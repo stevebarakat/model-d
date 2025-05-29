@@ -55,5 +55,7 @@ export function createSynthActions(
           external: { ...state.mixer.external, ...value },
         },
       })),
+    setGlideOn: (on: boolean) => set({ glideOn: on }),
+    setGlideTime: (time: number) => set({ glideTime: time }),
   };
 }

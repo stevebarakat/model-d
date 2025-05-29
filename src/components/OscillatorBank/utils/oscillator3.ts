@@ -16,7 +16,9 @@ export type Osc3Params = BaseOscillatorParams & {
   frequency: number;
 };
 
-export type Osc3Instance = BaseOscillatorInstance;
+export type Osc3Instance = BaseOscillatorInstance & {
+  updateWithFrequency: (params: Partial<Osc3Params>) => void;
+};
 
 const pulseWavesCache = new WeakMap<
   AudioContext,
@@ -60,5 +62,17 @@ function getCustomWave(
 }
 
 export function createOscillator3(params: Osc3Params): Osc3Instance {
-  return createBaseOscillator(params, getCustomWave);
+  const base = createBaseOscillator(params, getCustomWave);
+  return {
+    ...base,
+    updateWithFrequency: (newParams: Partial<Osc3Params>) => {
+      const { waveform, range, gain, frequency } = newParams;
+      base.update({ waveform, range, gain });
+      if (typeof frequency === "number" && base.getNode()) {
+        base
+          .getNode()!
+          .frequency.setValueAtTime(frequency, params.audioContext.currentTime);
+      }
+    },
+  };
 }

@@ -51,9 +51,8 @@ export function useOscillator3(
     oscRef.current?.update({
       waveform: oscillator3.waveform as Oscillator3Waveform,
       range: oscillator3.range,
-      frequency: oscillator3.frequency,
     });
-  }, [oscillator3.waveform, oscillator3.range, oscillator3.frequency]);
+  }, [oscillator3.waveform, oscillator3.range]);
 
   const triggerAttack = useCallback(
     (note: string) => {

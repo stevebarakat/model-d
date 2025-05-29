@@ -57,6 +57,10 @@ export type SynthState = {
   oscillator2: OscillatorState;
   oscillator3: OscillatorState;
   mixer: MixerState;
+
+  // Glide
+  glideOn: boolean;
+  glideTime: number;
 };
 
 export type SynthActions = {
@@ -75,4 +79,7 @@ export type SynthActions = {
   ) => void;
   setMixerNoise: (value: Partial<MixerNoiseState>) => void;
   setMixerExternal: (value: Partial<MixerExternalState>) => void;
+
+  setGlideOn: (on: boolean) => void;
+  setGlideTime: (time: number) => void;
 };

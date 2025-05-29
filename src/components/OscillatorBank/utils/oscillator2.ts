@@ -16,7 +16,9 @@ export type Osc2Params = BaseOscillatorParams & {
   frequency: number;
 };
 
-export type Osc2Instance = BaseOscillatorInstance;
+export type Osc2Instance = BaseOscillatorInstance & {
+  updateWithFrequency: (params: Partial<Osc2Params>) => void;
+};
 
 const pulseWavesCache = new WeakMap<
   AudioContext,
@@ -65,5 +67,17 @@ function getCustomWave(
 }
 
 export function createOscillator2(params: Osc2Params): Osc2Instance {
-  return createBaseOscillator(params, getCustomWave);
+  const base = createBaseOscillator(params, getCustomWave);
+  return {
+    ...base,
+    updateWithFrequency: (newParams: Partial<Osc2Params>) => {
+      const { waveform, range, gain, frequency } = newParams;
+      base.update({ waveform, range, gain });
+      if (typeof frequency === "number" && base.getNode()) {
+        base
+          .getNode()!
+          .frequency.setValueAtTime(frequency, params.audioContext.currentTime);
+      }
+    },
+  };
 }

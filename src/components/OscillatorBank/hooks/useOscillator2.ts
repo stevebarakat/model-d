@@ -11,7 +11,7 @@ export type UseOscillator2Result = {
 export function useOscillator2(
   audioContext: AudioContext
 ): UseOscillator2Result {
-  const { oscillator2, mixer } = useSynthStore();
+  const { oscillator2, mixer, glideOn, glideTime } = useSynthStore();
   const oscRef = useRef<Osc2Instance | null>(null);
 
   useEffect(() => {
@@ -44,18 +44,31 @@ export function useOscillator2(
     oscRef.current?.update({
       waveform: oscillator2.waveform as OscillatorType,
       range: oscillator2.range,
-      frequency: oscillator2.frequency,
     });
-  }, [oscillator2.waveform, oscillator2.range, oscillator2.frequency]);
+  }, [oscillator2.waveform, oscillator2.range]);
 
   const triggerAttack = useCallback(
     (note: string) => {
       const baseFreq = noteToFrequency(note);
       const detuneSemis = oscillator2.frequency || 0;
       const freq = baseFreq * Math.pow(2, detuneSemis / 12);
-      oscRef.current?.start(freq);
+      if (!oscRef.current) return;
+      const oscNode = oscRef.current.getNode();
+      if (!oscNode) {
+        oscRef.current.start(freq);
+        return;
+      }
+      if (glideOn) {
+        oscNode.frequency.setTargetAtTime(
+          freq,
+          audioContext.currentTime,
+          glideTime
+        );
+      } else {
+        oscNode.frequency.setValueAtTime(freq, audioContext.currentTime);
+      }
     },
-    [oscillator2.frequency]
+    [oscillator2.frequency, glideOn, glideTime, audioContext]
   );
 
   const triggerRelease = useCallback(() => {

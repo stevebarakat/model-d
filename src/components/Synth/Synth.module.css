@@ -1,16 +1,35 @@
+.synthContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 1525px;
+  height: 921px;
+  border-right: 2px solid var(--color-off-black);
+  border-left: 2px solid var(--color-off-black);
+  background: url("/images/minimoog-template.png") no-repeat center center;
+  background-size: 100% 100%;
+  z-index: 10000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  aspect-ratio: 1525 / 921;
+}
+
 .synthSides {
   position: relative;
   margin: 0 auto;
-  padding: 0 12px;
+  padding: 0 36px;
   width: fit-content;
-  background: hsl(217deg 39% 15%);
+  /* background: hsl(217deg 39% 15%);
   background: linear-gradient(
     180deg,
     hsl(0deg 0% 10%) 0%,
     hsl(217deg 39% 35%) 3%,
     hsl(217deg 39% 15%) 99%,
     hsl(0deg 0% 10%) 100%
-  );
+  ); */
   border-right: 2px solid hsl(218deg 33% 22.5%);
   border-left: 2px solid hsl(218deg 33% 22.5%);
   border-radius: 4px;
@@ -20,7 +39,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 12px;
+    width: 36px;
     height: 100%;
     background: linear-gradient(
       90deg,
@@ -40,7 +59,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 12px;
+    width: 36px;
     height: 100%;
     background: linear-gradient(
       90deg,
@@ -72,7 +91,8 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  width: calc(1480px / 1.2);
+  width: 1525px;
+  height: 921px;
   border-right: 2px solid var(--color-off-black);
   border-left: 2px solid var(--color-off-black);
 
@@ -100,18 +120,14 @@
   z-index: 0;
   display: flex;
   flex-direction: column;
-  background-color: var(--synth-bg);
+  height: 100%;
 }
 
 .innerControlsContainer {
   display: flex;
   width: 100%;
   overflow: hidden;
-  /* background-image: url("/images/controls.png"); */
-  background-position: center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  aspect-ratio: 1481/354;
+  min-height: 445px;
 }
 
 .horizontalIndent {
@@ -132,9 +148,9 @@
 .keyRow {
   display: flex;
   overflow: clip;
-  background: linear-gradient(
+  /* background: linear-gradient(
     180deg,
     hsl(217deg 50% 20%) 98%,
     hsl(217deg 50% 8%) 100%
-  );
+  ); */
 }

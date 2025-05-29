@@ -13,6 +13,7 @@ export type BaseOscillatorInstance = {
   ) => void;
   getNode: () => OscillatorNode | null;
   getGainNode: () => GainNode;
+  setFrequency: (frequency: number) => void;
 };
 
 export const rangeToMultiplier: Record<BaseOscillatorParams["range"], number> =
@@ -51,29 +52,39 @@ export function createBaseOscillator(
   gainNode.connect(params.audioContext.destination);
 
   function start(frequency: number): void {
-    stop();
-    osc = params.audioContext.createOscillator();
-    let oscType: OscillatorType = "triangle";
-    if (currentParams.waveform === "triangle") {
-      oscType = "triangle";
-    } else if (currentParams.waveform === "sawtooth") {
-      oscType = "sawtooth";
-    } else if (currentParams.waveform === "pulse1") {
-      oscType = "square";
-    } else {
-      oscType = "custom";
+    if (!osc) {
+      osc = params.audioContext.createOscillator();
+      let oscType: OscillatorType = "triangle";
+      if (currentParams.waveform === "triangle") {
+        oscType = "triangle";
+      } else if (currentParams.waveform === "sawtooth") {
+        oscType = "sawtooth";
+      } else if (currentParams.waveform === "pulse1") {
+        oscType = "square";
+      } else {
+        oscType = "custom";
+      }
+      if (oscType === "custom") {
+        osc.setPeriodicWave(
+          getCustomWave(params.audioContext, currentParams.waveform)
+        );
+      } else {
+        osc.type = oscType;
+      }
+      osc.connect(gainNode);
+      osc.start();
     }
-    if (oscType === "custom") {
-      osc.setPeriodicWave(
-        getCustomWave(params.audioContext, currentParams.waveform)
+    setFrequency(frequency);
+  }
+
+  function setFrequency(frequency: number): void {
+    if (osc) {
+      const freq = frequency * rangeToMultiplier[currentParams.range];
+      osc.frequency.setValueAtTime(
+        isFinite(freq) ? freq : 440,
+        params.audioContext.currentTime
       );
-    } else {
-      osc.type = oscType;
     }
-    const freq = frequency * rangeToMultiplier[currentParams.range];
-    osc.frequency.value = isFinite(freq) ? freq : 440;
-    osc.connect(gainNode);
-    osc.start();
   }
 
   function stop(): void {
@@ -128,5 +139,6 @@ export function createBaseOscillator(
     update,
     getNode,
     getGainNode,
+    setFrequency,
   };
 }
