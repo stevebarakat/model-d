@@ -38,7 +38,7 @@ function SidePanel() {
         <div className={styles.sideSwitches}>
           <HorizontalRockerSwitch
             theme="blue"
-            label="Glide"
+            label="Glide (On/Off)"
             topLabel="Glide"
             bottomLabelRight="On"
             checked={false}

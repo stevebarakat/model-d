@@ -1,2 +1,1 @@
-export { useKeyboardHandling } from "./useKeyboardHandling";
-export { useMidiHandling } from "./useMidiHandling";
+export * from "./useAudioContext";

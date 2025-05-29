@@ -34,7 +34,7 @@ function Controllers() {
             min={0}
             max={10}
             step={1}
-            label="Glide"
+            label="Glide Time"
             onChange={() => {}}
           />
           <Knob

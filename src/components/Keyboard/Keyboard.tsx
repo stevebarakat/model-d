@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import styles from "./Keyboard.module.css";
 import React from "react";
 import { SynthObject } from "@/store/types/synth";
@@ -113,23 +113,29 @@ function Keyboard({
   onKeyUp = () => {},
   onMouseDown = () => {},
   onMouseUp = () => {},
+  synth,
 }: KeyboardProps) {
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const FIXED_OCTAVE = 4;
 
   const keys = generateKeyboardKeys(octaveRange);
 
   const handleKeyPress = useCallback(
     (note: string): void => {
+      synth.triggerAttack(note);
       onKeyDown(note);
     },
-    [onKeyDown]
+    [onKeyDown, synth]
   );
 
   const handleKeyRelease = useCallback(
     (note: string): void => {
-      onKeyUp(note);
+      if (note === activeKeys) {
+        synth.triggerRelease(note);
+        onKeyUp(note);
+      }
     },
-    [onKeyUp]
+    [onKeyUp, synth, activeKeys]
   );
 
   const handleMouseDown = useCallback((): void => {
@@ -140,20 +146,22 @@ function Keyboard({
   const handleMouseUp = useCallback((): void => {
     setIsMouseDown(false);
     if (activeKeys) {
+      synth.triggerRelease(activeKeys);
       onKeyUp(activeKeys);
     }
     onMouseUp();
-  }, [activeKeys, onKeyUp, onMouseUp]);
+  }, [activeKeys, onKeyUp, onMouseUp, synth]);
 
   const handleMouseLeave = useCallback((): void => {
     if (isMouseDown) {
       setIsMouseDown(false);
       if (activeKeys) {
+        synth.triggerRelease(activeKeys);
         onKeyUp(activeKeys);
       }
       onMouseUp();
     }
-  }, [isMouseDown, activeKeys, onKeyUp, onMouseUp]);
+  }, [isMouseDown, activeKeys, onKeyUp, onMouseUp, synth]);
 
   const handleKeyInteraction = useCallback(
     (note: string): void => {
@@ -172,6 +180,56 @@ function Keyboard({
     },
     [isMouseDown, handleKeyRelease]
   );
+
+  useEffect(() => {
+    const baseKeyboardMap: { [key: string]: string } = {
+      a: "C",
+      w: "C#",
+      s: "D",
+      e: "D#",
+      d: "E",
+      f: "F",
+      t: "F#",
+      g: "G",
+      y: "G#",
+      h: "A",
+      u: "A#",
+      j: "B",
+      k: "C+1",
+    };
+
+    function handleKeyboardDown(e: KeyboardEvent) {
+      if (!e.key) return;
+      const baseNote = baseKeyboardMap[e.key.toLowerCase()];
+      if (baseNote && !e.repeat) {
+        const note =
+          baseNote === "C+1"
+            ? `C${FIXED_OCTAVE + 1}`
+            : `${baseNote}${FIXED_OCTAVE}`;
+        handleKeyPress(note);
+      }
+    }
+
+    function handleKeyboardUp(e: KeyboardEvent) {
+      if (!e.key) return;
+      const baseNote = baseKeyboardMap[e.key.toLowerCase()];
+      if (baseNote) {
+        const note =
+          baseNote === "C+1"
+            ? `C${FIXED_OCTAVE + 1}`
+            : `${baseNote}${FIXED_OCTAVE}`;
+        handleKeyRelease(note);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyboardDown);
+    window.addEventListener("keyup", handleKeyboardUp);
+
+    return function () {
+      window.removeEventListener("keydown", handleKeyboardDown);
+      window.removeEventListener("keyup", handleKeyboardUp);
+    };
+  }, [handleKeyPress, handleKeyRelease]);
 
   const renderWhiteKeys = useCallback(() => {
     return keys

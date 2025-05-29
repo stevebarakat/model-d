@@ -1,6 +1,6 @@
-import { useRef, useEffect, useMemo } from "react";
+import { useRef, useMemo } from "react";
 import { useNoise } from "@/components/Mixer/hooks";
-import { useKeyboardHandling } from "@/hooks";
+// import { useKeyboardHandling } from "@/hooks";
 import {
   useOscillator1,
   useOscillator2,
@@ -41,44 +41,19 @@ function Synth() {
     };
   }, [osc1, osc2, osc3]);
 
-  const keyboardRef = useRef<{
-    synth: typeof synthObj;
-  }>({ synth: synthObj });
-
-  useEffect(() => {
-    keyboardRef.current.synth = synthObj;
-  }, [synthObj]);
-
-  const { handleKeyDown, handleKeyUp, handleMouseDown, handleMouseUp } =
-    useKeyboardHandling({
-      keyboardRef,
-      activeKeys,
-      setActiveKeys,
-    });
-
   return (
-    <div className={styles.synthSides}>
+    <div className={styles.synthContainer}>
       <div className={styles.synth}>
-        <div className={styles.controlsContainer}>
-          <div className={styles.backPanel}></div>
-          <div className={styles.innerControlsContainer}>
-            <SynthControls />
-          </div>
-          <div className={styles.horizontalIndent}></div>
-        </div>
-        <div className={styles.keyRow}>
-          <SidePanel />
-
+        <div className={styles.mainContent}>
+          <SynthControls />
           <Keyboard
             activeKeys={activeKeys}
-            octaveRange={{ min: 3, max: 5 }}
-            onKeyDown={handleKeyDown}
-            onKeyUp={handleKeyUp}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            synth={keyboardRef.current.synth}
+            onKeyDown={setActiveKeys}
+            onKeyUp={() => setActiveKeys(null)}
+            synth={synthObj}
           />
         </div>
+        <SidePanel />
       </div>
     </div>
   );
