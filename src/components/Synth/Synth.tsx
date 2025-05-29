@@ -42,18 +42,25 @@ function Synth() {
   }, [osc1, osc2, osc3]);
 
   return (
-    <div className={styles.synthContainer}>
+    <div className={styles.synthSides}>
       <div className={styles.synth}>
-        <div className={styles.mainContent}>
-          <SynthControls />
+        <div className={styles.controlsContainer}>
+          <div className={styles.backPanel}></div>
+          <div className={styles.innerControlsContainer}>
+            <SynthControls />
+          </div>
+          <div className={styles.horizontalIndent}></div>
+        </div>
+        <div className={styles.keyRow}>
+          <SidePanel />
           <Keyboard
             activeKeys={activeKeys}
+            octaveRange={{ min: 3, max: 5 }}
             onKeyDown={setActiveKeys}
             onKeyUp={() => setActiveKeys(null)}
             synth={synthObj}
           />
         </div>
-        <SidePanel />
       </div>
     </div>
   );
