@@ -1,0 +1,128 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-right: 2px solid var(--color-text-secondary);
+}
+
+.oscillatorTitleContainer {
+  position: relative;
+  top: 20px;
+  right: -20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 10px;
+}
+
+.oscillatorTitle {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.frequencyLabel {
+  position: absolute;
+  top: 10px;
+  font-size: var(--font-size-xs);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.column {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-top: -5px;
+  padding-right: 10px;
+  width: 272px;
+}
+
+.row {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:not(:last-child) {
+    margin-left: 37px;
+  }
+
+  &:last-child {
+    margin-top: -40px;
+  }
+
+  &:nth-child(3) {
+    margin-top: -20px;
+  }
+}
+
+.screw {
+  position: absolute;
+  z-index: 101;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(
+    circle at center,
+    hsl(217deg 20% 25%) 0%,
+    hsl(217deg 20% 20%) 30%,
+    hsl(217deg 20% 15%) 60%,
+    hsl(217deg 20% 10%) 100%
+  );
+  border-radius: 50%;
+}
+
+.screw::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(
+      90deg,
+      transparent 40%,
+      hsl(217deg 20% 5% / 80%) 40%,
+      hsl(217deg 20% 5% / 80%) 60%,
+      transparent 60%
+    ),
+    linear-gradient(
+      0deg,
+      transparent 40%,
+      hsl(217deg 20% 5% / 80%) 40%,
+      hsl(217deg 20% 5% / 80%) 60%,
+      transparent 60%
+    );
+  border-radius: 1px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  content: "";
+}
+
+.screwTopLeft {
+  composes: screw;
+  top: 4px;
+  left: 4px;
+}
+
+.screwTopRight {
+  composes: screw;
+  top: 4px;
+  right: 4px;
+}
+
+.screwBottomLeft {
+  composes: screw;
+  bottom: 4px;
+  left: 4px;
+}
+
+.screwBottomRight {
+  right: 4px;
+  bottom: 4px;
+  composes: screw;
+}

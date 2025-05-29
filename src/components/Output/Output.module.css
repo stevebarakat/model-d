@@ -1,0 +1,139 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.column {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border-right: 2px solid var(--color-text-secondary);
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  gap: 12px;
+  padding-left: 26px;
+}
+
+.flexRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-weight: 900;
+  text-transform: uppercase;
+  gap: 12px;
+}
+
+.label {
+  position: relative;
+  left: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 8ch;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.sectionTitle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.modSwitches {
+  position: absolute;
+  top: 56px;
+  left: -35px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.modSwitch {
+  position: relative;
+  top: -10px;
+  span {
+    position: relative;
+    top: 12px;
+  }
+}
+
+.screw {
+  position: absolute;
+  z-index: 101;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(
+    circle at center,
+    hsl(217deg 20% 25%) 0%,
+    hsl(217deg 20% 20%) 30%,
+    hsl(217deg 20% 15%) 60%,
+    hsl(217deg 20% 10%) 100%
+  );
+  border-radius: 50%;
+}
+
+.screw::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(
+      90deg,
+      transparent 40%,
+      hsl(217deg 20% 5% / 80%) 40%,
+      hsl(217deg 20% 5% / 80%) 60%,
+      transparent 60%
+    ),
+    linear-gradient(
+      0deg,
+      transparent 40%,
+      hsl(217deg 20% 5% / 80%) 40%,
+      hsl(217deg 20% 5% / 80%) 60%,
+      transparent 60%
+    );
+  border-radius: 1px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  content: "";
+}
+
+.screwTopLeft {
+  composes: screw;
+  top: 4px;
+  left: 4px;
+}
+
+.screwTopRight {
+  composes: screw;
+  top: 4px;
+  right: 4px;
+}
+
+.screwBottomLeft {
+  composes: screw;
+  bottom: 4px;
+  left: 4px;
+}
+
+.screwBottomRight {
+  right: 4px;
+  bottom: 4px;
+  composes: screw;
+}

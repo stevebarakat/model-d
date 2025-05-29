@@ -1,0 +1,68 @@
+.overloadContainer {
+  --overload-size: 12px;
+  position: relative;
+  width: var(--overload-size);
+  height: var(--overload-size);
+  top: 26px;
+}
+
+.overload {
+  position: relative;
+  width: var(--overload-size);
+  height: var(--overload-size);
+  border-radius: 50%;
+  background-color: hsl(0deg 0% 13%);
+  box-shadow: inset 0 0 2.5px hsl(0deg 0% 0%), 0px 1px 1px hsl(0deg 0% 34%);
+  transition: all 0.1s ease-out;
+  z-index: 1;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at center,
+      hsla(0deg 100% 50% / calc(var(--glow-intensity) * 0.5)) 0%,
+      transparent 70%
+    );
+    opacity: var(--glow-intensity);
+    transition: opacity 0.1s ease-out;
+    z-index: -1;
+  }
+}
+
+.overload:not([style*="--glow-intensity: 0"]) {
+  box-shadow: inset 0 0 2.5px hsl(0deg 0% 0%), 0px 1px 1px hsl(0deg 0% 34%),
+    0 0 calc(var(--glow-intensity) * 20px) hsl(0deg 100% 50%),
+    0 0 calc(var(--glow-intensity) * 40px) hsla(0deg 100% 50% / 0.5);
+  background-color: hsl(0deg 100% calc(var(--glow-intensity) * 50%));
+  filter: brightness(calc(1 + var(--glow-intensity) * 0.5));
+}
+
+.overloadBackground {
+  position: absolute;
+  display: block;
+  width: calc(var(--overload-size) * 2.5);
+  height: calc(var(--overload-size) * 2.5);
+  border-radius: 50%;
+  border-top: 1px solid hsl(215 10% 45%);
+  background: hsl(0deg 0% 10%);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(
+      to bottom,
+      hsl(0deg 0% 70% / 50%) 0%,
+      hsl(0deg 0% 25% / 50%) 35%,
+      hsl(0deg 0% 0% / 50%) 55%,
+      hsl(0deg 0% 5% / 100%) 100%
+    );
+    pointer-events: none;
+  }
+}

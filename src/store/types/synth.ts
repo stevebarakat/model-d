@@ -1,0 +1,78 @@
+export type Note = string;
+
+export type OscillatorWaveform =
+  | "triangle"
+  | "tri_saw"
+  | "sawtooth"
+  | "rev_saw"
+  | "pulse1"
+  | "pulse2"
+  | "pulse3";
+export type OscillatorRange = "32" | "16" | "8" | "4" | "2" | "lo";
+
+export type OscillatorState = {
+  waveform: OscillatorWaveform;
+  frequency: number;
+  range: OscillatorRange;
+  enabled: boolean;
+};
+
+export type SynthObject = {
+  triggerAttack: (note: string) => void;
+  triggerRelease: (note: string) => void;
+};
+
+export type MixerSourceState = {
+  enabled: boolean;
+  volume: number;
+};
+
+export type MixerNoiseState = MixerSourceState & {
+  noiseType: "white" | "pink";
+};
+
+export type MixerExternalState = MixerSourceState & {
+  overload: boolean;
+};
+
+export type MixerState = {
+  osc1: MixerSourceState;
+  osc2: MixerSourceState;
+  osc3: MixerSourceState;
+  noise: MixerNoiseState;
+  external: MixerExternalState;
+};
+
+export type SynthState = {
+  // Keyboard state
+  activeKeys: Note | null;
+  keyboardRef: {
+    synth: SynthObject | null;
+  };
+
+  // Controller state
+  pitchWheel: number;
+  modWheel: number;
+  oscillator1: OscillatorState;
+  oscillator2: OscillatorState;
+  oscillator3: OscillatorState;
+  mixer: MixerState;
+};
+
+export type SynthActions = {
+  setActiveKeys: (
+    key: Note | null | ((prev: Note | null) => Note | null)
+  ) => void;
+  setKeyboardRef: (ref: { synth: SynthObject | null }) => void;
+  setPitchWheel: (value: number) => void;
+  setModWheel: (value: number) => void;
+  setOscillator1: (osc: Partial<OscillatorState>) => void;
+  setOscillator2: (osc: Partial<OscillatorState>) => void;
+  setOscillator3: (osc: Partial<OscillatorState>) => void;
+  setMixerSource: (
+    source: "osc1" | "osc2" | "osc3",
+    value: Partial<MixerSourceState>
+  ) => void;
+  setMixerNoise: (value: Partial<MixerNoiseState>) => void;
+  setMixerExternal: (value: Partial<MixerExternalState>) => void;
+};
