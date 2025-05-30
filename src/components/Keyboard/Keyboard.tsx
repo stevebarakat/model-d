@@ -198,19 +198,19 @@ function Keyboard({
 
   useEffect(() => {
     const baseKeyboardMap: { [key: string]: string } = {
-      a: "C",
-      w: "C#",
-      s: "D",
-      e: "D#",
-      d: "E",
-      f: "F",
-      t: "F#",
-      g: "G",
-      y: "G#",
-      h: "A",
-      u: "A#",
-      j: "B",
-      k: "C+1",
+      a: "F",
+      w: "F#",
+      s: "G",
+      e: "G#",
+      d: "A",
+      r: "A#",
+      f: "B",
+      g: "C",
+      y: "C#",
+      h: "D",
+      u: "D#",
+      j: "E",
+      k: "F+1",
     };
 
     function handleKeyboardDown(e: KeyboardEvent) {
@@ -218,8 +218,14 @@ function Keyboard({
       const baseNote = baseKeyboardMap[e.key.toLowerCase()];
       if (baseNote && !e.repeat) {
         const note =
-          baseNote === "C+1"
-            ? `C${FIXED_OCTAVE + 1}`
+          baseNote === "F+1"
+            ? `F${FIXED_OCTAVE + 1}`
+            : baseNote === "C" ||
+              baseNote === "C#" ||
+              baseNote === "D" ||
+              baseNote === "D#" ||
+              baseNote === "E"
+            ? `${baseNote}${FIXED_OCTAVE + 1}`
             : `${baseNote}${FIXED_OCTAVE}`;
         handleKeyPress(note);
       }
@@ -230,8 +236,14 @@ function Keyboard({
       const baseNote = baseKeyboardMap[e.key.toLowerCase()];
       if (baseNote) {
         const note =
-          baseNote === "C+1"
-            ? `C${FIXED_OCTAVE + 1}`
+          baseNote === "F+1"
+            ? `F${FIXED_OCTAVE + 1}`
+            : baseNote === "C" ||
+              baseNote === "C#" ||
+              baseNote === "D" ||
+              baseNote === "D#" ||
+              baseNote === "E"
+            ? `${baseNote}${FIXED_OCTAVE + 1}`
             : `${baseNote}${FIXED_OCTAVE}`;
         handleKeyRelease(note);
       }
