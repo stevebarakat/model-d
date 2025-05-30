@@ -46,7 +46,8 @@ function Synth() {
 
   return (
     <div className={styles.synthContainer}>
-      <div className={styles.synthSides}>
+      <div className={styles.synthSides}></div>
+      <div className={styles.synth}>
         <div className={styles.controlsContainer}>
           <Controllers />
           <OscillatorBank />
@@ -65,6 +66,7 @@ function Synth() {
           />
         </div>
       </div>
+      <div className={styles.synthSides}></div>
     </div>
   );
 }

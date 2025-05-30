@@ -7,14 +7,26 @@
   overflow: hidden;
   background: url("/images/minimoog-template.png") no-repeat center center;
   background-size: cover;
-  display: flex;
   user-select: none;
+  display: flex;
 }
 
 .synthSides {
+  position: relative;
+  display: flex;
+  width: 2.45%;
+  height: 100%;
+  background: red;
+  display: flex;
+  flex-direction: column;
+}
+
+.synth {
   width: 100%;
-  border-right: 32px solid var(--color-off-black);
-  border-left: 32px solid var(--color-off-black);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .controlsContainer {
@@ -27,4 +39,26 @@
 .keyboardContainer {
   display: flex;
   overflow: clip;
+}
+
+@media (max-width: 1024px) {
+  .synthContainer {
+    aspect-ratio: auto;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .synthSides {
+    border-left: 19px solid var(--color-off-black);
+    border-right: 19px solid var(--color-off-black);
+  }
+
+  .controlsContainer {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .keyboardContainer {
+    flex-direction: column;
+  }
 }
