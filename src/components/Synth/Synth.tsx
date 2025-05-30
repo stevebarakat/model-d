@@ -1,12 +1,15 @@
 import { useRef, useMemo } from "react";
 import { useNoise } from "@/components/Mixer/hooks";
-// import { useKeyboardHandling } from "@/hooks";
 import {
   useOscillator1,
   useOscillator2,
   useOscillator3,
 } from "@/components/OscillatorBank/hooks";
-import SynthControls from "@/components/SynthControls";
+import Modifiers from "../Modifiers";
+import Mixer from "../Mixer";
+import OscillatorBank from "../OscillatorBank";
+import Controllers from "../Controllers";
+import Output from "../Output";
 import Keyboard from "@/components/Keyboard";
 import SidePanel from "@/components/SidePanel";
 import { useSynthStore } from "@/store/synthStore";
@@ -44,24 +47,22 @@ function Synth() {
   return (
     <div className={styles.synthContainer}>
       <div className={styles.synthSides}>
-        <div className={styles.synth}>
-          <div className={styles.controlsContainer}>
-            <div className={styles.backPanel}></div>
-            <div className={styles.innerControlsContainer}>
-              <SynthControls />
-            </div>
-            <div className={styles.horizontalIndent}></div>
-          </div>
-          <div className={styles.keyRow}>
-            <SidePanel />
-            <Keyboard
-              activeKeys={activeKeys}
-              octaveRange={{ min: 3, max: 5 }}
-              onKeyDown={setActiveKeys}
-              onKeyUp={() => setActiveKeys(null)}
-              synth={synthObj}
-            />
-          </div>
+        <div className={styles.controlsContainer}>
+          <Controllers />
+          <OscillatorBank />
+          <Mixer />
+          <Modifiers />
+          <Output />
+        </div>
+        <div className={styles.keyboardContainer}>
+          <SidePanel />
+          <Keyboard
+            activeKeys={activeKeys}
+            octaveRange={{ min: 3, max: 5 }}
+            onKeyDown={setActiveKeys}
+            onKeyUp={() => setActiveKeys(null)}
+            synth={synthObj}
+          />
         </div>
       </div>
     </div>
