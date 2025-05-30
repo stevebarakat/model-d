@@ -1,5 +1,5 @@
 import { useSynthStore } from "@/store/synthStore";
-import HorizontalRockerSwitch from "../HorizontalRockerSwitch";
+import HorizontalRockerSwitch from "../RockerSwitch";
 import Knob from "../Knob";
 import ModWheel from "../ModWheel";
 import styles from "./SidePanel.module.css";

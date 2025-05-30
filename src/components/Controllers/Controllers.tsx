@@ -1,4 +1,4 @@
-import HorizontalRockerSwitch from "../HorizontalRockerSwitch";
+import HorizontalRockerSwitch from "../RockerSwitch";
 import styles from "./Controllers.module.css";
 import Knob from "../Knob";
 import SectionTitle from "../SectionTitle";

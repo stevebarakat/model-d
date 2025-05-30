@@ -1,6 +1,6 @@
 import styles from "./Modifiers.module.css";
 import Knob from "../Knob";
-import HorizontalRockerSwitch from "../HorizontalRockerSwitch";
+import HorizontalRockerSwitch from "../RockerSwitch";
 import SectionTitle from "../SectionTitle";
 
 function Modifiers() {
