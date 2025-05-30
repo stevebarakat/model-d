@@ -21,11 +21,6 @@ type KeyboardProps = {
 };
 
 const OCTAVE_NOTES: Note[] = [
-  { note: "C", isSharp: false },
-  { note: "C#", isSharp: true },
-  { note: "D", isSharp: false },
-  { note: "D#", isSharp: true },
-  { note: "E", isSharp: false },
   { note: "F", isSharp: false },
   { note: "F#", isSharp: true },
   { note: "G", isSharp: false },
@@ -33,6 +28,11 @@ const OCTAVE_NOTES: Note[] = [
   { note: "A", isSharp: false },
   { note: "A#", isSharp: true },
   { note: "B", isSharp: false },
+  { note: "C", isSharp: false },
+  { note: "C#", isSharp: true },
+  { note: "D", isSharp: false },
+  { note: "D#", isSharp: true },
+  { note: "E", isSharp: false },
 ];
 
 const generateKeyboardKeys = (octaveRange: {
@@ -43,14 +43,29 @@ const generateKeyboardKeys = (octaveRange: {
     { length: octaveRange.max - octaveRange.min + 1 },
     (_, i) => octaveRange.min + i
   ).flatMap((octave) =>
-    OCTAVE_NOTES.map((key) => ({
-      note: `${key.note}${octave}`,
-      isSharp: key.isSharp,
-    }))
+    OCTAVE_NOTES.map((key, index) => {
+      // For notes after F (index >= 7), we need to use the next octave
+      const adjustedOctave = index >= 7 ? octave + 1 : octave;
+      return {
+        note: `${key.note}${adjustedOctave}`,
+        isSharp: key.isSharp,
+      };
+    })
   );
 
-  // Add one more key at the end (C of the next octave)
-  return [...keys, { note: `C${octaveRange.max + 1}`, isSharp: false }];
+  // Add 8 more keys at the end to complete the octave up to C
+  const lastOctave = octaveRange.max + 1;
+  const extraNotes = OCTAVE_NOTES.slice(0, 7).map((key) => ({
+    note: `${key.note}${lastOctave}`,
+    isSharp: key.isSharp,
+  }));
+
+  // Add the final C one octave higher
+  return [
+    ...keys,
+    ...extraNotes,
+    { note: `C${lastOctave + 1}`, isSharp: false },
+  ];
 };
 
 const WhiteKey = React.memo(
@@ -108,7 +123,7 @@ const BlackKey = React.memo(
 
 function Keyboard({
   activeKeys = null,
-  octaveRange = { min: 3, max: 6 },
+  octaveRange = { min: 1, max: 4 },
   onKeyDown = () => {},
   onKeyUp = () => {},
   onMouseDown = () => {},
