@@ -75,8 +75,7 @@ src/
     Keyboard/               # Virtual keyboard
     Knob/                   # Knob UI component
     ArrowKnob/              # Arrow knob UI component
-    HorizontalRockerSwitch/ # Horizontal rocker switch UI
-    VerticalRockerSwitch/   # Vertical rocker switch UI
+    RockerSwitch/           # Rocker switch UI
     SectionTitle/           # Section title UI
     SidePanel/              # Side panel UI
     ModWheel/               # Modulation wheel UI

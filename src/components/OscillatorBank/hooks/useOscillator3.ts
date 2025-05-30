@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from "react";
 import { useSynthStore } from "@/store/synthStore";
-import { createOscillator3, Osc3Instance } from "../utils/oscillator3";
+import { createOscillator3, Osc3Instance } from "../audio/oscillator3";
 
 export type Oscillator3Waveform =
   | "triangle"

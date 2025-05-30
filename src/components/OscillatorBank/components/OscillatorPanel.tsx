@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./OscillatorBank.module.css";
-import VerticalRockerSwitch from "@/components/VerticalRockerSwitch";
+import styles from "../OscillatorBank.module.css";
+import { VerticalRockerSwitch } from "@/components/RockerSwitch";
 
 export type OscillatorPanelProps = {
   showControlSwitch?: boolean;

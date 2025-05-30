@@ -1,1 +1,1 @@
-export { default } from "./components/OscillatorBank";
+export { default } from "./OscillatorBank";

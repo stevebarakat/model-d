@@ -1,7 +1,7 @@
-import SectionTitle from "../../SectionTitle";
-import Oscillator1 from "./Oscillator1";
-import Oscillator2 from "./Oscillator2";
-import Oscillator3 from "./Oscillator3";
+import SectionTitle from "../SectionTitle";
+import Oscillator1 from "./components/Oscillator1";
+import Oscillator2 from "./components/Oscillator2";
+import Oscillator3 from "./components/Oscillator3";
 import styles from "./OscillatorBank.module.css";
 
 function OscillatorBank() {
