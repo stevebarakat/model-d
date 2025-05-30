@@ -18,7 +18,7 @@ export type UseOscillator3Result = {
 export function useOscillator3(
   audioContext: AudioContext
 ): UseOscillator3Result {
-  const { oscillator3, mixer } = useSynthStore();
+  const { oscillator3, mixer, glideOn, glideTime } = useSynthStore();
   const oscRef = useRef<Osc3Instance | null>(null);
 
   useEffect(() => {
@@ -59,9 +59,23 @@ export function useOscillator3(
       const baseFreq = noteToFrequency(note);
       const detuneSemis = oscillator3.frequency || 0;
       const freq = baseFreq * Math.pow(2, detuneSemis / 12);
-      oscRef.current?.start(freq);
+      if (!oscRef.current) return;
+      const oscNode = oscRef.current.getNode();
+      if (!oscNode) {
+        oscRef.current.start(freq);
+        return;
+      }
+      if (glideOn) {
+        oscNode.frequency.setTargetAtTime(
+          freq,
+          audioContext.currentTime,
+          glideTime
+        );
+      } else {
+        oscNode.frequency.setValueAtTime(freq, audioContext.currentTime);
+      }
     },
-    [oscillator3.frequency]
+    [oscillator3.frequency, glideOn, glideTime, audioContext]
   );
 
   const triggerRelease = useCallback(() => {
