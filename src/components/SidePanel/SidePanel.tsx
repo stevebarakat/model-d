@@ -1,14 +1,14 @@
 import { useSynthStore } from "@/store/synthStore";
 import { HorizontalRockerSwitch } from "../RockerSwitch";
 import Knob from "../Knob";
-import ModWheel from "../ModWheel";
+import Wheel from "../Wheel";
 import styles from "./SidePanel.module.css";
 
 function ModWheels() {
   return (
     <div className={styles.modWheels}>
       <div className={styles.modWheelwell}>
-        <ModWheel
+        <Wheel
           value={0}
           min={0}
           max={100}
@@ -18,7 +18,7 @@ function ModWheels() {
         />
       </div>
       <div className={styles.modWheelwell}>
-        <ModWheel value={0} min={0} max={100} onChange={() => {}} label="Mod" />
+        <Wheel value={0} min={0} max={100} onChange={() => {}} label="Mod" />
       </div>
     </div>
   );

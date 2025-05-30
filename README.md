@@ -78,7 +78,7 @@ src/
     RockerSwitch/           # Rocker switch UI
     SectionTitle/           # Section title UI
     SidePanel/              # Side panel UI
-    ModWheel/               # Modulation wheel UI
+    Wheel/                  # Wheel Input UI for Modulation and Pitch
     Switch/                 # Switch UI
     Synth/                  # Synth engine or wrapper
     SynthControls/          # Synth control panel

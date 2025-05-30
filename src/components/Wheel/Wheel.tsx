@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import styles from "./ModWheel.module.css";
+import styles from "./Wheel.module.css";
 
 type ModWheelProps = {
   value: number;
@@ -29,7 +29,7 @@ function calculateNewValue(
   return Math.max(min, Math.min(max, steppedValue));
 }
 
-function ModWheel({
+function Wheel({
   value,
   min,
   max,
@@ -129,4 +129,4 @@ function ModWheel({
   );
 }
 
-export default ModWheel;
+export default Wheel;
