@@ -1,24 +1,12 @@
 .keyboardContainer {
-  margin-bottom: var(--spacing-md);
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .keyboard {
-  padding: 0 3px 4px;
+  padding: 0 3px;
   /* background: var(--color-off-black); */
-  /* box-shadow: 0 4px 6px -1px hsl(217deg 30% 25%),
-    0 4px 6px -1px hsl(217deg 50% 10%); */
-
-  &::before {
-    position: relative;
-    /* left: -175px; */
-    z-index: 50;
-    display: flex;
-    width: calc(100% + 300px);
-
-    box-shadow: 0 5px 10px 0 hsl(0deg 0% 0% / 50%);
-    content: "";
-  }
 }
 
 .pianoKeys {
@@ -26,37 +14,6 @@
   display: flex;
   gap: 2px;
   height: 100%;
-}
-
-.leftShadow {
-  position: absolute;
-  z-index: 10;
-  width: 20px;
-  height: 100%;
-  background: linear-gradient(
-    270deg,
-    hsl(0deg 0% 100% / 0%) 0%,
-    hsl(0deg 0% 50% / 50%) 50%,
-    hsl(0deg 0% 0% / 100%) 100%
-  );
-  pointer-events: none;
-  filter: blur(9px);
-}
-
-.rightShadow {
-  position: absolute;
-  right: 0;
-  z-index: 10;
-  width: 20px;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    hsl(0deg 0% 100% / 0%) 0%,
-    hsl(0deg 0% 50% / 50%) 50%,
-    hsl(0deg 0% 0% / 100%) 100%
-  );
-  pointer-events: none;
-  filter: blur(9px);
 }
 
 .whiteKey {
@@ -153,40 +110,33 @@
   }
 }
 
-.keyboardControls {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 4px;
-  padding: 4px 8px;
+.leftShadow {
+  position: absolute;
+  z-index: 10;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(
+    270deg,
+    hsl(0deg 0% 100% / 0%) 0%,
+    hsl(0deg 0% 50% / 50%) 50%,
+    hsl(0deg 0% 0% / 100%) 100%
+  );
+  pointer-events: none;
+  filter: blur(9px);
 }
 
-.button {
-  padding: 0.875rem 1.75rem;
+.rightShadow {
+  position: absolute;
+  right: 0;
+  z-index: 10;
+  width: 20px;
+  height: 100%;
   background: linear-gradient(
-    to bottom,
-    hsl(217deg 13% 20%),
-    hsl(217deg 13% 15%)
+    90deg,
+    hsl(0deg 0% 100% / 0%) 0%,
+    hsl(0deg 0% 50% / 50%) 50%,
+    hsl(0deg 0% 0% / 100%) 100%
   );
-  border: none;
-  border-radius: 4px;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.button:hover {
-  background: linear-gradient(
-    to bottom,
-    hsl(217deg 13% 25%),
-    hsl(217deg 13% 20%)
-  );
-}
-
-.buttonActive {
-  background: linear-gradient(
-    to bottom,
-    hsl(217deg 13% 30%),
-    hsl(217deg 13% 25%)
-  );
-  box-shadow: inset 0 1px 1px hsl(217deg 13% 35%);
+  pointer-events: none;
+  filter: blur(9px);
 }

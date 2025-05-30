@@ -14,6 +14,7 @@ import Keyboard from "@/components/Keyboard";
 import SidePanel from "@/components/SidePanel";
 import { useSynthStore } from "@/store/synthStore";
 import styles from "./Synth.module.css";
+import Side from "@/Side";
 
 function Synth() {
   const { activeKeys, setActiveKeys } = useSynthStore();
@@ -46,16 +47,16 @@ function Synth() {
 
   return (
     <div className={styles.synthContainer}>
-      <div className={styles.synthSides}></div>
+      <Side />
       <div className={styles.synth}>
-        <div className={styles.controlsContainer}>
+        <div className={styles.controlsPanel}>
           <Controllers />
           <OscillatorBank />
           <Mixer />
           <Modifiers />
           <Output />
         </div>
-        <div className={styles.keyboardContainer}>
+        <div className={styles.keyboardPanel}>
           <SidePanel />
           <Keyboard
             activeKeys={activeKeys}
@@ -66,7 +67,7 @@ function Synth() {
           />
         </div>
       </div>
-      <div className={styles.synthSides}></div>
+      <Side />
     </div>
   );
 }

@@ -29,14 +29,14 @@
   flex-direction: column;
 }
 
-.controlsContainer {
+.controlsPanel {
   display: flex;
   width: 100%;
   overflow: hidden;
   min-height: 570px;
 }
 
-.keyboardContainer {
+.keyboardPanel {
   display: flex;
   overflow: clip;
 }
