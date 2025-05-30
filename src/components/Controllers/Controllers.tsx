@@ -5,9 +5,7 @@ import SectionTitle from "../SectionTitle";
 import { useSynthStore } from "@/store/synthStore";
 
 function Controllers() {
-  const glideOn = useSynthStore((s) => s.glideOn);
   const glideTime = useSynthStore((s) => s.glideTime);
-  const setGlideOn = useSynthStore((s) => s.setGlideOn);
   const setGlideTime = useSynthStore((s) => s.setGlideTime);
 
   return (
@@ -34,14 +32,6 @@ function Controllers() {
           />
         </div>
         <div className={styles.row}>
-          <HorizontalRockerSwitch
-            theme="blue"
-            checked={glideOn}
-            onCheckedChange={setGlideOn}
-            label="Glide"
-            topLabel="Glide"
-            bottomLabelRight="On"
-          />
           <Knob
             size="medium"
             value={glideTime}
