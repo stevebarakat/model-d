@@ -1,6 +1,5 @@
 .knobContainer {
-  --knob-size: 45px;
-
+  --knob-size: 55px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -49,8 +48,8 @@
 
 .outerKnob {
   position: relative;
-  top: 2px;
-  left: -4px;
+  top: -4px;
+  left: -6px;
   display: grid;
   width: 120%;
   height: 120%;
@@ -149,7 +148,7 @@
 
 .knobValue {
   position: absolute;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-xxs);
   font-weight: 800;
   text-transform: uppercase;
   white-space: nowrap;

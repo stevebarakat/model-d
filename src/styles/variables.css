@@ -17,11 +17,11 @@
   --synth-bg: hsl(217deg 39% 15%);
 
   /* Spacing System */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 0.75rem;
-  --spacing-lg: 1rem;
-  --spacing-xl: 1.25rem;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.25rem;
+  --spacing-xl: 1.5rem;
 
   /* Component Sizes */
   --border-radius-sm: 2px;
@@ -31,11 +31,11 @@
   /* Typography */
   --color-text-primary: hsl(220deg 13% 100% / 45%);
   --color-text-secondary: hsl(220deg 13% 100% / 60%);
-  --font-size-xxs: 0.425rem;
-  --font-size-xs: 0.4875rem;
-  --font-size-sm: 0.6rem;
-  --font-size-md: 0.5rem;
-  --font-size-lg: 0.72rem;
+  --font-size-xxs: 0.4875rem;
+  --font-size-xs: 0.5625rem;
+  --font-size-sm: 0.625rem;
+  --font-size-md: 0.75rem;
+  --font-size-lg: 0.875rem;
   --font-size-xl: 1.5rem;
 
   /* Transitions */

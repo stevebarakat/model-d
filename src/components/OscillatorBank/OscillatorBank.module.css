@@ -11,8 +11,10 @@
 .row {
   position: relative;
   display: flex;
+  gap: var(--spacing-xl);
   justify-content: space-between;
   align-items: center;
+  border: 1px solid red;
 
   &:not(:last-child) {
     margin-left: 37px;

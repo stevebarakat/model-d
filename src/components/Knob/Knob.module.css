@@ -18,7 +18,7 @@
 
 .knobContainerLarge {
   --knob-size: 60px;
-  margin-top: 36px;
+  margin: 20px 0 8px;
 }
 
 .knob {
@@ -141,7 +141,7 @@
 
 .knobValueLabel {
   color: var(--color-text-secondary);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-xxs);
   font-weight: 700;
   user-select: none;
   text-align: center;
