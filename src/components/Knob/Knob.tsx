@@ -250,12 +250,23 @@ function Knob({
         type="range"
         min={logarithmic ? Math.log(min) : min}
         max={logarithmic ? Math.log(max) : max}
-        step={logarithmic ? (Math.log(max) - Math.log(min)) / 100 : step}
+        step={
+          min === 0 && max === 1
+            ? 1
+            : logarithmic
+            ? (Math.log(max) - Math.log(min)) / 100
+            : step
+        }
         value={logarithmic ? Math.log(value) : value}
         onChange={(e) => {
           const rawValue = Number(e.target.value);
           const newValue = logarithmic ? Math.exp(rawValue) : rawValue;
-          onChange(Number(newValue.toFixed(step >= 1 ? 0 : 2)));
+          // For binary switches (0/1), ensure we get exact values
+          if (min === 0 && max === 1) {
+            onChange(Math.round(newValue));
+          } else {
+            onChange(Number(newValue.toFixed(step >= 1 ? 0 : 2)));
+          }
         }}
         className={styles.rangeInput}
       />
