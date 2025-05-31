@@ -11,6 +11,15 @@ body {
   height: 100vh; */
 }
 
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 4px;
+  border-right: 2px solid var(--color-text-secondary);
+}
+
 /* Utility classes */
 
 .sr-only:not(:focus, :active) {

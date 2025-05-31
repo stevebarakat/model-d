@@ -1,15 +1,6 @@
-.section {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border-right: 2px solid var(--color-text-secondary);
-}
-
 .container {
   display: flex;
-  padding-top: 17px;
-  width: 392px;
+  width: 100%;
 }
 
 .column {

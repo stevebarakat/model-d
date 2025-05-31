@@ -5,7 +5,7 @@ import SectionTitle from "../SectionTitle";
 
 function Modifiers() {
   return (
-    <section className={styles.section}>
+    <section className="section">
       <div className={styles.column}>
         <div className={styles.modSwitches}>
           <div className={styles.flexRow}>

@@ -6,7 +6,7 @@ import styles from "./OscillatorBank.module.css";
 
 function OscillatorBank() {
   return (
-    <section className={styles.section}>
+    <section className="section">
       <div className={styles.column}>
         <Oscillator1 />
         <Oscillator2 />

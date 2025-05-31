@@ -21,7 +21,7 @@ function Mixer() {
   };
 
   return (
-    <section className={styles.section}>
+    <section className="section">
       <div className={styles.container}>
         <div className={styles.column}>
           <span className={styles.label}>Volume</span>

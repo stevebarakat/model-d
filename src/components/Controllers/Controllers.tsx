@@ -9,7 +9,7 @@ function Controllers() {
   const setGlideTime = useSynthStore((s) => s.setGlideTime);
 
   return (
-    <section className={styles.section}>
+    <section className="section">
       <div className={styles.column}>
         <div className={styles.row}>
           <Knob
