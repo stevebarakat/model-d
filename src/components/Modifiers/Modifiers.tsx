@@ -1,9 +1,9 @@
 import styles from "./Modifiers.module.css";
-import { HorizontalRockerSwitch } from "../RockerSwitch";
-import SectionTitle from "../SectionTitle";
-import LoudnessContour from "../LoudnessContour";
-import Filter from "../Filter";
-import FilterContour from "../FilterContour";
+import { HorizontalRockerSwitch } from "@/components/RockerSwitch";
+import SectionTitle from "@/components/SectionTitle";
+import LoudnessContour from "@/components/LoudnessContour";
+import Filter from "@/components/Filter";
+import FilterContour from "@/components/FilterContour";
 
 function Modifiers() {
   return (

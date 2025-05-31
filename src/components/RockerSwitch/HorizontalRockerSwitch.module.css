@@ -34,8 +34,8 @@
 
 .leftLabel {
   position: relative;
-  left: calc(var(--spacing-xs) * -1);
   top: 14px;
+  left: calc(var(--spacing-xs) * -1);
   display: flex;
 }
 

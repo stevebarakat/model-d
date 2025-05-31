@@ -5,14 +5,14 @@
 }
 
 .subSectionTitle {
+  margin-left: 16px;
+  color: hsl(0deg 0% 100%);
   font-size: 14px;
   font-weight: 500;
-  color: hsl(0, 0%, 100%);
-  margin-left: 16px;
 }
 
 .row {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 8px;
 }
