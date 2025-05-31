@@ -7,7 +7,7 @@ interface OverloadProps {
   audioLevel: number;
 }
 
-export function Overload({ isEnabled, volume, audioLevel }: OverloadProps) {
+function Overload({ isEnabled, volume, audioLevel }: OverloadProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Initialize canvas size
@@ -75,3 +75,5 @@ export function Overload({ isEnabled, volume, audioLevel }: OverloadProps) {
     </div>
   );
 }
+
+export default Overload;

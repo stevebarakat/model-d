@@ -5,7 +5,7 @@ import SectionTitle from "../SectionTitle";
 import styles from "./Mixer.module.css";
 import { useExternalInput } from "./hooks/useExternalInput";
 import { useAudioContext } from "@/hooks/useAudioContext";
-import { Overload } from "../Overload/Overload";
+import Overload from "../Overload";
 
 function Mixer() {
   const { mixer, setMixerSource, setMixerNoise, setMixerExternal } =
