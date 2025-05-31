@@ -37,7 +37,8 @@ function Mixer() {
             min={0}
             max={10}
             step={1}
-            label="Volume"
+            title="Volume"
+            label="Oscillator 1 Volume"
             onChange={(v) => setMixerSource("osc1", { volume: v })}
             size="medium"
           />
@@ -54,7 +55,8 @@ function Mixer() {
             min={0}
             max={10}
             step={1}
-            label="Volume"
+            title=" "
+            label="Oscillator 2 Volume"
             onChange={(v) => setMixerSource("osc2", { volume: v })}
             size="medium"
           />
@@ -71,7 +73,8 @@ function Mixer() {
             min={0}
             max={10}
             step={1}
-            label="Volume"
+            title=" "
+            label="Oscillator 3 Volume"
             onChange={(v) => setMixerSource("osc3", { volume: v })}
             size="medium"
           />

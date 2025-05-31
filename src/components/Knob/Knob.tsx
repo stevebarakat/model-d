@@ -8,6 +8,7 @@ type KnobProps = {
   max: number;
   step?: number;
   label: string;
+  title?: string | null;
   unit?: string;
   onChange: (value: number) => void;
   valueLabels?: Record<number, string | React.ReactElement>;
@@ -57,6 +58,7 @@ function Knob({
   max,
   step = 1,
   label,
+  title = null,
   unit = "",
   onChange,
   valueLabels,
@@ -68,6 +70,7 @@ function Knob({
   const [isKeyboardActive, setIsKeyboardActive] = useState(false);
   const [startY, setStartY] = useState(0);
   const [startValue, setStartValue] = useState(0);
+  const labelClass = title ? styles.labelHidden : styles.label;
   const id = slugify(label);
 
   const rotation = getRotation(value, min, max, logarithmic);
@@ -180,13 +183,13 @@ function Knob({
     >
       <label
         htmlFor={id}
-        className={`${styles.label} ${
+        className={`${labelClass} ${
           styles[`label${size.charAt(0).toUpperCase() + size.slice(1)}`]
         }`}
       >
         {label}
       </label>
-      {/* {title && (
+      {title && (
         <span
           className={`${styles.title} ${
             styles[`title${size.charAt(0).toUpperCase() + size.slice(1)}`]
@@ -194,7 +197,7 @@ function Knob({
         >
           {title}
         </span>
-      )} */}
+      )}
       <div className={styles.ticks}></div>
       <div className={styles.knob}>
         <input
