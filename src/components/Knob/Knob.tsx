@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { slugify } from "@/utils/helpers";
 import styles from "./Knob.module.css";
 
 type KnobProps = {
@@ -70,6 +71,7 @@ function Knob({
   const [startY, setStartY] = useState(0);
   const [startValue, setStartValue] = useState(0);
   const labelClass = title ? styles.labelHidden : styles.label;
+  const id = slugify(label);
 
   const rotation = getRotation(value, min, max, logarithmic);
   const displayValue = getDisplayValue(value, step, unit, valueLabels);
@@ -180,6 +182,7 @@ function Knob({
       }`}
     >
       <label
+        htmlFor={id}
         className={`${labelClass} ${
           styles[`label${size.charAt(0).toUpperCase() + size.slice(1)}`]
         }`}
@@ -242,6 +245,20 @@ function Knob({
           </div>
         </div>
       </div>
+      <input
+        id={id}
+        type="range"
+        min={logarithmic ? Math.log(min) : min}
+        max={logarithmic ? Math.log(max) : max}
+        step={logarithmic ? (Math.log(max) - Math.log(min)) / 100 : step}
+        value={logarithmic ? Math.log(value) : value}
+        onChange={(e) => {
+          const rawValue = Number(e.target.value);
+          const newValue = logarithmic ? Math.exp(rawValue) : rawValue;
+          onChange(Number(newValue.toFixed(step >= 1 ? 0 : 2)));
+        }}
+        className={styles.rangeInput}
+      />
     </div>
   );
 }
