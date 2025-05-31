@@ -7,9 +7,11 @@
 }
 
 .knobContainerSmall {
-  --knob-size: 30px;
+  --knob-size: 45px;
 
-  margin-top: 26px;
+  width: calc(var(--knob-size) * 1.75);
+  height: calc(var(--knob-size) * 1.75);
+  border: 1px dashed rgb(110, 253, 1);
 }
 
 .knobContainerMedium {

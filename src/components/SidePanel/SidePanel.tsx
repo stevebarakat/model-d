@@ -29,11 +29,20 @@ function SidePanel() {
       <div className={styles.row}>
         <Knob
           size="small"
+          valueLabels={{
+            0: "0",
+            2: "2",
+            4: "4",
+            6: "6",
+            8: "8",
+            10: "10",
+          }}
           value={0}
           min={0}
-          max={100}
-          onChange={() => {}}
+          max={10}
+          step={1}
           label="LFO Rate"
+          onChange={(v) => console.log(v)}
         />
         <div className={styles.sideSwitches}>
           <HorizontalRockerSwitch
