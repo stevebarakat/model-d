@@ -5,6 +5,7 @@
   align-items: center;
   width: 12.5%;
   overflow: hidden;
+  padding-top: 6px;
 }
 
 .sideSwitches {
@@ -13,13 +14,14 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 10px;
-  padding-top: 25px;
+  padding-top: 20px;
   width: fit-content;
   height: 100%;
 }
 
 .row {
   display: flex;
+  gap: var(--spacing-xl);
 }
 
 .wheels {
