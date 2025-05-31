@@ -3,141 +3,30 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 12px 0 12px;
-  width: calc(170px / 1.2);
+  width: 12.5%;
   overflow: hidden;
-  /* background: url("/images/side-panel.png") no-repeat center center;
-  background-size: 100% 100%; */
-  box-shadow: inset 1px 0 4px hsl(0deg 0% 5% / 100%),
-    inset -1px 0 4px hsl(0deg 0% 5% / 100%);
-  aspect-ratio: 170/278;
 }
 
 .sideSwitches {
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 10px;
+  padding-top: 25px;
   width: fit-content;
   height: 100%;
-  gap: 10px;
 }
 
 .row {
+  display: flex;
+}
+
+.wheels {
   position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   width: 100%;
-  margin-right: 0px;
-  gap: 6px;
-  margin-left: 8px;
-}
-
-.modWheels {
+  transform: translateY(350%);
+  left: 40%;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-}
-
-.modWheelwell {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  left: 16px;
-}
-
-/* Screw decorations */
-.screw {
-  position: absolute;
-  z-index: 101;
-  width: 12px;
-  height: 12px;
-  background: radial-gradient(
-    circle at center,
-    hsl(217deg 20% 25%) 0%,
-    hsl(217deg 20% 20%) 30%,
-    hsl(217deg 20% 15%) 60%,
-    hsl(217deg 20% 10%) 100%
-  );
-  border-radius: 50%;
-}
-
-.screw::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  background: linear-gradient(
-      90deg,
-      transparent 40%,
-      hsl(217deg 20% 5% / 80%) 40%,
-      hsl(217deg 20% 5% / 80%) 60%,
-      transparent 60%
-    ),
-    linear-gradient(
-      0deg,
-      transparent 40%,
-      hsl(217deg 20% 5% / 80%) 40%,
-      hsl(217deg 20% 5% / 80%) 60%,
-      transparent 60%
-    );
-  border-radius: 1px;
-  transform: translate(-50%, -50%) rotate(45deg);
-  content: "";
-}
-
-.screwTopLeft {
-  composes: screw;
-  top: 12px;
-  left: 4px;
-}
-
-.screwTopRight {
-  composes: screw;
-  top: 12px;
-  right: 4px;
-}
-
-.screwBottomLeft {
-  composes: screw;
-  bottom: 6px;
-  left: 4px;
-}
-
-.screwBottomRight {
-  right: 4px;
-  bottom: 6px;
-  composes: screw;
-}
-
-.horizontalIndent {
-  margin-bottom: -2px;
-  width: 100%;
-  height: 8px;
-  background: linear-gradient(
-    0deg,
-    hsl(217deg 20% 25% / 50%) 0%,
-    hsl(217deg 40% 25%) 10%,
-    hsl(217deg 10% 5%) 20%,
-    hsl(217deg 30% 20%) 30%,
-    hsl(217deg 50% 25%) 40%
-  );
-
-  &:last-of-type {
-    margin-top: 120px;
-    background: linear-gradient(
-      0deg,
-      hsl(217deg 50% 20% / 50%) 0%,
-      hsl(217deg 50% 25%) 10%,
-      hsl(217deg 10% 5%) 20%,
-      hsl(217deg 50% 25%) 30%,
-      hsl(217deg 50% 20% / 50%) 60%
-    );
-  }
+  gap: 55px;
 }

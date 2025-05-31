@@ -7,30 +7,30 @@
 }
 
 .column {
-  width: 337px;
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 0;
+  width: 337px;
 }
 
 .row {
   display: flex;
-  width: 100%;
   gap: 12px;
   padding-left: 26px;
+  width: 100%;
 }
 
 .flexRow {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  gap: 12px;
   font-size: var(--font-size-xs);
   font-weight: 900;
   text-transform: uppercase;
-  gap: 12px;
 }
 
 .label {
@@ -68,6 +68,7 @@
 .modSwitch {
   position: relative;
   top: -10px;
+
   span {
     position: relative;
     top: 12px;

@@ -1,9 +1,8 @@
 .side {
   position: relative;
   display: flex;
+  flex-direction: column;
   width: 2.4%;
   height: 100%;
-  background: hsl(0 0% 50% /0.25);
-  display: flex;
-  flex-direction: column;
+  background: hsl(0deg 0% 50% /25%);
 }

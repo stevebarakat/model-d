@@ -105,10 +105,10 @@ function Wheel({
   }, [handleMouseMove, onMouseUp, isDragging]);
 
   return (
-    <div className={styles.modWheelContainer}>
+    <div>
       <div
         ref={sliderRef}
-        className={`${styles.slider} ${disabled ? styles.disabled : ""}`}
+        className={`${styles.wheel} ${disabled ? styles.disabled : ""}`}
         onMouseDown={handleMouseDown}
         onKeyDown={handleKeyDown}
         style={{ "--thumb-position": `${percentage}%` } as React.CSSProperties}
@@ -120,11 +120,11 @@ function Wheel({
         aria-label={label}
       >
         <div className={styles.track}>
-          <div className={styles.modWheelShadow} />
+          <div className={styles.shadow} />
         </div>
         <div className={styles.thumb} />
       </div>
-      <div className={styles.modLabel}>{label}</div>
+      <div className={styles.label}>{label}</div>
     </div>
   );
 }

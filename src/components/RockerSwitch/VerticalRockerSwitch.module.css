@@ -18,18 +18,18 @@
   align-items: center;
   margin-top: -0.5em;
   margin-bottom: 1.5em;
+  padding-bottom: 10px;
   max-width: 8ch;
   color: var(--color-text-secondary);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-xxs);
   font-weight: 900;
   text-align: center;
   text-transform: uppercase;
-  padding-bottom: 10px;
-  font-size: var(--font-size-xxs);
 }
 
 .control {
   --border-color: var(--synth-borders);
+
   display: inline-block;
   width: 44px;
   height: 18px;

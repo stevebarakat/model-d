@@ -6,20 +6,16 @@ import styles from "./SidePanel.module.css";
 
 function ModWheels() {
   return (
-    <div className={styles.modWheels}>
-      <div className={styles.modWheelwell}>
-        <Wheel
-          value={0}
-          min={0}
-          max={100}
-          onChange={() => {}}
-          onMouseUp={() => {}}
-          label="Pitch"
-        />
-      </div>
-      <div className={styles.modWheelwell}>
-        <Wheel value={0} min={0} max={100} onChange={() => {}} label="Mod" />
-      </div>
+    <div className={styles.wheels}>
+      <Wheel
+        value={0}
+        min={0}
+        max={100}
+        onChange={() => {}}
+        onMouseUp={() => {}}
+        label="Pitch"
+      />
+      <Wheel value={0} min={0} max={100} onChange={() => {}} label="Mod" />
     </div>
   );
 }

@@ -3,8 +3,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border-right: 2px solid var(--color-text-secondary);
   margin: 20px 0;
+  border-right: 2px solid var(--color-text-secondary);
 }
 
 .column {
@@ -14,6 +14,7 @@
   justify-content: space-between;
   justify-content: center;
   gap: var(--spacing-lg);
+
   /* margin-top: -5px; */
   padding-right: 10px;
   width: 337px;

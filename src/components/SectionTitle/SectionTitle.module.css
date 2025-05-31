@@ -1,8 +1,8 @@
 .title {
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text-primary);
   font-size: var(--font-size-xl);
   font-weight: 600;
-  color: var(--color-text-primary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: var(--spacing-lg);
 }

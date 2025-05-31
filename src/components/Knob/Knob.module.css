@@ -8,16 +8,19 @@
 
 .knobContainerSmall {
   --knob-size: 30px;
+
   margin-top: 26px;
 }
 
 .knobContainerMedium {
   --knob-size: 45px;
+
   margin-top: 20px;
 }
 
 .knobContainerLarge {
   --knob-size: 55px;
+
   margin-top: 36px;
 }
 
