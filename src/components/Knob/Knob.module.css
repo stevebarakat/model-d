@@ -135,6 +135,10 @@
   font-size: var(--font-size-xs);
 }
 
+.titleMedium {
+  /* padding-bottom: 10px; */
+}
+
 .labelLarge,
 .titleLarge {
   max-width: 18ch;

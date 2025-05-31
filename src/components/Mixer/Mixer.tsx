@@ -24,31 +24,57 @@ function Mixer() {
     <section className="section">
       <div className={styles.container}>
         <div className={styles.column}>
-          <span className={styles.label}>Volume</span>
           <Knob
+            valueLabels={{
+              0: "0",
+              2: "2",
+              4: "4",
+              6: "6",
+              8: "8",
+              10: "10",
+            }}
             value={mixer.osc1.volume}
             min={0}
             max={10}
             step={1}
-            label=""
+            label="Volume"
+            title="Volume"
             onChange={(v) => setMixerSource("osc1", { volume: v })}
             size="medium"
           />
           <Knob
+            valueLabels={{
+              0: "0",
+              2: "2",
+              4: "4",
+              6: "6",
+              8: "8",
+              10: "10",
+            }}
             value={mixer.osc2.volume}
             min={0}
             max={10}
             step={1}
-            label=""
+            label="Volume"
+            title=" "
             onChange={(v) => setMixerSource("osc2", { volume: v })}
             size="medium"
           />
           <Knob
+            valueLabels={{
+              0: "0",
+              2: "2",
+              4: "4",
+              6: "6",
+              8: "8",
+              10: "10",
+            }}
             value={mixer.osc3.volume}
             min={0}
             max={10}
             step={1}
-            label=""
+            label="Volume"
+            title=" "
             onChange={(v) => setMixerSource("osc3", { volume: v })}
             size="medium"
           />
@@ -99,6 +125,14 @@ function Mixer() {
         <div className={styles.offsetColumn}>
           <div className={styles.row}>
             <Knob
+              valueLabels={{
+                0: "0",
+                2: "2",
+                4: "4",
+                6: "6",
+                8: "8",
+                10: "10",
+              }}
               value={mixer.external.volume}
               min={0}
               max={10}
@@ -114,6 +148,14 @@ function Mixer() {
           </div>
           <div className={styles.row}>
             <Knob
+              valueLabels={{
+                0: "0",
+                2: "2",
+                4: "4",
+                6: "6",
+                8: "8",
+                10: "10",
+              }}
               value={mixer.noise.volume}
               min={0}
               max={10}
