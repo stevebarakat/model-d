@@ -122,7 +122,7 @@
 .title,
 .label {
   position: absolute;
-  bottom: 120%;
+  bottom: 102.5%;
   display: block;
   font-size: var(--font-size-sm);
   font-weight: 900;
