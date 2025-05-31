@@ -1,28 +1,31 @@
 .synthContainer {
   position: relative;
-  display: flex;
-  margin: 0 auto;
   width: 100%;
   max-width: 1600px;
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+  position: relative;
   background: url("/images/minimoog-template.png") no-repeat center center;
   background-size: cover;
-  aspect-ratio: 16 / 9;
   user-select: none;
-}
-
-.synthSides {
-  position: relative;
   display: flex;
-  flex-direction: column;
-  width: 2.4%;
-  height: 100%;
-  background: hsl(0deg 0% 50% /25%);
 }
 
 .synth {
+  position: relative;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  &::before {
+    content: "";
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 80px;
+    height: 80px;
+    border: 1px solid white;
+  }
 }
 
 .controlsPanel {
@@ -35,16 +38,11 @@
   display: flex;
 }
 
-@media (width <= 1024px) {
+@media (max-width: 1024px) {
   .synthContainer {
-    flex-direction: column;
-    height: auto;
     aspect-ratio: auto;
-  }
-
-  .synthSides {
-    border-right: 19px solid var(--color-off-black);
-    border-left: 19px solid var(--color-off-black);
+    height: auto;
+    flex-direction: column;
   }
 
   .controlsContainer {
