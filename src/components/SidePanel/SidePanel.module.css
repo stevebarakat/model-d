@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   padding-top: var(--spacing-md);
-  width: 12.5%;
+  width: 12rem;
   overflow: hidden;
 }
 
@@ -26,9 +26,9 @@
 
 .wheels {
   position: relative;
-  left: 40%;
+  left: var(--spacing-xl);
   display: flex;
   gap: 55px;
   width: 100%;
-  transform: translateY(350%);
+  transform: translateY(calc(var(--spacing-xl) * 4));
 }
