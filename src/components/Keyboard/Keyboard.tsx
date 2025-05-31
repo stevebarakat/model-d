@@ -298,7 +298,7 @@ function Keyboard({
         const whiteKeysBefore = keys
           .slice(0, keyIndex)
           .filter((k) => !k.isSharp).length;
-        const position = (whiteKeysBefore - 0.35) * whiteKeyWidth;
+        const position = (whiteKeysBefore - 0.3) * whiteKeyWidth;
 
         return (
           <BlackKey

@@ -19,7 +19,7 @@
 
 .whiteKey {
   flex: 1;
-  height: 280px;
+  height: 290px;
 
   /* background: linear-gradient(180deg, hsl(0deg 0% 100%), hsl(0deg 0% 80%)); */
   border-bottom: 3px solid hsl(0deg 0% 35%);
@@ -62,7 +62,7 @@
 .blackKey {
   position: absolute;
   z-index: 20;
-  height: 160px;
+  height: 62.5%;
   background: linear-gradient(
     to bottom,
     hsl(217deg 13% 15%),

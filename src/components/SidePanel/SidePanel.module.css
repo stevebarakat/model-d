@@ -3,9 +3,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 6px;
   width: 12.5%;
   overflow: hidden;
-  padding-top: 6px;
 }
 
 .sideSwitches {
@@ -26,9 +26,9 @@
 
 .wheels {
   position: relative;
-  width: 100%;
-  transform: translateY(350%);
   left: 40%;
   display: flex;
   gap: 55px;
+  width: 100%;
+  transform: translateY(350%);
 }
