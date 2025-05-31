@@ -56,11 +56,13 @@ export default function Oscillator2() {
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
       />
       <Knob
+        size="large"
         value={oscillator2.frequency}
         min={-7}
         max={7}
         step={1}
-        label=""
+        title="Oscillator - 2"
+        label="Frequency"
         unit=""
         onChange={handleFrequencyChange}
         valueLabels={{

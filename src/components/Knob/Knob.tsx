@@ -7,6 +7,7 @@ type KnobProps = {
   max: number;
   step?: number;
   label: string;
+  title?: string | null;
   unit?: string;
   onChange: (value: number) => void;
   valueLabels?: Record<number, string | React.ReactElement>;
@@ -56,19 +57,19 @@ function Knob({
   max,
   step = 1,
   label,
+  title = null,
   unit = "",
   onChange,
   valueLabels,
   logarithmic = false,
-  size = "large",
+  size = "medium",
 }: KnobProps): React.ReactElement {
   const knobRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isKeyboardActive, setIsKeyboardActive] = useState(false);
   const [startY, setStartY] = useState(0);
   const [startValue, setStartValue] = useState(0);
-  const hasLabel = label !== "";
-  const labelClass = hasLabel ? styles.label : styles.labelHidden;
+  const labelClass = title ? styles.labelHidden : styles.label;
 
   const rotation = getRotation(value, min, max, logarithmic);
   const displayValue = getDisplayValue(value, step, unit, valueLabels);
@@ -179,12 +180,21 @@ function Knob({
       }`}
     >
       <label
-        className={`${styles.label} ${
+        className={`${labelClass} ${
           styles[`label${size.charAt(0).toUpperCase() + size.slice(1)}`]
         }`}
       >
         {label}
       </label>
+      {title && (
+        <span
+          className={`${styles.title} ${
+            styles[`title${size.charAt(0).toUpperCase() + size.slice(1)}`]
+          }`}
+        >
+          {title}
+        </span>
+      )}
       <div className={styles.ticks}></div>
       <div className={styles.knob}>
         {/* Value labels around the knob */}

@@ -31,7 +31,6 @@
   flex-direction: column;
   align-items: center;
   max-width: 8ch;
-  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   font-weight: 900;
   text-align: center;
@@ -39,7 +38,6 @@
 }
 
 .sectionTitle {
-  color: var(--color-text-secondary);
   font-size: var(--font-size-lg);
   font-weight: 900;
   text-align: center;

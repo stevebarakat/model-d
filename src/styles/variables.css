@@ -11,6 +11,7 @@
   --color-deep-purple: hsl(270deg 40% 20% / 90%);
   --color-background: hsl(0deg 0% 10%);
   --color-off-black: hsl(217deg 32% 5%);
+  --color-off-white: hsl(220deg 13% 100% / 60%);
 
   /* Synth UI Colors */
   --synth-borders: hsl(218deg 40% 10%);
@@ -29,8 +30,6 @@
   --border-radius-lg: 8px;
 
   /* Typography */
-  --color-text-primary: hsl(220deg 13% 100% / 45%);
-  --color-text-secondary: hsl(220deg 13% 100% / 60%);
   --font-size-xxs: 0.4875rem;
   --font-size-xs: 0.5625rem;
   --font-size-sm: 0.625rem;

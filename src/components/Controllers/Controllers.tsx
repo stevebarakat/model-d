@@ -13,7 +13,6 @@ function Controllers() {
       <div className={styles.column}>
         <div className={styles.row}>
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}
@@ -40,7 +39,6 @@ function Controllers() {
         </div>
         <div className={styles.row}>
           <Knob
-            size="medium"
             value={glideTime}
             min={0}
             max={1}
@@ -59,7 +57,6 @@ function Controllers() {
             }}
           />
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}

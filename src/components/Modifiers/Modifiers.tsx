@@ -44,7 +44,6 @@ function Modifiers() {
         <div className={styles.sectionTitle}>Filter</div>
         <div className={styles.row}>
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}
@@ -53,7 +52,6 @@ function Modifiers() {
             onChange={() => {}}
           />
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}
@@ -62,7 +60,6 @@ function Modifiers() {
             onChange={() => {}}
           />
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}
@@ -73,7 +70,6 @@ function Modifiers() {
         </div>
         <div className={styles.row}>
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}
@@ -82,7 +78,6 @@ function Modifiers() {
             onChange={() => {}}
           />
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}
@@ -91,7 +86,6 @@ function Modifiers() {
             onChange={() => {}}
           />
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}
@@ -103,7 +97,6 @@ function Modifiers() {
         <div className={styles.sectionTitle}>Loudness Contour</div>
         <div className={styles.row}>
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}
@@ -112,7 +105,6 @@ function Modifiers() {
             onChange={() => {}}
           />
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}
@@ -121,7 +113,6 @@ function Modifiers() {
             onChange={() => {}}
           />
           <Knob
-            size="medium"
             value={0}
             min={0}
             max={10}

@@ -105,7 +105,6 @@ function Mixer() {
               step={1}
               label="External Input Volume"
               onChange={(v) => setMixerExternal({ volume: v })}
-              size="medium"
             />
             <Overload
               isEnabled={mixer.external.enabled}
@@ -121,7 +120,6 @@ function Mixer() {
               step={1}
               label="Noise Volume"
               onChange={(v) => setMixerNoise({ volume: v })}
-              size="medium"
             />
             <VerticalRockerSwitch
               checked={mixer.noise.noiseType === "pink"}

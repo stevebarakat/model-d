@@ -117,11 +117,11 @@
   }
 }
 
+.title,
 .label {
   position: absolute;
   bottom: 120%;
   display: block;
-  color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   font-weight: 900;
   text-align: center;
@@ -129,20 +129,29 @@
   user-select: none;
 }
 
+.titleMedium,
 .labelMedium {
-  max-width: 13ch;
+  max-width: 15ch;
   font-size: var(--font-size-xs);
 }
 
+.labelLarge,
+.titleLarge {
+  max-width: 18ch;
+  font-size: var(--font-size-sm);
+}
+
 .labelHidden {
-  margin-top: -24px;
-  width: 0;
-  height: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
   overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
 }
 
 .valueLabel {
-  color: var(--color-text-secondary);
   font-size: var(--font-size-xxs);
   font-weight: 700;
   user-select: none;

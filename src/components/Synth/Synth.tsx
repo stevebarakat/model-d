@@ -12,9 +12,9 @@ import Controllers from "../Controllers";
 import Output from "../Output";
 import Keyboard from "@/components/Keyboard";
 import SidePanel from "@/components/SidePanel";
+import Side from "@/components/Side";
 import { useSynthStore } from "@/store/synthStore";
 import styles from "./Synth.module.css";
-import Side from "@/Side";
 
 function Synth() {
   const { activeKeys, setActiveKeys } = useSynthStore();
