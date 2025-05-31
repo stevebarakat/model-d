@@ -3,24 +3,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 12px var(--spacing-lg);
+  padding: 0 15%;
 }
 
 .knobContainerSmall {
   --knob-size: 30px;
-
   margin-top: 26px;
 }
 
 .knobContainerMedium {
-  --knob-size: 45px;
-
+  --knob-size: 55px;
   margin-top: 20px;
 }
 
 .knobContainerLarge {
   --knob-size: 55px;
-
   margin-top: 36px;
 }
 
