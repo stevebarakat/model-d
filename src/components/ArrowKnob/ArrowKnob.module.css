@@ -50,9 +50,20 @@
   display: grid;
   width: 120%;
   height: 120%;
-  background: url("./arrow-knob.svg") no-repeat center center;
+  background: url("./images/arrow-knob.svg") no-repeat center center;
   border-radius: 50%;
   place-items: center;
+}
+
+.ticks {
+  position: absolute;
+  top: -12px;
+  left: -8px;
+  width: calc(var(--knob-size) + 15px);
+  height: calc(var(--knob-size) + 15px);
+  background: url("./images/arrow-ticks.svg") no-repeat center center;
+  background-size: 100% 100%;
+  pointer-events: none;
 }
 
 .label {

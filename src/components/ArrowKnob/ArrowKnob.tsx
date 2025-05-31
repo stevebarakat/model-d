@@ -210,6 +210,7 @@ function ArrowKnob({
       })}
       {<label className={hideLabel ? `sr-only` : styles.label}>{label}</label>}
       <div className={styles.knobRing}>
+        <div className={styles.ticks}></div>
         <div className={styles.knob}>
           <div className={styles.knobBtm}>
             <div
