@@ -10,7 +10,6 @@
 .row {
   display: flex;
   gap: 12px;
-  padding-left: 26px;
   width: 100%;
 }
 
@@ -37,7 +36,7 @@
   text-transform: uppercase;
 }
 
-.sectionTitle {
+.subSectionTitle {
   font-size: var(--font-size-lg);
   font-weight: 900;
   text-align: center;

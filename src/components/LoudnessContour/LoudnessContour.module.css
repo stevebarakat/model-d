@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  border-top: 2px solid var(--color-off-white);
+  margin: 12px 0 0;
+  padding: 0;
+  width: 100%;
+}
+
+.row {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--spacing-sm);
+  width: 100%;
+}
+
+.subSectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}

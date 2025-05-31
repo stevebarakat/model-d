@@ -1,12 +1,10 @@
 .column {
-  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   justify-content: center;
-
-  /* gap: var(--spacing-lg); */
-  padding-right: 10px;
+  align-items: center;
+  gap: 0;
+  width: 100%;
 }
 
 .row {
