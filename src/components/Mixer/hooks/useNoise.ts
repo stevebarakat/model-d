@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useSynthStore } from "@/store/synthStore";
 
-export function useNoise(audioContext: AudioContext) {
+export function useNoise(audioContext: AudioContext, mixerNode?: AudioNode) {
   const { mixer, activeKeys } = useSynthStore();
   const gainRef = useRef<GainNode | null>(null);
   const noiseRef = useRef<AudioWorkletNode | null>(null);
@@ -26,7 +26,11 @@ export function useNoise(audioContext: AudioContext) {
           : "white-noise-processor"
       );
       noiseRef.current.connect(gainRef.current);
-      gainRef.current.connect(audioContext.destination);
+      if (mixerNode) {
+        gainRef.current.connect(mixerNode);
+      } else {
+        gainRef.current.connect(audioContext.destination);
+      }
     }
     setup();
 
@@ -37,7 +41,14 @@ export function useNoise(audioContext: AudioContext) {
       gainRef.current = null;
       noiseRef.current = null;
     };
-  }, [audioContext, mixer.noise.noiseType, mixer.noise.enabled, activeKeys]);
+  }, [
+    audioContext,
+    mixer.noise.noiseType,
+    mixer.noise.enabled,
+    activeKeys,
+    mixer.noise.volume,
+    mixerNode,
+  ]);
 
   useEffect(() => {
     if (gainRef.current) {

@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useSynthStore } from "@/store/synthStore";
 
-export function useExternalInput(audioContext: AudioContext | null) {
+export function useExternalInput(
+  audioContext: AudioContext | null,
+  mixerNode?: AudioNode
+) {
   const { mixer } = useSynthStore();
   const gainRef = useRef<GainNode | null>(null);
   const inputRef = useRef<MediaStreamAudioSourceNode | null>(null);
@@ -75,7 +78,11 @@ export function useExternalInput(audioContext: AudioContext | null) {
             // Connect the nodes
             inputRef.current.connect(gainRef.current);
             inputRef.current.connect(analyzerRef.current); // Connect to analyzer
-            gainRef.current.connect(audioContext.destination);
+            if (mixerNode) {
+              gainRef.current.connect(mixerNode);
+            } else {
+              gainRef.current.connect(audioContext.destination);
+            }
 
             // Set initial gain based on mixer state
             gainRef.current.gain.value = mixer.external.enabled
@@ -113,7 +120,7 @@ export function useExternalInput(audioContext: AudioContext | null) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [audioContext, mixer.external.enabled, mixer.external.volume]);
+  }, [audioContext, mixer.external.enabled, mixer.external.volume, mixerNode]);
 
   // Update gain when mixer settings change
   useEffect(() => {

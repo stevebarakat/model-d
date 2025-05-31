@@ -66,8 +66,11 @@ function getCustomWave(
   }
 }
 
-export function createOscillator2(params: Osc2Params): Osc2Instance {
-  const base = createBaseOscillator(params, getCustomWave);
+export function createOscillator2(
+  params: Osc2Params,
+  mixerNode?: AudioNode
+): Osc2Instance {
+  const base = createBaseOscillator(params, getCustomWave, mixerNode);
   return {
     ...base,
     updateWithFrequency: (newParams: Partial<Osc2Params>) => {

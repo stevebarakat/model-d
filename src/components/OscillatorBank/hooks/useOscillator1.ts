@@ -9,22 +9,26 @@ export type UseOscillator1Result = {
 };
 
 export function useOscillator1(
-  audioContext: AudioContext
+  audioContext: AudioContext,
+  mixerNode?: AudioNode
 ): UseOscillator1Result {
   const { oscillator1, mixer, glideOn, glideTime } = useSynthStore();
   const oscRef = useRef<Osc1Instance | null>(null);
 
   useEffect(() => {
-    oscRef.current = createOscillator1({
-      audioContext,
-      waveform: oscillator1.waveform as OscillatorType,
-      range: oscillator1.range,
-    });
+    oscRef.current = createOscillator1(
+      {
+        audioContext,
+        waveform: oscillator1.waveform as OscillatorType,
+        range: oscillator1.range,
+      },
+      mixerNode
+    );
     return () => {
       oscRef.current?.stop();
       oscRef.current = null;
     };
-  }, [audioContext, oscillator1.range, oscillator1.waveform]);
+  }, [audioContext, oscillator1.range, oscillator1.waveform, mixerNode]);
 
   useEffect(() => {
     if (oscRef.current) {

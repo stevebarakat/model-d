@@ -24,11 +24,22 @@ function Synth() {
     audioContextRef.current = new window.AudioContext();
   }
 
-  useNoise(audioContextRef.current!);
+  // Create a single mixer node for all sources
+  const mixerNodeRef = useRef<GainNode | null>(null);
+  if (!mixerNodeRef.current && audioContextRef.current) {
+    mixerNodeRef.current = audioContextRef.current.createGain();
+    mixerNodeRef.current.gain.value = 1;
+    // Connect mixer to the next stage (for now, directly to destination)
+    mixerNodeRef.current.connect(audioContextRef.current.destination);
+  }
 
-  const osc1 = useOscillator1(audioContextRef.current);
-  const osc2 = useOscillator2(audioContextRef.current);
-  const osc3 = useOscillator3(audioContextRef.current);
+  // We'll pass mixerNodeRef.current to all sources in the next steps
+
+  useNoise(audioContextRef.current!, mixerNodeRef.current!);
+
+  const osc1 = useOscillator1(audioContextRef.current, mixerNodeRef.current!);
+  const osc2 = useOscillator2(audioContextRef.current, mixerNodeRef.current!);
+  const osc3 = useOscillator3(audioContextRef.current, mixerNodeRef.current!);
 
   const synthObj = useMemo(() => {
     return {

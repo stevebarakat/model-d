@@ -43,13 +43,18 @@ export function createPulseWave(
 
 export function createBaseOscillator(
   params: BaseOscillatorParams,
-  getCustomWave: (audioContext: AudioContext, waveform: string) => PeriodicWave
+  getCustomWave: (audioContext: AudioContext, waveform: string) => PeriodicWave,
+  mixerNode?: AudioNode
 ): BaseOscillatorInstance {
   let osc: OscillatorNode | null = null;
   let currentParams = { ...params };
   const gainNode = params.audioContext.createGain();
   gainNode.gain.value = params.gain ?? 1;
-  gainNode.connect(params.audioContext.destination);
+  if (mixerNode) {
+    gainNode.connect(mixerNode);
+  } else {
+    gainNode.connect(params.audioContext.destination);
+  }
 
   function start(frequency: number): void {
     if (!osc) {

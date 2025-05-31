@@ -63,6 +63,9 @@ function getCustomWave(
   }
 }
 
-export function createOscillator1(params: Osc1Params): Osc1Instance {
-  return createBaseOscillator(params, getCustomWave);
+export function createOscillator1(
+  params: Osc1Params,
+  mixerNode?: AudioNode
+): Osc1Instance {
+  return createBaseOscillator(params, getCustomWave, mixerNode);
 }
