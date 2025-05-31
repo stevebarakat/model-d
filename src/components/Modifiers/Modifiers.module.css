@@ -9,7 +9,8 @@
 
 .row {
   display: flex;
-  gap: 12px;
+  justify-content: space-around;
+  gap: var(--spacing-sm);
   width: 100%;
 }
 
@@ -56,9 +57,4 @@
 .modSwitch {
   position: relative;
   top: -10px;
-
-  span {
-    position: relative;
-    top: 12px;
-  }
 }

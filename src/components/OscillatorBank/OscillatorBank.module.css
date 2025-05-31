@@ -8,11 +8,10 @@
 }
 
 .row {
-  position: relative;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-around;
   gap: var(--spacing-sm);
+  width: 100%;
 
   /* border: 1px solid yellow; */
 

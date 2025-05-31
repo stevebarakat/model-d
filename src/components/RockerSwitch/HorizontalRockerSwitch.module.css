@@ -32,6 +32,13 @@
   }
 }
 
+.leftLabel {
+  position: relative;
+  left: calc(var(--spacing-xs) * -1);
+  top: 14px;
+  display: flex;
+}
+
 .bottomLabel {
   position: relative;
   display: flex;

@@ -1,7 +1,3 @@
-.container {
-  display: flex;
-}
-
 .column {
   display: flex;
   flex-direction: column;
@@ -13,7 +9,9 @@
 
 .row {
   display: flex;
-  gap: var(--spacing-xs);
+  justify-content: space-around;
+  gap: var(--spacing-sm);
+  width: 100%;
 }
 
 .offsetColumn {

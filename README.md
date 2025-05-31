@@ -95,16 +95,21 @@ src/
   main.tsx                  # React entry point
   vite-env.d.ts             # Vite/TypeScript environment types
 
-public/                     # Static assets (if any)
+public/                     # Static assets
 dist/                       # Build output
-README.md                   # This file
-dev-preferences.json        # Project configuration and preferences
-package.json                # Project dependencies and scripts
-tsconfig*.json              # TypeScript configuration
-vite.config.ts              # Vite configuration
-postcss.config.js           # PostCSS configuration
-eslint.config.js            # ESLint configuration
-.stylelintrc.json           # Stylelint configuration
+node_modules/              # Dependencies
+index.html                 # Entry HTML file
+package.json               # Project dependencies and scripts
+package-lock.json          # Dependency lock file
+tsconfig.json              # Base TypeScript configuration
+tsconfig.app.json          # App-specific TypeScript config
+tsconfig.node.json         # Node-specific TypeScript config
+vite.config.ts             # Vite configuration
+postcss.config.js          # PostCSS configuration
+eslint.config.js           # ESLint configuration
+.stylelintrc.json          # Stylelint configuration
+.gitignore                 # Git ignore rules
+dev-preferences.json       # Project configuration and preferences
 ```
 
 - **Colocation:** Whenever possible, related files (component, styles, tests, hooks, types, audio, store, utils, etc.) are placed in the same directory to improve discoverability and maintainability, as described in `dev-preferences.json`.

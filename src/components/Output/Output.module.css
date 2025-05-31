@@ -9,7 +9,7 @@
 
 .row {
   display: flex;
-  gap: 12px;
-  padding-left: 26px;
+  justify-content: space-around;
+  gap: var(--spacing-sm);
   width: 100%;
 }

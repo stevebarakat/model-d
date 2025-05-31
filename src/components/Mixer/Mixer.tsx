@@ -22,7 +22,7 @@ function Mixer() {
 
   return (
     <section className="section">
-      <div className={styles.container}>
+      <div className="flex">
         <div className={styles.column}>
           <Knob
             valueLabels={{

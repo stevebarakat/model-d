@@ -9,13 +9,11 @@
 }
 
 .row {
-  margin: 0;
-  padding: 0;
   display: flex;
+  justify-content: space-around;
   gap: var(--spacing-sm);
   width: 100%;
 }
-
 .subSectionTitle {
   font-size: var(--font-size-lg);
   font-weight: 900;

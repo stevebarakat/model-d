@@ -8,6 +8,7 @@ type RockerSwitchProps = {
   topLabelLeft?: string;
   topLabel?: string;
   topLabelRight?: string;
+  leftLabel?: string;
   bottomLabelLeft?: string;
   bottomLabelCenter?: string;
   bottomLabelRight?: string;
@@ -23,6 +24,7 @@ function HorizontalRockerSwitch({
   topLabelLeft,
   topLabel,
   topLabelRight,
+  leftLabel,
   bottomLabelLeft,
   bottomLabelCenter,
   bottomLabelRight,
@@ -45,6 +47,9 @@ function HorizontalRockerSwitch({
             <span className={styles.right}>{topLabelRight}</span>
           )}
         </div>
+
+        {/* Left Label */}
+        {leftLabel && <span className={styles.leftLabel}>{leftLabel}</span>}
 
         {/* Switch Input */}
         <input
