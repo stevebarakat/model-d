@@ -63,7 +63,10 @@ function Synth() {
         <div className={styles.controlsPanel}>
           <Controllers />
           <OscillatorBank />
-          <Mixer />
+          <Mixer
+            audioContext={audioContextRef.current!}
+            mixerNode={mixerNodeRef.current!}
+          />
           <Modifiers />
           <Output />
         </div>

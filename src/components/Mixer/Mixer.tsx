@@ -4,19 +4,20 @@ import Knob from "../Knob";
 import SectionTitle from "../SectionTitle";
 import styles from "./Mixer.module.css";
 import { useExternalInput } from "./hooks/useExternalInput";
-import { useAudioContext } from "@/hooks/useAudioContext";
+import { AudioContext } from "standardized-audio-context";
 import Overload from "../Overload";
 
-function Mixer() {
+type MixerProps = {
+  audioContext: AudioContext;
+  mixerNode: AudioNode;
+};
+
+function Mixer({ audioContext, mixerNode }: MixerProps) {
   const { mixer, setMixerSource, setMixerNoise, setMixerExternal } =
     useSynthStore();
-  const { audioContext, isInitialized, initialize } = useAudioContext();
-  const { audioLevel } = useExternalInput(audioContext);
+  const { audioLevel } = useExternalInput(audioContext, mixerNode);
 
-  const handleExternalToggle = async (checked: boolean) => {
-    if (!isInitialized) {
-      await initialize();
-    }
+  const handleExternalToggle = (checked: boolean) => {
     setMixerExternal({ enabled: checked });
   };
 
