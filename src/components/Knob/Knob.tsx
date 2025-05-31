@@ -188,34 +188,31 @@ function Knob({
       <div className={styles.ticks}></div>
       <div className={styles.knob}>
         {/* Value labels around the knob */}
-        {valueLabels && (
-          <div className={styles.knobValueLabels}>
-            {Object.keys(valueLabels).map((tickKey) => {
-              const tick = Number(tickKey);
-              const arc = 270;
-              const startAngle = 135;
-              const angle = startAngle + ((tick - min) / (max - min)) * arc;
-              const rad = (angle * Math.PI) / 180;
-              const x = 50 + Math.cos(rad) * 80;
-              const y = 50 + Math.sin(rad) * 80;
-              return (
-                <div
-                  key={tick}
-                  className={styles.knobValueLabel}
-                  style={{
-                    position: "absolute",
-                    left: `${x}%`,
-                    top: `${y}%`,
-                    transform: "translate(-50%, -50%)",
-                    pointerEvents: "none",
-                  }}
-                >
-                  {valueLabels[tick]}
-                </div>
-              );
-            })}
-          </div>
-        )}
+        {valueLabels &&
+          Object.keys(valueLabels).map((tickKey) => {
+            const tick = Number(tickKey);
+            const arc = 270;
+            const startAngle = 135;
+            const angle = startAngle + ((tick - min) / (max - min)) * arc;
+            const rad = (angle * Math.PI) / 180;
+            const x = 50 + Math.cos(rad) * 80;
+            const y = 50 + Math.sin(rad) * 80;
+            return (
+              <div
+                key={tick}
+                className={styles.knobValueLabel}
+                style={{
+                  position: "absolute",
+                  left: `${x}%`,
+                  top: `${y}%`,
+                  transform: "translate(-50%, -50%)",
+                  pointerEvents: "none",
+                }}
+              >
+                {valueLabels[tick]}
+              </div>
+            );
+          })}
         <div className={styles.knobBtm}>
           <div
             className={styles.outerKnob}
