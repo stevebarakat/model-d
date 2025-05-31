@@ -166,6 +166,7 @@
 .rangeInput {
   position: absolute;
   width: var(--knob-size);
+  height: var(--knob-size);
   -webkit-appearance: none;
   appearance: none;
   background: transparent;
@@ -198,4 +199,9 @@
   background: transparent;
   border: none;
   cursor: pointer;
+}
+
+.rangeInput:focus ~ .knobBtm .outerKnob {
+  outline: 2px solid hsl(220deg 100% 50%);
+  outline-offset: 2px;
 }

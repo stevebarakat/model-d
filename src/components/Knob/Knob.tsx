@@ -200,6 +200,31 @@ function Knob({
       )}
       <div className={styles.ticks}></div>
       <div className={styles.knob}>
+        <input
+          type="range"
+          min={logarithmic ? Math.log(min) : min}
+          max={logarithmic ? Math.log(max) : max}
+          step={
+            min === 0 && max === 1
+              ? 1
+              : logarithmic
+              ? (Math.log(max) - Math.log(min)) / 100
+              : step
+          }
+          value={logarithmic ? Math.log(value) : value}
+          onChange={(e) => {
+            const rawValue = Number(e.target.value);
+            const newValue = logarithmic ? Math.exp(rawValue) : rawValue;
+            // For binary switches (0/1), ensure we get exact values
+            if (min === 0 && max === 1) {
+              onChange(Math.round(newValue));
+            } else {
+              onChange(Number(newValue.toFixed(step >= 1 ? 0 : 2)));
+            }
+          }}
+          className={styles.rangeInput}
+          aria-labelledby={id}
+        />
         {/* Value labels around the knob */}
         {valueLabels &&
           Object.keys(valueLabels).map((tickKey) => {
@@ -228,6 +253,7 @@ function Knob({
           })}
         <div className={styles.knobBtm}>
           <div
+            id={id}
             className={styles.outerKnob}
             ref={knobRef}
             style={{ transform: `rotate(${rotation}deg)` }}
@@ -245,31 +271,6 @@ function Knob({
           </div>
         </div>
       </div>
-      <input
-        id={id}
-        type="range"
-        min={logarithmic ? Math.log(min) : min}
-        max={logarithmic ? Math.log(max) : max}
-        step={
-          min === 0 && max === 1
-            ? 1
-            : logarithmic
-            ? (Math.log(max) - Math.log(min)) / 100
-            : step
-        }
-        value={logarithmic ? Math.log(value) : value}
-        onChange={(e) => {
-          const rawValue = Number(e.target.value);
-          const newValue = logarithmic ? Math.exp(rawValue) : rawValue;
-          // For binary switches (0/1), ensure we get exact values
-          if (min === 0 && max === 1) {
-            onChange(Math.round(newValue));
-          } else {
-            onChange(Number(newValue.toFixed(step >= 1 ? 0 : 2)));
-          }
-        }}
-        className={styles.rangeInput}
-      />
     </div>
   );
 }
