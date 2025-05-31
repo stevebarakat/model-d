@@ -200,8 +200,7 @@
   border: none;
   cursor: pointer;
 }
-
 .rangeInput:focus ~ .knobBtm .outerKnob {
-  outline: 2px solid hsl(220deg 100% 50%);
+  outline: 2px solid hsl(220deg 100% 75%);
   outline-offset: 2px;
 }

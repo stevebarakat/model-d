@@ -258,7 +258,6 @@ function Knob({
             ref={knobRef}
             style={{ transform: `rotate(${rotation}deg)` }}
             onMouseDown={handleMouseDown}
-            tabIndex={0}
             role="slider"
             aria-valuemin={min}
             aria-valuemax={max}
