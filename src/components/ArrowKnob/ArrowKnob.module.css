@@ -1,5 +1,6 @@
 .knobContainer {
   --knob-size: 55px;
+
   position: relative;
   display: flex;
   flex-direction: column;

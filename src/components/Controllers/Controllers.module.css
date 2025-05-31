@@ -1,9 +1,9 @@
 .column {
-  padding-top: 35%;
   display: flex;
-  gap: 10%;
   flex-direction: column;
   align-items: center;
+  gap: 10%;
+  padding-top: 35%;
   width: 100%;
   height: 100%;
 }

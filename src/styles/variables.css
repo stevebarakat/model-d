@@ -1,3 +1,7 @@
+/********************  */
+/* Variables */
+/********************  */
+
 :root {
   /* Color System */
   --color-red: hsl(350deg 40% 20%);
@@ -30,6 +34,8 @@
   --border-radius-lg: 8px;
 
   /* Typography */
+  --font-primary: "Urbanist", -apple-system, blinkmacsystemfont, "Segoe UI",
+    roboto, oxygen, ubuntu, cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   --font-size-xxs: 0.4875rem;
   --font-size-xs: 0.5625rem;
   --font-size-sm: 0.625rem;

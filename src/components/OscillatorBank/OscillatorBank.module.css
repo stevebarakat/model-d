@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: space-between;
   justify-content: center;
+
   /* gap: var(--spacing-lg); */
   padding-right: 10px;
 }
@@ -11,9 +12,10 @@
 .row {
   position: relative;
   display: flex;
-  gap: var(--spacing-sm);
   justify-content: space-between;
   align-items: center;
+  gap: var(--spacing-sm);
+
   /* border: 1px solid yellow; */
 
   &:not(:last-child) {

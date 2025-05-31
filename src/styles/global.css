@@ -1,88 +1,6 @@
-/*********************/
-/* Fonts */
-/*********************/
-
-/* Preconnect to Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap");
-
-/* Define font variables */
-:root {
-  --font-primary: "Urbanist", -apple-system, blinkmacsystemfont, "Segoe UI",
-    roboto, oxygen, ubuntu, cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
-
-/*********************/
-/* Reset */
-/*********************/
-
-body {
-  margin: 0;
-  font: inherit;
-  font-size: 100%;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  vertical-align: baseline;
-}
-
-*,
-::before,
-::after {
-  box-sizing: border-box;
-}
-
-/*********************/
-/* Variables */
-/*********************/
-
-:root {
-  /* Color System */
-  --color-red: hsl(350deg 40% 20%);
-  --color-deep-rose: hsl(320deg 40% 20% / 90%);
-  --color-amber: hsl(45deg 40% 20%);
-  --color-warm-amber: hsl(35deg 50% 20% / 90%);
-  --color-emerald: hsl(160deg 40% 20%);
-  --color-rich-emerald: hsl(150deg 40% 20% / 90%);
-  --color-warm-red: hsl(15deg 50% 20% / 90%);
-  --color-vibrant-blue: hsl(210deg 50% 20% / 90%);
-  --color-deep-purple: hsl(270deg 40% 20% / 90%);
-  --color-background: hsl(0deg 0% 10%);
-  --color-off-black: hsl(217deg 32% 5%);
-  --color-off-white: hsl(220deg 13% 100% / 60%);
-
-  /* Synth UI Colors */
-  --synth-borders: hsl(218deg 40% 10%);
-  --synth-bg: hsl(217deg 39% 15%);
-
-  /* Spacing System */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 0.75rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.25rem;
-  --spacing-xl: 1.5rem;
-
-  /* Component Sizes */
-  --border-radius-sm: 2px;
-  --border-radius-md: 4px;
-  --border-radius-lg: 8px;
-
-  /* Typography */
-  --font-size-xxs: 0.4875rem;
-  --font-size-xs: 0.5625rem;
-  --font-size-sm: 0.625rem;
-  --font-size-md: 0.75rem;
-  --font-size-lg: 0.875rem;
-  --font-size-xl: 1.5rem;
-
-  /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.4s ease;
-}
-
-/*********************/
+/********************  */
 /* Global styles */
-/*********************/
+/********************  */
 
 body {
   background-color: var(--color-background);
@@ -107,9 +25,9 @@ section {
   border-right: 2px solid var(--color-off-white);
 }
 
-/*********************/
+/********************  */
 /* Utility classes */
-/*********************/
+/********************  */
 
 .sr-only:not(:focus, :active) {
   position: absolute;

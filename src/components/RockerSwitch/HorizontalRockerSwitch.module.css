@@ -59,6 +59,7 @@
 
 .control {
   --border-color: hsl(218deg 40% 10%);
+
   width: 44px;
   height: 18px;
   background-color: #fafafa;
