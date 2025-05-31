@@ -68,7 +68,7 @@ function Knob({
   const [startY, setStartY] = useState(0);
   const [startValue, setStartValue] = useState(0);
   const hasLabel = label !== "";
-  const labelClass = hasLabel ? styles.knobLabel : styles.knobLabelHidden;
+  const labelClass = hasLabel ? styles.label : styles.labelHidden;
 
   const rotation = getRotation(value, min, max, logarithmic);
   const displayValue = getDisplayValue(value, step, unit, valueLabels);
@@ -179,8 +179,8 @@ function Knob({
       }`}
     >
       <label
-        className={`${styles.knobLabel} ${
-          styles[`knobLabel${size.charAt(0).toUpperCase() + size.slice(1)}`]
+        className={`${styles.label} ${
+          styles[`label${size.charAt(0).toUpperCase() + size.slice(1)}`]
         }`}
       >
         {label}
@@ -200,7 +200,7 @@ function Knob({
             return (
               <div
                 key={tick}
-                className={styles.knobValueLabel}
+                className={styles.valueLabel}
                 style={{
                   position: "absolute",
                   left: `${x}%`,

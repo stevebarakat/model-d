@@ -59,6 +59,7 @@ export default function Oscillator3() {
         max={ranges.length - 1}
         step={1}
         label="Range"
+        hideLabel={true}
         onChange={handleRangeChange}
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
       />
@@ -87,6 +88,7 @@ export default function Oscillator3() {
         max={waveforms.length - 1}
         step={1}
         label="Waveform"
+        hideLabel={true}
         onChange={handleWaveformChange}
         valueLabels={waveformIcons.reduce(
           (acc, icon, i) => ({ ...acc, [i]: icon }),

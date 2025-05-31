@@ -4,7 +4,7 @@ export function TriangleIcon() {
       <polyline
         points="2,22 12,2 22,22"
         stroke="#FFFFFF99"
-        strokeWidth="2"
+        strokeWidth="3"
         fill="none"
       />
     </svg>
@@ -17,7 +17,7 @@ export function TriSawIcon() {
       <polyline
         points="2,22 12,2 12,12 22,22"
         stroke="#FFFFFF99"
-        strokeWidth="2"
+        strokeWidth="3"
         fill="none"
       />
     </svg>
@@ -30,7 +30,7 @@ export function ReverseSawIcon() {
       <polyline
         points="2,22 2,2 22,22"
         stroke="#FFFFFF99"
-        strokeWidth="2"
+        strokeWidth="3"
         fill="none"
       />
     </svg>
@@ -43,7 +43,7 @@ export function SawtoothIcon() {
       <polyline
         points="22,22 22,2 2,22"
         stroke="#FFFFFF99"
-        strokeWidth="2"
+        strokeWidth="3"
         fill="none"
       />
     </svg>
@@ -56,7 +56,7 @@ export function SquareIcon() {
       <polyline
         points="2,22 2,2 15,2 15,22 22,22"
         stroke="#FFFFFF99"
-        strokeWidth="2"
+        strokeWidth="3"
         fill="none"
       />
     </svg>
@@ -69,7 +69,7 @@ export function WidePulseIcon() {
       <polyline
         points="2,22 2,2 12,2 12,22 22,22"
         stroke="#FFFFFF99"
-        strokeWidth="2"
+        strokeWidth="3"
         fill="none"
       />
     </svg>
@@ -82,7 +82,7 @@ export function NarrowPulseIcon() {
       <polyline
         points="2,22 2,2 8,2 8,22 22,22"
         stroke="#FFFFFF99"
-        strokeWidth="2"
+        strokeWidth="3"
         fill="none"
       />
     </svg>

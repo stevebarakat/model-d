@@ -4,27 +4,19 @@
   flex-direction: column;
   justify-content: space-between;
   justify-content: center;
-  gap: var(--spacing-lg);
+  /* gap: var(--spacing-lg); */
   padding-right: 10px;
 }
 
 .row {
   position: relative;
   display: flex;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-sm);
   justify-content: space-between;
   align-items: center;
-  border: 1px solid red;
+  /* border: 1px solid yellow; */
 
   &:not(:last-child) {
-    margin-left: 37px;
-  }
-
-  &:last-child {
-    margin-top: -40px;
-  }
-
-  &:nth-child(3) {
-    margin-top: -20px;
+    padding-left: 37px;
   }
 }

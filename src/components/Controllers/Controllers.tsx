@@ -20,6 +20,13 @@ function Controllers() {
             step={1}
             label="Tune"
             onChange={() => {}}
+            valueLabels={{
+              "-2": "-2",
+              "-1": "-1",
+              "0": "0",
+              "1": "1",
+              "2": "2",
+            }}
           />
           <HorizontalRockerSwitch
             className={styles.oscModSwitch}
@@ -40,6 +47,16 @@ function Controllers() {
             step={0.01}
             label="Glide Time"
             onChange={setGlideTime}
+            valueLabels={{
+              "-7": "-7",
+              "-5": "-5",
+              "-3": "-3",
+              "-1": "-1",
+              "1": "1",
+              "3": "3",
+              "5": "5",
+              "7": "7",
+            }}
           />
           <Knob
             size="medium"
@@ -49,6 +66,16 @@ function Controllers() {
             step={1}
             label="Modulation Mix"
             onChange={() => {}}
+            valueLabels={{
+              "-7": "-7",
+              "-5": "-5",
+              "-3": "-3",
+              "-1": "-1",
+              "1": "1",
+              "3": "3",
+              "5": "5",
+              "7": "7",
+            }}
           />
         </div>
         <div className={styles.row}>

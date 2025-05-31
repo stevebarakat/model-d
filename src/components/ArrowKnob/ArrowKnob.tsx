@@ -6,7 +6,8 @@ type ArrowKnobProps = {
   min: number;
   max: number;
   step: number;
-  label?: string;
+  label: string;
+  hideLabel?: boolean;
   unit?: string;
   onChange: (value: number) => void;
   valueLabels: Record<number, string | React.ReactElement>;
@@ -66,6 +67,7 @@ function ArrowKnob({
   max,
   step = 1,
   label,
+  hideLabel = false,
   unit = "",
   onChange,
   valueLabels,
@@ -206,7 +208,7 @@ function ArrowKnob({
           </div>
         );
       })}
-      {<div className={styles.knobLabel}>{label}</div>}
+      {<label className={hideLabel ? `sr-only` : styles.label}>{label}</label>}
       <div className={styles.knobRing}>
         <div className={styles.knob}>
           <div className={styles.knobBtm}>

@@ -4,29 +4,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: var(--spacing-lg) -10px -36px -10px;
+  margin: var(--spacing-lg) 0 calc(var(--spacing-sm) * -1);
 }
 
 .knobRing {
-  &::before {
-    position: absolute;
-    top: calc(50% - 10px);
-    left: 50%;
-    z-index: 0;
-    width: var(--knob-size);
-    height: var(--knob-size);
-    background: linear-gradient(
-      to bottom,
-      hsl(0deg 0% 70% / 50%) 0%,
-      hsl(0deg 0% 25% / 50%) 35%,
-      hsl(0deg 0% 0% / 50%) 35%,
-      hsl(0deg 0% 5% / 100%) 100%
-    );
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    content: "";
-    filter: drop-shadow(0 -1px hsl(0deg 0% 0%));
-  }
+  position: absolute;
+  top: calc(50% - 10px);
+  left: 50%;
+  z-index: 0;
+  width: var(--knob-size);
+  height: var(--knob-size);
+  background: linear-gradient(
+    to bottom,
+    hsl(0deg 0% 70% / 50%) 0%,
+    hsl(0deg 0% 25% / 50%) 35%,
+    hsl(0deg 0% 0% / 50%) 35%,
+    hsl(0deg 0% 5% / 100%) 100%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 -1px hsl(0deg 0% 0%));
 }
 
 .knob {
@@ -58,14 +55,12 @@
   place-items: center;
 }
 
-.knobLabel {
+.label {
   position: absolute;
-  top: -16px;
-  left: 50%;
+  top: calc(var(--spacing-lg) * -1);
   font-size: var(--font-size-xs);
   font-weight: 800;
   text-transform: uppercase;
-  transform: translateX(-50%);
 }
 
 .line {
