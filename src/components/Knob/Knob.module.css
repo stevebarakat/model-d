@@ -166,7 +166,6 @@
 .rangeInput {
   position: absolute;
   width: var(--knob-size);
-  height: var(--knob-size);
   -webkit-appearance: none;
   appearance: none;
   background: transparent;
@@ -176,7 +175,8 @@
 
 ::-webkit-slider-runnable-track {
   display: flex;
-  height: calc(var(--knob-size) * 2.5);
+  width: 3333px;
+  height: 3333px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -185,22 +185,17 @@
 .rangeInput::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 0;
-  height: 0;
+  width: 100%;
+  height: 100%;
   background: transparent;
   border: none;
   cursor: pointer;
 }
 
 .rangeInput::-moz-range-thumb {
-  width: 0;
-  height: 0;
+  width: 100%;
+  height: 100%;
   background: transparent;
   border: none;
   cursor: pointer;
-}
-
-.rangeInput:focus ~ .knobBtm .outerKnob {
-  outline: 2px solid hsl(220deg 100% 75%);
-  outline-offset: 2px;
 }
