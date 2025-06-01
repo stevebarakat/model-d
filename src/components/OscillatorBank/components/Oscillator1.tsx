@@ -1,6 +1,7 @@
 import { useSynthStore } from "@/store/synthStore";
 import OscillatorPanel from "./OscillatorPanel";
 import ArrowKnob from "@/components/ArrowKnob";
+import styles from "../OscillatorBank.module.css";
 import {
   TriangleIcon,
   TriSawIcon,
@@ -10,6 +11,7 @@ import {
   NarrowPulseIcon,
 } from "../icons/WaveformIcons";
 import { OscillatorWaveform, OscillatorRange } from "@/store/types/synth";
+import Spacer from "@/components/Spacer";
 
 const waveforms: OscillatorWaveform[] = [
   "triangle",
@@ -50,6 +52,12 @@ export default function Oscillator1() {
         onChange={handleRangeChange}
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
       />
+      <Spacer width="35%">
+        <div className={styles.rowColTitles}>
+          <div className={styles.rowTitle}>Oscillator - 1</div>
+          <div className={styles.colTitle}>Frequency</div>
+        </div>
+      </Spacer>
       <ArrowKnob
         value={waveforms.indexOf(oscillator1.waveform)}
         min={0}

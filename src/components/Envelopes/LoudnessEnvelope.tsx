@@ -1,8 +1,8 @@
 import Knob from "../Knob";
-import styles from "./LoudnessContour.module.css";
 import Spacer from "../Spacer";
+import { styles } from "@/components/Modifiers";
 
-function LoudnessContour() {
+function LoudnessEnvelope() {
   return (
     <div className={styles.container}>
       <div className={styles.subSectionTitle}>Loudness Contour</div>
@@ -61,4 +61,4 @@ function LoudnessContour() {
   );
 }
 
-export default LoudnessContour;
+export default LoudnessEnvelope;

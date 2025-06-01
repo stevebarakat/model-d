@@ -7,7 +7,7 @@ import Glide from "../Glide";
 
 function Controllers() {
   return (
-    <section className="section">
+    <section>
       <div className={styles.column}>
         <div className={styles.row}>
           <Tune />

@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .column {
   display: flex;
   flex-direction: column;
@@ -21,6 +27,13 @@
   gap: 12px;
   font-size: var(--font-size-xs);
   font-weight: 900;
+  text-transform: uppercase;
+}
+
+.subSectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  text-align: center;
   text-transform: uppercase;
 }
 

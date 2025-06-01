@@ -22,7 +22,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
   };
 
   return (
-    <section className="section">
+    <section>
       <div className="flex">
         <div className={styles.column}>
           <Knob

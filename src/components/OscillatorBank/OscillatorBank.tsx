@@ -7,7 +7,7 @@ import OscillatorMod from "./components/OscillatorMod";
 
 function OscillatorBank() {
   return (
-    <section className="section">
+    <section>
       <div className={styles.column}>
         <OscillatorMod />
         <Oscillator1 />

@@ -1,13 +1,12 @@
-import styles from "./Modifiers.module.css";
+import { LoudnessEnvelope, FilterEnvelope } from "@/components/Envelopes";
 import { HorizontalRockerSwitch } from "@/components/RockerSwitch";
 import SectionTitle from "@/components/SectionTitle";
-import LoudnessContour from "@/components/LoudnessContour";
 import Filter from "@/components/Filter";
-import FilterContour from "@/components/FilterContour";
+import styles from "./Modifiers.module.css";
 
 function Modifiers() {
   return (
-    <section className="section">
+    <section>
       <div className={styles.column}>
         <div className={styles.modSwitches}>
           <div className={styles.flexRow}>
@@ -43,8 +42,8 @@ function Modifiers() {
           </div>
         </div>
         <Filter />
-        <FilterContour />
-        <LoudnessContour />
+        <FilterEnvelope />
+        <LoudnessEnvelope />
       </div>
       <SectionTitle>Modifiers</SectionTitle>
     </section>

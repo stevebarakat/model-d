@@ -1,8 +1,8 @@
 import Knob from "../Knob";
-import styles from "./FilterContour.module.css";
+import { styles } from "@/components/Modifiers";
 import Spacer from "../Spacer";
 
-function FilterContour() {
+function FilterEnvelope() {
   return (
     <div className={styles.container}>
       <div className={styles.row}>
@@ -60,4 +60,4 @@ function FilterContour() {
   );
 }
 
-export default FilterContour;
+export default FilterEnvelope;

@@ -24,3 +24,21 @@
   left: -24px;
   width: fit-content;
 }
+
+.rowColTitles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.rowTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.colTitle {
+  font-size: 12px;
+  font-weight: 600;
+}
