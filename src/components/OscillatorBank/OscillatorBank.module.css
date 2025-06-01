@@ -27,18 +27,19 @@
 
 .rowColTitles {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  gap: 2px;
+  text-transform: uppercase;
+  font-weight: 900;
   width: 100%;
 }
 
 .rowTitle {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
 }
 
 .colTitle {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
 }
