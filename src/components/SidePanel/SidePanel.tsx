@@ -1,8 +1,8 @@
-import { useSynthStore } from "@/store/synthStore";
 import { HorizontalRockerSwitch } from "../RockerSwitch";
 import Knob from "../Knob";
 import Wheel from "../Wheel";
 import styles from "./SidePanel.module.css";
+import GlideSwitch from "../Glide/GlideSwitch";
 
 function ModWheels() {
   return (
@@ -21,9 +21,6 @@ function ModWheels() {
 }
 
 function SidePanel() {
-  const glideOn = useSynthStore((s) => s.glideOn);
-  const setGlideOn = useSynthStore((s) => s.setGlideOn);
-
   return (
     <div className={styles.sidePanel}>
       <div className={styles.row}>
@@ -45,14 +42,7 @@ function SidePanel() {
           onChange={(v) => console.log(v)}
         />
         <div className={styles.sideSwitches}>
-          <HorizontalRockerSwitch
-            theme="blue"
-            label="Glide (On/Off)"
-            topLabel="Glide"
-            bottomLabelRight="On"
-            checked={glideOn}
-            onCheckedChange={setGlideOn}
-          />
+          <GlideSwitch />
           <HorizontalRockerSwitch
             theme="blue"
             label="Decay"

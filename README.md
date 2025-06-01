@@ -119,7 +119,7 @@ dev-preferences.json       # Project configuration and preferences
 ### Project Preferences
 
 - See [`dev-preferences.json`](dev-preferences.json) for code style, tooling, and architectural guidelines.
-- See [`Web Audio API Performance and Debugging Notes`](resources/web-audio-performance.html) for best practices.
+- See [`Web Audio API Performance and Debugging Notes`](resources/web-audio-performance.txt) for best practices.
 
 ---
 

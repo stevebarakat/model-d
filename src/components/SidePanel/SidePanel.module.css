@@ -1,6 +1,7 @@
 .sidePanel {
   position: relative;
   display: flex;
+  justify-content: flex-end;
   flex-direction: column;
   padding: var(--spacing-md) var(--spacing-xs) 0;
 }
@@ -21,10 +22,7 @@
 }
 
 .wheels {
-  position: relative;
-  left: var(--spacing-xl);
-  display: flex;
-  gap: 55px;
-  width: 100%;
-  transform: translateY(calc(var(--spacing-xl) * 3));
+  margin-left: var(--spacing-xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }

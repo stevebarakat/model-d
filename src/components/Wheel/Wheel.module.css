@@ -1,6 +1,6 @@
 .wheel {
   position: relative;
-  top: 280%;
+  /* top: 280%; */
   width: 0;
   cursor: pointer;
   transform: rotate(270deg);

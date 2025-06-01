@@ -1,3 +1,36 @@
+INTRODUCTION
+
+Minimoog Model D is a self-contained monophonic analog synthesizer.
+The main components include:
+- Oscillator-1
+- Oscillator-2
+- Oscillator-3
+- Noise Generator
+- LFO Modulation Oscillator
+- Audio Mixer
+- Filter
+- Filter Contour (Envelope Generator)
+- Loudness Contour (Envelope Generator)
+- 44 full-size keys with Velocity and After Pressure
+- Pitch Bend and Modulation Wheels and Glide
+
+The front panel groups these elements and controls
+together by type—CONTROLLERS, OSCILLATOR
+BANK, MIXER, MODIFIERS, OUTPUT —in an
+intuitive and efficient design. All of these elements
+are controlled via single-function knobs and
+switches. And like its modular ancestors, Model D
+is constructed of independent synthesizer circuits
+connected by audio pathways and control lines. In
+place of patch cables, Model D uses color-coded
+rocker switches to establish connections between
+these circuit elements, or modules. Orange switches
+connect modulation sources to their destinations.
+Blue switches turn audio sources on and off. White
+switches turn performance features on and off.
+Black switches select between modulation sources.
+
+
 ** Oscillator Bank **
 
 Oscillators are the primary source of sound in
