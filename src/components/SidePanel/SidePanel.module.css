@@ -2,7 +2,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   padding: var(--spacing-md) var(--spacing-xs) 0;
 }
 
