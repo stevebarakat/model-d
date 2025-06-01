@@ -1,10 +1,16 @@
+import ModulationSwitch from "@/components/Filter/ModulationSwitch";
+import KeyboardControl from "@/components/Filter/KeyboardControl";
 import Knob from "../Knob";
-import { styles } from "@/components/Modifiers";
 import Spacer from "../Spacer";
+import { styles } from "@/components/Modifiers";
 
 function Filter() {
   return (
     <div className={styles.container}>
+      <div className={styles.filterSwitches}>
+        <ModulationSwitch />
+        <KeyboardControl />
+      </div>
       <div className={styles.subSectionTitle}>Filter</div>
       <div className={styles.row}>
         <Spacer width="16px" />
