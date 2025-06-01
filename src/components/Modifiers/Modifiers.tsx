@@ -1,6 +1,7 @@
 import { LoudnessEnvelope, FilterEnvelope } from "@/components/Envelopes";
-import { HorizontalRockerSwitch } from "@/components/RockerSwitch";
 import SectionTitle from "@/components/SectionTitle";
+import ModulationSwitch from "@/components/Filter/ModulationSwitch";
+import KeyboardControl from "@/components/Filter/KeyboardControl";
 import Filter from "@/components/Filter";
 import styles from "./Modifiers.module.css";
 
@@ -9,37 +10,8 @@ function Modifiers() {
     <section>
       <div className={styles.column}>
         <div className={styles.modSwitches}>
-          <div className={styles.flexRow}>
-            <HorizontalRockerSwitch
-              theme="orange"
-              checked={false}
-              onCheckedChange={() => {}}
-              label="Filter Modulation"
-              topLabel="Filter Modulation"
-              bottomLabelRight="On"
-            />
-          </div>
-          <div className={styles.flexRow}>
-            <HorizontalRockerSwitch
-              theme="orange"
-              checked={false}
-              onCheckedChange={() => {}}
-              label="Keyboard Control"
-              leftLabel="1"
-              topLabelRight="On"
-            />
-          </div>
-          <div className={styles.flexRow}>
-            <HorizontalRockerSwitch
-              theme="orange"
-              checked={false}
-              onCheckedChange={() => {}}
-              label="Keyboard Control"
-              leftLabel="2"
-              topLabel="Keyboard Control"
-              bottomLabelRight="On"
-            />
-          </div>
+          <ModulationSwitch />
+          <KeyboardControl />
         </div>
         <Filter />
         <FilterEnvelope />
