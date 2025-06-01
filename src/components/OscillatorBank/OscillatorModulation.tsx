@@ -1,0 +1,20 @@
+import { HorizontalRockerSwitch } from "../RockerSwitch";
+import styles from "./OscillatorBank.module.css";
+
+function OscillatorModulation() {
+  return (
+    <div className={styles.oscModulation}>
+      <HorizontalRockerSwitch
+        className={styles.oscModSwitch}
+        theme="orange"
+        checked={false}
+        onCheckedChange={() => {}}
+        label="Oscillator Modulation"
+        topLabel="Oscillator Modulation"
+        bottomLabelRight="On"
+      />
+    </div>
+  );
+}
+
+export default OscillatorModulation;

@@ -11,15 +11,6 @@ function Controllers() {
       <div className={styles.column}>
         <div className={styles.row}>
           <Tune />
-          <HorizontalRockerSwitch
-            className={styles.oscModSwitch}
-            theme="orange"
-            checked={false}
-            onCheckedChange={() => {}}
-            label="Oscillator Modulation"
-            topLabel="Oscillator Modulation"
-            bottomLabelRight="On"
-          />
         </div>
         <div className={styles.row}>
           <Glide />

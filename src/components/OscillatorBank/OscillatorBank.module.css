@@ -13,9 +13,14 @@
   gap: var(--spacing-sm);
   width: 100%;
 
-  /* border: 1px solid yellow; */
-
   &:not(:last-child) {
     padding-left: 37px;
   }
+}
+
+.oscModulation {
+  position: absolute;
+  top: 30%;
+  left: -24px;
+  width: fit-content;
 }
