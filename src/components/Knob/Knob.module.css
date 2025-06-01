@@ -145,7 +145,7 @@
 .labelLarge,
 .titleLarge {
   max-width: 18ch;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
 }
 
 .labelHidden {

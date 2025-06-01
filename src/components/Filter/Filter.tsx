@@ -16,17 +16,16 @@ function Filter() {
         <Spacer width="16px" />
         <Knob
           valueLabels={{
-            0: "0",
-            2: "2",
-            4: "4",
-            6: "6",
-            8: "8",
-            10: "10",
+            0: "-4",
+            2.5: "-2",
+            5: "0",
+            7.5: "2",
+            10: "4",
           }}
           value={0}
           min={0}
           max={10}
-          step={1}
+          step={0.5}
           label="Cutoff Frequency"
           onChange={() => {}}
         />
