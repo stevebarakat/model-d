@@ -3,9 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: var(--spacing-md);
-  width: 12rem;
-  overflow: hidden;
+  padding: var(--spacing-md) var(--spacing-xs) 0;
 }
 
 .sideSwitches {
@@ -14,7 +12,6 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 10px;
-  padding-top: 20px;
   width: fit-content;
   height: 100%;
 }

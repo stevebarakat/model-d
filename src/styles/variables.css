@@ -21,7 +21,6 @@
 
   /* Synth UI Colors */
   --synth-borders: hsl(218deg 40% 10%);
-  --synth-bg: hsl(217deg 39% 15%);
 
   /* Spacing System */
   --spacing-xs: 0.5rem;
@@ -29,11 +28,6 @@
   --spacing-md: 1rem;
   --spacing-lg: 1.25rem;
   --spacing-xl: 1.5rem;
-
-  /* Component Sizes */
-  --border-radius-sm: 2px;
-  --border-radius-md: 4px;
-  --border-radius-lg: 8px;
 
   /* Typography */
   --font-primary: "Urbanist", -apple-system, blinkmacsystemfont, "Segoe UI",
