@@ -1,23 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSynthStore } from "@/store/synthStore";
-import {
-  IAudioContext,
-  IGainNode,
-  IMediaStreamAudioSourceNode,
-  IAnalyserNode,
-  IAudioNode,
-} from "standardized-audio-context";
 
 export function useExternalInput(
-  audioContext: IAudioContext | null,
-  mixerNode?: IAudioNode<IAudioContext>
+  audioContext: AudioContext | null,
+  mixerNode?: AudioNode
 ) {
   const { mixer } = useSynthStore();
-  const gainRef = useRef<IGainNode<IAudioContext> | null>(null);
-  const inputRef = useRef<IMediaStreamAudioSourceNode<IAudioContext> | null>(
-    null
-  );
-  const analyzerRef = useRef<IAnalyserNode<IAudioContext> | null>(null);
+  const gainRef = useRef<GainNode | null>(null);
+  const inputRef = useRef<MediaStreamAudioSourceNode | null>(null);
+  const analyzerRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const [audioLevel, setAudioLevel] = useState(0);
 

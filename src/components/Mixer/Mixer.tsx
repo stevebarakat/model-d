@@ -1,21 +1,19 @@
 import { useSynthStore } from "@/store/synthStore";
-import { HorizontalRockerSwitch, VerticalRockerSwitch } from "../RockerSwitch";
+import { HorizontalRockerSwitch } from "../RockerSwitch";
 import Knob from "../Knob";
 import SectionTitle from "../SectionTitle";
 import styles from "./Mixer.module.css";
-import { useExternalInput } from "./hooks/useExternalInput";
-import { IAudioContext, IAudioNode } from "standardized-audio-context";
-import Overload from "../Overload";
+import Noise from "../Noise";
+import ExternalInput from "../ExternalInput";
 
 type MixerProps = {
-  audioContext: IAudioContext;
-  mixerNode: IAudioNode<IAudioContext>;
+  audioContext: AudioContext;
+  mixerNode: AudioNode;
 };
 
 function Mixer({ audioContext, mixerNode }: MixerProps) {
   const { mixer, setMixerSource, setMixerNoise, setMixerExternal } =
     useSynthStore();
-  const { audioLevel } = useExternalInput(audioContext, mixerNode);
 
   const handleExternalToggle = (checked: boolean) => {
     setMixerExternal({ enabled: checked });
@@ -124,55 +122,8 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
           />
         </div>
         <div className={styles.offsetColumn}>
-          <div className={styles.row}>
-            <Knob
-              valueLabels={{
-                0: "0",
-                2: "2",
-                4: "4",
-                6: "6",
-                8: "8",
-                10: "10",
-              }}
-              value={mixer.external.volume}
-              min={0}
-              max={10}
-              step={1}
-              label="External Input Volume"
-              onChange={(v) => setMixerExternal({ volume: v })}
-            />
-            <Overload
-              isEnabled={mixer.external.enabled}
-              volume={mixer.external.volume}
-              audioLevel={audioLevel}
-            />
-          </div>
-          <div className={styles.row}>
-            <Knob
-              valueLabels={{
-                0: "0",
-                2: "2",
-                4: "4",
-                6: "6",
-                8: "8",
-                10: "10",
-              }}
-              value={mixer.noise.volume}
-              min={0}
-              max={10}
-              step={1}
-              label="Noise Volume"
-              onChange={(v) => setMixerNoise({ volume: v })}
-            />
-            <VerticalRockerSwitch
-              checked={mixer.noise.noiseType === "pink"}
-              onCheckedChange={(checked) =>
-                setMixerNoise({ noiseType: checked ? "pink" : "white" })
-              }
-              label={mixer.noise.noiseType === "pink" ? "Pink" : "White"}
-              theme="blue"
-            />
-          </div>
+          <ExternalInput audioContext={audioContext} mixerNode={mixerNode} />
+          <Noise audioContext={audioContext} mixerNode={mixerNode} />
         </div>
       </div>
       <SectionTitle>Mixer</SectionTitle>

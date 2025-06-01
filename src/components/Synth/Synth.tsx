@@ -1,5 +1,5 @@
 import { useRef, useMemo } from "react";
-import { useNoise } from "@/components/Mixer/hooks";
+import { useNoise } from "@/components/Noise/hooks";
 import {
   useOscillator1,
   useOscillator2,
