@@ -19,6 +19,7 @@ export function createSynthActions(
     setKeyboardRef: (ref) => set({ keyboardRef: ref }),
     setPitchWheel: (value) => set({ pitchWheel: value }),
     setModWheel: (value) => set({ modWheel: value }),
+    setMasterTune: (value) => set({ masterTune: value }),
     setOscillator1: (osc: Partial<OscillatorState>) =>
       set((state: SynthState) => ({
         oscillator1: { ...state.oscillator1, ...osc },

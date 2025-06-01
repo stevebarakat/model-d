@@ -15,6 +15,7 @@ export function createInitialState(): Omit<
     keyboardRef: { synth: null },
     pitchWheel: 50,
     modWheel: 50,
+    masterTune: 0,
     oscillator1: {
       waveform: "sawtooth",
       frequency: 440,

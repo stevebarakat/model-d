@@ -1,22 +1,21 @@
+import { useSynthStore } from "@/store/synthStore";
 import Knob from "../Knob";
 
 function Tune() {
+  const { masterTune, setMasterTune } = useSynthStore();
+
   return (
     <Knob
-      value={0}
-      min={0}
-      max={10}
-      step={1}
+      value={masterTune}
+      min={-2}
+      max={2}
+      step={0.01}
       label="Tune"
-      onChange={(value) => {
-        console.log(value);
-      }}
+      onChange={setMasterTune}
       valueLabels={{
-        "0": "-2",
-        "2.5": "-1",
-        "5": "0",
-        "7.5": "1",
-        "10": "2",
+        "-2": "-2",
+        "0": "0",
+        "2": "+2",
       }}
     />
   );

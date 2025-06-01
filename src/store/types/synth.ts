@@ -53,6 +53,7 @@ export type SynthState = {
   // Controller state
   pitchWheel: number;
   modWheel: number;
+  masterTune: number; // -2 to +2 semitones
   oscillator1: OscillatorState;
   oscillator2: OscillatorState;
   oscillator3: OscillatorState;
@@ -70,6 +71,7 @@ export type SynthActions = {
   setKeyboardRef: (ref: { synth: SynthObject | null }) => void;
   setPitchWheel: (value: number) => void;
   setModWheel: (value: number) => void;
+  setMasterTune: (value: number) => void;
   setOscillator1: (osc: Partial<OscillatorState>) => void;
   setOscillator2: (osc: Partial<OscillatorState>) => void;
   setOscillator3: (osc: Partial<OscillatorState>) => void;
