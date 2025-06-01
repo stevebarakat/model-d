@@ -3,19 +3,30 @@ import styles from "./SidePanel.module.css";
 import GlideSwitch from "../Glide/GlideSwitch";
 import DecaySwitch from "../DecaySwitch";
 import LfoRate from "../LfoRate";
+import { useState } from "react";
 
 function ModWheels() {
+  const [pitch, setPitch] = useState(0);
+  const [mod, setMod] = useState(0);
+
   return (
     <div className={styles.wheels}>
       <Wheel
-        value={0}
+        value={pitch}
         min={0}
         max={100}
-        onChange={() => {}}
+        onChange={setPitch}
         onMouseUp={() => {}}
         label="Pitch"
       />
-      <Wheel value={0} min={0} max={100} onChange={() => {}} label="Mod" />
+      <Wheel
+        value={mod}
+        min={0}
+        max={100}
+        onChange={setMod}
+        onMouseUp={() => {}}
+        label="Mod"
+      />
     </div>
   );
 }

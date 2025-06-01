@@ -23,7 +23,9 @@
 
 .thumb {
   position: absolute;
-  top: clamp(4.5px, calc(var(--thumb-position, 0%)), calc(100% - 4.5px));
+  top: calc(
+    100% - clamp(4.5px, calc(var(--thumb-position, 0%)), calc(100% - 4.5px))
+  );
   left: 0;
   width: 14px;
   height: 9px;
