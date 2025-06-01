@@ -1,5 +1,5 @@
 import Knob from "../Knob";
-import styles from "./Filter.module.css";
+import { styles } from "@/components/Modifiers";
 import Spacer from "../Spacer";
 
 function Filter() {
