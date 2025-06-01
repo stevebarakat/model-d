@@ -1,7 +1,7 @@
 import { HorizontalRockerSwitch } from "@/components/RockerSwitch";
 import styles from "../OscillatorBank.module.css";
 
-function OscillatorModulation() {
+function OscillatorMod() {
   return (
     <div className={styles.oscModulation}>
       <HorizontalRockerSwitch
@@ -17,4 +17,4 @@ function OscillatorModulation() {
   );
 }
 
-export default OscillatorModulation;
+export default OscillatorMod;
