@@ -105,7 +105,7 @@ function Wheel({
   }, [handleMouseMove, onMouseUp, isDragging]);
 
   return (
-    <div>
+    <div className={styles.wheelContainer}>
       <div
         ref={sliderRef}
         className={`${styles.wheel} ${disabled ? styles.disabled : ""}`}
@@ -124,7 +124,7 @@ function Wheel({
         </div>
         <div className={styles.thumb} />
       </div>
-      <div className={styles.label}>{label}</div>
+      <label className={styles.label}>{label}</label>
     </div>
   );
 }

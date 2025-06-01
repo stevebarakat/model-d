@@ -1,20 +1,19 @@
 .sidePanel {
   position: relative;
   display: flex;
-  justify-content: flex-end;
   flex-direction: column;
   padding: var(--spacing-md) var(--spacing-xs) 0;
 }
 
-/* .sideSwitches {
+.sideSwitches {
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
+  gap: var(--spacing-md);
+  top: calc(var(--spacing-sm) * -1);
+  left: calc(var(--spacing-md) * -1);
   width: fit-content;
-  height: 100%;
-} */
+}
 
 .row {
   display: flex;
