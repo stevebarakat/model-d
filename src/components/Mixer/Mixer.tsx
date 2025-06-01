@@ -4,12 +4,12 @@ import Knob from "../Knob";
 import SectionTitle from "../SectionTitle";
 import styles from "./Mixer.module.css";
 import { useExternalInput } from "./hooks/useExternalInput";
-import { AudioContext } from "standardized-audio-context";
+import { IAudioContext, IAudioNode } from "standardized-audio-context";
 import Overload from "../Overload";
 
 type MixerProps = {
-  audioContext: AudioContext;
-  mixerNode: AudioNode;
+  audioContext: IAudioContext;
+  mixerNode: IAudioNode<IAudioContext>;
 };
 
 function Mixer({ audioContext, mixerNode }: MixerProps) {

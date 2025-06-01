@@ -1,32 +1,16 @@
 import { HorizontalRockerSwitch } from "../RockerSwitch";
 import styles from "./Controllers.module.css";
-import Knob from "../Knob";
 import SectionTitle from "../SectionTitle";
-import { useSynthStore } from "@/store/synthStore";
+import Knob from "../Knob";
+import Tune from "../Tune";
+import Glide from "../Glide";
 
 function Controllers() {
-  const glideTime = useSynthStore((s) => s.glideTime);
-  const setGlideTime = useSynthStore((s) => s.setGlideTime);
-
   return (
     <section className="section">
       <div className={styles.column}>
         <div className={styles.row}>
-          <Knob
-            value={0}
-            min={0}
-            max={10}
-            step={1}
-            label="Tune"
-            onChange={() => {}}
-            valueLabels={{
-              "0": "-2",
-              "2.5": "-1",
-              "5": "0",
-              "7.5": "1",
-              "10": "2",
-            }}
-          />
+          <Tune />
           <HorizontalRockerSwitch
             className={styles.oscModSwitch}
             theme="orange"
@@ -38,22 +22,7 @@ function Controllers() {
           />
         </div>
         <div className={styles.row}>
-          <Knob
-            value={glideTime}
-            min={0}
-            max={10}
-            step={0.01}
-            label="Glide Time"
-            onChange={setGlideTime}
-            valueLabels={{
-              "0": "0",
-              "2": "2",
-              "4": "4",
-              "6": "6",
-              "8": "8",
-              "10": "10",
-            }}
-          />
+          <Glide />
           <Knob
             value={0}
             min={0}

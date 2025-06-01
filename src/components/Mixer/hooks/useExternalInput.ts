@@ -1,14 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSynthStore } from "@/store/synthStore";
+import {
+  IAudioContext,
+  IGainNode,
+  IMediaStreamAudioSourceNode,
+  IAnalyserNode,
+  IAudioNode,
+} from "standardized-audio-context";
 
 export function useExternalInput(
-  audioContext: AudioContext | null,
-  mixerNode?: AudioNode
+  audioContext: IAudioContext | null,
+  mixerNode?: IAudioNode<IAudioContext>
 ) {
   const { mixer } = useSynthStore();
-  const gainRef = useRef<GainNode | null>(null);
-  const inputRef = useRef<MediaStreamAudioSourceNode | null>(null);
-  const analyzerRef = useRef<AnalyserNode | null>(null);
+  const gainRef = useRef<IGainNode<IAudioContext> | null>(null);
+  const inputRef = useRef<IMediaStreamAudioSourceNode<IAudioContext> | null>(
+    null
+  );
+  const analyzerRef = useRef<IAnalyserNode<IAudioContext> | null>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const [audioLevel, setAudioLevel] = useState(0);
 
@@ -20,7 +29,7 @@ export function useExternalInput(
     return Math.pow(normalizedVolume, 2) * 0.999 + 0.001;
   };
 
-  const updateAudioLevel = () => {
+  const updateAudioLevel = useCallback(() => {
     if (!analyzerRef.current) return;
 
     // Only calculate level if external input is enabled and volume is above 0
@@ -47,7 +56,7 @@ export function useExternalInput(
 
     // Schedule next update
     animationFrameRef.current = requestAnimationFrame(updateAudioLevel);
-  };
+  }, [mixer.external.enabled, mixer.external.volume]);
 
   useEffect(() => {
     async function setup() {
@@ -120,7 +129,13 @@ export function useExternalInput(
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [audioContext, mixer.external.enabled, mixer.external.volume, mixerNode]);
+  }, [
+    audioContext,
+    mixer.external.enabled,
+    mixer.external.volume,
+    mixerNode,
+    updateAudioLevel,
+  ]);
 
   // Update gain when mixer settings change
   useEffect(() => {
