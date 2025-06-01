@@ -14,6 +14,7 @@ export function useOscillator2(
 ): UseOscillator2Result {
   const { oscillator2, mixer, glideOn, glideTime } = useSynthStore();
   const oscRef = useRef<Osc2Instance | null>(null);
+  const lastFrequencyRef = useRef<number | null>(null);
 
   useEffect(() => {
     oscRef.current = createOscillator2(
@@ -60,18 +61,31 @@ export function useOscillator2(
       if (!oscRef.current) return;
       const oscNode = oscRef.current.getNode();
       if (!oscNode) {
-        oscRef.current.start(freq);
-        return;
-      }
-      if (glideOn) {
-        oscNode.frequency.setTargetAtTime(
-          freq,
-          audioContext.currentTime,
-          glideTime
-        );
+        if (glideOn && lastFrequencyRef.current !== null) {
+          oscRef.current.start(lastFrequencyRef.current);
+          const newOscNode = oscRef.current.getNode();
+          if (newOscNode) {
+            const mappedGlideTime = Math.pow(10, glideTime / 5) * 0.02;
+            newOscNode.frequency.linearRampToValueAtTime(
+              freq,
+              audioContext.currentTime + mappedGlideTime
+            );
+          }
+        } else {
+          oscRef.current.start(freq);
+        }
       } else {
-        oscNode.frequency.setValueAtTime(freq, audioContext.currentTime);
+        if (glideOn) {
+          const mappedGlideTime = Math.pow(10, glideTime / 5) * 0.02;
+          oscNode.frequency.linearRampToValueAtTime(
+            freq,
+            audioContext.currentTime + mappedGlideTime
+          );
+        } else {
+          oscNode.frequency.setValueAtTime(freq, audioContext.currentTime);
+        }
       }
+      lastFrequencyRef.current = freq;
     },
     [oscillator2.frequency, glideOn, glideTime, audioContext]
   );

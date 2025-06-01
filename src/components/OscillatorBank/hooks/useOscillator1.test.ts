@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useOscillator1 } from "./useOscillator1";
 import { useSynthStore } from "@/store/synthStore";
+import { createOscillator1 } from "../audio/oscillator1";
 
 // Mock the oscillator audio modules
 vi.mock("../audio/oscillator1", () => ({
@@ -110,6 +111,44 @@ describe("useOscillator1 Glide", () => {
       expect.closeTo(523.25, 2), // C5 frequency
       0,
       customGlideTime
+    );
+  });
+
+  it("should glide from last frequency when playing non-legato with glide ON", () => {
+    useSynthStore.setState({ glideOn: true, glideTime: 0.3 });
+
+    const { result } = renderHook(() => useOscillator1(mockAudioContext));
+
+    // Play first note
+    act(() => {
+      result.current.triggerAttack("A4");
+    });
+
+    // Release first note
+    act(() => {
+      result.current.triggerRelease();
+    });
+
+    // Clear mock calls
+    vi.clearAllMocks();
+
+    // Play second note (non-legato)
+    act(() => {
+      result.current.triggerAttack("C5");
+    });
+
+    // Should start at A4 frequency and glide to C5
+    const createOscillator1Mock = vi.mocked(createOscillator1);
+    const mockInstance = createOscillator1Mock.mock.results[0].value;
+
+    // Verify it started at the last frequency (A4 = 440Hz)
+    expect(mockInstance.start).toHaveBeenCalledWith(440);
+
+    // Verify it glides to the new frequency
+    expect(mockOscNode.frequency.setTargetAtTime).toHaveBeenCalledWith(
+      expect.closeTo(523.25, 2), // C5 frequency
+      0,
+      0.3 // glideTime
     );
   });
 });
