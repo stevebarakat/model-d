@@ -1,5 +1,5 @@
-import { HorizontalRockerSwitch } from "../RockerSwitch";
-import styles from "./OscillatorBank.module.css";
+import { HorizontalRockerSwitch } from "@/components/RockerSwitch";
+import styles from "../OscillatorBank.module.css";
 
 function OscillatorModulation() {
   return (
