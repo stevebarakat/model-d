@@ -41,7 +41,8 @@ export function createInitialState(): Omit<
       noise: { enabled: false, volume: 0, noiseType: "white" },
       external: { enabled: false, volume: 0, overload: false },
     },
-    masterVolume: 8,
+    masterVolume: 5,
+    isMasterActive: true,
     glideOn: false,
     glideTime: 0.1,
   };

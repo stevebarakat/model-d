@@ -14,32 +14,41 @@ import Keyboard from "@/components/Keyboard";
 import SidePanel from "@/components/SidePanel";
 import Side from "@/components/Side";
 import { useSynthStore } from "@/store/synthStore";
+import { useAudioContext } from "@/hooks/useAudioContext";
 import styles from "./Synth.module.css";
+import PowerButton from "../PowerButton";
 
 function Synth() {
-  const { activeKeys, setActiveKeys, masterVolume } = useSynthStore();
+  const { activeKeys, setActiveKeys, masterVolume, isMasterActive } =
+    useSynthStore();
 
-  const audioContextRef = useRef<AudioContext | null>(null);
-  if (!audioContextRef.current) {
-    audioContextRef.current = new window.AudioContext();
-  }
+  const { audioContext, isInitialized, initialize, dispose } =
+    useAudioContext();
 
   // Create a single mixer node for all sources
   const mixerNodeRef = useRef<GainNode | null>(null);
-  if (!mixerNodeRef.current && audioContextRef.current) {
-    mixerNodeRef.current = audioContextRef.current.createGain();
-    mixerNodeRef.current.gain.value = 1;
-    // Connect mixer to the next stage (for now, directly to destination)
-    mixerNodeRef.current.connect(audioContextRef.current.destination);
-  }
+  useEffect(() => {
+    if (!mixerNodeRef.current && audioContext) {
+      mixerNodeRef.current = audioContext.createGain();
+      mixerNodeRef.current.gain.value = 1;
+      mixerNodeRef.current.connect(audioContext.destination);
+    }
+  }, [audioContext]);
 
-  // We'll pass mixerNodeRef.current to all sources in the next steps
-
-  useNoise(audioContextRef.current!, mixerNodeRef.current!);
-
-  const osc1 = useOscillator1(audioContextRef.current, mixerNodeRef.current!);
-  const osc2 = useOscillator2(audioContextRef.current, mixerNodeRef.current!);
-  const osc3 = useOscillator3(audioContextRef.current, mixerNodeRef.current!);
+  // Always call hooks, pass null if not initialized
+  useNoise(audioContext ?? null, mixerNodeRef.current ?? null);
+  const osc1 = useOscillator1(
+    audioContext ?? null,
+    mixerNodeRef.current ?? null
+  );
+  const osc2 = useOscillator2(
+    audioContext ?? null,
+    mixerNodeRef.current ?? null
+  );
+  const osc3 = useOscillator3(
+    audioContext ?? null,
+    mixerNodeRef.current ?? null
+  );
 
   const synthObj = useMemo(() => {
     return {
@@ -58,38 +67,50 @@ function Synth() {
 
   // Set master volume on mixerNode
   useEffect(() => {
-    if (mixerNodeRef.current) {
-      // Convert 0-10 to 0-1, use quadratic for audio taper
-      const gain = Math.pow(masterVolume / 10, 2);
-      mixerNodeRef.current.gain.setValueAtTime(
-        gain,
-        audioContextRef.current!.currentTime
-      );
+    if (mixerNodeRef.current && audioContext) {
+      if (!isMasterActive) {
+        mixerNodeRef.current.gain.setValueAtTime(0, audioContext.currentTime);
+      } else {
+        const gain = Math.pow(masterVolume / 10, 2);
+        mixerNodeRef.current.gain.setValueAtTime(
+          gain,
+          audioContext.currentTime
+        );
+      }
     }
-  }, [masterVolume]);
+  }, [masterVolume, isMasterActive, audioContext]);
 
   return (
     <div className={styles.synthContainer}>
+      <div style={{ position: "absolute", top: 24, right: 24, zIndex: 10 }}>
+        <PowerButton
+          isOn={isInitialized}
+          onPowerOn={initialize}
+          onPowerOff={dispose}
+        />
+      </div>
       <Side />
       <div className={styles.synth}>
         <div className={styles.controlsPanel}>
-          <Controllers />
-          <OscillatorBank />
+          <Controllers disabled={!isInitialized} />
+          <OscillatorBank disabled={!isInitialized} />
           <Mixer
-            audioContext={audioContextRef.current!}
-            mixerNode={mixerNodeRef.current!}
+            audioContext={audioContext}
+            mixerNode={mixerNodeRef.current}
+            disabled={!isInitialized}
           />
-          <Modifiers />
-          <Output />
+          <Modifiers disabled={!isInitialized} />
+          <Output disabled={!isInitialized} />
         </div>
         <div className={styles.keyboardPanel}>
-          <SidePanel />
+          <SidePanel disabled={!isInitialized} />
           <Keyboard
             activeKeys={activeKeys}
             octaveRange={{ min: 3, max: 5 }}
             onKeyDown={setActiveKeys}
             onKeyUp={() => setActiveKeys(null)}
             synth={synthObj}
+            disabled={!isInitialized}
           />
         </div>
       </div>

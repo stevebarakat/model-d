@@ -20,6 +20,14 @@ export function useAudioContext() {
     }
   };
 
+  const dispose = async () => {
+    if (audioContextRef.current) {
+      await audioContextRef.current.close();
+      audioContextRef.current = null;
+      setIsInitialized(false);
+    }
+  };
+
   useEffect(() => {
     return () => {
       if (audioContextRef.current) {
@@ -34,5 +42,6 @@ export function useAudioContext() {
     audioContext: audioContextRef.current,
     isInitialized,
     initialize,
+    dispose,
   };
 }

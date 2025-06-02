@@ -59,6 +59,7 @@ export type SynthState = {
   oscillator3: OscillatorState;
   mixer: MixerState;
   masterVolume: number; // 0-10, controls the final output gain
+  isMasterActive: boolean; // true = muted, false = unmuted
 
   // Glide
   glideOn: boolean;
@@ -83,6 +84,7 @@ export type SynthActions = {
   setMixerNoise: (value: Partial<MixerNoiseState>) => void;
   setMixerExternal: (value: Partial<MixerExternalState>) => void;
   setMasterVolume: (value: number) => void;
+  setIsMasterActive: (value: boolean) => void;
   setGlideOn: (on: boolean) => void;
   setGlideTime: (time: number) => void;
 };

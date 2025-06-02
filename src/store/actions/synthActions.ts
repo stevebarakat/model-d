@@ -59,5 +59,6 @@ export function createSynthActions(
     setGlideOn: (on: boolean) => set({ glideOn: on }),
     setGlideTime: (time: number) => set({ glideTime: time }),
     setMasterVolume: (value) => set({ masterVolume: value }),
+    setIsMasterActive: (value) => set({ isMasterActive: value }),
   };
 }

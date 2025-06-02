@@ -1,12 +1,20 @@
 import { useEffect, useRef } from "react";
 import { useSynthStore } from "@/store/synthStore";
 
-export function useNoise(audioContext: AudioContext, mixerNode?: AudioNode) {
+export function useNoise(
+  audioContext: AudioContext | null,
+  mixerNode?: AudioNode | null
+) {
   const { mixer, activeKeys } = useSynthStore();
   const gainRef = useRef<GainNode | null>(null);
   const noiseRef = useRef<AudioWorkletNode | null>(null);
 
   useEffect(() => {
+    if (!audioContext) {
+      gainRef.current = null;
+      noiseRef.current = null;
+      return;
+    }
     let cancelled = false;
 
     async function setup() {

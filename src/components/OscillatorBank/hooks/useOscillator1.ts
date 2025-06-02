@@ -9,8 +9,8 @@ export type UseOscillator1Result = {
 };
 
 export function useOscillator1(
-  audioContext: AudioContext,
-  mixerNode?: AudioNode
+  audioContext: AudioContext | null,
+  mixerNode?: AudioNode | null
 ): UseOscillator1Result {
   const { oscillator1, mixer, glideOn, glideTime, masterTune } =
     useSynthStore();
@@ -18,13 +18,17 @@ export function useOscillator1(
   const lastFrequencyRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (!audioContext) {
+      oscRef.current = null;
+      return;
+    }
     oscRef.current = createOscillator1(
       {
         audioContext,
         waveform: oscillator1.waveform as OscillatorType,
         range: oscillator1.range,
       },
-      mixerNode
+      mixerNode ?? undefined
     );
     return () => {
       oscRef.current?.stop();
@@ -49,8 +53,8 @@ export function useOscillator1(
 
   const triggerAttack = useCallback(
     (note: string) => {
+      if (!audioContext || !oscRef.current) return;
       const freq = noteToFrequency(note) * Math.pow(2, masterTune / 12);
-      if (!oscRef.current) return;
       const oscNode = oscRef.current.getNode();
       if (!oscNode) {
         if (glideOn && lastFrequencyRef.current !== null) {
@@ -83,8 +87,16 @@ export function useOscillator1(
   );
 
   const triggerRelease = useCallback(() => {
+    if (!audioContext || !oscRef.current) return;
     oscRef.current?.stop();
-  }, []);
+  }, [audioContext]);
+
+  if (!audioContext) {
+    return {
+      triggerAttack: () => {},
+      triggerRelease: () => {},
+    };
+  }
 
   return {
     triggerAttack,
