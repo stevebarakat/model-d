@@ -14,6 +14,7 @@ export const useSynthStore = create<SynthState & SynthActions>()(
       name: "synth-storage",
       partialize: (state) => ({
         modWheel: state.modWheel,
+        masterVolume: state.masterVolume,
       }),
     }
   )

@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { useNoise } from "@/components/Noise/hooks";
 import {
   useOscillator1,
@@ -17,7 +17,7 @@ import { useSynthStore } from "@/store/synthStore";
 import styles from "./Synth.module.css";
 
 function Synth() {
-  const { activeKeys, setActiveKeys } = useSynthStore();
+  const { activeKeys, setActiveKeys, masterVolume } = useSynthStore();
 
   const audioContextRef = useRef<AudioContext | null>(null);
   if (!audioContextRef.current) {
@@ -55,6 +55,18 @@ function Synth() {
       },
     };
   }, [osc1, osc2, osc3]);
+
+  // Set master volume on mixerNode
+  useEffect(() => {
+    if (mixerNodeRef.current) {
+      // Convert 0-10 to 0-1, use quadratic for audio taper
+      const gain = Math.pow(masterVolume / 10, 2);
+      mixerNodeRef.current.gain.setValueAtTime(
+        gain,
+        audioContextRef.current!.currentTime
+      );
+    }
+  }, [masterVolume]);
 
   return (
     <div className={styles.synthContainer}>
