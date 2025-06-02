@@ -1,8 +1,9 @@
 import { useSynthStore } from "@/store/synthStore";
 import Knob from "../Knob";
 import Overload from "../Overload";
-import styles from "./ExternalInput.module.css";
 import { useExternalInput } from "./hooks";
+import Row from "../Row";
+import Column from "../Column";
 
 type ExternalInputProps = {
   audioContext: AudioContext;
@@ -14,8 +15,8 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
   const { audioLevel } = useExternalInput(audioContext, mixerNode);
 
   return (
-    <div className={styles.externalInputContainer}>
-      <div className={styles.row}>
+    <Column>
+      <Row>
         <Knob
           valueLabels={{
             0: "0",
@@ -37,8 +38,8 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
           volume={mixer.external.volume}
           audioLevel={audioLevel}
         />
-      </div>
-    </div>
+      </Row>
+    </Column>
   );
 }
 

@@ -1,8 +1,9 @@
+import { useNoise } from "./hooks/useNoise";
 import { useSynthStore } from "@/store/synthStore";
 import { VerticalRockerSwitch } from "../RockerSwitch";
+import Column from "../Column";
+import Row from "../Row";
 import Knob from "../Knob";
-import styles from "./Noise.module.css";
-import { useNoise } from "./hooks/useNoise";
 
 type NoiseProps = {
   audioContext: AudioContext;
@@ -15,8 +16,8 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
   useNoise(audioContext, mixerNode);
 
   return (
-    <div className={styles.noiseContainer}>
-      <div className={styles.row}>
+    <Column>
+      <Row>
         <Knob
           valueLabels={{
             0: "0",
@@ -41,8 +42,8 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
           label={mixer.noise.noiseType === "pink" ? "Pink" : "White"}
           theme="blue"
         />
-      </div>
-    </div>
+      </Row>
+    </Column>
   );
 }
 

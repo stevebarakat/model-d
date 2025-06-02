@@ -1,5 +1,5 @@
 import { useSynthStore } from "@/store/synthStore";
-import { HorizontalRockerSwitch } from "../RockerSwitch";
+import MuteSwitches from "./MuteSwitches";
 import Knob from "../Knob";
 import Title from "../Title";
 import styles from "./Mixer.module.css";
@@ -15,12 +15,7 @@ type MixerProps = {
 };
 
 function Mixer({ audioContext, mixerNode }: MixerProps) {
-  const { mixer, setMixerSource, setMixerNoise, setMixerExternal } =
-    useSynthStore();
-
-  const handleExternalToggle = (checked: boolean) => {
-    setMixerExternal({ enabled: checked });
-  };
+  const { mixer, setMixerSource } = useSynthStore();
 
   return (
     <Section>
@@ -81,49 +76,8 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
             size="medium"
           />
         </Column>
-        <div className={styles.mixerSwitches}>
-          <HorizontalRockerSwitch
-            theme="blue"
-            checked={mixer.osc1.enabled}
-            onCheckedChange={(checked) =>
-              setMixerSource("osc1", { enabled: checked })
-            }
-            label="Oscillator 1"
-            bottomLabelRight="On"
-          />
-          <HorizontalRockerSwitch
-            theme="blue"
-            checked={mixer.external.enabled}
-            onCheckedChange={handleExternalToggle}
-            label="External Input"
-            bottomLabelRight="On"
-          />
-          <HorizontalRockerSwitch
-            theme="blue"
-            checked={mixer.osc2.enabled}
-            onCheckedChange={(checked) =>
-              setMixerSource("osc2", { enabled: checked })
-            }
-            label="Oscillator 2"
-            bottomLabelRight="On"
-          />
-          <HorizontalRockerSwitch
-            theme="blue"
-            checked={mixer.noise.enabled}
-            onCheckedChange={(checked) => setMixerNoise({ enabled: checked })}
-            label="Noise"
-            bottomLabelRight="On"
-          />
-          <HorizontalRockerSwitch
-            theme="blue"
-            checked={mixer.osc3.enabled}
-            onCheckedChange={(checked) =>
-              setMixerSource("osc3", { enabled: checked })
-            }
-            label="Oscillator 3"
-            bottomLabelRight="On"
-          />
-        </div>
+        <MuteSwitches />
+
         <div className={styles.offsetColumn}>
           <ExternalInput audioContext={audioContext} mixerNode={mixerNode} />
           <Noise audioContext={audioContext} mixerNode={mixerNode} />
