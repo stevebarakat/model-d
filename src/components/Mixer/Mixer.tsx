@@ -1,10 +1,13 @@
 import { useSynthStore } from "@/store/synthStore";
 import { HorizontalRockerSwitch } from "../RockerSwitch";
 import Knob from "../Knob";
-import SectionTitle from "../SectionTitle";
+import Title from "../Title";
 import styles from "./Mixer.module.css";
 import Noise from "../Noise";
 import ExternalInput from "../ExternalInput";
+import Row from "../Row";
+import Column from "../Column";
+import Section from "../Section";
 
 type MixerProps = {
   audioContext: AudioContext;
@@ -20,9 +23,9 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
   };
 
   return (
-    <section>
-      <div className="flex">
-        <div className={styles.column}>
+    <Section>
+      <Row>
+        <Column>
           <Knob
             valueLabels={{
               0: "0",
@@ -77,7 +80,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
             onChange={(v) => setMixerSource("osc3", { volume: v })}
             size="medium"
           />
-        </div>
+        </Column>
         <div className={styles.mixerSwitches}>
           <HorizontalRockerSwitch
             theme="blue"
@@ -125,9 +128,9 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
           <ExternalInput audioContext={audioContext} mixerNode={mixerNode} />
           <Noise audioContext={audioContext} mixerNode={mixerNode} />
         </div>
-      </div>
-      <SectionTitle>Mixer</SectionTitle>
-    </section>
+      </Row>
+      <Title>Mixer</Title>
+    </Section>
   );
 }
 

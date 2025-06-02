@@ -1,18 +1,20 @@
 import { HorizontalRockerSwitch } from "../RockerSwitch";
-import styles from "./Controllers.module.css";
-import SectionTitle from "../SectionTitle";
+import Title from "../Title";
 import Knob from "../Knob";
 import Tune from "../Tune";
 import Glide from "../Glide";
+import Section from "../Section";
+import Column from "../Column";
+import Row from "../Row";
 
 function Controllers() {
   return (
-    <section>
-      <div className={styles.column}>
-        <div className={styles.row}>
+    <Section>
+      <Column>
+        <Row>
           <Tune />
-        </div>
-        <div className={styles.row}>
+        </Row>
+        <Row>
           <Glide />
           <Knob
             value={0}
@@ -32,8 +34,8 @@ function Controllers() {
               "10": "7",
             }}
           />
-        </div>
-        <div className={styles.row}>
+        </Row>
+        <Row>
           <HorizontalRockerSwitch
             theme="blue"
             checked={false}
@@ -50,10 +52,10 @@ function Controllers() {
             bottomLabelLeft="Noise"
             bottomLabelRight="LFO"
           />
-        </div>
-      </div>
-      <SectionTitle>Controllers</SectionTitle>
-    </section>
+        </Row>
+      </Column>
+      <Title>Controllers</Title>
+    </Section>
   );
 }
 

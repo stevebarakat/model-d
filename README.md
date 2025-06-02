@@ -76,7 +76,7 @@ src/
     Knob/                   # Knob UI component
     ArrowKnob/              # Arrow knob UI component
     RockerSwitch/           # Rocker switch UI
-    SectionTitle/           # Section title UI
+    Title/           # Section title UI
     SidePanel/              # Side panel UI
     Wheel/                  # Wheel Input UI for Modulation and Pitch
     Switch/                 # Switch UI

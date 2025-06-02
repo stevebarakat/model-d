@@ -1,18 +1,19 @@
 import { LoudnessEnvelope, FilterEnvelope } from "@/components/Envelopes";
-import SectionTitle from "@/components/SectionTitle";
+import Title from "@/components/Title";
 import Filter from "@/components/Filter";
-import styles from "./Modifiers.module.css";
+import Section from "../Section";
+import Column from "../Column";
 
 function Modifiers() {
   return (
-    <section>
-      <div className={styles.column}>
+    <Section>
+      <Column>
         <Filter />
         <FilterEnvelope />
         <LoudnessEnvelope />
-      </div>
-      <SectionTitle>Modifiers</SectionTitle>
-    </section>
+      </Column>
+      <Title>Modifiers</Title>
+    </Section>
   );
 }
 

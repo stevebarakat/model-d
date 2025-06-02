@@ -1,0 +1,9 @@
+.section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-right: 2px solid var(--color-off-white);
+}

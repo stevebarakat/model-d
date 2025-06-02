@@ -1,11 +1,10 @@
 import { HorizontalRockerSwitch } from "@/components/RockerSwitch";
 import styles from "../OscillatorBank.module.css";
 
-function OscillatorMod() {
+function OscillatorModulation() {
   return (
     <div className={styles.oscModulation}>
       <HorizontalRockerSwitch
-        className={styles.oscModSwitch}
         theme="orange"
         checked={false}
         onCheckedChange={() => {}}
@@ -17,4 +16,4 @@ function OscillatorMod() {
   );
 }
 
-export default OscillatorMod;
+export default OscillatorModulation;

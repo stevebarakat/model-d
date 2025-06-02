@@ -1,11 +1,11 @@
-.sidePanel {
-  position: relative;
+.column {
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-md) var(--spacing-xs) 0;
+  justify-content: center;
+  gap: 0;
 }
 
-.sideSwitches {
+.switches {
   position: relative;
   display: flex;
   flex-direction: column;

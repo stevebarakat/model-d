@@ -1,6 +1,6 @@
 import Knob from "../Knob";
 import HorizontalRockerSwitch from "../RockerSwitch/HorizontalRockerSwitch";
-import SectionTitle from "../SectionTitle";
+import Title from "../Title";
 import styles from "./Output.module.css";
 
 function Output() {
@@ -24,7 +24,7 @@ function Output() {
           />
         </div>
       </div>
-      <SectionTitle>Output</SectionTitle>
+      <Title>Output</Title>
     </section>
   );
 }

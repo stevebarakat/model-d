@@ -1,0 +1,22 @@
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.small {
+  font-size: var(--font-size-md);
+  font-weight: 900;
+}
+
+.medium {
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+}
+
+.large {
+  font-size: var(--font-size-2xl);
+  font-weight: 900;
+}

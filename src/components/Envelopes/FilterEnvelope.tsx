@@ -1,11 +1,14 @@
 import Knob from "../Knob";
-import { styles } from "@/components/Modifiers";
 import Spacer from "../Spacer";
+import Row from "../Row";
+import Title from "../Title";
+import Section from "../Section";
 
 function FilterEnvelope() {
   return (
-    <div className={styles.container}>
-      <div className={styles.row}>
+    <Section>
+      <Title size="sm">Filter Contour</Title>
+      <Row>
         <Spacer width="16px" />
         <Knob
           valueLabels={{
@@ -60,8 +63,8 @@ function FilterEnvelope() {
           label="Sustain Level"
           onChange={() => {}}
         />
-      </div>
-    </div>
+      </Row>
+    </Section>
   );
 }
 

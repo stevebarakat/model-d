@@ -3,6 +3,8 @@ import KeyboardControl from "@/components/Filter/KeyboardControl";
 import Knob from "../Knob";
 import Spacer from "../Spacer";
 import { styles } from "@/components/Modifiers";
+import Row from "../Row";
+import Title from "../Title";
 
 function Filter() {
   return (
@@ -11,8 +13,8 @@ function Filter() {
         <ModulationSwitch />
         <KeyboardControl />
       </div>
-      <div className={styles.subSectionTitle}>Filter</div>
-      <div className={styles.row}>
+      <Title size="sm">Filter</Title>
+      <Row>
         <Spacer width="16px" />
         <Knob
           valueLabels={{
@@ -61,7 +63,7 @@ function Filter() {
           label="Amount of Contour"
           onChange={() => {}}
         />
-      </div>
+      </Row>
     </div>
   );
 }
