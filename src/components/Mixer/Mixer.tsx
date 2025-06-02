@@ -9,12 +9,13 @@ import Row from "../Row";
 import Column from "../Column";
 import Section from "../Section";
 
-type MixerProps = {
+interface MixerProps {
   audioContext: AudioContext;
   mixerNode: AudioNode;
-};
+  disabled?: boolean;
+}
 
-function Mixer({ audioContext, mixerNode }: MixerProps) {
+function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
   const { mixer, setMixerSource } = useSynthStore();
 
   return (
@@ -36,8 +37,11 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
             step={1}
             title="Volume"
             label="Oscillator 1 Volume"
-            onChange={(v) => setMixerSource("osc1", { volume: v })}
+            onChange={
+              disabled ? () => {} : (v) => setMixerSource("osc1", { volume: v })
+            }
             size="medium"
+            disabled={disabled}
           />
           <Knob
             valueLabels={{
@@ -54,8 +58,11 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
             step={1}
             title=" "
             label="Oscillator 2 Volume"
-            onChange={(v) => setMixerSource("osc2", { volume: v })}
+            onChange={
+              disabled ? () => {} : (v) => setMixerSource("osc2", { volume: v })
+            }
             size="medium"
+            disabled={disabled}
           />
           <Knob
             valueLabels={{
@@ -72,15 +79,26 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
             step={1}
             title=" "
             label="Oscillator 3 Volume"
-            onChange={(v) => setMixerSource("osc3", { volume: v })}
+            onChange={
+              disabled ? () => {} : (v) => setMixerSource("osc3", { volume: v })
+            }
             size="medium"
+            disabled={disabled}
           />
         </Column>
-        <MuteSwitches />
+        <MuteSwitches disabled={disabled} />
 
         <div className={styles.offsetColumn}>
-          <ExternalInput audioContext={audioContext} mixerNode={mixerNode} />
-          <Noise audioContext={audioContext} mixerNode={mixerNode} />
+          <ExternalInput
+            audioContext={audioContext}
+            mixerNode={mixerNode}
+            disabled={disabled}
+          />
+          <Noise
+            audioContext={audioContext}
+            mixerNode={mixerNode}
+            disabled={disabled}
+          />
         </div>
       </Row>
       <Title>Mixer</Title>

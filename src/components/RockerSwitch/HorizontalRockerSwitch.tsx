@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./HorizontalRockerSwitch.module.css";
 import { slugify } from "@/utils/helpers";
 
@@ -14,6 +15,7 @@ type RockerSwitchProps = {
   bottomLabelRight?: string;
   theme?: "black" | "orange" | "blue" | "white";
   className?: string;
+  disabled?: boolean;
 };
 
 function HorizontalRockerSwitch({
@@ -29,12 +31,20 @@ function HorizontalRockerSwitch({
   bottomLabelCenter,
   bottomLabelRight,
   className,
+  disabled = false,
 }: RockerSwitchProps) {
   // Covert label to slug for id
   const id = slugify(label);
 
   return (
-    <div className={`${styles.switch} ${styles[theme]} ${className}`}>
+    <div
+      className={
+        styles.horizontalRockerSwitch +
+        (styles[theme] ? " " + styles[theme] : "") +
+        (disabled ? " " + styles.disabled : "")
+      }
+      style={disabled ? { opacity: 0.5, pointerEvents: "none" } : {}}
+    >
       {/* Label for screen readers */}
       <label htmlFor={id}>
         <span className="sr-only">{label}</span>
@@ -57,8 +67,9 @@ function HorizontalRockerSwitch({
           className={styles.state}
           type="checkbox"
           name="switch"
-          onChange={() => onCheckedChange(!checked)}
+          onChange={(e) => onCheckedChange(e.target.checked)}
           checked={checked}
+          disabled={disabled}
         />
         <div className={styles.control}></div>
 

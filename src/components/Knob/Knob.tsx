@@ -14,6 +14,7 @@ type KnobProps = {
   valueLabels?: Record<number, string | React.ReactElement>;
   logarithmic?: boolean;
   size?: "small" | "medium" | "large";
+  disabled?: boolean;
 };
 
 type MousePosition = {
@@ -64,6 +65,7 @@ function Knob({
   valueLabels,
   logarithmic = false,
   size = "medium",
+  disabled = false,
 }: KnobProps): React.ReactElement {
   const knobRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -81,6 +83,7 @@ function Knob({
       : value.toFixed(step >= 1 ? 0 : 2) + (unit ? ` ${unit}` : "");
 
   function handleMouseDown(e: React.MouseEvent): void {
+    if (disabled) return;
     setIsDragging(true);
     setStartY(e.clientY);
     setStartValue(value);
@@ -177,9 +180,17 @@ function Knob({
 
   return (
     <div
-      className={`${styles.knobContainer} ${
-        styles[`knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`]
-      }`}
+      className={
+        styles.knobContainer +
+        (styles[`knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`]
+          ? " " +
+            styles[
+              `knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`
+            ]
+          : "") +
+        (disabled ? " " + styles.disabled : "")
+      }
+      style={disabled ? { opacity: 0.5, pointerEvents: "none" } : {}}
     >
       <label
         htmlFor={id}
@@ -232,13 +243,14 @@ function Knob({
             ref={knobRef}
             style={{ transform: `rotate(${rotation}deg)` }}
             onMouseDown={handleMouseDown}
-            tabIndex={0}
+            tabIndex={disabled ? -1 : 0}
             role="slider"
             aria-valuemin={min}
             aria-valuemax={max}
             aria-valuenow={value}
             aria-label={label}
             aria-valuetext={ariaValueText}
+            aria-disabled={disabled}
           >
             <div className={styles.innerKnob}></div>
             <div className={styles.dot}></div>
@@ -258,17 +270,22 @@ function Knob({
             : step
         }
         value={logarithmic ? Math.log(value) : value}
-        onChange={(e) => {
-          const rawValue = Number(e.target.value);
-          const newValue = logarithmic ? Math.exp(rawValue) : rawValue;
-          // For binary switches (0/1), ensure we get exact values
-          if (min === 0 && max === 1) {
-            onChange(Math.round(newValue));
-          } else {
-            onChange(Number(newValue.toFixed(step >= 1 ? 0 : 2)));
-          }
-        }}
+        onChange={
+          disabled
+            ? undefined
+            : (e) => {
+                const rawValue = Number(e.target.value);
+                const newValue = logarithmic ? Math.exp(rawValue) : rawValue;
+                // For binary switches (0/1), ensure we get exact values
+                if (min === 0 && max === 1) {
+                  onChange(Math.round(newValue));
+                } else {
+                  onChange(Number(newValue.toFixed(step >= 1 ? 0 : 2)));
+                }
+              }
+        }
         className={styles.rangeInput}
+        disabled={disabled}
       />
     </div>
   );

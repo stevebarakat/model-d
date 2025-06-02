@@ -1,7 +1,11 @@
 import { useSynthStore } from "@/store/synthStore";
 import { HorizontalRockerSwitch } from "../RockerSwitch";
 
-function GlideSwitch() {
+interface GlideSwitchProps {
+  disabled?: boolean;
+}
+
+function GlideSwitch({ disabled = false }: GlideSwitchProps) {
   const glideOn = useSynthStore((s) => s.glideOn);
   const setGlideOn = useSynthStore((s) => s.setGlideOn);
   return (
@@ -11,7 +15,8 @@ function GlideSwitch() {
       topLabel="Glide"
       bottomLabelRight="On"
       checked={glideOn}
-      onCheckedChange={setGlideOn}
+      onCheckedChange={disabled ? () => {} : setGlideOn}
+      disabled={disabled}
     />
   );
 }

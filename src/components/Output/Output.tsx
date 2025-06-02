@@ -4,7 +4,11 @@ import Title from "../Title";
 import styles from "./Output.module.css";
 import { useSynthStore } from "@/store/synthStore";
 
-function Output() {
+interface OutputProps {
+  disabled?: boolean;
+}
+
+function Output({ disabled = false }: OutputProps) {
   const { masterVolume, setMasterVolume, isMasterActive, setIsMasterActive } =
     useSynthStore();
   return (
@@ -24,14 +28,16 @@ function Output() {
             min={0}
             max={10}
             step={0.1}
-            onChange={setMasterVolume}
+            onChange={disabled ? () => {} : setMasterVolume}
             label="Volume"
+            disabled={disabled}
           />
           <HorizontalRockerSwitch
             checked={isMasterActive}
-            onCheckedChange={setIsMasterActive}
+            onCheckedChange={disabled ? () => {} : setIsMasterActive}
             label="Main Output"
             bottomLabelRight="On"
+            disabled={disabled}
           />
         </div>
       </div>

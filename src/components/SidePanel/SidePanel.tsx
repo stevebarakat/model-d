@@ -5,19 +5,23 @@ import GlideSwitch from "../Glide/GlideSwitch";
 import DecaySwitch from "../DecaySwitch";
 import LfoRate from "../LfoRate";
 
-function SidePanel() {
+interface SidePanelProps {
+  disabled?: boolean;
+}
+
+function SidePanel({ disabled = false }: SidePanelProps) {
   return (
     <div className={styles.column}>
       <div className={styles.row}>
-        <LfoRate />
+        <LfoRate disabled={disabled} />
         <div className={styles.switches}>
-          <GlideSwitch />
-          <DecaySwitch />
+          <GlideSwitch disabled={disabled} />
+          <DecaySwitch disabled={disabled} />
         </div>
       </div>
       <div className={styles.wheels}>
-        <PitchBender />
-        <ModulationWheel />
+        <PitchBender disabled={disabled} />
+        <ModulationWheel disabled={disabled} />
       </div>
     </div>
   );

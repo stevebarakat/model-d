@@ -7,22 +7,26 @@ import Section from "../Section";
 import Column from "../Column";
 import Row from "../Row";
 
-function Controllers() {
+interface ControllersProps {
+  disabled?: boolean;
+}
+
+function Controllers({ disabled = false }: ControllersProps) {
   return (
     <Section>
       <Column>
         <Row>
-          <Tune />
+          <Tune disabled={disabled} />
         </Row>
         <Row>
-          <Glide />
+          <Glide disabled={disabled} />
           <Knob
             value={0}
             min={0}
             max={10}
             step={1}
             label="Modulation Mix"
-            onChange={() => {}}
+            onChange={disabled ? () => {} : () => {}}
             valueLabels={{
               "0": "-7",
               "1.42": "-5",
@@ -33,24 +37,27 @@ function Controllers() {
               "8.57": "5",
               "10": "7",
             }}
+            disabled={disabled}
           />
         </Row>
         <Row>
           <HorizontalRockerSwitch
             theme="blue"
             checked={false}
-            onCheckedChange={() => {}}
+            onCheckedChange={disabled ? () => {} : () => {}}
             label="Send to mod 1"
             bottomLabelLeft="Osc. 3"
             bottomLabelRight="Filter Eg"
+            disabled={disabled}
           />
           <HorizontalRockerSwitch
             theme="blue"
             checked={false}
-            onCheckedChange={() => {}}
+            onCheckedChange={disabled ? () => {} : () => {}}
             label="Send to mod 2"
             bottomLabelLeft="Noise"
             bottomLabelRight="LFO"
+            disabled={disabled}
           />
         </Row>
       </Column>

@@ -1,7 +1,11 @@
 import { useSynthStore } from "@/store/synthStore";
 import Knob from "../Knob";
 
-function Glide() {
+interface GlideProps {
+  disabled?: boolean;
+}
+
+function Glide({ disabled = false }: GlideProps) {
   const glideTime = useSynthStore((s) => s.glideTime);
   const setGlideTime = useSynthStore((s) => s.setGlideTime);
   return (
@@ -11,7 +15,7 @@ function Glide() {
       max={10}
       step={0.01}
       label="Glide Time"
-      onChange={setGlideTime}
+      onChange={disabled ? () => {} : setGlideTime}
       valueLabels={{
         "0": "0",
         "2": "2",
@@ -20,6 +24,7 @@ function Glide() {
         "8": "8",
         "10": "10",
       }}
+      disabled={disabled}
     />
   );
 }

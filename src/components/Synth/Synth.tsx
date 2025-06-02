@@ -28,11 +28,22 @@ function Synth() {
   // Create a single mixer node for all sources
   const mixerNodeRef = useRef<GainNode | null>(null);
   useEffect(() => {
-    if (!mixerNodeRef.current && audioContext) {
+    // Clean up previous mixer node if context changes or is disposed
+    if (mixerNodeRef.current) {
+      mixerNodeRef.current.disconnect();
+      mixerNodeRef.current = null;
+    }
+    if (audioContext) {
       mixerNodeRef.current = audioContext.createGain();
       mixerNodeRef.current.gain.value = 1;
       mixerNodeRef.current.connect(audioContext.destination);
     }
+    return () => {
+      if (mixerNodeRef.current) {
+        mixerNodeRef.current.disconnect();
+        mixerNodeRef.current = null;
+      }
+    };
   }, [audioContext]);
 
   // Always call hooks, pass null if not initialized

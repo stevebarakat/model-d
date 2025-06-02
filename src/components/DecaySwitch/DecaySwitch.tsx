@@ -1,6 +1,10 @@
 import { HorizontalRockerSwitch } from "../RockerSwitch";
 
-function DecaySwitch() {
+interface DecaySwitchProps {
+  disabled?: boolean;
+}
+
+function DecaySwitch({ disabled = false }: DecaySwitchProps) {
   return (
     <HorizontalRockerSwitch
       theme="white"
@@ -8,7 +12,8 @@ function DecaySwitch() {
       topLabel="Decay"
       bottomLabelRight="On"
       checked={false}
-      onCheckedChange={() => {}}
+      onCheckedChange={disabled ? () => {} : () => {}}
+      disabled={disabled}
     />
   );
 }

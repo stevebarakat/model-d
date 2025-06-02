@@ -1,6 +1,10 @@
 import Knob from "../Knob";
 
-function LFORate() {
+interface LFORateProps {
+  disabled?: boolean;
+}
+
+function LFORate({ disabled = false }: LFORateProps) {
   return (
     <Knob
       size="small"
@@ -17,7 +21,8 @@ function LFORate() {
       max={10}
       step={1}
       label="LFO Rate"
-      onChange={(v) => console.log(v)}
+      onChange={disabled ? () => {} : (v) => console.log(v)}
+      disabled={disabled}
     />
   );
 }

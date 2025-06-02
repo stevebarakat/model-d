@@ -6,14 +6,18 @@ import Title from "../Title";
 import Section from "../Section";
 import Column from "../Column";
 
-function OscillatorBank() {
+interface OscillatorBankProps {
+  disabled?: boolean;
+}
+
+function OscillatorBank({ disabled = false }: OscillatorBankProps) {
   return (
     <Section>
       <Column>
-        <OscillatorModulation />
-        <Oscillator1 />
-        <Oscillator2 />
-        <Oscillator3 />
+        <OscillatorModulation disabled={disabled} />
+        <Oscillator1 disabled={disabled} />
+        <Oscillator2 disabled={disabled} />
+        <Oscillator3 disabled={disabled} />
       </Column>
       <Title>Oscillator Bank</Title>
     </Section>

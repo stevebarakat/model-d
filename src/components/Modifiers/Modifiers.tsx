@@ -4,13 +4,17 @@ import Filter from "@/components/Filter";
 import Section from "../Section";
 import Column from "../Column";
 
-function Modifiers() {
+interface ModifiersProps {
+  disabled?: boolean;
+}
+
+function Modifiers({ disabled = false }: ModifiersProps) {
   return (
     <Section>
       <Column>
-        <Filter />
-        <FilterEnvelope />
-        <LoudnessEnvelope />
+        <Filter disabled={disabled} />
+        <FilterEnvelope disabled={disabled} />
+        <LoudnessEnvelope disabled={disabled} />
       </Column>
       <Title>Modifiers</Title>
     </Section>

@@ -18,6 +18,7 @@ type KeyboardProps = {
   onMouseDown?: () => void;
   onMouseUp?: () => void;
   synth: Synth;
+  disabled?: boolean;
 };
 
 const OCTAVE_NOTES: Note[] = [
@@ -129,6 +130,7 @@ function Keyboard({
   onMouseDown = () => {},
   onMouseUp = () => {},
   synth,
+  disabled = false,
 }: KeyboardProps) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const FIXED_OCTAVE = 4;
@@ -137,37 +139,42 @@ function Keyboard({
 
   const handleKeyPress = useCallback(
     (note: string): void => {
+      if (disabled) return;
       synth.triggerAttack(note);
       onKeyDown(note);
     },
-    [onKeyDown, synth]
+    [onKeyDown, synth, disabled]
   );
 
   const handleKeyRelease = useCallback(
     (note: string): void => {
+      if (disabled) return;
       if (note === activeKeys) {
         synth.triggerRelease(note);
         onKeyUp(note);
       }
     },
-    [onKeyUp, synth, activeKeys]
+    [onKeyUp, synth, activeKeys, disabled]
   );
 
   const handleMouseDown = useCallback((): void => {
+    if (disabled) return;
     setIsMouseDown(true);
     onMouseDown();
-  }, [onMouseDown]);
+  }, [onMouseDown, disabled]);
 
   const handleMouseUp = useCallback((): void => {
+    if (disabled) return;
     setIsMouseDown(false);
     if (activeKeys) {
       synth.triggerRelease(activeKeys);
       onKeyUp(activeKeys);
     }
     onMouseUp();
-  }, [activeKeys, onKeyUp, onMouseUp, synth]);
+  }, [activeKeys, onKeyUp, onMouseUp, synth, disabled]);
 
   const handleMouseLeave = useCallback((): void => {
+    if (disabled) return;
     if (isMouseDown) {
       setIsMouseDown(false);
       if (activeKeys) {
@@ -176,24 +183,26 @@ function Keyboard({
       }
       onMouseUp();
     }
-  }, [isMouseDown, activeKeys, onKeyUp, onMouseUp, synth]);
+  }, [isMouseDown, activeKeys, onKeyUp, onMouseUp, synth, disabled]);
 
   const handleKeyInteraction = useCallback(
     (note: string): void => {
+      if (disabled) return;
       if (isMouseDown) {
         handleKeyPress(note);
       }
     },
-    [isMouseDown, handleKeyPress]
+    [isMouseDown, handleKeyPress, disabled]
   );
 
   const handleKeyLeave = useCallback(
     (note: string): void => {
+      if (disabled) return;
       if (isMouseDown) {
         handleKeyRelease(note);
       }
     },
-    [isMouseDown, handleKeyRelease]
+    [isMouseDown, handleKeyRelease, disabled]
   );
 
   useEffect(() => {
@@ -328,7 +337,9 @@ function Keyboard({
 
   return (
     <div
-      className={styles.keyboardContainer}
+      className={
+        styles.keyboardContainer + (disabled ? " " + styles.disabled : "")
+      }
       onPointerUp={handleMouseUp}
       onPointerLeave={handleMouseLeave}
     >
