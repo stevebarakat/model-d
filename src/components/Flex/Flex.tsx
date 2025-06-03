@@ -26,7 +26,7 @@ function Flex({
         display: "flex",
         alignItems: align,
         justifyContent: justify,
-        gap,
+        gap: gap,
       }}
     >
       {children}

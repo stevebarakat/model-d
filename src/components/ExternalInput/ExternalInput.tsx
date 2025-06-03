@@ -4,6 +4,8 @@ import Overload from "../Overload";
 import { useExternalInput } from "./hooks";
 import Row from "../Row";
 import Column from "../Column";
+import Flex from "../Flex";
+import HorizontalRockerSwitch from "../RockerSwitch/HorizontalRockerSwitch";
 
 type ExternalInputProps = {
   audioContext: AudioContext;
@@ -17,29 +19,49 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
   return (
     <Column>
       <Row>
-        <Knob
-          valueLabels={{
-            0: "0",
-            2: "2",
-            4: "4",
-            6: "6",
-            8: "8",
-            10: "10",
-          }}
-          value={mixer.external.volume}
-          min={0}
-          max={10}
-          step={1}
-          label="External Input Volume"
-          onChange={(v) => setMixerExternal({ volume: v })}
-          logarithmic={true}
-          disabled={audioContext === null}
-        />
-        <Overload
-          isEnabled={mixer.external.enabled}
-          volume={mixer.external.volume}
-          audioLevel={audioLevel}
-        />
+        <Flex gap="10px">
+          <HorizontalRockerSwitch
+            theme="blue"
+            checked={mixer.external.enabled}
+            onCheckedChange={(checked) =>
+              setMixerExternal({ enabled: checked })
+            }
+            label="External Input"
+            bottomLabelRight="On"
+            disabled={audioContext === null}
+            style={{ alignSelf: "center" }}
+          />
+          <Flex>
+            <Knob
+              valueLabels={{
+                0: "0",
+                2: "2",
+                4: "4",
+                6: "6",
+                8: "8",
+                10: "10",
+              }}
+              value={mixer.external.volume}
+              min={0}
+              max={10}
+              step={1}
+              title="External Input Volume"
+              label="External Input Volume"
+              onChange={
+                audioContext === null
+                  ? () => {}
+                  : (v) => setMixerExternal({ volume: v })
+              }
+              size="medium"
+              disabled={audioContext === null || !mixer.external.enabled}
+            />
+            <Overload
+              isEnabled={mixer.external.enabled}
+              volume={mixer.external.volume}
+              audioLevel={audioLevel}
+            />
+          </Flex>
+        </Flex>
       </Row>
     </Column>
   );

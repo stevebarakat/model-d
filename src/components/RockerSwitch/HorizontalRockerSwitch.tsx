@@ -14,6 +14,7 @@ type RockerSwitchProps = {
   bottomLabelRight?: string;
   theme?: "black" | "orange" | "blue" | "white";
   disabled?: boolean;
+  style?: React.CSSProperties;
 };
 
 function HorizontalRockerSwitch({
@@ -29,6 +30,7 @@ function HorizontalRockerSwitch({
   bottomLabelCenter,
   bottomLabelRight,
   disabled = false,
+  style,
 }: RockerSwitchProps) {
   // Covert label to slug for id
   const id = slugify(label);
@@ -40,7 +42,11 @@ function HorizontalRockerSwitch({
         (styles[theme] ? " " + styles[theme] : "") +
         (disabled ? " " + styles.disabled : "")
       }
-      style={disabled ? { opacity: 0.5, pointerEvents: "none" } : {}}
+      style={
+        disabled
+          ? { opacity: 0.5, pointerEvents: "none", ...style }
+          : { ...style }
+      }
     >
       {/* Label for screen readers */}
       <label htmlFor={id}>
