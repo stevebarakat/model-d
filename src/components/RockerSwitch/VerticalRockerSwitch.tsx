@@ -4,8 +4,7 @@ type RockerSwitchProps = {
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
   label?: string;
-  theme?: "black" | "orange" | "blue";
-  orientation?: "horizontal" | "vertical";
+  theme?: "black" | "orange" | "blue" | "white";
 };
 
 function VerticalRockerSwitch({

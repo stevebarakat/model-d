@@ -1,6 +1,5 @@
-import React from "react";
 import styles from "./HorizontalRockerSwitch.module.css";
-import { slugify } from "@/utils/helpers";
+import { slugify } from "@/utils";
 
 type RockerSwitchProps = {
   checked: boolean;
@@ -14,7 +13,6 @@ type RockerSwitchProps = {
   bottomLabelCenter?: string;
   bottomLabelRight?: string;
   theme?: "black" | "orange" | "blue" | "white";
-  className?: string;
   disabled?: boolean;
 };
 
@@ -22,7 +20,7 @@ function HorizontalRockerSwitch({
   checked,
   onCheckedChange,
   label = "",
-  theme = "white",
+  theme = "black",
   topLabelLeft,
   topLabel,
   topLabelRight,
@@ -30,7 +28,6 @@ function HorizontalRockerSwitch({
   bottomLabelLeft,
   bottomLabelCenter,
   bottomLabelRight,
-  className,
   disabled = false,
 }: RockerSwitchProps) {
   // Covert label to slug for id

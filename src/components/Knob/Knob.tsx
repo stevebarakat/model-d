@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { slugify } from "@/utils/helpers";
+import { slugify } from "@/utils";
 import styles from "./Knob.module.css";
 
 type KnobProps = {
