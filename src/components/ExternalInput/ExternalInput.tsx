@@ -32,6 +32,8 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
           step={1}
           label="External Input Volume"
           onChange={(v) => setMixerExternal({ volume: v })}
+          logarithmic={true}
+          disabled={audioContext === null}
         />
         <Overload
           isEnabled={mixer.external.enabled}

@@ -33,6 +33,8 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
           step={1}
           label="Noise Volume"
           onChange={(v) => setMixerNoise({ volume: v })}
+          logarithmic={true}
+          disabled={audioContext === null}
         />
         <VerticalRockerSwitch
           checked={mixer.noise.noiseType === "pink"}
