@@ -11,17 +11,29 @@ export type OscillatorPanelProps = {
     theme?: "black" | "orange" | "blue";
   };
   children: React.ReactNode;
+  disabled?: boolean;
 };
 
 function OscillatorPanel({
   showControlSwitch = false,
   controlSwitchProps,
   children,
+  disabled = false,
 }: OscillatorPanelProps) {
   return (
     <div className={styles.row}>
       {showControlSwitch && controlSwitchProps && (
-        <VerticalRockerSwitch {...controlSwitchProps} />
+        <VerticalRockerSwitch
+          {...controlSwitchProps}
+          label="Osc. 3 Control"
+          topLabel={
+            <span>
+              Osc. 3<br />
+              Control
+            </span>
+          }
+          disabled={disabled}
+        />
       )}
       {children}
     </div>

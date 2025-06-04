@@ -5,7 +5,7 @@ type VerticalRockerSwitchProps = {
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
   label: string;
-  topLabel?: string;
+  topLabel?: string | React.ReactElement;
   leftLabel?: string;
   bottomLabel?: string;
   theme?: "black" | "orange" | "blue" | "white";

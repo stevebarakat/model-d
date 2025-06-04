@@ -56,11 +56,6 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
               onCheckedChange={(checked) =>
                 setMixerNoise({ noiseType: checked ? "white" : "pink" })
               }
-              style={
-                {
-                  // width: "100%",
-                }
-              }
               label="Noise Type"
               topLabel="White"
               bottomLabel="Pink"
