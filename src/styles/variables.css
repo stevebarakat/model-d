@@ -24,11 +24,16 @@
   --font-primary: "Urbanist", -apple-system, blinkmacsystemfont, "Segoe UI",
     roboto, oxygen, ubuntu, cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   --font-size-xxs: 0.4875rem;
+  /* --font-size-xxs: 0.5625rem; */
   --font-size-xs: 0.5625rem;
+  /* --font-size-xs: 0.625rem; */
   --font-size-sm: 0.625rem;
-  --font-size-md: 0.75rem;
-  --font-size-lg: 0.875rem;
-  --font-size-xl: 1.5rem;
+  /* --font-size-sm: 0.75rem; */
+  --font-size-md: 0.875rem;
+  /* --font-size-md: 0.875rem; */
+  /* --font-size-lg: 0.875rem; */
+  --font-size-lg: 1.5rem;
+  /* --font-size-xl: 1.5rem; */
 
   /* Transitions */
   --transition-fast: 0.2s ease;
