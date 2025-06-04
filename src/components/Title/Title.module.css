@@ -1,23 +1,22 @@
 .title {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   font-size: var(--font-size-xl);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  text-align: center;
+  /* letter-spacing: 0.05em; */
 }
 
 .small {
   font-size: var(--font-size-sm);
   font-weight: 900;
+  letter-spacing: 0.1em;
 }
 
 .medium {
   font-size: var(--font-size-md);
   font-weight: 900;
-  background-color: red;
 }
 
 .large {

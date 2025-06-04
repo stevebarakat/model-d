@@ -16,7 +16,6 @@
 
 .overloadLabel {
   position: relative;
-  font-size: var(--font-size-xs);
   font-weight: 900;
   text-transform: uppercase;
   text-align: center;

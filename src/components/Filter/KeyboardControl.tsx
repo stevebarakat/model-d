@@ -12,6 +12,7 @@ function KeyboardControl() {
           label="Keyboard Control"
           leftLabel="1"
           topLabelRight="On"
+          bottomLabel="Keyboard Control"
         />
       </div>
       <div className={styles.flexRow}>
@@ -21,7 +22,6 @@ function KeyboardControl() {
           onCheckedChange={() => {}}
           label="Keyboard Control"
           leftLabel="2"
-          topLabel="Keyboard Control"
           bottomLabelRight="On"
         />
       </div>

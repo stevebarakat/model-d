@@ -8,6 +8,7 @@ body {
   background-color: var(--color-background);
   color: var(--color-off-white);
   font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
   font-weight: 600;
 
   /* display: flex;
@@ -15,16 +16,6 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh; */
-}
-
-section {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  border-right: 2px solid var(--color-off-white);
 }
 
 /********************  */

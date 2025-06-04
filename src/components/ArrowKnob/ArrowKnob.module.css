@@ -1,11 +1,12 @@
 .knobContainer {
-  --knob-size: 55px;
+  --knob-size: 65px;
+  margin-top: var(--spacing-xl);
 
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: var(--spacing-lg) 0 calc(var(--spacing-sm) * -1);
+  border: 1px dotted aqua;
 }
 
 .knobRing {
@@ -25,6 +26,7 @@
   border-radius: 50%;
   transform: translate(-50%, -50%);
   filter: drop-shadow(0 -1px hsl(0deg 0% 0%));
+  background: red;
 }
 
 .knob {
@@ -45,51 +47,13 @@
 }
 
 .outerKnob {
-  position: relative;
-  top: -4px;
-  left: -6px;
   display: grid;
-  width: 120%;
-  height: 120%;
+  width: 100%;
+  height: 100%;
+  scale: 1.2;
   background: url("./images/arrow-knob.svg") no-repeat center center;
   border-radius: 50%;
   place-items: center;
-}
-
-.ticks {
-  position: absolute;
-  top: -12px;
-  left: -8px;
-  width: calc(var(--knob-size) + 15px);
-  height: calc(var(--knob-size) + 15px);
-  background: url("./images/arrow-ticks.svg") no-repeat center center;
-  background-size: 100% 100%;
-  pointer-events: none;
-}
-
-.label {
-  position: absolute;
-  top: calc(var(--spacing-lg) * -1);
-  font-size: var(--font-size-xs);
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.line {
-  position: absolute;
-  top: 28%;
-  left: 50.5%;
-  z-index: 5;
-  width: 1px;
-  height: 12px;
-  background: linear-gradient(
-    to bottom,
-    hsl(220deg 13% 65%),
-    hsl(220deg 13% 85%)
-  );
-  border-radius: 1px;
-  transform: translate(-50%, -100%);
-  content: "";
 }
 
 .innerKnob {
@@ -151,6 +115,39 @@
     );
     border-radius: 50%;
   }
+}
+
+.line {
+  position: absolute;
+  top: 28%;
+  left: 50.5%;
+  z-index: 5;
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(
+    to bottom,
+    hsl(220deg 13% 65%),
+    hsl(220deg 13% 85%)
+  );
+  border-radius: 1px;
+  transform: translate(-50%, -100%);
+  content: "";
+}
+
+.ticks {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  scale: 1.2;
+  background: url("./images/arrow-ticks.svg") no-repeat center center;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+.label {
+  margin-top: calc(var(--spacing-md) * -2);
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .knobValue {

@@ -28,7 +28,6 @@
   flex-direction: column;
   align-items: center;
   max-width: 8ch;
-  font-size: var(--font-size-xs);
   font-weight: 900;
   text-align: center;
   text-transform: uppercase;

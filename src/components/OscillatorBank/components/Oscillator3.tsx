@@ -75,7 +75,7 @@ export default function Oscillator3({
         max={7}
         step={1}
         label="Oscillator 3 Frequency"
-        title=" "
+        title="Oscillator - 3"
         unit=""
         onChange={handleFrequencyChange}
         valueLabels={{

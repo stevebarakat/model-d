@@ -133,7 +133,6 @@
   position: absolute;
   bottom: 102.5%;
   display: block;
-  font-size: var(--font-size-sm);
   font-weight: 900;
   text-align: center;
   text-transform: uppercase;
@@ -142,12 +141,14 @@
 
 .titleMedium,
 .labelMedium {
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.05em;
 }
 
 .labelLarge,
 .titleLarge {
   font-size: var(--font-size-md);
+  letter-spacing: 0.05em;
 }
 
 .labelHidden {

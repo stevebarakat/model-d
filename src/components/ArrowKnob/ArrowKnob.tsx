@@ -22,7 +22,7 @@ type MousePosition = {
 function getRotation(value: number, min: number, max: number): number {
   const range = max - min;
   const percentage = (value - min) / range;
-  return percentage * 120 - 60; // -60 to +60 degrees (top 120° arc)
+  return percentage * 160 - 80; // -60 to +60 degrees (top 120° arc)
 }
 
 function getDisplayValue(
@@ -89,7 +89,7 @@ function ArrowKnob({
       : value.toFixed(step >= 1 ? 0 : 2) + (unit ? ` ${unit}` : "");
 
   const knobSize = 80; // px, adjust as needed
-  const labelRadius = 46; // px, adjust for label distance from center
+  const labelRadius = 60; // px, adjust for label distance from center
   const stepValues = getStepValues(min, max, step);
 
   function handleMouseDown(e: React.MouseEvent): void {

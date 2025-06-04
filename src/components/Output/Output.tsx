@@ -3,6 +3,7 @@ import HorizontalRockerSwitch from "../RockerSwitch/HorizontalRockerSwitch";
 import Title from "../Title";
 import styles from "./Output.module.css";
 import { useSynthStore } from "@/store/synthStore";
+import Section from "../Section";
 
 interface OutputProps {
   disabled?: boolean;
@@ -12,7 +13,7 @@ function Output({ disabled = false }: OutputProps) {
   const { masterVolume, setMasterVolume, isMasterActive, setIsMasterActive } =
     useSynthStore();
   return (
-    <section>
+    <Section>
       <div className={styles.column}>
         <div className={styles.row}>
           <Knob
@@ -42,7 +43,7 @@ function Output({ disabled = false }: OutputProps) {
         </div>
       </div>
       <Title>Output</Title>
-    </section>
+    </Section>
   );
 }
 
