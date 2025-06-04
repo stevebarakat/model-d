@@ -1,7 +1,7 @@
 import styles from "./HorizontalRockerSwitch.module.css";
 import { slugify } from "@/utils";
 
-type RockerSwitchProps = {
+type HorizontalRockerSwitchProps = {
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
   label: string;
@@ -31,7 +31,7 @@ function HorizontalRockerSwitch({
   bottomLabelRight,
   disabled = false,
   style,
-}: RockerSwitchProps) {
+}: HorizontalRockerSwitchProps) {
   // Covert label to slug for id
   const id = slugify(label);
 

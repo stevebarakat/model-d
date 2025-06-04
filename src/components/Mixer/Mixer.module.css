@@ -14,15 +14,15 @@
 .offsetColumn {
   position: relative;
   top: 17%;
-  right: 10%;
+  /* right: 10%; */
   padding-right: 90px;
 }
 
-.mixerSwitches {
+/* .mixerSwitches {
   display: grid;
   grid-template-rows: repeat(5, 1fr);
   padding: 30px 0 42px 16px;
-}
+} */
 
 .label {
   position: relative;

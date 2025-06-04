@@ -1,29 +1,67 @@
 .switch {
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 3px;
-  margin-left: 8px;
-  width: 16px;
+  margin: 2px 0;
   transition: all 0.3s ease-in-out;
   user-select: none;
 }
 
-.label {
+.topLabel {
   position: relative;
-  left: 6px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -0.5em;
-  margin-bottom: 1.5em;
-  padding-bottom: 10px;
-  max-width: 8ch;
+  width: 44px;
+  font-size: var(--font-size-xs);
+  font-weight: 900;
+  text-transform: uppercase;
+
+  .left {
+    text-align: left;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .right {
+    width: 100%;
+    font-size: var(--font-size-xxs);
+    text-align: right;
+  }
+}
+
+.leftLabel {
+  position: relative;
+  top: 14px;
+  left: calc(var(--spacing-xs) * -1);
+  display: flex;
+}
+
+.bottomLabel {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  margin-top: 2px;
+  width: 44px;
   font-size: var(--font-size-xxs);
   font-weight: 900;
-  text-align: center;
   text-transform: uppercase;
+  white-space: nowrap;
+
+  .left {
+    text-align: left;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .right {
+    width: 100%;
+    text-align: right;
+  }
 }
 
 /* Base Control Styles */

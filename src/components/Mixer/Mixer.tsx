@@ -24,7 +24,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
     <Section>
       <Row>
         <Column>
-          <Flex gap="10px">
+          <Flex gap="50px">
             <Knob
               valueLabels={{
                 0: "0",
@@ -59,7 +59,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               disabled={disabled}
             />
           </Flex>
-          <Flex gap="10px">
+          <Flex gap="50px">
             <Knob
               valueLabels={{
                 0: "0",
@@ -94,7 +94,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               disabled={disabled}
             />
           </Flex>
-          <Flex gap="10px">
+          <Flex gap="50px">
             <Knob
               valueLabels={{
                 0: "0",

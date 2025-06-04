@@ -3,4 +3,5 @@
   justify-content: center;
   gap: var(--spacing-sm);
   width: 100%;
+  border: 3px dashed white;
 }

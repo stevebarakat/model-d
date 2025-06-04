@@ -19,7 +19,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
   return (
     <Column>
       <Row>
-        <Flex gap="10px">
+        <Flex gap="50px">
           <HorizontalRockerSwitch
             theme="blue"
             checked={mixer.external.enabled}
@@ -29,7 +29,11 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
             label="External Input"
             bottomLabelRight="On"
             disabled={audioContext === null}
-            style={{ alignSelf: "center" }}
+            style={{
+              alignSelf: "center",
+              position: "absolute",
+              left: "-72px",
+            }}
           />
           <Flex>
             <Knob
@@ -53,7 +57,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
                   : (v) => setMixerExternal({ volume: v })
               }
               size="medium"
-              disabled={audioContext === null || !mixer.external.enabled}
+              disabled={audioContext === null}
             />
             <Overload
               isEnabled={mixer.external.enabled}
