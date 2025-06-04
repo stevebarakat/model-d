@@ -24,22 +24,3 @@
   left: -24px;
   width: fit-content;
 }
-
-.rowColTitles {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-  text-transform: uppercase;
-  font-weight: 900;
-  width: 100%;
-}
-
-.rowTitle {
-  font-size: var(--font-size-md);
-}
-
-.colTitle {
-  font-size: var(--font-size-sm);
-}

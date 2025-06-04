@@ -13,9 +13,12 @@
 
 .offsetColumn {
   position: relative;
-  top: 17%;
-  /* right: 10%; */
-  padding-right: 90px;
+  height: fit-content;
+  top: 15%;
+  padding-right: 45px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid purple;
 }
 
 .label {

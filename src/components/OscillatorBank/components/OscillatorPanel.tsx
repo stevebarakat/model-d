@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../OscillatorBank.module.css";
 import { VerticalRockerSwitch } from "@/components/RockerSwitch";
+import Row from "@/components/Row";
 
 export type OscillatorPanelProps = {
   showControlSwitch?: boolean;
@@ -21,7 +21,7 @@ function OscillatorPanel({
   disabled = false,
 }: OscillatorPanelProps) {
   return (
-    <div className={styles.row}>
+    <Row>
       {showControlSwitch && controlSwitchProps && (
         <VerticalRockerSwitch
           {...controlSwitchProps}
@@ -36,7 +36,7 @@ function OscillatorPanel({
         />
       )}
       {children}
-    </div>
+    </Row>
   );
 }
 

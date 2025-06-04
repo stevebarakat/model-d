@@ -12,7 +12,7 @@ import {
 } from "../icons/WaveformIcons";
 import { OscillatorWaveform, OscillatorRange } from "@/store/types/synth";
 import Spacer from "@/components/Spacer";
-
+import Title from "@/components/Title";
 const waveforms: OscillatorWaveform[] = [
   "triangle",
   "tri_saw",
@@ -58,10 +58,8 @@ export default function Oscillator1({
         disabled={disabled}
       />
       <Spacer width="35%">
-        <div className={styles.rowColTitles}>
-          <div className={styles.rowTitle}>Oscillator - 1</div>
-          <div className={styles.colTitle}>Frequency</div>
-        </div>
+        <Title size="md">Oscillator - 1</Title>
+        <Title size="sm">Frequency</Title>
       </Spacer>
       <ArrowKnob
         value={waveforms.indexOf(oscillator1.waveform)}
