@@ -6,7 +6,7 @@ import { styles } from "@/components/Modifiers";
 import Row from "../Row";
 import Title from "../Title";
 
-function Filter() {
+function Filter({ disabled = false }: { disabled?: boolean }) {
   return (
     <div className={styles.container}>
       <div className={styles.filterSwitches}>
@@ -32,6 +32,7 @@ function Filter() {
           max={10}
           step={0.5}
           label="Cutoff Frequency"
+          disabled={disabled}
           onChange={() => {}}
         />
         <Knob
@@ -48,6 +49,7 @@ function Filter() {
           max={10}
           step={1}
           label="Emphasis"
+          disabled={disabled}
           onChange={() => {}}
         />
         <Knob
@@ -71,6 +73,7 @@ function Filter() {
             </span>
           }
           label="Amount of Contour"
+          disabled={disabled}
           onChange={() => {}}
         />
       </Row>

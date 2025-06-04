@@ -3,7 +3,7 @@ import Spacer from "../Spacer";
 import Row from "../Row";
 import Section from "../Section";
 
-function FilterEnvelope() {
+function FilterEnvelope({ disabled = false }: { disabled?: boolean }) {
   return (
     <Section>
       <Row>
@@ -27,6 +27,7 @@ function FilterEnvelope() {
           max={10}
           step={1}
           label="Attack Time"
+          disabled={disabled}
           onChange={() => {}}
         />
         <Knob
@@ -43,6 +44,7 @@ function FilterEnvelope() {
           max={10}
           step={1}
           label="Decay Time"
+          disabled={disabled}
           onChange={() => {}}
         />
         <Knob
@@ -59,6 +61,7 @@ function FilterEnvelope() {
           max={10}
           step={1}
           label="Sustain Level"
+          disabled={disabled}
           onChange={() => {}}
         />
       </Row>

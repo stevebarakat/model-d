@@ -5,7 +5,7 @@ import Row from "../Row";
 import Title from "../Title";
 import FlexY from "../FlexY";
 
-function LoudnessEnvelope() {
+function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
   return (
     <FlexY>
       <Title size="md">
@@ -30,6 +30,7 @@ function LoudnessEnvelope() {
             step={1}
             label="Attack Time"
             onChange={() => {}}
+            disabled={disabled}
           />
           <Knob
             valueLabels={{
@@ -46,6 +47,7 @@ function LoudnessEnvelope() {
             step={1}
             label="Decay Time"
             onChange={() => {}}
+            disabled={disabled}
           />
           <Knob
             valueLabels={{
@@ -62,6 +64,7 @@ function LoudnessEnvelope() {
             step={1}
             label="Sustain Level"
             onChange={() => {}}
+            disabled={disabled}
           />
         </Row>
       </div>
