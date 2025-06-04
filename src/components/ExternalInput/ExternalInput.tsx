@@ -19,7 +19,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
   return (
     <Column>
       <Row>
-        <Flex gap="50px">
+        <Flex>
           <HorizontalRockerSwitch
             theme="blue"
             checked={mixer.external.enabled}

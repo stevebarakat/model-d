@@ -23,7 +23,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
     <Section>
       <Row>
         <Column>
-          <Flex gap="50px">
+          <Flex>
             <Knob
               valueLabels={{
                 0: "0",
@@ -58,7 +58,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               disabled={disabled}
             />
           </Flex>
-          <Flex gap="50px">
+          <Flex>
             <Knob
               valueLabels={{
                 0: "0",
@@ -72,7 +72,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               min={0}
               max={10}
               step={1}
-              title="Volume"
+              title=" "
               label="Oscillator 2 Volume"
               onChange={
                 disabled
@@ -93,7 +93,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               disabled={disabled}
             />
           </Flex>
-          <Flex gap="50px">
+          <Flex>
             <Knob
               valueLabels={{
                 0: "0",
@@ -107,7 +107,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               min={0}
               max={10}
               step={1}
-              title="Volume"
+              title=" "
               label="Oscillator 3 Volume"
               onChange={
                 disabled

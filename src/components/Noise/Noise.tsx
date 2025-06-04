@@ -18,7 +18,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
   return (
     <Column>
       <Row>
-        <Flex gap="50px">
+        <Flex>
           <HorizontalRockerSwitch
             theme="blue"
             checked={mixer.noise.enabled}

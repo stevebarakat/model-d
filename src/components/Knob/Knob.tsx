@@ -59,7 +59,7 @@ function Knob({
   max,
   step = 1,
   label,
-  title = null,
+  title = "",
   unit = "",
   onChange,
   valueLabels,
