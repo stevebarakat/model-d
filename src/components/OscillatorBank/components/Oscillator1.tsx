@@ -47,6 +47,7 @@ export default function Oscillator1({
 
   return (
     <OscillatorPanel>
+      <Spacer width="24px" />
       <ArrowKnob
         value={ranges.indexOf(oscillator1.range)}
         min={0}
