@@ -142,6 +142,7 @@
 
 .titleMedium,
 .labelMedium {
+  white-space: nowrap;
   font-size: var(--font-size-sm);
   letter-spacing: 0.05em;
 }
