@@ -27,7 +27,6 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
             bottomLabelRight="On"
             disabled={audioContext === null}
             style={{
-              alignSelf: "center",
               position: "absolute",
               left: "-72px",
             }}
@@ -57,9 +56,11 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
               onCheckedChange={(checked) =>
                 setMixerNoise({ noiseType: checked ? "white" : "pink" })
               }
-              style={{
-                width: "100%",
-              }}
+              style={
+                {
+                  // width: "100%",
+                }
+              }
               label="Noise Type"
               topLabel="White"
               bottomLabel="Pink"

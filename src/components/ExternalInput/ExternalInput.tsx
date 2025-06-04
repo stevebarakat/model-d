@@ -30,7 +30,6 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
             bottomLabelRight="On"
             disabled={audioContext === null}
             style={{
-              alignSelf: "center",
               position: "absolute",
               left: "-72px",
             }}
@@ -58,6 +57,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
               isEnabled={mixer.external.enabled}
               volume={mixer.external.volume}
               audioLevel={audioLevel}
+              disabled={audioContext === null}
             />
           </Flex>
         </Flex>

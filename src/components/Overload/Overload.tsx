@@ -5,9 +5,10 @@ interface OverloadProps {
   isEnabled: boolean;
   volume: number;
   audioLevel: number;
+  disabled: boolean;
 }
 
-function Overload({ isEnabled, volume, audioLevel }: OverloadProps) {
+function Overload({ isEnabled, volume, audioLevel, disabled }: OverloadProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Initialize canvas size
@@ -68,7 +69,9 @@ function Overload({ isEnabled, volume, audioLevel }: OverloadProps) {
   }, [isEnabled, volume, audioLevel]);
 
   return (
-    <div className={styles.overloadContainer}>
+    <div
+      className={`${styles.overloadContainer} ${disabled && styles.disabled}`}
+    >
       <div className={styles.overloadLabel}>Overload</div>
       <div className={styles.overloadBackground}>
         <canvas ref={canvasRef} className={styles.overload} />

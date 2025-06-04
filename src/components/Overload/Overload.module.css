@@ -8,7 +8,10 @@
   align-items: center;
   width: var(--overload-size);
   height: var(--overload-size);
-  width: 100%;
+  left: 15%;
+  &.disabled {
+    opacity: 0.5;
+  }
 }
 
 .overloadLabel {
