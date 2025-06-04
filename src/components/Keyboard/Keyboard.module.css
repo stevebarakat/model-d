@@ -7,7 +7,7 @@
 .keyboard {
   padding: 0 3px;
 
-  /* background: var(--color-off-black); */
+  background: var(--color-off-black);
 }
 
 .pianoKeys {

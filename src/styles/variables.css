@@ -6,18 +6,9 @@
 
 :root {
   /* Color System */
-  --color-red: hsl(350deg 40% 20%);
-  --color-deep-rose: hsl(320deg 40% 20% / 90%);
-  --color-amber: hsl(45deg 40% 20%);
-  --color-warm-amber: hsl(35deg 50% 20% / 90%);
-  --color-emerald: hsl(160deg 40% 20%);
-  --color-rich-emerald: hsl(150deg 40% 20% / 90%);
-  --color-warm-red: hsl(15deg 50% 20% / 90%);
-  --color-vibrant-blue: hsl(210deg 50% 20% / 90%);
-  --color-deep-purple: hsl(270deg 40% 20% / 90%);
   --color-background: hsl(0deg 0% 10%);
-  --color-off-black: hsl(217deg 32% 5%);
-  --color-off-white: hsl(220deg 13% 100% / 60%);
+  --color-off-black: hsl(0deg 0% 5%);
+  --color-off-white: hsl(0deg 0% 100% / 60%);
 
   /* Synth UI Colors */
   --synth-borders: hsl(218deg 40% 10%);

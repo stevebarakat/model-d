@@ -1,5 +1,4 @@
 import { useSynthStore } from "@/store/synthStore";
-import MuteSwitches from "./MuteSwitches";
 import Knob from "../Knob";
 import Title from "../Title";
 import styles from "./Mixer.module.css";
@@ -130,8 +129,6 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
             />
           </Flex>
         </Column>
-        {/* <MuteSwitches /> */}
-
         <div className={styles.offsetColumn}>
           <ExternalInput audioContext={audioContext} mixerNode={mixerNode} />
           <Noise audioContext={audioContext} mixerNode={mixerNode} />

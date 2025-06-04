@@ -35,7 +35,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
               left: "-72px",
             }}
           />
-          <Flex justify="space-between">
+          <Flex>
             <Knob
               valueLabels={{
                 0: "0",
@@ -49,14 +49,9 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
               min={0}
               max={10}
               step={1}
-              title="External Input Volume"
               label="External Input Volume"
-              onChange={
-                audioContext === null
-                  ? () => {}
-                  : (v) => setMixerExternal({ volume: v })
-              }
-              size="medium"
+              onChange={(v) => setMixerExternal({ volume: v })}
+              logarithmic={true}
               disabled={audioContext === null}
             />
             <Overload
