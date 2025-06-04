@@ -35,7 +35,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
               left: "-72px",
             }}
           />
-          <Flex>
+          <Flex justify="space-between">
             <Knob
               valueLabels={{
                 0: "0",

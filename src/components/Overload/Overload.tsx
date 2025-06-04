@@ -69,6 +69,7 @@ function Overload({ isEnabled, volume, audioLevel }: OverloadProps) {
 
   return (
     <div className={styles.overloadContainer}>
+      <div className={styles.overloadLabel}>Overload</div>
       <div className={styles.overloadBackground}>
         <canvas ref={canvasRef} className={styles.overload} />
       </div>
