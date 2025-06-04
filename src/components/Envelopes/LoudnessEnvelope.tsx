@@ -7,7 +7,7 @@ import Title from "../Title";
 function LoudnessEnvelope() {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <Title>Loudness Contour</Title>
+      <Title size="md">Loudness Contour</Title>
       <div className={styles.container}>
         <Spacer width="24px" style={{ backgroundColor: "red" }} />
         <Row>

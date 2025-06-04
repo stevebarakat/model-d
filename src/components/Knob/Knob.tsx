@@ -180,17 +180,9 @@ function Knob({
 
   return (
     <div
-      className={
-        styles.knobContainer +
-        (styles[`knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`]
-          ? " " +
-            styles[
-              `knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`
-            ]
-          : "") +
-        (disabled ? " " + styles.disabled : "")
-      }
-      style={disabled ? { opacity: 0.5, pointerEvents: "none" } : {}}
+      className={`${styles.knobContainer} ${disabled && styles.disabled} ${
+        styles[`knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`]
+      }`}
     >
       <label
         htmlFor={id}

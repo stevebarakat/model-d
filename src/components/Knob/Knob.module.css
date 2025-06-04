@@ -4,6 +4,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }
 
 .knobContainerSmall {
@@ -138,13 +142,12 @@
 
 .titleMedium,
 .labelMedium {
-  max-width: 15ch;
+  max-width: 13ch;
   font-size: var(--font-size-xs);
 }
 
 .labelLarge,
 .titleLarge {
-  max-width: 18ch;
   font-size: var(--font-size-md);
 }
 
