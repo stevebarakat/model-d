@@ -1,11 +1,11 @@
 .knobContainer {
   --knob-size: 65px;
-  margin-top: var(--spacing-xl);
 
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: var(--spacing-xl);
   border: 1px dotted aqua;
 }
 
@@ -23,10 +23,10 @@
     hsl(0deg 0% 0% / 50%) 35%,
     hsl(0deg 0% 5% / 100%) 100%
   );
+  background: red;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   filter: drop-shadow(0 -1px hsl(0deg 0% 0%));
-  background: red;
 }
 
 .knob {

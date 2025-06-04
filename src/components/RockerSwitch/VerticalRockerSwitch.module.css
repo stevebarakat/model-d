@@ -10,30 +10,31 @@
 
 .topLabel {
   position: relative;
-  font-weight: 900;
-  text-transform: uppercase;
-  text-align: center;
   margin-bottom: 1.5rem;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .bottomLabel {
   position: relative;
-  font-weight: 900;
-  text-transform: uppercase;
-  text-align: center;
   margin-top: 1.5rem;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 /* Base Control Styles */
 .control {
-  --border-color: hsl(0, 0%, 0%);
-  box-shadow: 0 0 0px 2px hsl(0 0% 100% / 0.1);
+  --border-color: hsl(0deg 0% 0%);
+
   display: inline-block;
   width: 54px;
   height: 22px;
   background-color: #fafafa;
   border: none;
   border-radius: 0.15em;
+  box-shadow: 0 0 0 2px hsl(0deg 0% 100% / 10%);
   cursor: pointer;
   rotate: 90deg;
   box-sizing: border-box;

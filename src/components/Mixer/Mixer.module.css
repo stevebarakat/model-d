@@ -13,11 +13,11 @@
 
 .offsetColumn {
   position: relative;
-  height: fit-content;
   top: 15%;
-  padding-right: 45px;
   display: flex;
   flex-direction: column;
+  padding-right: 45px;
+  height: fit-content;
   border: 1px solid purple;
 }
 
