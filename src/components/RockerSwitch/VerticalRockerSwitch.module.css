@@ -1,4 +1,4 @@
-.switch {
+.verticalRockerSwitch {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -30,13 +30,6 @@
     font-size: var(--font-size-xxs);
     text-align: right;
   }
-}
-
-.leftLabel {
-  position: relative;
-  top: 14px;
-  left: calc(var(--spacing-xs) * -1);
-  display: flex;
 }
 
 .bottomLabel {
