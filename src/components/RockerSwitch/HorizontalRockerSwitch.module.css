@@ -12,7 +12,7 @@
 .topLabel {
   position: relative;
   display: flex;
-  width: calc(var(--switch-width) + 10px);
+  width: var(--switch-width);
   font-weight: 900;
   font-size: var(--font-size-xs);
   text-transform: uppercase;
@@ -47,20 +47,26 @@
 .bottomLabel {
   position: relative;
   display: flex;
-  /* gap: 10px; */
+  gap: 10px;
   margin-top: 4px;
   width: calc(var(--switch-width) + 10px);
   font-size: var(--font-size-xs);
   font-weight: 900;
   text-transform: uppercase;
+  white-space: nowrap;
 
   .left {
     text-align: left;
   }
 
   .center {
+    background-color: red;
     text-align: center;
+    width: 100%;
     font-size: var(--font-size-sm);
+    display: flex;
+    justify-content: center;
+    white-space: wrap;
   }
 
   .right {
