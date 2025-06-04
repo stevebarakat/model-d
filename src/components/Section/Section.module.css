@@ -4,7 +4,6 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin: 20px 0;
-  border: 3px dashed green;
+  padding: 20px 0;
   border-right: 2px solid var(--color-off-white);
 }
