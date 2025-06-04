@@ -3,14 +3,18 @@ import Spacer from "../Spacer";
 import { styles } from "@/components/Modifiers";
 import Row from "../Row";
 import Title from "../Title";
+import FlexY from "../FlexY";
 
 function LoudnessEnvelope() {
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <Title size="md">Loudness Contour</Title>
+    <FlexY>
+      <Title size="md">
+        <Spacer width="24px" />
+        Loudness Contour
+      </Title>
       <div className={styles.container}>
-        <Spacer width="24px" style={{ backgroundColor: "red" }} />
         <Row>
+          <Spacer width="13px" />
           <Knob
             valueLabels={{
               0: "0",
@@ -61,7 +65,7 @@ function LoudnessEnvelope() {
           />
         </Row>
       </div>
-    </div>
+    </FlexY>
   );
 }
 

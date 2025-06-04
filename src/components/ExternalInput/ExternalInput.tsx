@@ -49,6 +49,13 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
               max={10}
               step={1}
               label="External Input Volume"
+              title={
+                <span>
+                  External
+                  <br />
+                  Input Volume
+                </span>
+              }
               onChange={(v) => setMixerExternal({ volume: v })}
               logarithmic={true}
               disabled={audioContext === null}

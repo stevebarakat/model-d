@@ -1,13 +1,11 @@
 import Knob from "../Knob";
 import Spacer from "../Spacer";
 import Row from "../Row";
-import Title from "../Title";
 import Section from "../Section";
 
 function FilterEnvelope() {
   return (
     <Section>
-      <Title size="sm">Filter Contour</Title>
       <Row>
         <Spacer width="16px" />
         <Knob

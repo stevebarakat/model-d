@@ -13,7 +13,10 @@ function Filter() {
         <ModulationSwitch />
         <KeyboardControl />
       </div>
-      <Title size="sm">Filter</Title>
+      <Title size="md">
+        <Spacer width="28px" />
+        Filter
+      </Title>
       <Row>
         <Spacer width="16px" />
         <Knob
@@ -60,6 +63,13 @@ function Filter() {
           min={0}
           max={10}
           step={1}
+          title={
+            <span>
+              Amount
+              <br />
+              of Contour
+            </span>
+          }
           label="Amount of Contour"
           onChange={() => {}}
         />

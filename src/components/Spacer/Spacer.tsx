@@ -1,3 +1,5 @@
+import styles from "./Spacer.module.css";
+
 function Spacer({
   width = "100%",
   height = "100%",
@@ -9,7 +11,11 @@ function Spacer({
   children?: React.ReactNode;
   style?: React.CSSProperties;
 }) {
-  return <div style={{ width, height, ...style }}>{children}</div>;
+  return (
+    <div className={styles.spacer} style={{ width, height, ...style }}>
+      {children}
+    </div>
+  );
 }
 
 export default Spacer;

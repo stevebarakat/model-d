@@ -8,7 +8,7 @@ type KnobProps = {
   max: number;
   step?: number;
   label: string;
-  title?: string | null;
+  title?: string | React.ReactElement | null;
   unit?: string;
   onChange: (value: number) => void;
   valueLabels?: Record<number, string | React.ReactElement>;
