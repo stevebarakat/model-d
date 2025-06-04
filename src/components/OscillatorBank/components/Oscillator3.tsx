@@ -30,7 +30,11 @@ const waveformIcons = [
 ];
 const ranges: OscillatorRange[] = ["lo", "32", "16", "8", "4", "2"];
 
-export default function Oscillator3() {
+export default function Oscillator3({
+  disabled = false,
+}: {
+  disabled?: boolean;
+}) {
   const { oscillator3, setOscillator3 } = useSynthStore();
 
   function handleWaveformChange(value: number) {
@@ -62,6 +66,7 @@ export default function Oscillator3() {
         hideLabel={true}
         onChange={handleRangeChange}
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
+        disabled={disabled}
       />
       <Knob
         size="large"
@@ -70,7 +75,7 @@ export default function Oscillator3() {
         max={7}
         step={1}
         label="Oscillator 3 Frequency"
-        title="Oscillator 3"
+        title=" "
         unit=""
         onChange={handleFrequencyChange}
         valueLabels={{
@@ -83,6 +88,7 @@ export default function Oscillator3() {
           "5": "5",
           "7": "7",
         }}
+        disabled={disabled}
       />
       <ArrowKnob
         value={waveforms.indexOf(oscillator3.waveform)}
@@ -96,6 +102,7 @@ export default function Oscillator3() {
           (acc, icon, i) => ({ ...acc, [i]: icon }),
           {}
         )}
+        disabled={disabled}
       />
     </OscillatorPanel>
   );

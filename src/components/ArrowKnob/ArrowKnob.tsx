@@ -11,6 +11,7 @@ type ArrowKnobProps = {
   unit?: string;
   onChange: (value: number) => void;
   valueLabels: Record<number, string | React.ReactElement>;
+  disabled?: boolean;
 };
 
 type MousePosition = {
@@ -71,6 +72,7 @@ function ArrowKnob({
   unit = "",
   onChange,
   valueLabels,
+  disabled = false,
 }: ArrowKnobProps): React.ReactElement {
   const knobRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -178,7 +180,12 @@ function ArrowKnob({
   return (
     <div
       className={styles.knobContainer}
-      style={{ position: "relative", width: knobSize, height: knobSize }}
+      style={{
+        position: "relative",
+        width: knobSize,
+        height: knobSize,
+        opacity: disabled ? 0.5 : 1,
+      }}
     >
       {/* Value labels around the knob */}
       {stepValues.map((v) => {

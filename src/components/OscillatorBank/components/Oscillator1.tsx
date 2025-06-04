@@ -31,7 +31,11 @@ const waveformIcons = [
 ];
 const ranges: OscillatorRange[] = ["lo", "32", "16", "8", "4", "2"];
 
-export default function Oscillator1() {
+export default function Oscillator1({
+  disabled = false,
+}: {
+  disabled?: boolean;
+}) {
   const { oscillator1, setOscillator1 } = useSynthStore();
 
   function handleWaveformChange(value: number) {
@@ -51,6 +55,7 @@ export default function Oscillator1() {
         label="Range"
         onChange={handleRangeChange}
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
+        disabled={disabled}
       />
       <Spacer width="35%">
         <div className={styles.rowColTitles}>
@@ -69,6 +74,7 @@ export default function Oscillator1() {
           (acc, icon, i) => ({ ...acc, [i]: icon }),
           {}
         )}
+        disabled={disabled}
       />
     </OscillatorPanel>
   );
