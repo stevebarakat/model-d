@@ -44,9 +44,7 @@ function VerticalRockerSwitch({
         <span className="sr-only">{label}</span>
 
         {/* Top Label */}
-        <div className={`${styles.topLabel}`}>
-          {topLabel && <span className={styles.center}>{topLabel}</span>}
-        </div>
+        <div className={`${styles.topLabel}`}>{topLabel}</div>
 
         {/* Switch Input */}
         <input
@@ -61,9 +59,7 @@ function VerticalRockerSwitch({
         <div className={styles.control}></div>
 
         {/* Bottom Label */}
-        <div className={`${styles.bottomLabel}`}>
-          {bottomLabel && <span className={styles.center}>{bottomLabel}</span>}
-        </div>
+        <div className={`${styles.bottomLabel}`}>{bottomLabel}</div>
       </label>
     </div>
   );
