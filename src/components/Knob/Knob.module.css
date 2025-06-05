@@ -23,7 +23,6 @@
 
   width: calc(var(--knob-size) * 1.75);
   height: calc(var(--knob-size) * 1.75);
-  border: 1px solid red;
 }
 
 .knobContainerLarge {
@@ -31,7 +30,6 @@
 
   width: calc(var(--knob-size) * 1.75);
   height: calc(var(--knob-size) * 1.75);
-  border: 1px solid green;
 }
 
 .knobRing {
