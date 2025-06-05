@@ -5,15 +5,22 @@ import { useSynthStore } from "@/store/synthStore";
 import Section from "../Section";
 import Column from "../Column";
 import Row from "../Row";
-import LedIndicator from "../LedIndicator";
 
 interface OutputProps {
   disabled?: boolean;
 }
 
 function Output({ disabled = false }: OutputProps) {
-  const { masterVolume, setMasterVolume, isMasterActive, setIsMasterActive } =
-    useSynthStore();
+  const {
+    masterVolume,
+    setMasterVolume,
+    isMasterActive,
+    setIsMasterActive,
+    phonesVolume = 0,
+    setPhonesVolume = () => {},
+    isPhonesActive = false,
+    setIsPhonesActive = () => {},
+  } = useSynthStore();
   return (
     <Section>
       <Column style={{ gap: "var(--spacing-md)" }}>
@@ -40,6 +47,7 @@ function Output({ disabled = false }: OutputProps) {
             checked={isMasterActive}
             onCheckedChange={disabled ? () => {} : setIsMasterActive}
             label="Main Output"
+            topLabel="Main&nbsp;Output"
             bottomLabelRight="On"
             disabled={disabled}
           />
@@ -49,8 +57,8 @@ function Output({ disabled = false }: OutputProps) {
             theme="blue"
             checked={false}
             onCheckedChange={disabled ? () => {} : () => {}}
-            label="Send to mod 1"
-            topLabel="Limiter"
+            label="A - 440"
+            topLabel="A - 440"
             bottomLabelRight="On"
             disabled={disabled}
           />
@@ -65,19 +73,22 @@ function Output({ disabled = false }: OutputProps) {
               8: "8",
               10: "10",
             }}
-            value={10}
+            value={phonesVolume}
             min={0}
             max={10}
             step={0.1}
-            onChange={() => {}}
-            label="Amount"
+            onChange={disabled ? () => {} : setPhonesVolume}
+            label="Phones Volume"
+            title="Volume"
             disabled={disabled}
           />
-          <LedIndicator
-            label="Overload"
-            isEnabled={false}
-            volume={10}
-            audioLevel={10}
+          <HorizontalRockerSwitch
+            theme="blue"
+            checked={isPhonesActive}
+            onCheckedChange={disabled ? () => {} : setIsPhonesActive}
+            label="Enable Headphones"
+            topLabel="Phones"
+            bottomLabelRight="On"
             disabled={disabled}
           />
         </Row>
