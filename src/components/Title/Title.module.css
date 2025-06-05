@@ -5,6 +5,7 @@
   font-size: var(--font-size-xl);
   font-weight: 500;
   text-transform: uppercase;
+  height: 1.5rem;
 
   /* letter-spacing: 0.05em; */
 }

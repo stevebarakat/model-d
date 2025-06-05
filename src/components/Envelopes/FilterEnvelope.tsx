@@ -5,7 +5,7 @@ import Section from "../Section";
 
 function FilterEnvelope({ disabled = false }: { disabled?: boolean }) {
   return (
-    <Section>
+    <>
       <Row>
         <Spacer width="16px" />
         <Knob
@@ -65,7 +65,7 @@ function FilterEnvelope({ disabled = false }: { disabled?: boolean }) {
           onChange={() => {}}
         />
       </Row>
-    </Section>
+    </>
   );
 }
 

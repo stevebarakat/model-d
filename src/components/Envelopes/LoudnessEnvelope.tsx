@@ -1,18 +1,17 @@
 import Knob from "../Knob";
 import Spacer from "../Spacer";
-import { styles } from "@/components/Modifiers";
 import Row from "../Row";
 import Title from "../Title";
-import FlexY from "../FlexY";
+import Column from "../Column";
 
 function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
   return (
-    <FlexY>
+    <Column style={{ borderTop: "2px solid var(--color-off-white)" }}>
       <Title size="md">
         <Spacer width="24px" />
         Loudness Contour
       </Title>
-      <div className={styles.container}>
+      <Column>
         <Row>
           <Spacer width="13px" />
           <Knob
@@ -67,8 +66,8 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
             disabled={disabled}
           />
         </Row>
-      </div>
-    </FlexY>
+      </Column>
+    </Column>
   );
 }
 

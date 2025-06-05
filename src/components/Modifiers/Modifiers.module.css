@@ -1,21 +1,14 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  border: 1px solid rgb(166 255 0);
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid rgb(166 255 0);
+  padding: 0.5rem;
 
   &:last-of-type {
     border-top: 2px solid var(--color-off-white);
   }
-}
-
-.flexRow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  font-weight: 900;
-  text-transform: uppercase;
 }
 
 .label {
@@ -32,15 +25,6 @@
 
 .filterSwitches {
   position: absolute;
-  top: 56px;
-  left: -40px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 14px;
-}
-
-.modSwitch {
-  position: relative;
-  top: -10px;
+  top: 65px;
+  left: -30px;
 }

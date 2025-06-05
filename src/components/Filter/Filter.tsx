@@ -8,7 +8,7 @@ import Title from "../Title";
 
 function Filter({ disabled = false }: { disabled?: boolean }) {
   return (
-    <div className={styles.container}>
+    <div>
       <div className={styles.filterSwitches}>
         <ModulationSwitch />
         <KeyboardControl />
