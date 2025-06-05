@@ -34,12 +34,30 @@
   border: 1px solid green;
 }
 
+.knobRing {
+  position: absolute;
+  top: calc(50% - 32.5px);
+  z-index: 0;
+  width: calc(var(--knob-size) + 5px);
+  height: calc(var(--knob-size) + 5px);
+  background: linear-gradient(
+    to bottom,
+    hsl(0deg 0% 70% / 50%) 0%,
+    hsl(0deg 0% 25% / 50%) 65%,
+    hsl(0deg 0% 0% / 50%) 35%,
+    hsl(0deg 0% 5% / 100%) 100%
+  );
+  border: 2px solid #0f0f0f;
+  border-radius: 50%;
+  filter: drop-shadow(0 -1px hsl(0deg 0% 0%));
+}
+
 .knob {
   position: relative;
   width: var(--knob-size);
   height: var(--knob-size);
   border-radius: 50%;
-  filter: drop-shadow(0 -1px 0 hsl(0deg 0% 50% / 50%));
+  /* filter: drop-shadow(0 -5px 0 hsl(0deg 0% 30% / 95%)); */
 }
 
 .knobBtm {
@@ -48,20 +66,45 @@
   left: 0;
   width: var(--knob-size);
   height: var(--knob-size);
-  filter: drop-shadow(0 1px 1px hsl(0deg 0% 0% / 95%));
+  filter: drop-shadow(0 1px 1px 1px hsl(0deg 0% 50% / 50%));
 }
 
 .outerKnob {
   position: absolute;
-  z-index: 1;
+  z-index: 5;
   display: grid;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  left: 2.5%;
+  width: 95%;
+  height: 95%;
   background: url("./images/knob-bg.svg") no-repeat center center;
   border: none;
   border-radius: 50%;
   cursor: pointer;
   place-items: center;
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    background-image: conic-gradient(
+      hsl(0deg 0% 90%),
+      hsl(0deg 0% 100%),
+      hsl(0deg 0% 30%),
+      hsl(0deg 0% 80%),
+      hsl(0deg 0% 50%),
+      hsl(0deg 0% 90%),
+      hsl(0deg 0% 100%),
+      hsl(0deg 0% 30%),
+      hsl(0deg 0% 80%),
+      hsl(0deg 0% 50%),
+      hsl(0deg 0% 90%)
+    );
+    border-radius: 50%;
+  }
 }
 
 .dot {
@@ -99,21 +142,19 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: conic-gradient(
-      from 59.5deg at 50% 50%,
-      hsl(180deg 0% 68%) 0%,
-      hsl(180deg 0% 30%) 16.5%,
-      hsl(240deg 0% 28%) 16.5%,
-      hsl(240deg 0% 78%) 33%,
-      hsl(180deg 0% 68%) 33%,
-      hsl(180deg 0% 30%) 49.5%,
-      hsl(240deg 0% 28%) 49.5%,
-      hsl(240deg 0% 78%) 66%,
-      hsl(180deg 0% 68%) 66%,
-      hsl(180deg 0% 30%) 83.5%,
-      hsl(240deg 0% 28%) 83.5%,
-      hsl(240deg 0% 78%) 100%
-    );
+    /* background-image: conic-gradient(
+      hsl(0deg 0% 90%),
+      hsl(0deg 0% 100%),
+      hsl(0deg 0% 30%),
+      hsl(0deg 0% 80%),
+      hsl(0deg 0% 50%),
+      hsl(0deg 0% 90%),
+      hsl(0deg 0% 100%),
+      hsl(0deg 0% 30%),
+      hsl(0deg 0% 80%),
+      hsl(0deg 0% 50%),
+      hsl(0deg 0% 90%)
+    ); */
     border-radius: 50%;
   }
 }

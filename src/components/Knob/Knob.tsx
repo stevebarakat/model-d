@@ -201,6 +201,7 @@ function Knob({
           {title}
         </span>
       )}
+      <div className={styles.knobRing}></div>
       <div className={styles.ticks}></div>
       <div className={styles.knob}>
         {/* Value labels around the knob */}
