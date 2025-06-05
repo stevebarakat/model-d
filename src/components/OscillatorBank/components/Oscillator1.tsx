@@ -1,7 +1,6 @@
 import { useSynthStore } from "@/store/synthStore";
 import OscillatorPanel from "./OscillatorPanel";
 import ArrowKnob from "@/components/ArrowKnob";
-import styles from "../OscillatorBank.module.css";
 import {
   TriangleIcon,
   TriSawIcon,
@@ -47,7 +46,7 @@ export default function Oscillator1({
 
   return (
     <OscillatorPanel>
-      <Spacer width="24px" />
+      <Spacer width="54px" />
       <ArrowKnob
         value={ranges.indexOf(oscillator1.range)}
         min={0}
@@ -58,7 +57,7 @@ export default function Oscillator1({
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
         disabled={disabled}
       />
-      <Spacer width="35%">
+      <Spacer width="35%" style={{ marginTop: "-100px" }}>
         <Title size="md">Oscillator - 1</Title>
         <Title size="sm">Frequency</Title>
       </Spacer>

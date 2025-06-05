@@ -1,6 +1,7 @@
 .row {
   display: flex;
-  justify-content: center;
-  gap: var(--spacing-sm);
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
+  border: 3px dashed darkorange;
 }

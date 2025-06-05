@@ -8,7 +8,6 @@ import Row from "../Row";
 import Column from "../Column";
 import Section from "../Section";
 import HorizontalRockerSwitch from "../RockerSwitch/HorizontalRockerSwitch";
-import Flex from "../Flex";
 
 interface MixerProps {
   audioContext: AudioContext;
@@ -23,7 +22,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
     <Section>
       <Row>
         <Column>
-          <Flex>
+          <Row>
             <Knob
               valueLabels={{
                 0: "0",
@@ -57,8 +56,8 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               bottomLabelRight="On"
               disabled={disabled}
             />
-          </Flex>
-          <Flex>
+          </Row>
+          <Row>
             <Knob
               valueLabels={{
                 0: "0",
@@ -92,8 +91,8 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               bottomLabelRight="On"
               disabled={disabled}
             />
-          </Flex>
-          <Flex>
+          </Row>
+          <Row>
             <Knob
               valueLabels={{
                 0: "0",
@@ -127,7 +126,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               bottomLabelRight="On"
               disabled={disabled}
             />
-          </Flex>
+          </Row>
         </Column>
         <div className={styles.offsetColumn}>
           <ExternalInput audioContext={audioContext} mixerNode={mixerNode} />

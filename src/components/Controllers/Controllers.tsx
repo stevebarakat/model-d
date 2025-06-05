@@ -6,7 +6,6 @@ import Glide from "../Glide";
 import Section from "../Section";
 import Column from "../Column";
 import Row from "../Row";
-import Flex from "../Flex";
 
 interface ControllersProps {
   disabled?: boolean;
@@ -14,10 +13,10 @@ interface ControllersProps {
 
 function Controllers({ disabled = false }: ControllersProps) {
   return (
-    <Section style={{ marginTop: "3.25em" }}>
-      <Column>
+    <Section style={{ paddingTop: "9.5em" }}>
+      <Column style={{ gap: "0.5em" }}>
         <Tune disabled={disabled} />
-        <Row>
+        <Row style={{ gap: "0.05em" }}>
           <Glide disabled={disabled} />
           <Knob
             value={0}
@@ -39,7 +38,7 @@ function Controllers({ disabled = false }: ControllersProps) {
             disabled={disabled}
           />
         </Row>
-        <Flex justify="space-around">
+        <Row justify="space-around">
           <HorizontalRockerSwitch
             theme="blue"
             checked={false}
@@ -58,7 +57,7 @@ function Controllers({ disabled = false }: ControllersProps) {
             bottomLabelRight="LFO"
             disabled={disabled}
           />
-        </Flex>
+        </Row>
       </Column>
       <Title>Controllers</Title>
     </Section>

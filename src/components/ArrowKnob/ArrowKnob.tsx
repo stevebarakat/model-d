@@ -183,7 +183,7 @@ function ArrowKnob({
       style={{
         position: "relative",
         width: knobSize,
-        height: knobSize,
+        // height: knobSize,
         opacity: disabled ? 0.5 : 1,
       }}
     >

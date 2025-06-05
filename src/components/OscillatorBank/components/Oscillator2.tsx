@@ -11,6 +11,7 @@ import {
   NarrowPulseIcon,
 } from "../icons/WaveformIcons";
 import { OscillatorWaveform, OscillatorRange } from "@/store/types/synth";
+import Spacer from "@/components/Spacer/Spacer";
 
 const waveforms: OscillatorWaveform[] = [
   "triangle",
@@ -49,6 +50,7 @@ export default function Oscillator2({
 
   return (
     <OscillatorPanel>
+      <Spacer width="54px" />
       <ArrowKnob
         value={ranges.indexOf(oscillator2.range)}
         min={0}

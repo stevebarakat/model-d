@@ -4,7 +4,6 @@ import { HorizontalRockerSwitch, VerticalRockerSwitch } from "../RockerSwitch";
 import Column from "../Column";
 import Row from "../Row";
 import Knob from "../Knob";
-import Flex from "../Flex";
 
 type NoiseProps = {
   audioContext: AudioContext;
@@ -18,7 +17,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
   return (
     <Column>
       <Row>
-        <Flex>
+        <Row>
           <HorizontalRockerSwitch
             theme="blue"
             checked={mixer.noise.enabled}
@@ -31,7 +30,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
               left: "-72px",
             }}
           />
-          <Flex>
+          <Row>
             <Knob
               valueLabels={{
                 0: "0",
@@ -61,8 +60,8 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
               bottomLabel="Pink"
               disabled={audioContext === null}
             />
-          </Flex>
-        </Flex>
+          </Row>
+        </Row>
       </Row>
     </Column>
   );
