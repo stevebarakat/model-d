@@ -1,14 +1,21 @@
 import { useRef, useEffect } from "react";
-import styles from "./Overload.module.css";
+import styles from "./LedIndicator.module.css";
 
-interface OverloadProps {
+interface LedIndicatorProps {
   isEnabled: boolean;
   volume: number;
   audioLevel: number;
   disabled: boolean;
+  label?: string;
 }
 
-function Overload({ isEnabled, volume, audioLevel, disabled }: OverloadProps) {
+function LedIndicator({
+  isEnabled,
+  volume,
+  audioLevel,
+  disabled,
+  label,
+}: LedIndicatorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Initialize canvas size
@@ -72,7 +79,7 @@ function Overload({ isEnabled, volume, audioLevel, disabled }: OverloadProps) {
     <div
       className={`${styles.overloadContainer} ${disabled && styles.disabled}`}
     >
-      <div className={styles.overloadLabel}>Overload</div>
+      <div className={styles.overloadLabel}>{label}</div>
       <div className={styles.overloadBackground}>
         <canvas ref={canvasRef} className={styles.overload} />
       </div>
@@ -80,4 +87,4 @@ function Overload({ isEnabled, volume, audioLevel, disabled }: OverloadProps) {
   );
 }
 
-export default Overload;
+export default LedIndicator;

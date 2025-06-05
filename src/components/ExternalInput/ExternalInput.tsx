@@ -1,6 +1,6 @@
 import { useSynthStore } from "@/store/synthStore";
 import Knob from "../Knob";
-import Overload from "../Overload";
+import LedIndicator from "../LedIndicator";
 import { useExternalInput } from "./hooks";
 import Row from "../Row";
 import HorizontalRockerSwitch from "../RockerSwitch/HorizontalRockerSwitch";
@@ -53,7 +53,8 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
         logarithmic={true}
         disabled={audioContext === null}
       />
-      <Overload
+      <LedIndicator
+        label="Signal"
         isEnabled={mixer.external.enabled}
         volume={mixer.external.volume}
         audioLevel={audioLevel}

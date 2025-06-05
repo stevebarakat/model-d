@@ -40,7 +40,6 @@ function Controllers({ disabled = false }: ControllersProps) {
         </Row>
         <Row justify="space-around">
           <HorizontalRockerSwitch
-            theme="blue"
             checked={false}
             onCheckedChange={disabled ? () => {} : () => {}}
             label="Send to mod 1"
@@ -49,7 +48,6 @@ function Controllers({ disabled = false }: ControllersProps) {
             disabled={disabled}
           />
           <HorizontalRockerSwitch
-            theme="blue"
             checked={false}
             onCheckedChange={disabled ? () => {} : () => {}}
             label="Send to mod 2"
