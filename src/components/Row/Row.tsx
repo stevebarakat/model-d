@@ -1,7 +1,7 @@
 import styles from "./Row.module.css";
 
 interface RowProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   align?: "center" | "flex-start" | "flex-end" | "stretch" | "baseline";
   justify?:
     | "center"
