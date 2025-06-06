@@ -1,24 +1,23 @@
 import ModulationSwitch from "@/components/Filter/ModulationSwitch";
 import KeyboardControl from "@/components/Filter/KeyboardControl";
 import Knob from "../Knob";
-import Spacer from "../Spacer";
 import { styles } from "@/components/Modifiers";
 import Row from "../Row";
 import Title from "../Title";
 
-function Filter({ disabled = false }: { disabled?: boolean }) {
+type FilterProps = {
+  disabled?: boolean;
+};
+
+function Filter({ disabled = false }: FilterProps) {
   return (
     <div>
       <div className={styles.filterSwitches}>
         <ModulationSwitch />
         <KeyboardControl />
       </div>
-      <Title size="md">
-        {/* <Spacer width="28px" /> */}
-        Filter
-      </Title>
+      <Title size="md">Filter</Title>
       <Row>
-        {/* <Spacer width="16px" /> */}
         <Knob
           valueLabels={{
             0: "-4",
