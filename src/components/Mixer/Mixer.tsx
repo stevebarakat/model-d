@@ -1,7 +1,6 @@
 import { useSynthStore } from "@/store/synthStore";
 import Knob from "../Knob";
 import Title from "../Title";
-import styles from "./Mixer.module.css";
 import Noise from "../Noise";
 import ExternalInput from "../ExternalInput";
 import Row from "../Row";
@@ -21,7 +20,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
   return (
     <Section>
       <Row>
-        <Column>
+        <Column gap="4px">
           <Row>
             <Knob
               valueLabels={{
@@ -47,6 +46,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               disabled={disabled}
             />
             <HorizontalRockerSwitch
+              style={{ left: "15px" }}
               theme="blue"
               checked={mixer.osc1.enabled}
               onCheckedChange={(checked) =>
@@ -82,6 +82,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               disabled={disabled}
             />
             <HorizontalRockerSwitch
+              style={{ left: "15px" }}
               theme="blue"
               checked={mixer.osc2.enabled}
               onCheckedChange={(checked) =>
@@ -117,6 +118,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               disabled={disabled}
             />
             <HorizontalRockerSwitch
+              style={{ left: "15px" }}
               theme="blue"
               checked={mixer.osc3.enabled}
               onCheckedChange={(checked) =>
@@ -128,10 +130,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
             />
           </Row>
         </Column>
-        <div className={styles.offsetColumn}>
+        <Column style={{ paddingRight: "45px", left: "35px" }}>
           <ExternalInput audioContext={audioContext} mixerNode={mixerNode} />
           <Noise audioContext={audioContext} mixerNode={mixerNode} />
-        </div>
+        </Column>
       </Row>
       <Title>Mixer</Title>
     </Section>
