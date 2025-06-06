@@ -1,6 +1,5 @@
 .switches {
   position: relative;
-  top: calc(var(--spacing-xl) * -1);
   display: flex;
   flex-direction: column;
   width: fit-content;

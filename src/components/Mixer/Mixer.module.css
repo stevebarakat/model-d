@@ -1,20 +1,7 @@
 .offsetColumn {
   position: relative;
-  /* top: 15%; */
   display: flex;
   flex-direction: column;
   padding-right: 45px;
   height: fit-content;
-}
-
-.label {
-  position: relative;
-  left: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 8ch;
-  font-weight: 900;
-  text-align: center;
-  text-transform: uppercase;
 }
