@@ -14,11 +14,11 @@ function Filter({ disabled = false }: { disabled?: boolean }) {
         <KeyboardControl />
       </div>
       <Title size="md">
-        <Spacer width="28px" />
+        {/* <Spacer width="28px" /> */}
         Filter
       </Title>
       <Row>
-        <Spacer width="16px" />
+        {/* <Spacer width="16px" /> */}
         <Knob
           valueLabels={{
             0: "-4",

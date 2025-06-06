@@ -6,14 +6,14 @@ import Column from "../Column";
 
 function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
   return (
-    <Column style={{ borderTop: "2px solid var(--color-off-white)" }}>
+    <Column>
       <Title size="md">
-        <Spacer width="24px" />
+        {/* <Spacer width="24px" /> */}
         Loudness Contour
       </Title>
       <Column>
         <Row>
-          <Spacer width="13px" />
+          {/* <Spacer width="13px" /> */}
           <Knob
             valueLabels={{
               0: "0",

@@ -1,13 +1,12 @@
 import Knob from "../Knob";
 import Spacer from "../Spacer";
 import Row from "../Row";
-import Section from "../Section";
 
 function FilterEnvelope({ disabled = false }: { disabled?: boolean }) {
   return (
     <>
       <Row>
-        <Spacer width="16px" />
+        {/* <Spacer width="16px" /> */}
         <Knob
           valueLabels={{
             0: "m-sec.",

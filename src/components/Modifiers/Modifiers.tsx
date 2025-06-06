@@ -11,7 +11,7 @@ interface ModifiersProps {
 function Modifiers({ disabled = false }: ModifiersProps) {
   return (
     <Section>
-      <Column>
+      <Column style={{ paddingLeft: "2.5rem" }}>
         <Filter disabled={disabled} />
         <FilterEnvelope disabled={disabled} />
         <LoudnessEnvelope disabled={disabled} />
