@@ -13,10 +13,10 @@ interface ControllersProps {
 
 function Controllers({ disabled = false }: ControllersProps) {
   return (
-    <Section style={{ paddingTop: "9.5em" }}>
-      <Column style={{ gap: "0.5em" }}>
+    <Section style={{ padding: "6.5rem var(--spacing-xs) 0" }}>
+      <Column gap="var(--spacing-xs)">
         <Tune disabled={disabled} />
-        <Row style={{ gap: "0.05em" }}>
+        <Row gap="0.25rem">
           <Glide disabled={disabled} />
           <Knob
             value={0}
@@ -26,14 +26,12 @@ function Controllers({ disabled = false }: ControllersProps) {
             label="Modulation Mix"
             onChange={disabled ? () => {} : () => {}}
             valueLabels={{
-              "0": "-7",
-              "1.42": "-5",
-              "2.85": "-3",
-              "4.28": "-1",
-              "5.71": "1",
-              "7.14": "3",
-              "8.57": "5",
-              "10": "7",
+              "0": "0",
+              "2": "2",
+              "4": "4",
+              "6": "6",
+              "8": "8",
+              "10": "10",
             }}
             disabled={disabled}
           />

@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 1px solid red;
 
   &.disabled {
     opacity: 0.5;
@@ -19,7 +20,7 @@
 }
 
 .knobContainerMedium {
-  --knob-size: 57px;
+  --knob-size: 55px;
 
   width: calc(var(--knob-size) * 1.75);
   height: calc(var(--knob-size) * 1.75);
@@ -205,7 +206,7 @@
 }
 
 .valueLabel {
-  font-size: var(--font-size-xxs);
+  font-size: var(--font-size-xx);
   font-weight: 700;
   user-select: none;
   text-align: center;

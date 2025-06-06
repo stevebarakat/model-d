@@ -5,16 +5,24 @@
 }
 
 html {
-  /* Improve consistency of default fonts in all browsers. */
-  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji";
-  line-height: 1.15; /* Correct the line height in all browsers. */
-  -moz-osx-font-smoothing: grayscale; /* Improve font rendering */
-  -webkit-font-smoothing: antialiased; /* Improve font rendering */
-  -webkit-text-size-adjust: 100%; /* Prevent adjustments of font size after orientation changes in iOS. */
+  font-family: system-ui, -apple-system, blinkmacsystemfont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+body,
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
 
 body {
-  margin: 0; /* Remove the margin in all browsers. */
-  vertical-align: baseline; /* Correct the inheritance of border-style */
+  margin: 0;
+  vertical-align: baseline;
+  font: inherit;
 }

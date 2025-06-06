@@ -181,9 +181,7 @@ function ArrowKnob({
     <div
       className={styles.knobContainer}
       style={{
-        position: "relative",
         width: knobSize,
-        // height: knobSize,
         opacity: disabled ? 0.5 : 1,
       }}
     >
