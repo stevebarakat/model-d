@@ -22,7 +22,6 @@ import Power from "../Power";
 function Synth() {
   const { activeKeys, setActiveKeys, masterVolume, isMasterActive } =
     useSynthStore();
-  console.log("[Synth] isMasterActive:", isMasterActive);
 
   const { audioContext, isInitialized, initialize, dispose } =
     useAudioContext();
@@ -101,7 +100,7 @@ function Synth() {
         mixerNode.gain.setValueAtTime(gain, audioContext.currentTime);
       }
     }
-  }, [masterVolume, isMasterActive, audioContext]);
+  }, [masterVolume, isMasterActive, audioContext, mixerNode]);
 
   return (
     <div className={styles.synthContainer}>

@@ -21,7 +21,6 @@ export default function Output({ disabled = false }: OutputProps) {
     isPhonesActive = false,
     setIsPhonesActive = () => {},
   } = useSynthStore();
-  console.log("[Output] isMasterActive:", isMasterActive);
   return (
     <Section>
       <Column
@@ -53,10 +52,6 @@ export default function Output({ disabled = false }: OutputProps) {
               disabled
                 ? () => {}
                 : (checked) => {
-                    console.log(
-                      "[Output] Main Output switch toggled:",
-                      checked
-                    );
                     setIsMasterActive(checked);
                   }
             }
