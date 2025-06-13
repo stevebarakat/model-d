@@ -1,5 +1,4 @@
 import Knob from "../Knob";
-import Spacer from "../Spacer";
 import Row from "../Row";
 import Title from "../Title";
 import Column from "../Column";
@@ -7,13 +6,11 @@ import Column from "../Column";
 function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
   return (
     <Column>
-      <Title size="md">
-        {/* <Spacer width="24px" /> */}
+      <Title disabled={disabled} size="md">
         Loudness Contour
       </Title>
       <Column>
         <Row>
-          {/* <Spacer width="13px" /> */}
           <Knob
             valueLabels={{
               0: "0",
