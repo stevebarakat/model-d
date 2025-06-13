@@ -4,9 +4,6 @@
   --color-off-black: hsl(0deg 0% 5%);
   --color-off-white: hsl(0deg 0% 100% / 60%);
 
-  /* Synth UI Colors */
-  --synth-borders: hsl(218deg 40% 10%);
-
   /* Spacing System */
   --spacing-xs: 0.5rem;
   --spacing-sm: 0.75rem;
@@ -15,7 +12,7 @@
   --spacing-xl: 1.5rem;
 
   /* Typography */
-  --font-primary: "Urbanist", sans-serif;
+  --font-primary: "Futura", sans-serif;
   --font-size-xs: 0.4875rem;
   --font-size-sm: 0.6625rem;
   --font-size-md: 0.75rem;

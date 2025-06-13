@@ -18,6 +18,7 @@ function Filter({ disabled = false }: FilterProps) {
       </div>
       <Title size="md">Filter</Title>
       <Row>
+        {/* <Spacer width="16px" /> */}
         <Knob
           valueLabels={{
             0: "-4",

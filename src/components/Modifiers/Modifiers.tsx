@@ -12,12 +12,12 @@ interface ModifiersProps {
 function Modifiers({ disabled = false }: ModifiersProps) {
   return (
     <Section>
-      <Column style={{ paddingLeft: "2.5rem" }}>
+      <Column style={{ paddingLeft: "2.5rem", paddingRight: "0.5rem" }}>
         <Filter disabled={disabled} />
         <FilterEnvelope disabled={disabled} />
       </Column>
       <Row style={{ borderTop: "2px solid var(--color-off-white)" }} />
-      <Column style={{ paddingLeft: "2.5rem" }}>
+      <Column style={{ paddingLeft: "2.5rem", paddingRight: "0.5rem" }}>
         <LoudnessEnvelope disabled={disabled} />
       </Column>
       <Title>Modifiers</Title>

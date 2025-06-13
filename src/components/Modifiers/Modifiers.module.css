@@ -1,5 +1,5 @@
 .filterSwitches {
   position: absolute;
-  /* top: 65px; */
   left: -30px;
+  border: 2px solid blueviolet;
 }

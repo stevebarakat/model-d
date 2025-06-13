@@ -49,19 +49,19 @@ function HorizontalRockerSwitch({
       }
     >
       {/* Label for screen readers */}
-      <label htmlFor={id}>
-        <span className="sr-only">{label}</span>
+      <label htmlFor={id} className="sr-only">
+        {label}
       </label>
 
       {/* Top Label */}
-      <div className={`${styles.topLabel}`}>
+      <div className={styles.topLabel}>
         {topLabelLeft && <span className={styles.left}>{topLabelLeft}</span>}
         {topLabel && <span className={styles.center}>{topLabel}</span>}
         {topLabelRight && <span className={styles.right}>{topLabelRight}</span>}
       </div>
 
       {/* Left Label */}
-      {leftLabel && <span className={styles.leftLabel}>{leftLabel}</span>}
+      {/* {leftLabel && <span className={styles.leftLabel}>{leftLabel}</span>} */}
 
       {/* Switch Input */}
       <input

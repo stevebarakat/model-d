@@ -7,7 +7,7 @@
 html {
   font-family: system-ui, -apple-system, blinkmacsystemfont, "Segoe UI", Roboto,
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  line-height: 1.15;
+  line-height: 1;
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
