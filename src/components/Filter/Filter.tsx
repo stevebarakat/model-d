@@ -14,7 +14,7 @@ function Filter({ disabled = false }: FilterProps) {
     <div>
       <div className={styles.filterSwitches}>
         <ModulationSwitch disabled={disabled} />
-        <KeyboardControl />
+        <KeyboardControl disabled={disabled} />
       </div>
       <Title disabled={disabled} size="md">
         Filter
