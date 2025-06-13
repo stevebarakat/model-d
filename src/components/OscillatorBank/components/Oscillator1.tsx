@@ -1,7 +1,6 @@
 import { useSynthStore } from "@/store/synthStore";
 import OscillatorPanel from "./OscillatorPanel";
 import ArrowKnob from "@/components/ArrowKnob/ArrowKnob";
-import Knob from "@/components/Knob/Knob";
 import {
   TriangleIcon,
   TriSawIcon,
@@ -45,9 +44,6 @@ export default function Oscillator2({
   function handleRangeChange(value: number) {
     setOscillator1({ range: ranges[Math.round(value)] });
   }
-  function handleFrequencyChange(value: number) {
-    setOscillator1({ frequency: value });
-  }
 
   return (
     <OscillatorPanel position={1}>
@@ -67,28 +63,6 @@ export default function Oscillator2({
         <Title size="md">Oscillator - 1</Title>
         <Title size="sm">Frequency</Title>
       </Spacer>
-      {/* <Knob
-        size="large"
-        value={oscillator1.frequency}
-        min={-7}
-        max={7}
-        step={1}
-        label="Oscillator 1 Frequency"
-        title="Oscillator - 1"
-        unit=""
-        onChange={handleFrequencyChange}
-        valueLabels={{
-          "-7": "-7",
-          "-5": "-5",
-          "-3": "-3",
-          "-1": "-1",
-          "1": "1",
-          "3": "3",
-          "5": "5",
-          "7": "7",
-        }}
-        disabled={disabled}
-      /> */}
       <ArrowKnob
         value={waveforms.indexOf(oscillator1.waveform)}
         min={0}
