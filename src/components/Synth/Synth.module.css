@@ -4,7 +4,7 @@
   margin: 0 auto;
   width: 100%;
   max-width: 1600px;
-  background: url("/images/minimoog-template.png") no-repeat center center;
+  /* background: url("/images/minimoog-template.png") no-repeat center center; */
   background-size: cover;
   aspect-ratio: 16 / 9;
   user-select: none;

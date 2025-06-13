@@ -1,18 +1,15 @@
 import Section from "../Section";
 import Column from "../Column";
 import Row from "../Row";
-import PowerButton from "../PowerButton";
 
-function Power() {
+function Power({ children }: { children: React.ReactNode }) {
   return (
     <Section>
       <Column
         gap="var(--spacing-xl)"
         style={{ paddingLeft: "0.5rem", paddingRight: "0.5rem" }}
       >
-        <Row gap="var(--spacing-md)">
-          <PowerButton isOn={true} onPowerOn={() => {}} onPowerOff={() => {}} />
-        </Row>
+        <Row gap="var(--spacing-md)">{children}</Row>
       </Column>
     </Section>
   );
