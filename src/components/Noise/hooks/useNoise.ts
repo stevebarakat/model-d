@@ -18,12 +18,6 @@ export function useNoise(
     let cancelled = false;
 
     async function setup() {
-      console.log("Noise setup:", {
-        enabled: mixer.noise.enabled,
-        volume: mixer.noise.volume,
-        audioContext,
-        activeKeys,
-      });
       if (!audioContext || !mixer.noise.enabled || !activeKeys) return;
       const moduleUrl =
         mixer.noise.noiseType === "pink"
@@ -34,17 +28,13 @@ export function useNoise(
       gainRef.current = audioContext.createGain();
       const initialGain = mixer.noise.volume / 10;
       gainRef.current.gain.value = isFinite(initialGain) ? initialGain : 0;
-      console.log(
-        "Noise gain node connected, value:",
-        gainRef.current.gain.value
-      );
+
       noiseRef.current = new AudioWorkletNode(
         audioContext,
         mixer.noise.noiseType === "pink"
           ? "pink-noise-processor"
           : "white-noise-processor"
       );
-      console.log("Noise node created:", noiseRef.current);
       noiseRef.current.connect(gainRef.current);
       if (mixerNode) {
         gainRef.current.connect(mixerNode);

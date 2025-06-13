@@ -41,7 +41,6 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
                 disabled
                   ? () => {}
                   : (v) => {
-                      console.log("Osc1 volume changed to", v);
                       setMixerSource("osc1", { volume: v });
                     }
               }
@@ -53,7 +52,6 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               theme="blue"
               checked={mixer.osc1.enabled}
               onCheckedChange={(checked) => {
-                console.log("Osc1 enabled changed to", checked);
                 setMixerSource("osc1", { enabled: checked });
               }}
               label="Oscillator 1"
@@ -81,7 +79,6 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
                 disabled
                   ? () => {}
                   : (v) => {
-                      console.log("Osc2 volume changed to", v);
                       setMixerSource("osc2", { volume: v });
                     }
               }
@@ -93,7 +90,6 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               theme="blue"
               checked={mixer.osc2.enabled}
               onCheckedChange={(checked) => {
-                console.log("Osc2 enabled changed to", checked);
                 setMixerSource("osc2", { enabled: checked });
               }}
               label="Oscillator 2"
@@ -121,7 +117,6 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
                 disabled
                   ? () => {}
                   : (v) => {
-                      console.log("Osc3 volume changed to", v);
                       setMixerSource("osc3", { volume: v });
                     }
               }
@@ -133,7 +128,6 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               theme="blue"
               checked={mixer.osc3.enabled}
               onCheckedChange={(checked) => {
-                console.log("Osc3 enabled changed to", checked);
                 setMixerSource("osc3", { enabled: checked });
               }}
               label="Oscillator 3"

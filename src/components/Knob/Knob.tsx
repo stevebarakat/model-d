@@ -84,10 +84,8 @@ function Knob({
 
   function handleMouseDown(e: React.MouseEvent): void {
     if (disabled) {
-      console.log("Knob disabled, ignoring mouseDown");
       return;
     }
-    console.log("Knob mouseDown:", { clientY: e.clientY, value });
     setIsDragging(true);
     setStartY(e.clientY);
     setStartValue(value);
@@ -96,7 +94,6 @@ function Knob({
   const handleMouseMove = useCallback(
     (e: MousePosition): void => {
       if (!isDragging) {
-        console.log("Knob not dragging, ignoring mouseMove");
         return;
       }
 
@@ -105,15 +102,6 @@ function Knob({
       const deltaY = (startY - e.clientY) * sensitivity;
       const range = max - min;
       let newValue;
-
-      console.log("Knob mouseMove:", {
-        startY,
-        currentY: e.clientY,
-        deltaY,
-        startValue,
-        sensitivity,
-        logarithmic,
-      });
 
       if (logarithmic) {
         const logMin = Math.log(min);
@@ -132,18 +120,6 @@ function Knob({
         const effectiveStep = Math.max(0.01, step);
         const steps = Math.round((newValue - min) / effectiveStep);
         newValue = min + steps * effectiveStep;
-
-        console.log("Knob logarithmic calculation:", {
-          logMin,
-          logMax,
-          logRange,
-          logStartValue,
-          logDelta,
-          logNewValue,
-          newValue,
-          effectiveStep,
-          steps,
-        });
       } else {
         newValue = Math.min(
           max,
@@ -156,16 +132,6 @@ function Knob({
 
       // Ensure we don't go below min or above max
       newValue = Math.min(max, Math.max(min, newValue));
-
-      console.log("Knob final value:", {
-        effectiveStep: logarithmic ? Math.max(0.01, step) : step,
-        steps: logarithmic
-          ? Math.round((newValue - min) / Math.max(0.01, step))
-          : Math.round(newValue / step),
-        newValue,
-        min,
-        max,
-      });
 
       // Round to appropriate precision based on step size
       const precision = step < 0.1 ? 2 : step < 1 ? 1 : 0;
@@ -207,7 +173,6 @@ function Knob({
     if (!isDragging) return;
 
     function handleMouseUp(): void {
-      console.log("Knob mouseUp");
       setIsDragging(false);
     }
 

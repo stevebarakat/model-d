@@ -74,7 +74,6 @@ export function useOscillator1(
 
   useEffect(() => {
     if (oscillatorRef.current) {
-      console.log("[Osc1] Updating gain:", enabled, volume);
       oscillatorRef.current.getGainNode().gain.value = enabled
         ? volume / 10
         : 0;

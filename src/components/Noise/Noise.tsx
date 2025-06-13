@@ -14,8 +14,6 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
   const { mixer, setMixerNoise } = useSynthStore();
   useNoise(audioContext, mixerNode);
 
-  console.log("Noise audioContext:", audioContext);
-
   return (
     <Column>
       <Row>
@@ -50,7 +48,6 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
               step={1}
               label="Noise Volume"
               onChange={(v) => {
-                console.log("Noise knob changed to", v);
                 setMixerNoise({ volume: v });
               }}
               logarithmic={false}
