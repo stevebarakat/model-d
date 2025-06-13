@@ -15,6 +15,7 @@ export function useOscillator1(
   const oscillatorRef = useRef<Osc1Instance | null>(null);
   const { oscillator1, masterTune, glideOn, glideTime } = useSynthStore();
   const lastFrequencyRef = useRef<number | null>(null);
+  const { enabled, volume } = useSynthStore((s) => s.mixer.osc1);
 
   const triggerAttack = useCallback(
     (note: string) => {
@@ -73,20 +74,12 @@ export function useOscillator1(
 
   useEffect(() => {
     if (oscillatorRef.current) {
-      console.log(
-        "[Osc1] Updating gain:",
-        useSynthStore.getState().mixer.osc1.enabled,
-        useSynthStore.getState().mixer.osc1.volume
-      );
-      oscillatorRef.current.getGainNode().gain.value = useSynthStore.getState()
-        .mixer.osc1.enabled
-        ? useSynthStore.getState().mixer.osc1.volume / 10
+      console.log("[Osc1] Updating gain:", enabled, volume);
+      oscillatorRef.current.getGainNode().gain.value = enabled
+        ? volume / 10
         : 0;
     }
-  }, [
-    useSynthStore.getState().mixer.osc1.enabled,
-    useSynthStore.getState().mixer.osc1.volume,
-  ]);
+  }, [enabled, volume]);
 
   useEffect(() => {
     if (oscillatorRef.current) {
