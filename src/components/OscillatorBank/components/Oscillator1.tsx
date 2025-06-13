@@ -60,8 +60,12 @@ export default function Oscillator2({
         disabled={disabled}
       />
       <Spacer width="35%" style={{ marginTop: "-100px" }}>
-        <Title size="md">Oscillator - 1</Title>
-        <Title size="sm">Frequency</Title>
+        <Title size="md" disabled={disabled}>
+          Oscillator - 1
+        </Title>
+        <Title size="sm" disabled={disabled}>
+          Frequency
+        </Title>
       </Spacer>
       <ArrowKnob
         value={waveforms.indexOf(oscillator1.waveform)}
