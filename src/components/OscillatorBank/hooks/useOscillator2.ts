@@ -12,10 +12,11 @@ export function useOscillator2(
   audioContext: AudioContext | null,
   mixerNode?: AudioNode | null
 ): UseOscillator2Result {
-  const { oscillator2, mixer, glideOn, glideTime, masterTune } =
+  const { oscillator2, mixer, glideOn, glideTime, masterTune, pitchWheel } =
     useSynthStore();
   const oscRef = useRef<Osc2Instance | null>(null);
   const lastFrequencyRef = useRef<number | null>(null);
+  const lastNoteRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (!audioContext) {
@@ -61,9 +62,14 @@ export function useOscillator2(
   const triggerAttack = useCallback(
     (note: string) => {
       if (!audioContext || !oscRef.current) return;
+      lastNoteRef.current = note;
       const baseFreq = noteToFrequency(note) * Math.pow(2, masterTune / 12);
       const detuneSemis = oscillator2.frequency || 0;
-      const freq = baseFreq * Math.pow(2, detuneSemis / 12);
+      const bendSemis = ((pitchWheel - 50) / 50) * 2;
+      const freq = baseFreq * Math.pow(2, (detuneSemis + bendSemis) / 12);
+      console.log(
+        `[Osc2] note: ${note}, baseFreq: ${baseFreq}, detuneSemis: ${detuneSemis}, bendSemis: ${bendSemis}, finalFreq: ${freq}`
+      );
       const oscNode = oscRef.current.getNode();
       if (!oscNode) {
         if (glideOn && lastFrequencyRef.current !== null) {
@@ -92,13 +98,36 @@ export function useOscillator2(
       }
       lastFrequencyRef.current = freq;
     },
-    [oscillator2.frequency, glideOn, glideTime, audioContext, masterTune]
+    [
+      oscillator2.frequency,
+      glideOn,
+      glideTime,
+      audioContext,
+      masterTune,
+      pitchWheel,
+    ]
   );
 
   const triggerRelease = useCallback(() => {
     if (!audioContext || !oscRef.current) return;
     oscRef.current?.stop();
   }, [audioContext]);
+
+  useEffect(() => {
+    if (oscRef.current && lastNoteRef.current) {
+      const baseFreq =
+        noteToFrequency(lastNoteRef.current) * Math.pow(2, masterTune / 12);
+      const detuneSemis = oscillator2.frequency || 0;
+      const bendSemis = ((pitchWheel - 50) / 50) * 2;
+      const freq = baseFreq * Math.pow(2, (detuneSemis + bendSemis) / 12);
+      oscRef.current
+        .getNode()
+        ?.frequency.setValueAtTime(freq, audioContext?.currentTime || 0);
+      console.log(
+        `[Osc2-PB] Real-time update: note: ${lastNoteRef.current}, baseFreq: ${baseFreq}, detuneSemis: ${detuneSemis}, bendSemis: ${bendSemis}, finalFreq: ${freq}`
+      );
+    }
+  }, [pitchWheel]);
 
   if (!audioContext) {
     return {
