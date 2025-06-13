@@ -31,7 +31,7 @@ const waveformIcons = [
 ];
 const ranges: OscillatorRange[] = ["lo", "32", "16", "8", "4", "2"];
 
-export default function Oscillator2({
+export default function Oscillator1({
   disabled = false,
 }: {
   disabled?: boolean;
@@ -46,7 +46,7 @@ export default function Oscillator2({
   }
 
   return (
-    <OscillatorPanel position={1}>
+    <OscillatorPanel position={1} disabled={disabled}>
       <Spacer width="54px" />
       <ArrowKnob
         value={ranges.indexOf(oscillator1.range)}

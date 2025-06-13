@@ -22,12 +22,13 @@ function OscillatorPanel({
   children,
   disabled = false,
 }: OscillatorPanelProps) {
+  console.log("disabled", disabled);
   return (
     <Row style={{ paddingBottom: position === 1 ? "10px" : "0px" }}>
       {showControlSwitch && controlSwitchProps && (
         <VerticalRockerSwitch
           {...controlSwitchProps}
-          label="Osc. 3 Control"
+          label={controlSwitchProps.label}
           topLabel={
             <span>
               Osc. 3<br />
