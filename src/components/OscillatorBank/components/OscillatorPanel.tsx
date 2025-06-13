@@ -4,6 +4,7 @@ import Row from "@/components/Row";
 
 export type OscillatorPanelProps = {
   showControlSwitch?: boolean;
+  position?: number | null;
   controlSwitchProps?: {
     checked: boolean;
     onCheckedChange: (checked: boolean) => void;
@@ -16,12 +17,13 @@ export type OscillatorPanelProps = {
 
 function OscillatorPanel({
   showControlSwitch = false,
+  position = null,
   controlSwitchProps,
   children,
   disabled = false,
 }: OscillatorPanelProps) {
   return (
-    <Row>
+    <Row style={{ paddingBottom: position === 1 ? "10px" : "0px" }}>
       {showControlSwitch && controlSwitchProps && (
         <VerticalRockerSwitch
           {...controlSwitchProps}

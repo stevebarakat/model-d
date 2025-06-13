@@ -1,6 +1,7 @@
 import { useSynthStore } from "@/store/synthStore";
 import OscillatorPanel from "./OscillatorPanel";
 import ArrowKnob from "@/components/ArrowKnob/ArrowKnob";
+import Knob from "@/components/Knob/Knob";
 import {
   TriangleIcon,
   TriSawIcon,
@@ -10,8 +11,9 @@ import {
   NarrowPulseIcon,
 } from "../icons/WaveformIcons";
 import { OscillatorWaveform, OscillatorRange } from "@/store/types/synth";
-import Spacer from "@/components/Spacer";
-import Title from "@/components/Title";
+import Spacer from "@/components/Spacer/Spacer";
+import Title from "@/components/Title/Title";
+
 const waveforms: OscillatorWaveform[] = [
   "triangle",
   "tri_saw",
@@ -30,7 +32,7 @@ const waveformIcons = [
 ];
 const ranges: OscillatorRange[] = ["lo", "32", "16", "8", "4", "2"];
 
-export default function Oscillator1({
+export default function Oscillator2({
   disabled = false,
 }: {
   disabled?: boolean;
@@ -43,9 +45,12 @@ export default function Oscillator1({
   function handleRangeChange(value: number) {
     setOscillator1({ range: ranges[Math.round(value)] });
   }
+  function handleFrequencyChange(value: number) {
+    setOscillator1({ frequency: value });
+  }
 
   return (
-    <OscillatorPanel>
+    <OscillatorPanel position={1}>
       <Spacer width="54px" />
       <ArrowKnob
         value={ranges.indexOf(oscillator1.range)}
@@ -53,6 +58,7 @@ export default function Oscillator1({
         max={ranges.length - 1}
         step={1}
         label="Range"
+        hideLabel={true}
         onChange={handleRangeChange}
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
         disabled={disabled}
@@ -61,12 +67,35 @@ export default function Oscillator1({
         <Title size="md">Oscillator - 1</Title>
         <Title size="sm">Frequency</Title>
       </Spacer>
+      {/* <Knob
+        size="large"
+        value={oscillator1.frequency}
+        min={-7}
+        max={7}
+        step={1}
+        label="Oscillator 1 Frequency"
+        title="Oscillator - 1"
+        unit=""
+        onChange={handleFrequencyChange}
+        valueLabels={{
+          "-7": "-7",
+          "-5": "-5",
+          "-3": "-3",
+          "-1": "-1",
+          "1": "1",
+          "3": "3",
+          "5": "5",
+          "7": "7",
+        }}
+        disabled={disabled}
+      /> */}
       <ArrowKnob
         value={waveforms.indexOf(oscillator1.waveform)}
         min={0}
         max={waveforms.length - 1}
         step={1}
         label="Waveform"
+        hideLabel={true}
         onChange={handleWaveformChange}
         valueLabels={waveformIcons.reduce(
           (acc, icon, i) => ({ ...acc, [i]: icon }),
