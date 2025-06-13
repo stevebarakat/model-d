@@ -4,12 +4,23 @@ import Knob from "../Knob";
 import { styles } from "@/components/Modifiers";
 import Row from "../Row";
 import Title from "../Title";
+import { useSynthStore } from "@/store/synthStore";
 
 type FilterProps = {
   disabled?: boolean;
 };
 
 function Filter({ disabled = false }: FilterProps) {
+  const filterCutoff = useSynthStore((state) => state.filterCutoff);
+  const filterEmphasis = useSynthStore((state) => state.filterEmphasis);
+  const setFilterCutoff = useSynthStore((state) => state.setFilterCutoff);
+  const setFilterEmphasis = useSynthStore((state) => state.setFilterEmphasis);
+  const filterContourAmount = useSynthStore(
+    (state) => state.filterContourAmount
+  );
+  const setFilterContourAmount = useSynthStore(
+    (state) => state.setFilterContourAmount
+  );
   return (
     <div>
       <div className={styles.filterSwitches}>
@@ -28,13 +39,13 @@ function Filter({ disabled = false }: FilterProps) {
             7.5: "2",
             10: "4",
           }}
-          value={0}
+          value={filterCutoff}
           min={0}
           max={10}
           step={0.5}
           label="Cutoff Frequency"
           disabled={disabled}
-          onChange={() => {}}
+          onChange={setFilterCutoff}
         />
         <Knob
           valueLabels={{
@@ -45,13 +56,13 @@ function Filter({ disabled = false }: FilterProps) {
             8: "8",
             10: "10",
           }}
-          value={0}
+          value={filterEmphasis}
           min={0}
           max={10}
           step={1}
           label="Emphasis"
           disabled={disabled}
-          onChange={() => {}}
+          onChange={setFilterEmphasis}
         />
         <Knob
           valueLabels={{
@@ -62,7 +73,7 @@ function Filter({ disabled = false }: FilterProps) {
             8: "8",
             10: "10",
           }}
-          value={0}
+          value={filterContourAmount}
           min={0}
           max={10}
           step={1}
@@ -75,7 +86,7 @@ function Filter({ disabled = false }: FilterProps) {
           }
           label="Amount of Contour"
           disabled={disabled}
-          onChange={() => {}}
+          onChange={setFilterContourAmount}
         />
       </Row>
     </div>

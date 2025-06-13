@@ -20,7 +20,7 @@
   flex: 1;
   height: 290px;
 
-  /* background: linear-gradient(180deg, hsl(0deg 0% 100%), hsl(0deg 0% 80%)); */
+  background: linear-gradient(180deg, hsl(0deg 0% 100%), hsl(0deg 0% 80%));
   border-bottom: 3px solid hsl(0deg 0% 35%);
   border-radius: 0 0 5px 5px;
   box-shadow: inset 0 0.5px 0.5px 1px hsl(0deg 0% 0% / 40%),
@@ -29,7 +29,7 @@
   cursor: pointer;
   transition: all 0.15s ease;
 
-  /* &::before {
+  &::before {
     z-index: 1000;
     content: "";
     display: block;
@@ -40,7 +40,7 @@
       hsl(0deg 0% 50% / 37.5%) 50%,
       hsl(0deg 0% 20% / 85%) 100%
     );
-  } */
+  }
 }
 
 .whiteKeyActive {
@@ -110,7 +110,7 @@
   }
 }
 
-/* .leftShadow {
+.leftShadow {
   position: absolute;
   z-index: 10;
   width: 20px;
@@ -139,4 +139,4 @@
   );
   pointer-events: none;
   filter: blur(9px);
-} */
+}

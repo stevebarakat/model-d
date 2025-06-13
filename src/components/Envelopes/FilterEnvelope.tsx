@@ -1,8 +1,12 @@
 import Knob from "../Knob";
-import Spacer from "../Spacer";
 import Row from "../Row";
+import { useSynthStore } from "@/store/synthStore";
 
 function FilterEnvelope({ disabled = false }: { disabled?: boolean }) {
+  const filterAttack = useSynthStore((state) => state.filterAttack);
+  const filterDecay = useSynthStore((state) => state.filterDecay);
+  const filterSustain = useSynthStore((state) => state.filterSustain);
+  const setFilterEnvelope = useSynthStore((state) => state.setFilterEnvelope);
   return (
     <>
       <Row>
@@ -21,13 +25,13 @@ function FilterEnvelope({ disabled = false }: { disabled?: boolean }) {
             9: "10",
             10: "sec.",
           }}
-          value={0}
+          value={filterAttack}
           min={0}
           max={10}
           step={1}
           label="Attack Time"
           disabled={disabled}
-          onChange={() => {}}
+          onChange={(v) => setFilterEnvelope({ attack: v })}
         />
         <Knob
           valueLabels={{
@@ -38,13 +42,13 @@ function FilterEnvelope({ disabled = false }: { disabled?: boolean }) {
             8: "8",
             10: "10",
           }}
-          value={0}
+          value={filterDecay}
           min={0}
           max={10}
           step={1}
           label="Decay Time"
           disabled={disabled}
-          onChange={() => {}}
+          onChange={(v) => setFilterEnvelope({ decay: v })}
         />
         <Knob
           valueLabels={{
@@ -55,13 +59,13 @@ function FilterEnvelope({ disabled = false }: { disabled?: boolean }) {
             8: "8",
             10: "10",
           }}
-          value={0}
+          value={filterSustain}
           min={0}
           max={10}
           step={1}
           label="Sustain Level"
           disabled={disabled}
-          onChange={() => {}}
+          onChange={(v) => setFilterEnvelope({ sustain: v })}
         />
       </Row>
     </>

@@ -60,5 +60,16 @@ export function createSynthActions(
     setGlideTime: (time: number) => set({ glideTime: time }),
     setMasterVolume: (value) => set({ masterVolume: value }),
     setIsMasterActive: (value) => set({ isMasterActive: value }),
+    setFilterEnvelope: (env) =>
+      set((state: SynthState) => ({
+        filterAttack:
+          env.attack !== undefined ? env.attack : state.filterAttack,
+        filterDecay: env.decay !== undefined ? env.decay : state.filterDecay,
+        filterSustain:
+          env.sustain !== undefined ? env.sustain : state.filterSustain,
+      })),
+    setFilterCutoff: (value) => set({ filterCutoff: value }),
+    setFilterEmphasis: (value) => set({ filterEmphasis: value }),
+    setFilterContourAmount: (value) => set({ filterContourAmount: value }),
   };
 }

@@ -22,7 +22,6 @@ function OscillatorPanel({
   children,
   disabled = false,
 }: OscillatorPanelProps) {
-  console.log("disabled", disabled);
   return (
     <Row style={{ paddingBottom: position === 1 ? "10px" : "0px" }}>
       {showControlSwitch && controlSwitchProps && (

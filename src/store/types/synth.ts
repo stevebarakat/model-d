@@ -64,6 +64,16 @@ export type SynthState = {
   // Glide
   glideOn: boolean;
   glideTime: number;
+
+  // Filter envelope (contour)
+  filterAttack: number; // 0-10
+  filterDecay: number; // 0-10
+  filterSustain: number; // 0-10
+
+  // Filter controls
+  filterCutoff: number; // 0-10
+  filterEmphasis: number; // 0-10
+  filterContourAmount: number; // 0-10
 };
 
 export type SynthActions = {
@@ -87,4 +97,10 @@ export type SynthActions = {
   setIsMasterActive: (value: boolean) => void;
   setGlideOn: (on: boolean) => void;
   setGlideTime: (time: number) => void;
+  setFilterEnvelope: (
+    env: Partial<{ attack: number; decay: number; sustain: number }>
+  ) => void;
+  setFilterCutoff: (value: number) => void;
+  setFilterEmphasis: (value: number) => void;
+  setFilterContourAmount: (value: number) => void;
 };

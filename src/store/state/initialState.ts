@@ -45,5 +45,11 @@ export function createInitialState(): Omit<
     isMasterActive: true,
     glideOn: false,
     glideTime: 0.1,
+    filterAttack: 0,
+    filterDecay: 0,
+    filterSustain: 0,
+    filterCutoff: 5,
+    filterEmphasis: 5,
+    filterContourAmount: 5,
   };
 }
