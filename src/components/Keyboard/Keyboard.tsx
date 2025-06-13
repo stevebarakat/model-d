@@ -133,57 +133,75 @@ function Keyboard({
   disabled = false,
 }: KeyboardProps) {
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [isReleasing, setIsReleasing] = useState(false);
   const FIXED_OCTAVE = 4;
 
   const keys = generateKeyboardKeys(octaveRange);
 
   const handleKeyPress = useCallback(
     (note: string): void => {
-      if (disabled) return;
+      if (disabled || isReleasing) return;
+      console.log("Keyboard handleKeyPress:", note);
       synth.triggerAttack(note);
       onKeyDown(note);
     },
-    [onKeyDown, synth, disabled]
+    [onKeyDown, synth, disabled, isReleasing]
   );
 
   const handleKeyRelease = useCallback(
     (note: string): void => {
-      if (disabled) return;
-      if (note === activeKeys) {
-        synth.triggerRelease(note);
-        onKeyUp(note);
-      }
+      if (disabled || isReleasing || note !== activeKeys) return;
+      console.log("Keyboard handleKeyRelease:", note);
+      setIsReleasing(true);
+      synth.triggerRelease();
+      onKeyUp(note);
+      setIsReleasing(false);
     },
-    [onKeyUp, synth, activeKeys, disabled]
+    [onKeyUp, synth, activeKeys, disabled, isReleasing]
   );
 
   const handleMouseDown = useCallback((): void => {
-    if (disabled) return;
+    if (disabled || isReleasing) return;
+    console.log("Keyboard handleMouseDown");
     setIsMouseDown(true);
     onMouseDown();
-  }, [onMouseDown, disabled]);
+  }, [onMouseDown, disabled, isReleasing]);
 
   const handleMouseUp = useCallback((): void => {
-    if (disabled) return;
+    if (disabled || isReleasing) return;
+    console.log("Keyboard handleMouseUp");
     setIsMouseDown(false);
     if (activeKeys) {
-      synth.triggerRelease(activeKeys);
+      setIsReleasing(true);
+      synth.triggerRelease();
       onKeyUp(activeKeys);
+      setIsReleasing(false);
     }
     onMouseUp();
-  }, [activeKeys, onKeyUp, onMouseUp, synth, disabled]);
+  }, [activeKeys, onKeyUp, onMouseUp, synth, disabled, isReleasing]);
 
   const handleMouseLeave = useCallback((): void => {
-    if (disabled) return;
+    if (disabled || isReleasing) return;
+    console.log("Keyboard handleMouseLeave");
     if (isMouseDown) {
       setIsMouseDown(false);
       if (activeKeys) {
-        synth.triggerRelease(activeKeys);
+        setIsReleasing(true);
+        synth.triggerRelease();
         onKeyUp(activeKeys);
+        setIsReleasing(false);
       }
       onMouseUp();
     }
-  }, [isMouseDown, activeKeys, onKeyUp, onMouseUp, synth, disabled]);
+  }, [
+    isMouseDown,
+    activeKeys,
+    onKeyUp,
+    onMouseUp,
+    synth,
+    disabled,
+    isReleasing,
+  ]);
 
   const handleKeyInteraction = useCallback(
     (note: string): void => {

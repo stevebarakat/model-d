@@ -1,131 +1,85 @@
 import { useEffect, useRef, useCallback } from "react";
 import { useSynthStore } from "@/store/synthStore";
 import { createOscillator1, Osc1Instance } from "../audio/oscillator1";
-import { OscillatorType } from "@/types";
+import { noteToFrequency } from "@/utils/noteToFrequency";
 
 export type UseOscillator1Result = {
   triggerAttack: (note: string) => void;
-  triggerRelease: (note?: string) => void;
+  triggerRelease: () => void;
 };
 
 export function useOscillator1(
   audioContext: AudioContext | null,
-  mixerNode?: AudioNode | null
+  mixerNode: GainNode | null
 ): UseOscillator1Result {
-  const { oscillator1, mixer, glideOn, glideTime, masterTune } =
-    useSynthStore();
-  const oscRef = useRef<Osc1Instance | null>(null);
+  const oscillatorRef = useRef<Osc1Instance | null>(null);
+  const { oscillator1, masterTune, glideOn, glideTime } = useSynthStore();
   const lastFrequencyRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    if (!audioContext) {
-      oscRef.current = null;
-      return;
-    }
-    oscRef.current = createOscillator1(
-      {
-        audioContext,
-        waveform: oscillator1.waveform as OscillatorType,
-        range: oscillator1.range,
-      },
-      mixerNode ?? undefined
-    );
-    return () => {
-      oscRef.current?.stop();
-      oscRef.current = null;
-    };
-  }, [audioContext, oscillator1.range, oscillator1.waveform, mixerNode]);
-
-  useEffect(() => {
-    if (oscRef.current) {
-      oscRef.current.getGainNode().gain.value = mixer.osc1.enabled
-        ? mixer.osc1.volume / 10
-        : 0;
-    }
-  }, [mixer.osc1.enabled, mixer.osc1.volume]);
-
-  useEffect(() => {
-    oscRef.current?.update({
-      waveform: oscillator1.waveform as OscillatorType,
-      range: oscillator1.range,
-    });
-  }, [oscillator1.waveform, oscillator1.range]);
 
   const triggerAttack = useCallback(
     (note: string) => {
-      if (!audioContext || !oscRef.current) return;
-      const freq = noteToFrequency(note) * Math.pow(2, masterTune / 12);
-      const oscNode = oscRef.current.getNode();
-      if (!oscNode) {
+      console.log("Oscillator1 triggerAttack:", note, {
+        audioContextState: audioContext?.state,
+        oscillatorState: oscillatorRef.current ? "active" : "inactive",
+        mixerNodeState: mixerNode ? "connected" : "disconnected",
+      });
+      if (audioContext && mixerNode) {
+        if (!oscillatorRef.current) {
+          oscillatorRef.current = createOscillator1(
+            {
+              audioContext,
+              waveform: oscillator1.waveform as
+                | "triangle"
+                | "tri_saw"
+                | "sawtooth"
+                | "pulse1"
+                | "pulse2"
+                | "pulse3",
+              range: oscillator1.range,
+              gain: oscillator1.enabled ? 1 : 0,
+            },
+            mixerNode
+          );
+        }
+        const frequency = noteToFrequency(note) * Math.pow(2, masterTune / 12);
         if (glideOn && lastFrequencyRef.current !== null) {
-          oscRef.current.start(lastFrequencyRef.current);
-          const newOscNode = oscRef.current.getNode();
-          if (newOscNode) {
+          oscillatorRef.current.start(lastFrequencyRef.current);
+          const oscNode = oscillatorRef.current.getNode();
+          if (oscNode) {
             const mappedGlideTime = Math.pow(10, glideTime / 5) * 0.02;
-            newOscNode.frequency.linearRampToValueAtTime(
-              freq,
+            oscNode.frequency.linearRampToValueAtTime(
+              frequency,
               audioContext.currentTime + mappedGlideTime
             );
           }
         } else {
-          oscRef.current.start(freq);
+          oscillatorRef.current.start(frequency);
         }
-      } else {
-        if (glideOn) {
-          const mappedGlideTime = Math.pow(10, glideTime / 5) * 0.02;
-          oscNode.frequency.linearRampToValueAtTime(
-            freq,
-            audioContext.currentTime + mappedGlideTime
-          );
-        } else {
-          oscNode.frequency.setValueAtTime(freq, audioContext.currentTime);
-        }
+        lastFrequencyRef.current = frequency;
       }
-      lastFrequencyRef.current = freq;
     },
-    [glideOn, glideTime, audioContext, masterTune]
+    [audioContext, mixerNode, oscillator1, masterTune, glideOn, glideTime]
   );
 
   const triggerRelease = useCallback(() => {
-    if (!audioContext || !oscRef.current) return;
-    oscRef.current?.stop();
-  }, [audioContext]);
+    console.log("Oscillator1 triggerRelease", {
+      audioContextState: audioContext?.state,
+      oscillatorState: oscillatorRef.current ? "active" : "inactive",
+      mixerNodeState: mixerNode ? "connected" : "disconnected",
+    });
+    if (oscillatorRef.current) {
+      oscillatorRef.current.stop();
+    }
+  }, [audioContext, mixerNode]);
 
-  if (!audioContext) {
-    return {
-      triggerAttack: () => {},
-      triggerRelease: () => {},
+  useEffect(() => {
+    return () => {
+      if (oscillatorRef.current) {
+        oscillatorRef.current.stop();
+        oscillatorRef.current = null;
+      }
     };
-  }
+  }, []);
 
-  return {
-    triggerAttack,
-    triggerRelease,
-  };
-}
-
-function noteToFrequency(note: string): number {
-  const match = note.match(/^([A-G]#?)(\d)$/);
-  if (!match) return 440;
-  const noteNames = [
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-    "A",
-    "A#",
-    "B",
-  ];
-  const [, name, octaveStr] = match;
-  const octave = parseInt(octaveStr, 10);
-  const n = noteNames.indexOf(name);
-  if (n < 0 || isNaN(octave)) return 440;
-  const midi = 12 * (octave + 1) + n;
-  const freq = 440 * Math.pow(2, (midi - 69) / 12);
-  return isFinite(freq) ? freq : 440;
+  return { triggerAttack, triggerRelease };
 }

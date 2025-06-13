@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import { useNoise } from "@/components/Noise/hooks";
 import {
   useOscillator1,
@@ -28,66 +28,99 @@ function Synth() {
 
   // Create a single mixer node for all sources
   const mixerNodeRef = useRef<GainNode | null>(null);
+  const [isMixerReady, setIsMixerReady] = useState(false);
+
   useEffect(() => {
     // Clean up previous mixer node if context changes or is disposed
     if (mixerNodeRef.current) {
       mixerNodeRef.current.disconnect();
       mixerNodeRef.current = null;
+      setIsMixerReady(false);
     }
     if (audioContext) {
+      console.log("Creating mixer node...");
       mixerNodeRef.current = audioContext.createGain();
       mixerNodeRef.current.gain.value = 1;
       mixerNodeRef.current.connect(audioContext.destination);
+      // Ensure the mixer node is ready
+      if (audioContext.state === "running") {
+        console.log("Mixer node ready");
+        setIsMixerReady(true);
+      } else {
+        const handleStateChange = () => {
+          if (audioContext.state === "running") {
+            console.log("Mixer node ready (after state change)");
+            setIsMixerReady(true);
+            audioContext.removeEventListener("statechange", handleStateChange);
+          }
+        };
+        audioContext.addEventListener("statechange", handleStateChange);
+        return () => {
+          audioContext.removeEventListener("statechange", handleStateChange);
+        };
+      }
     }
     return () => {
       if (mixerNodeRef.current) {
         mixerNodeRef.current.disconnect();
         mixerNodeRef.current = null;
+        setIsMixerReady(false);
       }
     };
   }, [audioContext]);
 
+  // Only pass mixer node to hooks when it's ready
+  const mixerNode = isMixerReady ? mixerNodeRef.current : null;
+
   // Always call hooks, pass null if not initialized
-  useNoise(audioContext ?? null, mixerNodeRef.current ?? null);
-  const osc1 = useOscillator1(
-    audioContext ?? null,
-    mixerNodeRef.current ?? null
-  );
-  const osc2 = useOscillator2(
-    audioContext ?? null,
-    mixerNodeRef.current ?? null
-  );
-  const osc3 = useOscillator3(
-    audioContext ?? null,
-    mixerNodeRef.current ?? null
-  );
+  useNoise(audioContext ?? null, mixerNode);
+  const osc1 = useOscillator1(audioContext ?? null, mixerNode);
+  const osc2 = useOscillator2(audioContext ?? null, mixerNode);
+  const osc3 = useOscillator3(audioContext ?? null, mixerNode);
 
   const synthObj = useMemo(() => {
     return {
       triggerAttack: (note: string) => {
+        console.log("Synth triggerAttack:", note, {
+          audioContextState: audioContext ? audioContext.state : "null",
+          isInitialized,
+          masterVolume,
+          isMasterActive,
+        });
         osc1.triggerAttack(note);
         osc2.triggerAttack(note);
         osc3.triggerAttack(note);
       },
       triggerRelease: () => {
+        console.log("Synth triggerRelease", {
+          audioContextState: audioContext ? audioContext.state : "null",
+          isInitialized,
+          masterVolume,
+          isMasterActive,
+        });
         osc1.triggerRelease();
         osc2.triggerRelease();
         osc3.triggerRelease();
       },
     };
-  }, [osc1, osc2, osc3]);
+  }, [
+    osc1,
+    osc2,
+    osc3,
+    audioContext,
+    isInitialized,
+    masterVolume,
+    isMasterActive,
+  ]);
 
   // Set master volume on mixerNode
   useEffect(() => {
-    if (mixerNodeRef.current && audioContext) {
+    if (mixerNode && audioContext) {
       if (!isMasterActive) {
-        mixerNodeRef.current.gain.setValueAtTime(0, audioContext.currentTime);
+        mixerNode.gain.setValueAtTime(0, audioContext.currentTime);
       } else {
         const gain = Math.pow(masterVolume / 10, 2);
-        mixerNodeRef.current.gain.setValueAtTime(
-          gain,
-          audioContext.currentTime
-        );
+        mixerNode.gain.setValueAtTime(gain, audioContext.currentTime);
       }
     }
   }, [masterVolume, isMasterActive, audioContext]);
@@ -101,7 +134,7 @@ function Synth() {
           <OscillatorBank disabled={!isInitialized} />
           <Mixer
             audioContext={audioContext}
-            mixerNode={mixerNodeRef.current}
+            mixerNode={mixerNode}
             disabled={!isInitialized}
           />
           <Modifiers disabled={!isInitialized} />
