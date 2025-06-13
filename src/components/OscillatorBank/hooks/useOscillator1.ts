@@ -111,12 +111,16 @@ export function useOscillator1(
         noteToFrequency(lastNoteRef.current) * Math.pow(2, masterTune / 12);
       const bendSemis = ((pitchWheel - 50) / 50) * 2;
       const frequency = baseFreq * Math.pow(2, bendSemis / 12);
-      oscillatorRef.current
-        .getNode()
-        ?.frequency.setValueAtTime(frequency, audioContext?.currentTime || 0);
-      console.log(
-        `[Osc1-PB] Real-time update: note: ${lastNoteRef.current}, baseFreq: ${baseFreq}, bendSemis: ${bendSemis}, finalFreq: ${frequency}`
-      );
+      const oscNode = oscillatorRef.current.getNode();
+      if (oscNode && audioContext) {
+        oscNode.frequency.linearRampToValueAtTime(
+          frequency,
+          audioContext.currentTime + 0.02
+        );
+        console.log(
+          `[Osc1-PB] Real-time update (ramp): note: ${lastNoteRef.current}, baseFreq: ${baseFreq}, bendSemis: ${bendSemis}, finalFreq: ${frequency}`
+        );
+      }
     }
   }, [pitchWheel]);
 
