@@ -68,6 +68,7 @@ function Synth() {
   const filterModulationOn = useSynthStore((state) => state.filterModulationOn);
   const keyboardControl1 = useSynthStore((state) => state.keyboardControl1);
   const keyboardControl2 = useSynthStore((state) => state.keyboardControl2);
+  const modWheel = useSynthStore((state) => state.modWheel);
 
   useEffect(() => {
     // Clean up previous mixer and filter nodes if context changes or is disposed
@@ -161,7 +162,8 @@ function Synth() {
 
           if (filterModulationOn) {
             // Envelope modulation as before, but start from trackedCutoff
-            const contourOctaves = mapContourAmount(filterContourAmount);
+            const contourOctaves =
+              mapContourAmount(filterContourAmount) * (modWheel / 100);
             const attackTime = 0.005 + (filterAttack / 10) * 2.0;
             const decayTime = 0.005 + (filterDecay / 10) * 2.0;
             const sustainLevel = filterSustain / 10;
@@ -208,6 +210,7 @@ function Synth() {
     filterModulationOn,
     keyboardControl1,
     keyboardControl2,
+    modWheel,
   ]);
 
   // Set master volume on mixerNode
