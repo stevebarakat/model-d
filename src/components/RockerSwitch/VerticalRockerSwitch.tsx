@@ -23,6 +23,13 @@ function VerticalRockerSwitch({
   disabled = false,
   style,
 }: VerticalRockerSwitchProps) {
+  // Runtime check: if onCheckedChange is not a function, throw a clear error.
+  if (typeof onCheckedChange !== "function") {
+    throw new Error(
+      "VerticalRockerSwitch: onCheckedChange must be a function."
+    );
+  }
+
   // Covert label to slug for id
   const id = slugify(label);
 

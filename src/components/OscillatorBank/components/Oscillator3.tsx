@@ -36,6 +36,8 @@ export default function Oscillator3({
   disabled?: boolean;
 }) {
   const { oscillator3, setOscillator3 } = useSynthStore();
+  const osc3Control = useSynthStore((state) => state.osc3Control);
+  const setOsc3Control = useSynthStore((state) => state.setOsc3Control);
 
   function handleWaveformChange(value: number) {
     setOscillator3({ waveform: waveforms[Math.round(value)] });
@@ -51,8 +53,8 @@ export default function Oscillator3({
     <OscillatorPanel
       showControlSwitch
       controlSwitchProps={{
-        checked: oscillator3.enabled ?? true,
-        onCheckedChange: (checked) => setOscillator3({ enabled: checked }),
+        checked: osc3Control,
+        onCheckedChange: setOsc3Control,
         label: "Osc. 3 Control",
         theme: "orange",
       }}

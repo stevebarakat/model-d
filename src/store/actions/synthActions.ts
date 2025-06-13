@@ -79,5 +79,9 @@ export function createSynthActions(
     setLfoWaveform: (waveform: "triangle" | "square") =>
       set({ lfoWaveform: waveform }),
     setLfoRate: (rate: number) => set({ lfoRate: rate }),
+    setOsc3Control: (on: boolean) => set({ osc3Control: on }),
+    setModMix: (value: number) => set({ modMix: value }),
+    setOsc3FilterEgSwitch: (on: boolean) => set({ osc3FilterEgSwitch: on }),
+    setNoiseLfoSwitch: (on: boolean) => set({ noiseLfoSwitch: on }),
   };
 }

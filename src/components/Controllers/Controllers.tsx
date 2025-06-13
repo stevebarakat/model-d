@@ -6,12 +6,20 @@ import Glide from "../Glide";
 import Section from "../Section";
 import Column from "../Column";
 import Row from "../Row";
+import { useSynthStore } from "@/store/synthStore";
 
 interface ControllersProps {
   disabled?: boolean;
 }
 
 function Controllers({ disabled = false }: ControllersProps) {
+  const modMix = useSynthStore((s) => s.modMix);
+  const setModMix = useSynthStore((s) => s.setModMix);
+  const osc3FilterEgSwitch = useSynthStore((s) => s.osc3FilterEgSwitch);
+  const setOsc3FilterEgSwitch = useSynthStore((s) => s.setOsc3FilterEgSwitch);
+  const noiseLfoSwitch = useSynthStore((s) => s.noiseLfoSwitch);
+  const setNoiseLfoSwitch = useSynthStore((s) => s.setNoiseLfoSwitch);
+
   return (
     <Section style={{ padding: "6.5rem var(--spacing-xs) 0" }}>
       <Column gap="var(--spacing-xs)">
@@ -19,12 +27,12 @@ function Controllers({ disabled = false }: ControllersProps) {
         <Row gap="0.25rem">
           <Glide disabled={disabled} />
           <Knob
-            value={0}
+            value={modMix}
             min={0}
             max={10}
             step={1}
             label="Modulation Mix"
-            onChange={disabled ? () => {} : () => {}}
+            onChange={disabled ? () => {} : setModMix}
             valueLabels={{
               "0": "0",
               "2": "2",
@@ -38,16 +46,16 @@ function Controllers({ disabled = false }: ControllersProps) {
         </Row>
         <Row justify="space-around">
           <HorizontalRockerSwitch
-            checked={false}
-            onCheckedChange={disabled ? () => {} : () => {}}
+            checked={osc3FilterEgSwitch}
+            onCheckedChange={disabled ? () => {} : setOsc3FilterEgSwitch}
             label="Send to mod 1"
             bottomLabelLeft="Osc. 3"
             bottomLabelRight="Filter Eg"
             disabled={disabled}
           />
           <HorizontalRockerSwitch
-            checked={false}
-            onCheckedChange={disabled ? () => {} : () => {}}
+            checked={noiseLfoSwitch}
+            onCheckedChange={disabled ? () => {} : setNoiseLfoSwitch}
             label="Send to mod 2"
             bottomLabelLeft="Noise"
             bottomLabelRight="LFO"

@@ -57,5 +57,9 @@ export function createInitialState(): Omit<
     oscillatorModulationOn: false,
     lfoWaveform: "triangle",
     lfoRate: 5,
+    modMix: 0,
+    osc3Control: true,
+    osc3FilterEgSwitch: true,
+    noiseLfoSwitch: true,
   };
 }

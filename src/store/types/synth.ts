@@ -82,6 +82,12 @@ export type SynthState = {
   oscillatorModulationOn: boolean;
   lfoWaveform: "triangle" | "square";
   lfoRate: number; // 0-10
+  osc3Control: boolean;
+
+  modMix: number;
+
+  osc3FilterEgSwitch: boolean;
+  noiseLfoSwitch: boolean;
 };
 
 export type SynthActions = {
@@ -117,4 +123,8 @@ export type SynthActions = {
   setOscillatorModulationOn: (on: boolean) => void;
   setLfoWaveform: (waveform: "triangle" | "square") => void;
   setLfoRate: (rate: number) => void;
+  setOsc3Control: (on: boolean) => void;
+  setModMix: (value: number) => void;
+  setOsc3FilterEgSwitch: (on: boolean) => void;
+  setNoiseLfoSwitch: (on: boolean) => void;
 };
