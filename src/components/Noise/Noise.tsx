@@ -14,6 +14,8 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
   const { mixer, setMixerNoise } = useSynthStore();
   useNoise(audioContext, mixerNode);
 
+  console.log("Noise audioContext:", audioContext);
+
   return (
     <Column>
       <Row>
@@ -40,13 +42,18 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
                 8: "8",
                 10: "10",
               }}
-              value={mixer.noise.volume}
+              value={
+                Number.isFinite(mixer.noise.volume) ? mixer.noise.volume : 0
+              }
               min={0}
               max={10}
               step={1}
               label="Noise Volume"
-              onChange={(v) => setMixerNoise({ volume: v })}
-              logarithmic={true}
+              onChange={(v) => {
+                console.log("Noise knob changed to", v);
+                setMixerNoise({ volume: v });
+              }}
+              logarithmic={false}
               disabled={audioContext === null}
             />
             <VerticalRockerSwitch

@@ -51,7 +51,7 @@ export function useExternalInput(
 
   useEffect(() => {
     async function setup() {
-      if (!audioContext) return;
+      if (!audioContext || audioContext.state !== "running") return;
 
       try {
         // Create gain node if it doesn't exist
@@ -85,7 +85,7 @@ export function useExternalInput(
             }
 
             // Set initial gain based on mixer state
-            gainRef.current.gain.value = mixer.external.enabled
+            const initialGain = mixer.external.enabled
               ? linearToLogGain(mixer.external.volume)
               : 0;
 
@@ -134,10 +134,15 @@ export function useExternalInput(
       const newGain = mixer.external.enabled
         ? linearToLogGain(mixer.external.volume)
         : 0;
-      gainRef.current.gain.setValueAtTime(
-        newGain,
-        audioContext?.currentTime ?? 0
-      );
+      // Guard against NaN and non-finite values
+      if (isFinite(newGain)) {
+        gainRef.current.gain.setValueAtTime(
+          newGain,
+          audioContext?.currentTime ?? 0
+        );
+      } else {
+        gainRef.current.gain.setValueAtTime(0, audioContext?.currentTime ?? 0);
+      }
     }
   }, [mixer.external.enabled, mixer.external.volume, audioContext]);
 

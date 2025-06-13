@@ -37,7 +37,9 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
           8: "8",
           10: "10",
         }}
-        value={mixer.external.volume}
+        value={
+          Number.isFinite(mixer.external.volume) ? mixer.external.volume : 0
+        }
         min={0}
         max={10}
         step={1}

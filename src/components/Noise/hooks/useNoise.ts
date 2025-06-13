@@ -18,6 +18,12 @@ export function useNoise(
     let cancelled = false;
 
     async function setup() {
+      console.log("Noise setup:", {
+        enabled: mixer.noise.enabled,
+        volume: mixer.noise.volume,
+        audioContext,
+        activeKeys,
+      });
       if (!audioContext || !mixer.noise.enabled || !activeKeys) return;
       const moduleUrl =
         mixer.noise.noiseType === "pink"
@@ -26,13 +32,19 @@ export function useNoise(
       await audioContext.audioWorklet.addModule(moduleUrl);
       if (cancelled) return;
       gainRef.current = audioContext.createGain();
-      gainRef.current.gain.value = mixer.noise.volume / 10;
+      const initialGain = mixer.noise.volume / 10;
+      gainRef.current.gain.value = isFinite(initialGain) ? initialGain : 0;
+      console.log(
+        "Noise gain node connected, value:",
+        gainRef.current.gain.value
+      );
       noiseRef.current = new AudioWorkletNode(
         audioContext,
         mixer.noise.noiseType === "pink"
           ? "pink-noise-processor"
           : "white-noise-processor"
       );
+      console.log("Noise node created:", noiseRef.current);
       noiseRef.current.connect(gainRef.current);
       if (mixerNode) {
         gainRef.current.connect(mixerNode);
@@ -53,14 +65,16 @@ export function useNoise(
     audioContext,
     mixer.noise.noiseType,
     mixer.noise.enabled,
-    activeKeys,
     mixer.noise.volume,
     mixerNode,
+    activeKeys,
   ]);
 
   useEffect(() => {
     if (gainRef.current) {
-      gainRef.current.gain.value = mixer.noise.volume / 10;
+      const newGain = mixer.noise.volume / 10;
+      // Guard against NaN and non-finite values
+      gainRef.current.gain.value = isFinite(newGain) ? newGain : 0;
     }
   }, [mixer.noise.volume]);
 }
