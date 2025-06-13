@@ -21,7 +21,12 @@ function Controllers({ disabled = false }: ControllersProps) {
   const setNoiseLfoSwitch = useSynthStore((s) => s.setNoiseLfoSwitch);
 
   return (
-    <Section style={{ padding: "6.5rem var(--spacing-xs) 0" }}>
+    <Section
+      style={{
+        paddingLeft: "var(--spacing-xs)",
+        paddingRight: "var(--spacing-xs)",
+      }}
+    >
       <Column gap="var(--spacing-xs)">
         <Tune disabled={disabled} />
         <Row gap="0.25rem">
