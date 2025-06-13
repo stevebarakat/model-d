@@ -22,6 +22,7 @@ import Power from "../Power";
 function Synth() {
   const { activeKeys, setActiveKeys, masterVolume, isMasterActive } =
     useSynthStore();
+  console.log("[Synth] isMasterActive:", isMasterActive);
 
   const { audioContext, isInitialized, initialize, dispose } =
     useAudioContext();

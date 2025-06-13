@@ -6,11 +6,11 @@ import Section from "../Section";
 import Column from "../Column";
 import Row from "../Row";
 
-interface OutputProps {
+type OutputProps = {
   disabled?: boolean;
-}
+};
 
-function Output({ disabled = false }: OutputProps) {
+export default function Output({ disabled = false }: OutputProps) {
   const {
     masterVolume,
     setMasterVolume,
@@ -21,6 +21,7 @@ function Output({ disabled = false }: OutputProps) {
     isPhonesActive = false,
     setIsPhonesActive = () => {},
   } = useSynthStore();
+  console.log("[Output] isMasterActive:", isMasterActive);
   return (
     <Section>
       <Column
@@ -48,7 +49,17 @@ function Output({ disabled = false }: OutputProps) {
           <HorizontalRockerSwitch
             theme="blue"
             checked={isMasterActive}
-            onCheckedChange={disabled ? () => {} : setIsMasterActive}
+            onCheckedChange={
+              disabled
+                ? () => {}
+                : (checked) => {
+                    console.log(
+                      "[Output] Main Output switch toggled:",
+                      checked
+                    );
+                    setIsMasterActive(checked);
+                  }
+            }
             label="Main Output"
             topLabel="Main&nbsp;Output"
             bottomLabelRight="On"
@@ -100,5 +111,3 @@ function Output({ disabled = false }: OutputProps) {
     </Section>
   );
 }
-
-export default Output;

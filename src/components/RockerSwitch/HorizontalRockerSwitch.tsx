@@ -64,16 +64,26 @@ function HorizontalRockerSwitch({
       {/* {leftLabel && <span className={styles.leftLabel}>{leftLabel}</span>} */}
 
       {/* Switch Input */}
-      <input
-        id={id}
-        className={styles.state}
-        type="checkbox"
-        name="switch"
-        onChange={(e) => onCheckedChange(e.target.checked)}
-        checked={checked}
-        disabled={disabled}
-      />
-      <div className={styles.control}></div>
+      <label
+        htmlFor={id}
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <input
+          id={id}
+          className={styles.state}
+          type="checkbox"
+          name="switch"
+          onChange={(e) => onCheckedChange(e.target.checked)}
+          checked={checked}
+          disabled={disabled}
+        />
+        <div className={styles.control}></div>
+      </label>
 
       {/* Bottom Label */}
       <div className={`${styles.bottomLabel}`}>
