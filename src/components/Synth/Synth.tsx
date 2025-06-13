@@ -16,7 +16,7 @@ import Side from "@/components/Side";
 import { useSynthStore } from "@/store/synthStore";
 import { useAudioContext } from "@/hooks/useAudioContext";
 import styles from "./Synth.module.css";
-import PowerButton from "../PowerButton";
+import Power from "../Power";
 
 function Synth() {
   const { activeKeys, setActiveKeys, masterVolume, isMasterActive } =
@@ -93,13 +93,6 @@ function Synth() {
 
   return (
     <div className={styles.synthContainer}>
-      <div style={{ position: "absolute", top: 24, right: 24, zIndex: 10 }}>
-        <PowerButton
-          isOn={isInitialized}
-          onPowerOn={initialize}
-          onPowerOff={dispose}
-        />
-      </div>
       <Side />
       <div className={styles.synth}>
         <div className={styles.controlsPanel}>
@@ -112,6 +105,7 @@ function Synth() {
           />
           <Modifiers disabled={!isInitialized} />
           <Output disabled={!isInitialized} />
+          <Power />
         </div>
         <div className={styles.keyboardPanel}>
           <SidePanel disabled={!isInitialized} />
