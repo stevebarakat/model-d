@@ -6,6 +6,7 @@ import { OscillatorType } from "@/types";
 export type UseOscillator2Result = {
   triggerAttack: (note: string) => void;
   triggerRelease: (note?: string) => void;
+  getNode: () => OscillatorNode | null;
 };
 
 export function useOscillator2(
@@ -173,12 +174,14 @@ export function useOscillator2(
     return {
       triggerAttack: () => {},
       triggerRelease: () => {},
+      getNode: () => null,
     };
   }
 
   return {
     triggerAttack,
     triggerRelease,
+    getNode: () => oscRef.current?.getNode() ?? null,
   };
 }
 

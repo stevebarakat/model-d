@@ -78,5 +78,6 @@ export function createSynthActions(
       set({ oscillatorModulationOn: on }),
     setLfoWaveform: (waveform: "triangle" | "square") =>
       set({ lfoWaveform: waveform }),
+    setLfoRate: (rate: number) => set({ lfoRate: rate }),
   };
 }

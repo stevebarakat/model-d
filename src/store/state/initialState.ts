@@ -56,5 +56,6 @@ export function createInitialState(): Omit<
     keyboardControl2: false,
     oscillatorModulationOn: false,
     lfoWaveform: "triangle",
+    lfoRate: 5,
   };
 }

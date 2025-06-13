@@ -6,6 +6,7 @@ import { noteToFrequency } from "@/utils/noteToFrequency";
 export type UseOscillator1Result = {
   triggerAttack: (note: string) => void;
   triggerRelease: () => void;
+  getNode: () => OscillatorNode | null;
 };
 
 export function useOscillator1(
@@ -150,5 +151,9 @@ export function useOscillator1(
     }
   }, [pitchWheel]);
 
-  return { triggerAttack, triggerRelease };
+  return {
+    triggerAttack,
+    triggerRelease,
+    getNode: () => oscillatorRef.current?.getNode() ?? null,
+  };
 }

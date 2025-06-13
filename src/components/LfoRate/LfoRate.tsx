@@ -10,6 +10,8 @@ interface LFORateProps {
 function LFORate({ disabled = false }: LFORateProps) {
   const lfoWaveform = useSynthStore((state) => state.lfoWaveform);
   const setLfoWaveform = useSynthStore((state) => state.setLfoWaveform);
+  const lfoRate = useSynthStore((state) => state.lfoRate);
+  const setLfoRate = useSynthStore((state) => state.setLfoRate);
   // TODO: Wire value/onChange to actual LFO rate state
   const handleDoubleClick = useCallback(() => {
     setLfoWaveform(lfoWaveform === "triangle" ? "square" : "triangle");
@@ -32,12 +34,12 @@ function LFORate({ disabled = false }: LFORateProps) {
                 8: "8",
                 10: "10",
               }}
-              value={0}
+              value={lfoRate}
               min={0}
               max={10}
               step={1}
               label="LFO Rate"
-              onChange={disabled ? () => {} : (v) => console.log(v)}
+              onChange={disabled ? () => {} : setLfoRate}
               disabled={disabled}
             />
           </div>

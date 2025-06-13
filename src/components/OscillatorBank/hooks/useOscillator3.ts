@@ -13,6 +13,7 @@ export type Oscillator3Waveform =
 export type UseOscillator3Result = {
   triggerAttack: (note: string) => void;
   triggerRelease: (note?: string) => void;
+  getNode: () => OscillatorNode | null;
 };
 
 export function useOscillator3(
@@ -180,12 +181,14 @@ export function useOscillator3(
     return {
       triggerAttack: () => {},
       triggerRelease: () => {},
+      getNode: () => null,
     };
   }
 
   return {
     triggerAttack,
     triggerRelease,
+    getNode: () => oscRef.current?.getNode() ?? null,
   };
 }
 

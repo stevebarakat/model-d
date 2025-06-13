@@ -72,6 +72,8 @@ function Synth() {
   const oscillatorModulationOn = useSynthStore(
     (state) => state.oscillatorModulationOn
   );
+  const lfoRate = useSynthStore((state) => state.lfoRate);
+  const lfoWaveform = useSynthStore((state) => state.lfoWaveform);
 
   useEffect(() => {
     // Clean up previous mixer and filter nodes if context changes or is disposed
@@ -124,17 +126,21 @@ function Synth() {
 
   // Only pass mixer node to hooks when it's ready
   const mixerNode = isMixerReady ? mixerNodeRef.current : null;
-
   // Always call hooks, pass null if not initialized
-  const validCtx = audioContext && mixerNode ? audioContext : null;
-  const validMixer = audioContext && mixerNode ? mixerNode : null;
+  const validCtx: AudioContext | null =
+    audioContext && mixerNode ? audioContext : null;
+  // For useNoise, mixerNode must be GainNode | null
+  const validMixer: GainNode | null =
+    audioContext && mixerNodeRef.current instanceof GainNode
+      ? mixerNodeRef.current
+      : null;
   useNoise(validCtx, validMixer);
   // Vibrato: 6 Hz sine, depth up to 1 semitone (modWheel=100)
   const vibratoAmount =
     oscillatorModulationOn && modWheel > 0 ? modWheel / 100 : 0;
-  const osc1 = useOscillator1(validCtx, validMixer, vibratoAmount);
-  const osc2 = useOscillator2(validCtx, validMixer, vibratoAmount);
-  const osc3 = useOscillator3(validCtx, validMixer, vibratoAmount);
+  const osc1 = useOscillator1(validCtx, mixerNode, vibratoAmount);
+  const osc2 = useOscillator2(validCtx, mixerNode, vibratoAmount);
+  const osc3 = useOscillator3(validCtx, mixerNode, vibratoAmount);
 
   // Helper to map 0-10 to 20 Hz - 20,000 Hz logarithmically
   function mapCutoff(val: number) {
@@ -262,6 +268,83 @@ function Synth() {
     activeKeys,
     keyboardControl1,
     keyboardControl2,
+  ]);
+
+  // --- LFO Node Setup ---
+  const lfoNodeRef = useRef<OscillatorNode | null>(null);
+  const lfoGainRef = useRef<GainNode | null>(null);
+  // LFO modulates pitch (vibrato) and/or filter cutoff
+  useEffect(() => {
+    if (!audioContext) return;
+    // Clean up previous LFO
+    lfoNodeRef.current?.disconnect();
+    lfoGainRef.current?.disconnect();
+    lfoNodeRef.current = null;
+    lfoGainRef.current = null;
+    // Create new LFO
+    const lfo = audioContext.createOscillator();
+    lfo.type = lfoWaveform;
+    // Map lfoRate (0-10) to 0.1 Hz to 20 Hz
+    const minHz = 0.1;
+    const maxHz = 20;
+    lfo.frequency.value = minHz * Math.pow(maxHz / minHz, lfoRate / 10);
+    const lfoGain = audioContext.createGain();
+    // LFO depth: scale by modWheel (0-100), max depth = 1 semitone for pitch, 2 octaves for filter
+    lfoGain.gain.value = 1; // We'll scale in the modulation logic
+    lfo.connect(lfoGain);
+    lfo.start();
+    lfoNodeRef.current = lfo;
+    lfoGainRef.current = lfoGain;
+    return () => {
+      lfo.stop();
+      lfo.disconnect();
+      lfoGain.disconnect();
+    };
+  }, [audioContext, lfoRate, lfoWaveform]);
+
+  // --- LFO Modulation Logic ---
+  useEffect(() => {
+    if (!audioContext || !lfoGainRef.current) return;
+    // Disconnect any previous connections
+    lfoGainRef.current.disconnect();
+    // Pitch modulation (vibrato)
+    if (oscillatorModulationOn && modWheel > 0) {
+      // For each oscillator, connect LFO to frequency param
+      [osc1, osc2, osc3].forEach((osc) => {
+        const node = osc?.getNode?.();
+        if (node) {
+          // Max vibrato depth: ±1 semitone (≈5.95%)
+          const depth = (modWheel / 100) * 5.95; // in percent
+          const vibratoGain = audioContext.createGain();
+          vibratoGain.gain.value = (node.frequency.value * depth) / 100;
+          lfoGainRef.current!.connect(vibratoGain);
+          vibratoGain.connect(node.frequency);
+        }
+      });
+    }
+    // Filter modulation
+    if (filterModulationOn && modWheel > 0 && filterNodeRef.current) {
+      // Max filter LFO depth: 2 octaves (frequency * 4)
+      const baseFreq = filterNodeRef.current.frequency.value;
+      const depth = (modWheel / 100) * baseFreq * 3; // up to +3x base freq
+      const filterLfoGain = audioContext.createGain();
+      filterLfoGain.gain.value = depth;
+      lfoGainRef.current!.connect(filterLfoGain);
+      filterLfoGain.connect(filterNodeRef.current.frequency);
+    }
+    // Cleanup: disconnect on unmount
+    return () => {
+      if (lfoGainRef.current) lfoGainRef.current.disconnect();
+    };
+  }, [
+    oscillatorModulationOn,
+    filterModulationOn,
+    modWheel,
+    osc1,
+    osc2,
+    osc3,
+    audioContext,
+    filterNodeRef,
   ]);
 
   return (
