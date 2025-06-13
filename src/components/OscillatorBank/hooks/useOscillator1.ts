@@ -18,11 +18,6 @@ export function useOscillator1(
 
   const triggerAttack = useCallback(
     (note: string) => {
-      console.log("Oscillator1 triggerAttack:", note, {
-        audioContextState: audioContext?.state,
-        oscillatorState: oscillatorRef.current ? "active" : "inactive",
-        mixerNodeState: mixerNode ? "connected" : "disconnected",
-      });
       if (audioContext && mixerNode) {
         if (!oscillatorRef.current) {
           oscillatorRef.current = createOscillator1(
@@ -62,11 +57,6 @@ export function useOscillator1(
   );
 
   const triggerRelease = useCallback(() => {
-    console.log("Oscillator1 triggerRelease", {
-      audioContextState: audioContext?.state,
-      oscillatorState: oscillatorRef.current ? "active" : "inactive",
-      mixerNodeState: mixerNode ? "connected" : "disconnected",
-    });
     if (oscillatorRef.current) {
       oscillatorRef.current.stop();
     }

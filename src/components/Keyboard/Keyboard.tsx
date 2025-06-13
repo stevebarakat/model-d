@@ -141,7 +141,6 @@ function Keyboard({
   const handleKeyPress = useCallback(
     (note: string): void => {
       if (disabled || isReleasing) return;
-      console.log("Keyboard handleKeyPress:", note);
       synth.triggerAttack(note);
       onKeyDown(note);
     },
@@ -151,7 +150,6 @@ function Keyboard({
   const handleKeyRelease = useCallback(
     (note: string): void => {
       if (disabled || isReleasing || note !== activeKeys) return;
-      console.log("Keyboard handleKeyRelease:", note);
       setIsReleasing(true);
       synth.triggerRelease();
       onKeyUp(note);
@@ -162,14 +160,12 @@ function Keyboard({
 
   const handleMouseDown = useCallback((): void => {
     if (disabled || isReleasing) return;
-    console.log("Keyboard handleMouseDown");
     setIsMouseDown(true);
     onMouseDown();
   }, [onMouseDown, disabled, isReleasing]);
 
   const handleMouseUp = useCallback((): void => {
     if (disabled || isReleasing) return;
-    console.log("Keyboard handleMouseUp");
     setIsMouseDown(false);
     if (activeKeys) {
       setIsReleasing(true);
@@ -182,7 +178,6 @@ function Keyboard({
 
   const handleMouseLeave = useCallback((): void => {
     if (disabled || isReleasing) return;
-    console.log("Keyboard handleMouseLeave");
     if (isMouseDown) {
       setIsMouseDown(false);
       if (activeKeys) {

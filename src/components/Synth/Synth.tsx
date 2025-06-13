@@ -38,18 +38,15 @@ function Synth() {
       setIsMixerReady(false);
     }
     if (audioContext) {
-      console.log("Creating mixer node...");
       mixerNodeRef.current = audioContext.createGain();
       mixerNodeRef.current.gain.value = 1;
       mixerNodeRef.current.connect(audioContext.destination);
       // Ensure the mixer node is ready
       if (audioContext.state === "running") {
-        console.log("Mixer node ready");
         setIsMixerReady(true);
       } else {
         const handleStateChange = () => {
           if (audioContext.state === "running") {
-            console.log("Mixer node ready (after state change)");
             setIsMixerReady(true);
             audioContext.removeEventListener("statechange", handleStateChange);
           }
@@ -81,37 +78,17 @@ function Synth() {
   const synthObj = useMemo(() => {
     return {
       triggerAttack: (note: string) => {
-        console.log("Synth triggerAttack:", note, {
-          audioContextState: audioContext ? audioContext.state : "null",
-          isInitialized,
-          masterVolume,
-          isMasterActive,
-        });
         osc1.triggerAttack(note);
         osc2.triggerAttack(note);
         osc3.triggerAttack(note);
       },
       triggerRelease: () => {
-        console.log("Synth triggerRelease", {
-          audioContextState: audioContext ? audioContext.state : "null",
-          isInitialized,
-          masterVolume,
-          isMasterActive,
-        });
         osc1.triggerRelease();
         osc2.triggerRelease();
         osc3.triggerRelease();
       },
     };
-  }, [
-    osc1,
-    osc2,
-    osc3,
-    audioContext,
-    isInitialized,
-    masterVolume,
-    isMasterActive,
-  ]);
+  }, [osc1, osc2, osc3]);
 
   // Set master volume on mixerNode
   useEffect(() => {
