@@ -13,7 +13,7 @@ interface SidePanelProps {
 
 function SidePanel({ disabled = false }: SidePanelProps) {
   return (
-    <Column justify="flex-end">
+    <Column style={{ marginTop: "var(--spacing-md)" }}>
       <Row gap="var(--spacing-md)">
         <LfoRate disabled={disabled} />
         <div className={styles.switches}>

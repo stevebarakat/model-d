@@ -3,4 +3,5 @@
   display: flex;
   flex-direction: column;
   width: fit-content;
+  top: -10px;
 }
