@@ -96,58 +96,40 @@ function Synth() {
 
   const osc3State = useSynthStore((s) => s.oscillator3);
 
+  const masterGainRef = useRef<GainNode | null>(null);
+  // Add loudness envelope gain node
+  const loudnessEnvelopeGainRef = useRef<GainNode | null>(null);
+
   useEffect(() => {
-    // Clean up previous mixer and filter nodes if context changes or is disposed
+    if (!audioContext) return;
 
-    console.log(
-      "modMix:",
-      modMix,
-      "osc3FilterEgSwitch:",
-      osc3FilterEgSwitch,
-      "noiseLfoSwitch:",
-      noiseLfoSwitch,
-      "modWheel:",
-      modWheel,
-      "oscillatorModulationOn:",
-      oscillatorModulationOn,
-      "filterModulationOn:",
-      filterModulationOn
-    );
+    // Create nodes
+    const filter = audioContext.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.Q.value = 0;
+    filter.frequency.value = mapCutoff(filterCutoff); // Set initial cutoff
+    filterNodeRef.current = filter;
 
-    if (mixerNodeRef.current) {
-      mixerNodeRef.current.disconnect();
-      mixerNodeRef.current = null;
-      setIsMixerReady(false);
-    }
-    if (filterNodeRef.current) {
-      filterNodeRef.current.disconnect();
-      filterNodeRef.current = null;
-    }
-    if (audioContext) {
-      mixerNodeRef.current = audioContext.createGain();
-      mixerNodeRef.current.gain.value = 1;
-      filterNodeRef.current = audioContext.createBiquadFilter();
-      filterNodeRef.current.type = "lowpass";
-      filterNodeRef.current.frequency.value = 20000; // wide open by default
-      // Connect: mixer -> filter -> destination
-      mixerNodeRef.current.connect(filterNodeRef.current);
-      filterNodeRef.current.connect(audioContext.destination);
-      // Ensure the mixer node is ready
-      if (audioContext.state === "running") {
-        setIsMixerReady(true);
-      } else {
-        const handleStateChange = () => {
-          if (audioContext.state === "running") {
-            setIsMixerReady(true);
-            audioContext.removeEventListener("statechange", handleStateChange);
-          }
-        };
-        audioContext.addEventListener("statechange", handleStateChange);
-        return () => {
-          audioContext.removeEventListener("statechange", handleStateChange);
-        };
-      }
-    }
+    const mixer = audioContext.createGain();
+    mixer.gain.value = 1;
+    mixerNodeRef.current = mixer;
+    setIsMixerReady(true); // Mark mixer as ready immediately
+
+    // Create loudness envelope gain node
+    const loudnessGain = audioContext.createGain();
+    loudnessGain.gain.value = 1; // Start at full volume, envelope will control it
+    loudnessEnvelopeGainRef.current = loudnessGain;
+
+    const masterGain = audioContext.createGain();
+    masterGain.gain.value = masterVolume;
+    masterGainRef.current = masterGain;
+
+    // Connect: Mixer -> Filter -> Loudness Envelope -> Master -> Destination
+    mixer.connect(filter);
+    filter.connect(loudnessGain);
+    loudnessGain.connect(masterGain);
+    masterGain.connect(audioContext.destination);
+
     return () => {
       if (mixerNodeRef.current) {
         mixerNodeRef.current.disconnect();
@@ -158,8 +140,16 @@ function Synth() {
         filterNodeRef.current.disconnect();
         filterNodeRef.current = null;
       }
+      if (loudnessEnvelopeGainRef.current) {
+        loudnessEnvelopeGainRef.current.disconnect();
+        loudnessEnvelopeGainRef.current = null;
+      }
+      if (masterGainRef.current) {
+        masterGainRef.current.disconnect();
+        masterGainRef.current = null;
+      }
     };
-  }, [audioContext]);
+  }, [audioContext, filterCutoff, masterVolume]);
 
   // Only pass mixer node to hooks when it's ready
   const mixerNode = isMixerReady ? mixerNodeRef.current : null;
@@ -195,11 +185,14 @@ function Synth() {
   const synthObj = useMemo(() => {
     return {
       triggerAttack: (note: string) => {
+        if (!audioContext || !loudnessEnvelopeGainRef.current) return;
+
         osc1?.triggerAttack?.(note);
         osc2?.triggerAttack?.(note);
         osc3?.triggerAttack?.(note);
-        if (filterNodeRef.current && audioContext) {
-          // Key tracking calculation
+
+        // Apply filter envelope and key tracking
+        if (filterNodeRef.current) {
           const keyTracking =
             (keyboardControl1 ? 1 / 3 : 0) + (keyboardControl2 ? 2 / 3 : 0);
           const noteNumber = noteNameToMidi(note);
@@ -210,7 +203,7 @@ function Synth() {
             Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
 
           if (filterModulationOn) {
-            // Envelope modulation as before, but start from trackedCutoff
+            // Filter envelope modulation
             const contourOctaves =
               mapContourAmount(filterContourAmount) * (modWheel / 100);
             const attackTime = 0.005 + (filterAttack / 10) * 2.0;
@@ -231,34 +224,72 @@ function Synth() {
               now + attackTime + decayTime
             );
           } else {
-            // No envelope, just set cutoff with key tracking
-            const now = audioContext.currentTime;
-            filterNodeRef.current.frequency.cancelScheduledValues(now);
-            filterNodeRef.current.frequency.setValueAtTime(trackedCutoff, now);
+            // Just set cutoff with key tracking
+            filterNodeRef.current.frequency.setValueAtTime(
+              trackedCutoff,
+              audioContext.currentTime
+            );
           }
         }
+
+        // Apply loudness envelope
+        const now = audioContext.currentTime;
+        const attackTime = 0.005 + (filterAttack / 10) * 2.0; // 5ms to 2s
+        const decayTime = 0.005 + (filterDecay / 10) * 2.0; // 5ms to 2s
+        const sustainLevel = filterSustain / 10; // 0 to 1
+
+        // Cancel any ongoing envelope
+        loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
+        // Start from current value (might be non-zero if note was retriggered)
+        const currentGain = loudnessEnvelopeGainRef.current.gain.value;
+        loudnessEnvelopeGainRef.current.gain.setValueAtTime(currentGain, now);
+        // Ramp to full volume
+        loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
+          1,
+          now + attackTime
+        );
+        // Then to sustain level
+        loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
+          sustainLevel,
+          now + attackTime + decayTime
+        );
       },
-      triggerRelease: (note: string) => {
+      triggerRelease: () => {
+        if (!audioContext || !loudnessEnvelopeGainRef.current) return;
+
         osc1?.triggerRelease?.();
-        osc2?.triggerRelease?.(note);
+        osc2?.triggerRelease?.();
         osc3?.triggerRelease?.();
-        // Optionally, implement envelope release here
+
+        const now = audioContext.currentTime;
+        const decayTime = 0.005 + (filterDecay / 10) * 2.0; // 5ms to 2s
+        const releaseTime = decayTime / 4; // Use 1/4 of decay time for release
+
+        // Cancel any ongoing envelope
+        loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
+        // Start from current value
+        const currentGain = loudnessEnvelopeGainRef.current.gain.value;
+        loudnessEnvelopeGainRef.current.gain.setValueAtTime(currentGain, now);
+        // Release to zero
+        loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
+          0,
+          now + releaseTime
+        );
       },
     };
   }, [
     osc1,
     osc2,
     osc3,
-    filterNodeRef,
     audioContext,
     filterCutoff,
-    filterContourAmount,
-    filterAttack,
-    filterDecay,
-    filterSustain,
     filterModulationOn,
     keyboardControl1,
     keyboardControl2,
+    filterAttack,
+    filterDecay,
+    filterSustain,
+    filterContourAmount,
     modWheel,
   ]);
 

@@ -88,6 +88,11 @@ export type SynthState = {
 
   osc3FilterEgSwitch: boolean;
   noiseLfoSwitch: boolean;
+
+  // Add loudness envelope state
+  loudnessAttack: number;
+  loudnessDecay: number;
+  loudnessSustain: number;
 };
 
 export type SynthActions = {
@@ -111,9 +116,11 @@ export type SynthActions = {
   setIsMasterActive: (value: boolean) => void;
   setGlideOn: (on: boolean) => void;
   setGlideTime: (time: number) => void;
-  setFilterEnvelope: (
-    env: Partial<{ attack: number; decay: number; sustain: number }>
-  ) => void;
+  setFilterEnvelope: (env: {
+    attack?: number;
+    decay?: number;
+    sustain?: number;
+  }) => void;
   setFilterCutoff: (value: number) => void;
   setFilterEmphasis: (value: number) => void;
   setFilterContourAmount: (value: number) => void;
@@ -127,4 +134,9 @@ export type SynthActions = {
   setModMix: (value: number) => void;
   setOsc3FilterEgSwitch: (on: boolean) => void;
   setNoiseLfoSwitch: (on: boolean) => void;
+  setLoudnessEnvelope: (env: {
+    attack?: number;
+    decay?: number;
+    sustain?: number;
+  }) => void;
 };

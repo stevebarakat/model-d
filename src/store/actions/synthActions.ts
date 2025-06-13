@@ -83,5 +83,14 @@ export function createSynthActions(
     setModMix: (value: number) => set({ modMix: value }),
     setOsc3FilterEgSwitch: (on: boolean) => set({ osc3FilterEgSwitch: on }),
     setNoiseLfoSwitch: (on: boolean) => set({ noiseLfoSwitch: on }),
+    setLoudnessEnvelope: (env) =>
+      set((state: SynthState) => ({
+        loudnessAttack:
+          env.attack !== undefined ? env.attack : state.loudnessAttack,
+        loudnessDecay:
+          env.decay !== undefined ? env.decay : state.loudnessDecay,
+        loudnessSustain:
+          env.sustain !== undefined ? env.sustain : state.loudnessSustain,
+      })),
   };
 }

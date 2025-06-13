@@ -2,8 +2,16 @@ import Knob from "../Knob";
 import Row from "../Row";
 import Title from "../Title";
 import Column from "../Column";
+import { useSynthStore } from "@/store/synthStore";
 
 function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
+  const {
+    loudnessAttack,
+    loudnessDecay,
+    loudnessSustain,
+    setLoudnessEnvelope,
+  } = useSynthStore();
+
   return (
     <Column>
       <Title disabled={disabled} size="md">
@@ -20,12 +28,12 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
               8: "8",
               10: "10",
             }}
-            value={0}
+            value={loudnessAttack}
             min={0}
             max={10}
             step={1}
             label="Attack Time"
-            onChange={() => {}}
+            onChange={(value) => setLoudnessEnvelope({ attack: value })}
             disabled={disabled}
           />
           <Knob
@@ -37,12 +45,12 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
               8: "8",
               10: "10",
             }}
-            value={0}
+            value={loudnessDecay}
             min={0}
             max={10}
             step={1}
             label="Decay Time"
-            onChange={() => {}}
+            onChange={(value) => setLoudnessEnvelope({ decay: value })}
             disabled={disabled}
           />
           <Knob
@@ -54,12 +62,12 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
               8: "8",
               10: "10",
             }}
-            value={0}
+            value={loudnessSustain}
             min={0}
             max={10}
             step={1}
             label="Sustain Level"
-            onChange={() => {}}
+            onChange={(value) => setLoudnessEnvelope({ sustain: value })}
             disabled={disabled}
           />
         </Row>
