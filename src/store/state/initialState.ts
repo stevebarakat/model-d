@@ -57,6 +57,7 @@ export function createInitialState(): Omit<
     loudnessAttack: 0,
     loudnessDecay: 0,
     loudnessSustain: 0,
+    decaySwitchOn: false,
     oscillatorModulationOn: false,
     lfoWaveform: "triangle",
     lfoRate: 5,

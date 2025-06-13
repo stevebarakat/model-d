@@ -8,7 +8,7 @@
 
 body {
   background-color: var(--color-background);
-  color: var(--color-off-white);
+  color: var(--color-text-primary);
   font-family: var(--font-primary);
   font-size: var(--font-size-sm);
   font-weight: 600;

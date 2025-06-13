@@ -100,6 +100,14 @@ function Synth() {
   // Add loudness envelope gain node
   const loudnessEnvelopeGainRef = useRef<GainNode | null>(null);
 
+  const { loudnessAttack, loudnessDecay, loudnessSustain, decaySwitchOn } =
+    useSynthStore();
+
+  // Precompute loudness envelope times for use in both triggerAttack and triggerRelease
+  const loudnessAttackTime = 0.005 + (loudnessAttack / 10) * 2.0; // 5ms to 2s
+  const loudnessDecayTime = 0.005 + (loudnessDecay / 10) * 2.0; // 5ms to 2s
+  const loudnessSustainLevel = loudnessSustain / 10; // 0 to 1
+
   useEffect(() => {
     if (!audioContext) return;
 
@@ -107,7 +115,6 @@ function Synth() {
     const filter = audioContext.createBiquadFilter();
     filter.type = "lowpass";
     filter.Q.value = 0;
-    filter.frequency.value = mapCutoff(filterCutoff); // Set initial cutoff
     filterNodeRef.current = filter;
 
     const mixer = audioContext.createGain();
@@ -121,14 +128,16 @@ function Synth() {
     loudnessEnvelopeGainRef.current = loudnessGain;
 
     const masterGain = audioContext.createGain();
-    masterGain.gain.value = masterVolume;
+    masterGain.gain.value = 1; // Set to 1, will be controlled in a separate effect
     masterGainRef.current = masterGain;
 
     // Connect: Mixer -> Filter -> Loudness Envelope -> Master -> Destination
-    mixer.connect(filter);
-    filter.connect(loudnessGain);
-    loudnessGain.connect(masterGain);
-    masterGain.connect(audioContext.destination);
+    if (mixer && filter && loudnessGain && masterGain) {
+      mixer.connect(filter);
+      filter.connect(loudnessGain);
+      loudnessGain.connect(masterGain);
+      masterGain.connect(audioContext.destination);
+    }
 
     return () => {
       if (mixerNodeRef.current) {
@@ -141,6 +150,7 @@ function Synth() {
         filterNodeRef.current = null;
       }
       if (loudnessEnvelopeGainRef.current) {
+        console.log("[DEBUG] Cleaning up loudnessEnvelopeGainRef");
         loudnessEnvelopeGainRef.current.disconnect();
         loudnessEnvelopeGainRef.current = null;
       }
@@ -149,14 +159,31 @@ function Synth() {
         masterGainRef.current = null;
       }
     };
-  }, [audioContext, filterCutoff, masterVolume]);
+  }, [audioContext]);
+
+  // Set filter cutoff on filterNode
+  useEffect(() => {
+    if (filterNodeRef.current && audioContext) {
+      filterNodeRef.current.frequency.setValueAtTime(
+        mapCutoff(filterCutoff),
+        audioContext.currentTime
+      );
+    }
+  }, [filterCutoff, audioContext]);
+
+  // Set master volume on masterGain
+  useEffect(() => {
+    if (masterGainRef.current && audioContext) {
+      const gain = Math.pow(masterVolume / 10, 2);
+      masterGainRef.current.gain.setValueAtTime(gain, audioContext.currentTime);
+    }
+  }, [masterVolume, audioContext]);
 
   // Only pass mixer node to hooks when it's ready
   const mixerNode = isMixerReady ? mixerNodeRef.current : null;
   // Always call hooks, pass null if not initialized
   const validCtx: AudioContext | null =
     audioContext && mixerNode ? audioContext : null;
-  // For useNoise, mixerNode must be GainNode | null
   const validMixer: GainNode | null =
     audioContext && mixerNodeRef.current instanceof GainNode
       ? mixerNodeRef.current
@@ -165,9 +192,22 @@ function Synth() {
   // Vibrato: 6 Hz sine, depth up to 1 semitone (modWheel=100)
   const vibratoAmount =
     oscillatorModulationOn && modWheel > 0 ? modWheel / 100 : 0;
-  const osc1 = useOscillator1(validCtx, mixerNode, vibratoAmount);
-  const osc2 = useOscillator2(validCtx, mixerNode, vibratoAmount);
-  const osc3 = useOscillator3(validCtx, mixerNode, vibratoAmount);
+  // Always call hooks in the same order, pass null if not ready
+  const osc1 = useOscillator1(
+    validCtx && validMixer ? validCtx : null,
+    validCtx && validMixer ? validMixer : null,
+    vibratoAmount
+  );
+  const osc2 = useOscillator2(
+    validCtx && validMixer ? validCtx : null,
+    validCtx && validMixer ? validMixer : null,
+    vibratoAmount
+  );
+  const osc3 = useOscillator3(
+    validCtx && validMixer ? validCtx : null,
+    validCtx && validMixer ? validMixer : null,
+    vibratoAmount
+  );
 
   // Helper to map 0-10 to 20 Hz - 20,000 Hz logarithmically
   function mapCutoff(val: number) {
@@ -234,10 +274,6 @@ function Synth() {
 
         // Apply loudness envelope
         const now = audioContext.currentTime;
-        const attackTime = 0.005 + (filterAttack / 10) * 2.0; // 5ms to 2s
-        const decayTime = 0.005 + (filterDecay / 10) * 2.0; // 5ms to 2s
-        const sustainLevel = filterSustain / 10; // 0 to 1
-
         // Cancel any ongoing envelope
         loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
         // Start from current value (might be non-zero if note was retriggered)
@@ -246,16 +282,24 @@ function Synth() {
         // Ramp to full volume
         loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
           1,
-          now + attackTime
+          now + loudnessAttackTime
         );
         // Then to sustain level
         loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
-          sustainLevel,
-          now + attackTime + decayTime
+          loudnessSustainLevel,
+          now + loudnessAttackTime + loudnessDecayTime
         );
       },
       triggerRelease: () => {
         if (!audioContext || !loudnessEnvelopeGainRef.current) return;
+
+        console.log("[DEBUG] triggerRelease called");
+        console.log("[DEBUG] decaySwitchOn:", decaySwitchOn);
+        console.log("[DEBUG] loudnessDecayTime:", loudnessDecayTime);
+        console.log(
+          "[DEBUG] current gain:",
+          loudnessEnvelopeGainRef.current.gain.value
+        );
 
         osc1?.triggerRelease?.();
         osc2?.triggerRelease?.();
@@ -263,45 +307,104 @@ function Synth() {
 
         const now = audioContext.currentTime;
         const decayTime = 0.005 + (filterDecay / 10) * 2.0; // 5ms to 2s
-        const releaseTime = decayTime / 4; // Use 1/4 of decay time for release
 
-        // Cancel any ongoing envelope
-        loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
-        // Start from current value
-        const currentGain = loudnessEnvelopeGainRef.current.gain.value;
-        loudnessEnvelopeGainRef.current.gain.setValueAtTime(currentGain, now);
-        // Release to zero
-        loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
-          0,
-          now + releaseTime
-        );
+        // Handle filter envelope release
+        if (filterNodeRef.current && filterModulationOn) {
+          if (decaySwitchOn) {
+            // If decay switch is on, use decay time for filter release
+            filterNodeRef.current.frequency.cancelScheduledValues(now);
+            const currentFreq = filterNodeRef.current.frequency.value;
+            filterNodeRef.current.frequency.setValueAtTime(currentFreq, now);
+            filterNodeRef.current.frequency.linearRampToValueAtTime(
+              mapCutoff(filterCutoff), // Return to base cutoff
+              now + decayTime
+            );
+          } else {
+            // If decay switch is off, return to base cutoff immediately
+            filterNodeRef.current.frequency.setValueAtTime(
+              mapCutoff(filterCutoff),
+              now
+            );
+          }
+        }
+
+        // Handle loudness envelope release
+        if (decaySwitchOn) {
+          console.log(
+            "[DEBUG] Decay Switch ON: scheduling gain ramp to 0 over",
+            loudnessDecayTime,
+            "seconds"
+          );
+          // If decay switch is on, use loudness decay time for release
+          loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
+          const currentGain = loudnessEnvelopeGainRef.current.gain.value;
+          loudnessEnvelopeGainRef.current.gain.setValueAtTime(currentGain, now);
+          loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
+            0,
+            now + loudnessDecayTime
+          );
+          // Debug: Watch gain value after scheduling the ramp
+          setTimeout(() => {
+            if (loudnessEnvelopeGainRef.current) {
+              console.log(
+                "[DEBUG] gain after 100ms:",
+                loudnessEnvelopeGainRef.current.gain.value
+              );
+            }
+          }, 100);
+          setTimeout(() => {
+            if (loudnessEnvelopeGainRef.current) {
+              console.log(
+                "[DEBUG] gain after 500ms:",
+                loudnessEnvelopeGainRef.current.gain.value
+              );
+            }
+          }, 500);
+          setTimeout(() => {
+            if (loudnessEnvelopeGainRef.current) {
+              console.log(
+                "[DEBUG] gain after 2000ms:",
+                loudnessEnvelopeGainRef.current.gain.value
+              );
+            }
+          }, 2000);
+        } else {
+          console.log(
+            "[DEBUG] Decay Switch OFF: setting gain to 0 immediately"
+          );
+          // If decay switch is off, release immediately
+          loudnessEnvelopeGainRef.current.gain.setValueAtTime(0, now);
+        }
       },
     };
   }, [
+    audioContext,
     osc1,
     osc2,
     osc3,
-    audioContext,
-    filterCutoff,
-    filterModulationOn,
+    loudnessAttackTime,
+    loudnessSustainLevel,
+    loudnessDecayTime,
     keyboardControl1,
     keyboardControl2,
+    filterCutoff,
+    filterModulationOn,
+    filterContourAmount,
+    modWheel,
     filterAttack,
     filterDecay,
     filterSustain,
-    filterContourAmount,
-    modWheel,
+    decaySwitchOn,
   ]);
 
   // Set master volume on mixerNode
   useEffect(() => {
-    if (mixerNode && audioContext) {
-      if (!isMasterActive) {
-        mixerNode.gain.setValueAtTime(0, audioContext.currentTime);
-      } else {
-        const gain = Math.pow(masterVolume / 10, 2);
-        mixerNode.gain.setValueAtTime(gain, audioContext.currentTime);
-      }
+    if (!audioContext || !mixerNode) return;
+    if (!isMasterActive) {
+      mixerNode.gain.setValueAtTime(0, audioContext.currentTime);
+    } else {
+      const gain = Math.pow(masterVolume / 10, 2);
+      mixerNode.gain.setValueAtTime(gain, audioContext.currentTime);
     }
   }, [masterVolume, isMasterActive, audioContext, mixerNode]);
 

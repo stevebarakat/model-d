@@ -1,18 +1,22 @@
 import { HorizontalRockerSwitch } from "../RockerSwitch";
+import { useSynthStore } from "@/store/synthStore";
 
 interface DecaySwitchProps {
   disabled?: boolean;
 }
 
 function DecaySwitch({ disabled = false }: DecaySwitchProps) {
+  const decaySwitchOn = useSynthStore((state) => state.decaySwitchOn);
+  const setDecaySwitchOn = useSynthStore((state) => state.setDecaySwitchOn);
+
   return (
     <HorizontalRockerSwitch
       theme="white"
       label="Decay"
       topLabel="Decay"
       bottomLabelRight="On"
-      checked={false}
-      onCheckedChange={disabled ? () => {} : () => {}}
+      checked={decaySwitchOn}
+      onCheckedChange={disabled ? () => {} : setDecaySwitchOn}
       disabled={disabled}
     />
   );

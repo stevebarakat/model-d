@@ -93,9 +93,6 @@ export function useOscillator1(
   );
 
   const triggerRelease = useCallback(() => {
-    if (oscillatorRef.current) {
-      oscillatorRef.current.stop();
-    }
     if (vibratoIntervalRef.current) {
       clearInterval(vibratoIntervalRef.current);
       vibratoIntervalRef.current = null;

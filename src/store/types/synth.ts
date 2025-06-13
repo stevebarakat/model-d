@@ -93,6 +93,7 @@ export type SynthState = {
   loudnessAttack: number;
   loudnessDecay: number;
   loudnessSustain: number;
+  decaySwitchOn: boolean;
 };
 
 export type SynthActions = {
@@ -139,4 +140,5 @@ export type SynthActions = {
     decay?: number;
     sustain?: number;
   }) => void;
+  setDecaySwitchOn: (on: boolean) => void;
 };

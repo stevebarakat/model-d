@@ -92,5 +92,6 @@ export function createSynthActions(
         loudnessSustain:
           env.sustain !== undefined ? env.sustain : state.loudnessSustain,
       })),
+    setDecaySwitchOn: (on: boolean) => set({ decaySwitchOn: on }),
   };
 }

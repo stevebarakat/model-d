@@ -5,6 +5,7 @@
   width: 100%;
   max-width: 1600px;
   background: url("/images/minimoog-template.png") no-repeat center center;
+  background-color: hsl(240, 100%, 10%);
   background-size: cover;
   aspect-ratio: 16 / 9;
   user-select: none;
