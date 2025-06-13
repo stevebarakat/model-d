@@ -54,5 +54,6 @@ export function createInitialState(): Omit<
     filterModulationOn: false,
     keyboardControl1: false,
     keyboardControl2: false,
+    oscillatorModulationOn: false,
   };
 }

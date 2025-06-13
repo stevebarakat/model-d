@@ -10,7 +10,8 @@ export type UseOscillator1Result = {
 
 export function useOscillator1(
   audioContext: AudioContext | null,
-  mixerNode: GainNode | null
+  mixerNode: GainNode | null,
+  vibratoAmount: number = 0
 ): UseOscillator1Result {
   const oscillatorRef = useRef<Osc1Instance | null>(null);
   const { oscillator1, masterTune, glideOn, glideTime, pitchWheel } =
@@ -18,6 +19,7 @@ export function useOscillator1(
   const lastFrequencyRef = useRef<number | null>(null);
   const lastNoteRef = useRef<string | null>(null);
   const { enabled, volume } = useSynthStore((s) => s.mixer.osc1);
+  const vibratoIntervalRef = useRef<number | null>(null);
 
   const triggerAttack = useCallback(
     (note: string) => {
@@ -43,9 +45,6 @@ export function useOscillator1(
         const baseFreq = noteToFrequency(note) * Math.pow(2, masterTune / 12);
         const bendSemis = ((pitchWheel - 50) / 50) * 2;
         const frequency = baseFreq * Math.pow(2, bendSemis / 12);
-        console.log(
-          `[Osc1] note: ${note}, baseFreq: ${baseFreq}, bendSemis: ${bendSemis}, finalFreq: ${frequency}`
-        );
         if (glideOn && lastFrequencyRef.current !== null) {
           oscillatorRef.current.start(lastFrequencyRef.current);
           const oscNode = oscillatorRef.current.getNode();
@@ -60,6 +59,24 @@ export function useOscillator1(
           oscillatorRef.current.start(frequency);
         }
         lastFrequencyRef.current = frequency;
+        // Vibrato
+        if (vibratoAmount > 0 && oscillatorRef.current) {
+          const oscNode = oscillatorRef.current.getNode();
+          const t0 = audioContext.currentTime;
+          vibratoIntervalRef.current = window.setInterval(() => {
+            const t = performance.now() / 1000 - t0;
+            // 6 Hz vibrato, ±1 semitone max
+            const vibratoSemis = Math.sin(2 * Math.PI * 6 * t) * vibratoAmount;
+            const vibFreq =
+              baseFreq * Math.pow(2, (bendSemis + vibratoSemis) / 12);
+            if (oscNode) {
+              oscNode.frequency.setValueAtTime(
+                vibFreq,
+                audioContext.currentTime
+              );
+            }
+          }, 1000 / 60); // 60Hz update
+        }
       }
     },
     [
@@ -70,12 +87,17 @@ export function useOscillator1(
       glideOn,
       glideTime,
       pitchWheel,
+      vibratoAmount,
     ]
   );
 
   const triggerRelease = useCallback(() => {
     if (oscillatorRef.current) {
       oscillatorRef.current.stop();
+    }
+    if (vibratoIntervalRef.current) {
+      clearInterval(vibratoIntervalRef.current);
+      vibratoIntervalRef.current = null;
     }
   }, [audioContext, mixerNode]);
 
@@ -84,6 +106,10 @@ export function useOscillator1(
       if (oscillatorRef.current) {
         oscillatorRef.current.stop();
         oscillatorRef.current = null;
+      }
+      if (vibratoIntervalRef.current) {
+        clearInterval(vibratoIntervalRef.current);
+        vibratoIntervalRef.current = null;
       }
     };
   }, []);

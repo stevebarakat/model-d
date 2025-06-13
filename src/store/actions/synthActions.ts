@@ -74,5 +74,7 @@ export function createSynthActions(
     setFilterModulationOn: (on: boolean) => set({ filterModulationOn: on }),
     setKeyboardControl1: (on: boolean) => set({ keyboardControl1: on }),
     setKeyboardControl2: (on: boolean) => set({ keyboardControl2: on }),
+    setOscillatorModulationOn: (on: boolean) =>
+      set({ oscillatorModulationOn: on }),
   };
 }

@@ -69,6 +69,9 @@ function Synth() {
   const keyboardControl1 = useSynthStore((state) => state.keyboardControl1);
   const keyboardControl2 = useSynthStore((state) => state.keyboardControl2);
   const modWheel = useSynthStore((state) => state.modWheel);
+  const oscillatorModulationOn = useSynthStore(
+    (state) => state.oscillatorModulationOn
+  );
 
   useEffect(() => {
     // Clean up previous mixer and filter nodes if context changes or is disposed
@@ -126,9 +129,12 @@ function Synth() {
   const validCtx = audioContext && mixerNode ? audioContext : null;
   const validMixer = audioContext && mixerNode ? mixerNode : null;
   useNoise(validCtx, validMixer);
-  const osc1 = useOscillator1(validCtx, validMixer);
-  const osc2 = useOscillator2(validCtx, validMixer);
-  const osc3 = useOscillator3(validCtx, validMixer);
+  // Vibrato: 6 Hz sine, depth up to 1 semitone (modWheel=100)
+  const vibratoAmount =
+    oscillatorModulationOn && modWheel > 0 ? modWheel / 100 : 0;
+  const osc1 = useOscillator1(validCtx, validMixer, vibratoAmount);
+  const osc2 = useOscillator2(validCtx, validMixer, vibratoAmount);
+  const osc3 = useOscillator3(validCtx, validMixer, vibratoAmount);
 
   // Helper to map 0-10 to 20 Hz - 20,000 Hz logarithmically
   function mapCutoff(val: number) {

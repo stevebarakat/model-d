@@ -79,6 +79,7 @@ export type SynthState = {
   filterModulationOn: boolean;
   keyboardControl1: boolean;
   keyboardControl2: boolean;
+  oscillatorModulationOn: boolean;
 };
 
 export type SynthActions = {
@@ -111,4 +112,5 @@ export type SynthActions = {
   setFilterModulationOn: (on: boolean) => void;
   setKeyboardControl1: (on: boolean) => void;
   setKeyboardControl2: (on: boolean) => void;
+  setOscillatorModulationOn: (on: boolean) => void;
 };

@@ -17,13 +17,15 @@ export type UseOscillator3Result = {
 
 export function useOscillator3(
   audioContext: AudioContext | null,
-  mixerNode?: AudioNode | null
+  mixerNode?: AudioNode | null,
+  vibratoAmount: number = 0
 ): UseOscillator3Result {
   const { oscillator3, mixer, glideOn, glideTime, masterTune, pitchWheel } =
     useSynthStore();
   const oscRef = useRef<Osc3Instance | null>(null);
   const lastFrequencyRef = useRef<number | null>(null);
   const lastNoteRef = useRef<string | null>(null);
+  const vibratoIntervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!audioContext) {
@@ -104,20 +106,41 @@ export function useOscillator3(
         }
       }
       lastFrequencyRef.current = freq;
+      // Vibrato
+      if (vibratoAmount > 0 && oscRef.current) {
+        const t0 = audioContext.currentTime;
+        vibratoIntervalRef.current = window.setInterval(() => {
+          const t = performance.now() / 1000 - t0;
+          // 6 Hz vibrato, ±1 semitone max
+          const vibratoSemis = Math.sin(2 * Math.PI * 6 * t) * vibratoAmount;
+          const vibFreq =
+            baseFreq *
+            Math.pow(2, (detuneSemis + bendSemis + vibratoSemis) / 12);
+          if (oscNode) {
+            oscNode.frequency.setValueAtTime(vibFreq, audioContext.currentTime);
+          }
+        }, 1000 / 60);
+      }
     },
     [
-      oscillator3.frequency,
-      glideOn,
-      glideTime,
       audioContext,
+      oscillator3,
       masterTune,
       pitchWheel,
+      vibratoAmount,
+      glideOn,
+      glideTime,
     ]
   );
 
   const triggerRelease = useCallback(() => {
-    if (!audioContext || !oscRef.current) return;
-    oscRef.current?.stop();
+    if (oscRef.current) {
+      oscRef.current.stop();
+    }
+    if (vibratoIntervalRef.current) {
+      clearInterval(vibratoIntervalRef.current);
+      vibratoIntervalRef.current = null;
+    }
   }, [audioContext]);
 
   useEffect(() => {
@@ -139,6 +162,19 @@ export function useOscillator3(
       }
     }
   }, [pitchWheel]);
+
+  useEffect(() => {
+    return () => {
+      if (oscRef.current) {
+        oscRef.current.stop();
+        oscRef.current = null;
+      }
+      if (vibratoIntervalRef.current) {
+        clearInterval(vibratoIntervalRef.current);
+        vibratoIntervalRef.current = null;
+      }
+    };
+  }, []);
 
   if (!audioContext) {
     return {
