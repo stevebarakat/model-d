@@ -47,10 +47,10 @@ function getDisplayValue(
   unit: string,
   valueLabels?: Record<number, string | React.ReactElement>
 ): string | React.ReactElement {
-  return (
-    valueLabels?.[Math.round(value)] ??
-    value.toFixed(step >= 1 ? 0 : 2) + (unit ? ` ${unit}` : "")
-  );
+  if (valueLabels?.[Math.round(value)]) {
+    return valueLabels[Math.round(value)];
+  }
+  return value.toFixed(step >= 1 ? 0 : 2) + (unit ? ` ${unit}` : "");
 }
 
 function Knob({
@@ -83,7 +83,11 @@ function Knob({
       : value.toFixed(step >= 1 ? 0 : 2) + (unit ? ` ${unit}` : "");
 
   function handleMouseDown(e: React.MouseEvent): void {
-    if (disabled) return;
+    if (disabled) {
+      console.log("Knob disabled, ignoring mouseDown");
+      return;
+    }
+    console.log("Knob mouseDown:", { clientY: e.clientY, value });
     setIsDragging(true);
     setStartY(e.clientY);
     setStartValue(value);
@@ -91,35 +95,83 @@ function Knob({
 
   const handleMouseMove = useCallback(
     (e: MousePosition): void => {
-      const sensitivity = 1.0;
+      if (!isDragging) {
+        console.log("Knob not dragging, ignoring mouseMove");
+        return;
+      }
+
+      // Increase sensitivity for logarithmic knobs
+      const sensitivity = logarithmic ? 2.0 : 1.0;
       const deltaY = (startY - e.clientY) * sensitivity;
       const range = max - min;
       let newValue;
+
+      console.log("Knob mouseMove:", {
+        startY,
+        currentY: e.clientY,
+        deltaY,
+        startValue,
+        sensitivity,
+        logarithmic,
+      });
 
       if (logarithmic) {
         const logMin = Math.log(min);
         const logMax = Math.log(max);
         const logRange = logMax - logMin;
-        const logStartValue = Math.log(startValue);
-        const logDelta = (deltaY / 100) * logRange;
+        const logStartValue = Math.log(Math.max(min, startValue));
+        // Adjust delta calculation for logarithmic scale
+        const logDelta = (deltaY / 200) * logRange;
         const logNewValue = Math.min(
           logMax,
           Math.max(logMin, logStartValue + logDelta)
         );
         newValue = Math.exp(logNewValue);
+
+        // For logarithmic knobs, use a more precise step calculation
+        const effectiveStep = Math.max(0.01, step);
+        const steps = Math.round((newValue - min) / effectiveStep);
+        newValue = min + steps * effectiveStep;
+
+        console.log("Knob logarithmic calculation:", {
+          logMin,
+          logMax,
+          logRange,
+          logStartValue,
+          logDelta,
+          logNewValue,
+          newValue,
+          effectiveStep,
+          steps,
+        });
       } else {
         newValue = Math.min(
           max,
           Math.max(min, startValue + (deltaY / 100) * range)
         );
+        // For linear knobs, use normal step calculation
+        const steps = Math.round(newValue / step);
+        newValue = steps * step;
       }
 
-      // Round to the nearest step
-      const steps = Math.round(newValue / step);
-      newValue = steps * step;
-      onChange(Number(newValue.toFixed(step >= 1 ? 0 : 2)));
+      // Ensure we don't go below min or above max
+      newValue = Math.min(max, Math.max(min, newValue));
+
+      console.log("Knob final value:", {
+        effectiveStep: logarithmic ? Math.max(0.01, step) : step,
+        steps: logarithmic
+          ? Math.round((newValue - min) / Math.max(0.01, step))
+          : Math.round(newValue / step),
+        newValue,
+        min,
+        max,
+      });
+
+      // Round to appropriate precision based on step size
+      const precision = step < 0.1 ? 2 : step < 1 ? 1 : 0;
+      onChange(Number(newValue.toFixed(precision)));
     },
-    [min, max, startY, startValue, onChange, logarithmic, step]
+    [min, max, startY, startValue, onChange, logarithmic, step, isDragging]
   );
 
   const handleKeyDown = useCallback(
@@ -155,6 +207,7 @@ function Knob({
     if (!isDragging) return;
 
     function handleMouseUp(): void {
+      console.log("Knob mouseUp");
       setIsDragging(false);
     }
 

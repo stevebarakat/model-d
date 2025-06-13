@@ -4,6 +4,7 @@ import LedIndicator from "../LedIndicator";
 import { useExternalInput } from "./hooks";
 import Row from "../Row";
 import HorizontalRockerSwitch from "../RockerSwitch/HorizontalRockerSwitch";
+import { useEffect } from "react";
 
 type ExternalInputProps = {
   audioContext: AudioContext;
@@ -13,6 +14,13 @@ type ExternalInputProps = {
 function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
   const { mixer, setMixerExternal } = useSynthStore();
   const { audioLevel } = useExternalInput(audioContext, mixerNode);
+
+  // Initialize volume to minimum value if it's 0
+  useEffect(() => {
+    if (mixer.external.volume === 0) {
+      setMixerExternal({ volume: 0.001 });
+    }
+  }, [mixer.external.volume, setMixerExternal]);
 
   return (
     <Row>
@@ -37,12 +45,10 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
           8: "8",
           10: "10",
         }}
-        value={
-          Number.isFinite(mixer.external.volume) ? mixer.external.volume : 0
-        }
-        min={0}
+        value={mixer.external.volume}
+        min={0.001}
         max={10}
-        step={1}
+        step={0.1}
         label="External Input Volume"
         title={
           <span>
@@ -51,7 +57,13 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
             Input Volume
           </span>
         }
-        onChange={(v) => setMixerExternal({ volume: v })}
+        onChange={(v) => {
+          // Only update if the value is different
+          if (v !== mixer.external.volume) {
+            console.log("Knob onChange:", v);
+            setMixerExternal({ volume: v });
+          }
+        }}
         logarithmic={true}
         disabled={audioContext === null}
       />
