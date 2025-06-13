@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2px 0;
+  margin: 0;
   transition: all 0.3s ease-in-out;
   user-select: none;
 
@@ -15,7 +15,7 @@
   position: relative;
   display: flex;
   gap: 10px;
-  width: var(--switch-width);
+  width: calc(var(--switch-width) + 10px);
   font-size: var(--font-size-xs);
   font-weight: 800;
   text-transform: uppercase;
@@ -43,9 +43,9 @@
 }
 
 .leftLabel {
-  position: relative;
-  top: 14px;
-  left: calc(var(--spacing-xs) * -1);
+  position: absolute;
+  margin-bottom: var(--spacing-md);
+  left: calc(var(--spacing-sm) * -1);
   display: flex;
 }
 

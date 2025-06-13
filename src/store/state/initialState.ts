@@ -51,5 +51,8 @@ export function createInitialState(): Omit<
     filterCutoff: 5,
     filterEmphasis: 5,
     filterContourAmount: 5,
+    filterModulationOn: false,
+    keyboardControl1: false,
+    keyboardControl2: false,
   };
 }

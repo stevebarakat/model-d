@@ -1,12 +1,17 @@
 import { HorizontalRockerSwitch } from "@/components/RockerSwitch";
+import { useSynthStore } from "@/store/synthStore";
 
 function ModulationSwitch({ disabled }: { disabled: boolean }) {
+  const filterModulationOn = useSynthStore((state) => state.filterModulationOn);
+  const setFilterModulationOn = useSynthStore(
+    (state) => state.setFilterModulationOn
+  );
   return (
     <div>
       <HorizontalRockerSwitch
         theme="orange"
-        checked={false}
-        onCheckedChange={() => {}}
+        checked={filterModulationOn}
+        onCheckedChange={setFilterModulationOn}
         label="Filter Modulation"
         topLabel="Filter Modulation"
         bottomLabelRight="On"

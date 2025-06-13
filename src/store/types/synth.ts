@@ -74,6 +74,11 @@ export type SynthState = {
   filterCutoff: number; // 0-10
   filterEmphasis: number; // 0-10
   filterContourAmount: number; // 0-10
+
+  // New switches
+  filterModulationOn: boolean;
+  keyboardControl1: boolean;
+  keyboardControl2: boolean;
 };
 
 export type SynthActions = {
@@ -103,4 +108,7 @@ export type SynthActions = {
   setFilterCutoff: (value: number) => void;
   setFilterEmphasis: (value: number) => void;
   setFilterContourAmount: (value: number) => void;
+  setFilterModulationOn: (on: boolean) => void;
+  setKeyboardControl1: (on: boolean) => void;
+  setKeyboardControl2: (on: boolean) => void;
 };

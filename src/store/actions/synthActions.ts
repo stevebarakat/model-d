@@ -71,5 +71,8 @@ export function createSynthActions(
     setFilterCutoff: (value) => set({ filterCutoff: value }),
     setFilterEmphasis: (value) => set({ filterEmphasis: value }),
     setFilterContourAmount: (value) => set({ filterContourAmount: value }),
+    setFilterModulationOn: (on: boolean) => set({ filterModulationOn: on }),
+    setKeyboardControl1: (on: boolean) => set({ keyboardControl1: on }),
+    setKeyboardControl2: (on: boolean) => set({ keyboardControl2: on }),
   };
 }

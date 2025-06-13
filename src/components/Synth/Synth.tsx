@@ -19,6 +19,28 @@ import styles from "./Synth.module.css";
 import PowerButton from "../PowerButton";
 import Power from "../Power";
 
+// Helper: Convert note name (e.g., 'C4') to MIDI number
+function noteNameToMidi(note: string): number {
+  const noteMap: Record<string, number> = {
+    C: 0,
+    "C#": 1,
+    D: 2,
+    "D#": 3,
+    E: 4,
+    F: 5,
+    "F#": 6,
+    G: 7,
+    "G#": 8,
+    A: 9,
+    "A#": 10,
+    B: 11,
+  };
+  const match = note.match(/^([A-G]#?)(-?\d+)$/);
+  if (!match) return 60; // default to C4
+  const [, n, oct] = match;
+  return 12 * (parseInt(oct, 10) + 1) + noteMap[n];
+}
+
 function Synth() {
   const { activeKeys, setActiveKeys, masterVolume, isMasterActive } =
     useSynthStore();
@@ -42,6 +64,10 @@ function Synth() {
   const filterAttack = useSynthStore((state) => state.filterAttack);
   const filterDecay = useSynthStore((state) => state.filterDecay);
   const filterSustain = useSynthStore((state) => state.filterSustain);
+
+  const filterModulationOn = useSynthStore((state) => state.filterModulationOn);
+  const keyboardControl1 = useSynthStore((state) => state.keyboardControl1);
+  const keyboardControl2 = useSynthStore((state) => state.keyboardControl2);
 
   useEffect(() => {
     // Clean up previous mixer and filter nodes if context changes or is disposed
@@ -122,35 +148,43 @@ function Synth() {
         osc1?.triggerAttack?.(note);
         osc2?.triggerAttack?.(note);
         osc3?.triggerAttack?.(note);
-        // Filter envelope modulation
         if (filterNodeRef.current && audioContext) {
-          // Get base cutoff from knob
+          // Key tracking calculation
+          const keyTracking =
+            (keyboardControl1 ? 1 / 3 : 0) + (keyboardControl2 ? 2 / 3 : 0);
+          const noteNumber = noteNameToMidi(note);
+          const baseNoteNumber = 60; // C4
           const baseCutoff = mapCutoff(filterCutoff);
-          // Envelope amount in octaves
-          const contourOctaves = mapContourAmount(filterContourAmount);
-          // Envelope times (map 0-10 to 0.005-5s for attack/decay)
-          const attackTime = 0.005 + (filterAttack / 10) * 2.0; // 5ms-2s
-          const decayTime = 0.005 + (filterDecay / 10) * 2.0; // 5ms-2s
-          // Sustain level (0-1)
-          const sustainLevel = filterSustain / 10;
-          // Envelope target frequency
-          const envMax = baseCutoff * Math.pow(2, contourOctaves);
-          const envSustain = baseCutoff + (envMax - baseCutoff) * sustainLevel;
-          const now = audioContext.currentTime;
-          // Cancel previous automation
-          filterNodeRef.current.frequency.cancelScheduledValues(now);
-          // Start at base cutoff
-          filterNodeRef.current.frequency.setValueAtTime(baseCutoff, now);
-          // Attack to envMax
-          filterNodeRef.current.frequency.linearRampToValueAtTime(
-            envMax,
-            now + attackTime
-          );
-          // Decay to sustain
-          filterNodeRef.current.frequency.linearRampToValueAtTime(
-            envSustain,
-            now + attackTime + decayTime
-          );
+          const trackedCutoff =
+            baseCutoff *
+            Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
+
+          if (filterModulationOn) {
+            // Envelope modulation as before, but start from trackedCutoff
+            const contourOctaves = mapContourAmount(filterContourAmount);
+            const attackTime = 0.005 + (filterAttack / 10) * 2.0;
+            const decayTime = 0.005 + (filterDecay / 10) * 2.0;
+            const sustainLevel = filterSustain / 10;
+            const envMax = trackedCutoff * Math.pow(2, contourOctaves);
+            const envSustain =
+              trackedCutoff + (envMax - trackedCutoff) * sustainLevel;
+            const now = audioContext.currentTime;
+            filterNodeRef.current.frequency.cancelScheduledValues(now);
+            filterNodeRef.current.frequency.setValueAtTime(trackedCutoff, now);
+            filterNodeRef.current.frequency.linearRampToValueAtTime(
+              envMax,
+              now + attackTime
+            );
+            filterNodeRef.current.frequency.linearRampToValueAtTime(
+              envSustain,
+              now + attackTime + decayTime
+            );
+          } else {
+            // No envelope, just set cutoff with key tracking
+            const now = audioContext.currentTime;
+            filterNodeRef.current.frequency.cancelScheduledValues(now);
+            filterNodeRef.current.frequency.setValueAtTime(trackedCutoff, now);
+          }
         }
       },
       triggerRelease: (note: string) => {
@@ -171,6 +205,9 @@ function Synth() {
     filterAttack,
     filterDecay,
     filterSustain,
+    filterModulationOn,
+    keyboardControl1,
+    keyboardControl2,
   ]);
 
   // Set master volume on mixerNode
@@ -187,12 +224,19 @@ function Synth() {
 
   useEffect(() => {
     if (!filterNodeRef.current) return;
-    // Map 0-10 to 20 Hz - 20,000 Hz logarithmically
-    const minFreq = 20;
-    const maxFreq = 20000;
-    const cutoff = minFreq * Math.pow(maxFreq / minFreq, filterCutoff / 10);
+    // Key tracking for static cutoff
+    let trackedCutoff = mapCutoff(filterCutoff);
+    const keyTracking =
+      (keyboardControl1 ? 1 / 3 : 0) + (keyboardControl2 ? 2 / 3 : 0);
+    if (activeKeys) {
+      const noteNumber = noteNameToMidi(activeKeys);
+      const baseNoteNumber = 60;
+      trackedCutoff =
+        trackedCutoff *
+        Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
+    }
     filterNodeRef.current.frequency.setValueAtTime(
-      cutoff,
+      trackedCutoff,
       filterNodeRef.current.context.currentTime
     );
     // Map 0-10 to Q: 0.7 (no resonance) to 15 (classic Minimoog max resonance)
@@ -203,7 +247,13 @@ function Synth() {
       q,
       filterNodeRef.current.context.currentTime
     );
-  }, [filterCutoff, filterEmphasis]);
+  }, [
+    filterCutoff,
+    filterEmphasis,
+    activeKeys,
+    keyboardControl1,
+    keyboardControl2,
+  ]);
 
   return (
     <div className={styles.synthContainer}>

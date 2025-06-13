@@ -61,7 +61,7 @@ function HorizontalRockerSwitch({
       </div>
 
       {/* Left Label */}
-      {/* {leftLabel && <span className={styles.leftLabel}>{leftLabel}</span>} */}
+      {leftLabel && <span className={styles.leftLabel}>{leftLabel}</span>}
 
       {/* Switch Input */}
       <label
