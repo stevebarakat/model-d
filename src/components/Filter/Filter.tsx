@@ -16,9 +16,10 @@ function Filter({ disabled = false }: FilterProps) {
         <ModulationSwitch />
         <KeyboardControl />
       </div>
-      <Title size="md">Filter</Title>
+      <Title disabled={disabled} size="md">
+        Filter
+      </Title>
       <Row>
-        {/* <Spacer width="16px" /> */}
         <Knob
           valueLabels={{
             0: "-4",
