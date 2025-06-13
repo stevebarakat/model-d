@@ -1,6 +1,6 @@
 import { HorizontalRockerSwitch } from "@/components/RockerSwitch";
 
-function ModulationSwitch() {
+function ModulationSwitch({ disabled }: { disabled: boolean }) {
   return (
     <div>
       <HorizontalRockerSwitch
@@ -10,6 +10,7 @@ function ModulationSwitch() {
         label="Filter Modulation"
         topLabel="Filter Modulation"
         bottomLabelRight="On"
+        disabled={disabled}
       />
     </div>
   );

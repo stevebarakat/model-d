@@ -13,7 +13,7 @@ function Filter({ disabled = false }: FilterProps) {
   return (
     <div>
       <div className={styles.filterSwitches}>
-        <ModulationSwitch />
+        <ModulationSwitch disabled={disabled} />
         <KeyboardControl />
       </div>
       <Title disabled={disabled} size="md">
