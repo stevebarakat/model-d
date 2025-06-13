@@ -76,5 +76,7 @@ export function createSynthActions(
     setKeyboardControl2: (on: boolean) => set({ keyboardControl2: on }),
     setOscillatorModulationOn: (on: boolean) =>
       set({ oscillatorModulationOn: on }),
+    setLfoWaveform: (waveform: "triangle" | "square") =>
+      set({ lfoWaveform: waveform }),
   };
 }

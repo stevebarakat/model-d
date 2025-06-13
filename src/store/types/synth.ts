@@ -80,6 +80,7 @@ export type SynthState = {
   keyboardControl1: boolean;
   keyboardControl2: boolean;
   oscillatorModulationOn: boolean;
+  lfoWaveform: "triangle" | "square";
 };
 
 export type SynthActions = {
@@ -113,4 +114,5 @@ export type SynthActions = {
   setKeyboardControl1: (on: boolean) => void;
   setKeyboardControl2: (on: boolean) => void;
   setOscillatorModulationOn: (on: boolean) => void;
+  setLfoWaveform: (waveform: "triangle" | "square") => void;
 };
