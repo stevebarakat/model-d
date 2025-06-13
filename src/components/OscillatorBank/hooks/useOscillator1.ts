@@ -88,5 +88,14 @@ export function useOscillator1(
     useSynthStore.getState().mixer.osc1.volume,
   ]);
 
+  useEffect(() => {
+    if (oscillatorRef.current) {
+      oscillatorRef.current.update({
+        waveform: oscillator1.waveform,
+        range: oscillator1.range,
+      });
+    }
+  }, [oscillator1.waveform, oscillator1.range]);
+
   return { triggerAttack, triggerRelease };
 }

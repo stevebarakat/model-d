@@ -1,6 +1,6 @@
 import { useSynthStore } from "@/store/synthStore";
 import OscillatorPanel from "./OscillatorPanel";
-import ArrowKnob from "@/components/ArrowKnob";
+import ArrowKnob from "@/components/ArrowKnob/ArrowKnob";
 import {
   TriangleIcon,
   TriSawIcon,
