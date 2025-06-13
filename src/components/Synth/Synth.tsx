@@ -82,9 +82,9 @@ function Synth() {
         osc2.triggerAttack(note);
         osc3.triggerAttack(note);
       },
-      triggerRelease: () => {
+      triggerRelease: (note: string) => {
         osc1.triggerRelease();
-        osc2.triggerRelease();
+        osc2.triggerRelease(note);
         osc3.triggerRelease();
       },
     };

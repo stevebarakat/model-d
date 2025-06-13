@@ -141,17 +141,24 @@ function Keyboard({
   const handleKeyPress = useCallback(
     (note: string): void => {
       if (disabled || isReleasing) return;
+
+      // If there's an active key and it's different from the new note,
+      // release it first to allow for glide transition
+      if (activeKeys && activeKeys !== note) {
+        synth.triggerRelease(activeKeys);
+      }
+
       synth.triggerAttack(note);
       onKeyDown(note);
     },
-    [onKeyDown, synth, disabled, isReleasing]
+    [onKeyDown, synth, disabled, isReleasing, activeKeys]
   );
 
   const handleKeyRelease = useCallback(
     (note: string): void => {
       if (disabled || isReleasing || note !== activeKeys) return;
       setIsReleasing(true);
-      synth.triggerRelease();
+      synth.triggerRelease(note);
       onKeyUp(note);
       setIsReleasing(false);
     },
@@ -169,7 +176,7 @@ function Keyboard({
     setIsMouseDown(false);
     if (activeKeys) {
       setIsReleasing(true);
-      synth.triggerRelease();
+      synth.triggerRelease(activeKeys);
       onKeyUp(activeKeys);
       setIsReleasing(false);
     }
@@ -182,7 +189,7 @@ function Keyboard({
       setIsMouseDown(false);
       if (activeKeys) {
         setIsReleasing(true);
-        synth.triggerRelease();
+        synth.triggerRelease(activeKeys);
         onKeyUp(activeKeys);
         setIsReleasing(false);
       }
