@@ -55,61 +55,38 @@ export function useExternalInput(
 
   useEffect(() => {
     async function setup() {
-      console.log("ExternalInput setup:", {
-        audioContextState: audioContext?.state,
-        mixerEnabled: mixer.external.enabled,
-        mixerVolume: mixer.external.volume,
-        hasMixerNode: !!mixerNode,
-      });
-
       if (!audioContext || audioContext.state !== "running") {
-        console.log("ExternalInput: AudioContext not ready", {
-          hasContext: !!audioContext,
-          state: audioContext?.state,
-        });
         return;
       }
 
       try {
         // Create gain node if it doesn't exist
         if (!gainRef.current) {
-          console.log("ExternalInput: Creating gain node");
           gainRef.current = audioContext.createGain();
           gainRef.current.gain.value = 0; // Start muted
         }
 
         // Create analyzer node
         if (!analyzerRef.current) {
-          console.log("ExternalInput: Creating analyzer node");
           analyzerRef.current = audioContext.createAnalyser();
           analyzerRef.current.fftSize = 256;
         }
 
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           try {
-            console.log("ExternalInput: Requesting microphone access");
             const stream = await navigator.mediaDevices.getUserMedia({
               audio: true,
-            });
-            console.log("ExternalInput: Microphone access granted", {
-              hasAudioTracks: stream.getAudioTracks().length > 0,
-              trackLabel: stream.getAudioTracks()[0]?.label,
             });
 
             // Create new source node
             inputRef.current = audioContext.createMediaStreamSource(stream);
 
             // Connect the nodes
-            console.log("ExternalInput: Connecting audio nodes");
             inputRef.current.connect(gainRef.current);
             inputRef.current.connect(analyzerRef.current); // Connect to analyzer
             if (mixerNode) {
-              console.log("ExternalInput: Connecting to mixer node");
               gainRef.current.connect(mixerNode);
             } else {
-              console.log(
-                "ExternalInput: Connecting to audio context destination"
-              );
               gainRef.current.connect(audioContext.destination);
             }
 
@@ -117,11 +94,6 @@ export function useExternalInput(
             const initialGain = mixer.external.enabled
               ? linearToLogGain(mixer.external.volume)
               : 0;
-            console.log("ExternalInput: Setting initial gain", {
-              enabled: mixer.external.enabled,
-              volume: mixer.external.volume,
-              initialGain,
-            });
             gainRef.current.gain.setValueAtTime(
               initialGain,
               audioContext.currentTime
@@ -143,7 +115,6 @@ export function useExternalInput(
     setup();
 
     return () => {
-      console.log("ExternalInput: Cleaning up");
       // Clean up connections
       if (gainRef.current) {
         gainRef.current.disconnect();
@@ -175,12 +146,6 @@ export function useExternalInput(
       const newGain = mixer.external.enabled
         ? linearToLogGain(mixer.external.volume)
         : 0;
-      console.log("ExternalInput: Updating gain", {
-        enabled: mixer.external.enabled,
-        volume: mixer.external.volume,
-        newGain,
-        isFinite: isFinite(newGain),
-      });
       // Guard against NaN and non-finite values
       if (isFinite(newGain)) {
         gainRef.current.gain.setValueAtTime(

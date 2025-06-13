@@ -60,7 +60,6 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
         onChange={(v) => {
           // Only update if the value is different
           if (v !== mixer.external.volume) {
-            console.log("Knob onChange:", v);
             setMixerExternal({ volume: v });
           }
         }}
