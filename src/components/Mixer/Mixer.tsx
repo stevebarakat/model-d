@@ -40,7 +40,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               onChange={
                 disabled
                   ? () => {}
-                  : (v) => setMixerSource("osc1", { volume: v })
+                  : (v) => {
+                      console.log("Osc1 volume changed to", v);
+                      setMixerSource("osc1", { volume: v });
+                    }
               }
               size="medium"
               disabled={disabled}
@@ -49,9 +52,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               style={{ left: "15px" }}
               theme="blue"
               checked={mixer.osc1.enabled}
-              onCheckedChange={(checked) =>
-                setMixerSource("osc1", { enabled: checked })
-              }
+              onCheckedChange={(checked) => {
+                console.log("Osc1 enabled changed to", checked);
+                setMixerSource("osc1", { enabled: checked });
+              }}
               label="Oscillator 1"
               bottomLabelRight="On"
               disabled={disabled}
@@ -76,7 +80,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               onChange={
                 disabled
                   ? () => {}
-                  : (v) => setMixerSource("osc2", { volume: v })
+                  : (v) => {
+                      console.log("Osc2 volume changed to", v);
+                      setMixerSource("osc2", { volume: v });
+                    }
               }
               size="medium"
               disabled={disabled}
@@ -85,9 +92,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               style={{ left: "15px" }}
               theme="blue"
               checked={mixer.osc2.enabled}
-              onCheckedChange={(checked) =>
-                setMixerSource("osc2", { enabled: checked })
-              }
+              onCheckedChange={(checked) => {
+                console.log("Osc2 enabled changed to", checked);
+                setMixerSource("osc2", { enabled: checked });
+              }}
               label="Oscillator 2"
               bottomLabelRight="On"
               disabled={disabled}
@@ -112,7 +120,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               onChange={
                 disabled
                   ? () => {}
-                  : (v) => setMixerSource("osc3", { volume: v })
+                  : (v) => {
+                      console.log("Osc3 volume changed to", v);
+                      setMixerSource("osc3", { volume: v });
+                    }
               }
               size="medium"
               disabled={disabled}
@@ -121,9 +132,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               style={{ left: "15px" }}
               theme="blue"
               checked={mixer.osc3.enabled}
-              onCheckedChange={(checked) =>
-                setMixerSource("osc3", { enabled: checked })
-              }
+              onCheckedChange={(checked) => {
+                console.log("Osc3 enabled changed to", checked);
+                setMixerSource("osc3", { enabled: checked });
+              }}
               label="Oscillator 3"
               bottomLabelRight="On"
               disabled={disabled}

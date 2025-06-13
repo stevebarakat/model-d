@@ -52,6 +52,11 @@ export function useOscillator3(
 
   useEffect(() => {
     if (oscRef.current) {
+      console.log(
+        "[Osc3] Updating gain:",
+        mixer.osc3.enabled,
+        mixer.osc3.volume
+      );
       oscRef.current.getGainNode().gain.value = mixer.osc3.enabled
         ? mixer.osc3.volume / 10
         : 0;

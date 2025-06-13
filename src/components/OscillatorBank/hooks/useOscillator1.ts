@@ -71,5 +71,22 @@ export function useOscillator1(
     };
   }, []);
 
+  useEffect(() => {
+    if (oscillatorRef.current) {
+      console.log(
+        "[Osc1] Updating gain:",
+        useSynthStore.getState().mixer.osc1.enabled,
+        useSynthStore.getState().mixer.osc1.volume
+      );
+      oscillatorRef.current.getGainNode().gain.value = useSynthStore.getState()
+        .mixer.osc1.enabled
+        ? useSynthStore.getState().mixer.osc1.volume / 10
+        : 0;
+    }
+  }, [
+    useSynthStore.getState().mixer.osc1.enabled,
+    useSynthStore.getState().mixer.osc1.volume,
+  ]);
+
   return { triggerAttack, triggerRelease };
 }
