@@ -23,8 +23,11 @@ function Output({ disabled = false }: OutputProps) {
   } = useSynthStore();
   return (
     <Section>
-      <Column style={{ gap: "var(--spacing-md)" }}>
-        <Row>
+      <Column
+        gap="var(--spacing-xl)"
+        style={{ paddingLeft: "0.5rem", paddingRight: "0.5rem" }}
+      >
+        <Row gap="var(--spacing-md)">
           <Knob
             valueLabels={{
               0: "0",
@@ -63,7 +66,7 @@ function Output({ disabled = false }: OutputProps) {
             disabled={disabled}
           />
         </Row>
-        <Row>
+        <Row gap="var(--spacing-md)">
           <Knob
             valueLabels={{
               0: "0",
