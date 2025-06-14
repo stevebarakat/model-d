@@ -50,7 +50,10 @@ function mapOscillatorType(waveform: string) {
       return "sawtooth";
     case "pulse1":
       return "square";
-    // Add more mappings as needed
+    case "pulse2":
+      return "square";
+    case "pulse3":
+      return "square";
     default:
       return "sine"; // fallback for custom or unsupported types
   }
