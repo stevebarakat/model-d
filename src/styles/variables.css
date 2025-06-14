@@ -1,7 +1,7 @@
 :root {
   /* Color System */
   --color-background: hsl(0deg 0% 10%);
-  --color-synth-bg: hsl(240, 50%, 10%);
+  --color-synth-bg: hsl(240deg 50% 10%);
   --color-off-black: hsl(0deg 0% 5%);
   --color-off-white: hsl(0deg 0% 100% / 60%);
   --color-text-primary: hsl(0deg 0% 60%);

@@ -104,9 +104,23 @@ function Synth() {
     useSynthStore();
 
   // Precompute loudness envelope times for use in both triggerAttack and triggerRelease
-  const loudnessAttackTime = 0.005 + (loudnessAttack / 10) * 2.0; // 5ms to 2s
-  const loudnessDecayTime = 0.005 + (loudnessDecay / 10) * 2.0; // 5ms to 2s
+  const loudnessAttackTime = mapEnvelopeTime(loudnessAttack); // 5ms to 10s
+  const loudnessDecayTime = mapEnvelopeTime(loudnessDecay); // 5ms to 10s
   const loudnessSustainLevel = loudnessSustain / 10; // 0 to 1
+
+  // Helper function to map knob values (0-10) to time values (5ms to 10s)
+  function mapEnvelopeTime(value: number): number {
+    // Map 0-10 to 0.005-10 seconds logarithmically
+    const minTime = 0.005; // 5ms
+    const maxTime = 10; // 10s
+    const mappedTime = minTime * Math.pow(maxTime / minTime, value / 10);
+    console.log(
+      `[DEBUG] Mapping envelope value ${value} to time ${mappedTime.toFixed(
+        3
+      )}s`
+    );
+    return mappedTime;
+  }
 
   useEffect(() => {
     if (!audioContext) return;
@@ -246,8 +260,8 @@ function Synth() {
             // Filter envelope modulation
             const contourOctaves =
               mapContourAmount(filterContourAmount) * (modWheel / 100);
-            const attackTime = 0.005 + (filterAttack / 10) * 2.0;
-            const decayTime = 0.005 + (filterDecay / 10) * 2.0;
+            const attackTime = mapEnvelopeTime(filterAttack);
+            const decayTime = mapEnvelopeTime(filterDecay);
             const sustainLevel = filterSustain / 10;
             const envMax = trackedCutoff * Math.pow(2, contourOctaves);
             const envSustain =
@@ -274,21 +288,22 @@ function Synth() {
 
         // Apply loudness envelope
         const now = audioContext.currentTime;
-        // Cancel any ongoing envelope
-        loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
-        // Start from current value (might be non-zero if note was retriggered)
-        const currentGain = loudnessEnvelopeGainRef.current.gain.value;
-        loudnessEnvelopeGainRef.current.gain.setValueAtTime(currentGain, now);
-        // Ramp to full volume
-        loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
-          1,
-          now + loudnessAttackTime
-        );
-        // Then to sustain level
-        loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
-          loudnessSustainLevel,
-          now + loudnessAttackTime + loudnessDecayTime
-        );
+        if (loudnessEnvelopeGainRef.current) {
+          // Cancel any ongoing envelope
+          loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
+          // Start from 0
+          loudnessEnvelopeGainRef.current.gain.setValueAtTime(0, now);
+          // Ramp to full volume
+          loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
+            1,
+            now + loudnessAttackTime
+          );
+          // Then to sustain level
+          loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
+            loudnessSustainLevel,
+            now + loudnessAttackTime + loudnessDecayTime
+          );
+        }
       },
       triggerRelease: () => {
         if (!audioContext || !loudnessEnvelopeGainRef.current) return;
@@ -317,7 +332,7 @@ function Synth() {
             filterNodeRef.current.frequency.setValueAtTime(currentFreq, now);
             filterNodeRef.current.frequency.linearRampToValueAtTime(
               mapCutoff(filterCutoff), // Return to base cutoff
-              now + decayTime
+              now + mapEnvelopeTime(filterDecay)
             );
           } else {
             // If decay switch is off, return to base cutoff immediately
@@ -330,50 +345,45 @@ function Synth() {
 
         // Handle loudness envelope release
         if (decaySwitchOn) {
-          console.log(
-            "[DEBUG] Decay Switch ON: scheduling gain ramp to 0 over",
-            loudnessDecayTime,
-            "seconds"
-          );
+          console.log(`[DEBUG] Release with Decay Switch ON:
+            Decay Time: ${loudnessDecayTime.toFixed(3)}s
+            Current Gain: ${loudnessEnvelopeGainRef.current?.gain.value.toFixed(
+              2
+            )}
+            Raw Decay Value: ${loudnessDecay}
+          `);
           // If decay switch is on, use loudness decay time for release
-          loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
-          const currentGain = loudnessEnvelopeGainRef.current.gain.value;
-          loudnessEnvelopeGainRef.current.gain.setValueAtTime(currentGain, now);
-          loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
-            0,
-            now + loudnessDecayTime
-          );
-          // Debug: Watch gain value after scheduling the ramp
-          setTimeout(() => {
-            if (loudnessEnvelopeGainRef.current) {
-              console.log(
-                "[DEBUG] gain after 100ms:",
-                loudnessEnvelopeGainRef.current.gain.value
-              );
-            }
-          }, 100);
-          setTimeout(() => {
-            if (loudnessEnvelopeGainRef.current) {
-              console.log(
-                "[DEBUG] gain after 500ms:",
-                loudnessEnvelopeGainRef.current.gain.value
-              );
-            }
-          }, 500);
-          setTimeout(() => {
-            if (loudnessEnvelopeGainRef.current) {
-              console.log(
-                "[DEBUG] gain after 2000ms:",
-                loudnessEnvelopeGainRef.current.gain.value
-              );
-            }
-          }, 2000);
+          if (loudnessEnvelopeGainRef.current) {
+            const now = audioContext.currentTime;
+            loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
+            const currentGain = loudnessEnvelopeGainRef.current.gain.value;
+            loudnessEnvelopeGainRef.current.gain.setValueAtTime(
+              currentGain,
+              now
+            );
+            loudnessEnvelopeGainRef.current.gain.linearRampToValueAtTime(
+              0,
+              now + loudnessDecayTime
+            );
+          }
         } else {
-          console.log(
-            "[DEBUG] Decay Switch OFF: setting gain to 0 immediately"
-          );
+          console.log(`[DEBUG] Release with Decay Switch OFF:
+            Current Gain: ${loudnessEnvelopeGainRef.current?.gain.value.toFixed(
+              2
+            )}
+          `);
           // If decay switch is off, release immediately
-          loudnessEnvelopeGainRef.current.gain.setValueAtTime(0, now);
+          if (loudnessEnvelopeGainRef.current) {
+            const now = audioContext.currentTime;
+            // Cancel any ongoing envelope
+            loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
+            // Set gain to 0 immediately
+            loudnessEnvelopeGainRef.current.gain.setValueAtTime(0, now);
+            // Also disconnect any ongoing connections
+            loudnessEnvelopeGainRef.current.disconnect();
+            // Reconnect to master gain
+            loudnessEnvelopeGainRef.current.connect(masterGainRef.current!);
+          }
         }
       },
     };
@@ -633,13 +643,11 @@ function Synth() {
     // Pitch modulation (if oscillatorModulationOn)
     if (oscillatorModulationOn && audioContext && modWheelGainRef.current) {
       // We've verified these are non-null in the if condition
-      const ctx = audioContext as AudioContext;
-      const wheelGain = modWheelGainRef.current as GainNode;
       [osc1, osc2, osc3].forEach((osc, index) => {
         const node = osc?.getNode?.();
         if (node) {
           // Create a gain node for this oscillator's modulation
-          const modGain = ctx.createGain();
+          const modGain = audioContext.createGain();
           // Store the gain node in the appropriate ref
           if (index === 0) modOsc1GainRef.current = modGain;
           else if (index === 1) modOsc2GainRef.current = modGain;
@@ -652,7 +660,7 @@ function Synth() {
           modGain.gain.value = baseFreq * 0.0595 * (modWheel / 100);
 
           // Connect the modulation chain
-          wheelGain.connect(modGain);
+          modWheelGainRef.current.connect(modGain);
           modGain.connect(node.frequency);
         }
       });

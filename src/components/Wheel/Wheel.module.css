@@ -42,14 +42,14 @@
 
 .label {
   position: relative;
+  top: var(--spacing-sm);
+  left: -25%;
   font-size: var(--font-size-sm);
   font-weight: 800;
   text-align: center;
   text-transform: uppercase;
   user-select: none;
   letter-spacing: 0.08em;
-  top: var(--spacing-sm);
-  left: -25%;
 }
 
 .shadow {

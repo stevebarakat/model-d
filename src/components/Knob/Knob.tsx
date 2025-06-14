@@ -117,29 +117,20 @@ function Knob({
           Math.max(logMin, logStartValue + logDelta)
         );
         newValue = Math.exp(logNewValue);
-
-        // For logarithmic knobs, use a more precise step calculation
-        const effectiveStep = Math.max(0.01, step);
-        const steps = Math.round((newValue - min) / effectiveStep);
-        newValue = min + steps * effectiveStep;
       } else {
         newValue = Math.min(
           max,
           Math.max(min, startValue + (deltaY / 100) * range)
         );
-        // For linear knobs, use normal step calculation
-        const steps = Math.round(newValue / step);
-        newValue = steps * step;
       }
 
       // Ensure we don't go below min or above max
       newValue = Math.min(max, Math.max(min, newValue));
 
-      // Round to appropriate precision based on step size
-      const precision = step < 0.1 ? 2 : step < 1 ? 1 : 0;
-      onChange(Number(newValue.toFixed(precision)));
+      // Only apply precision for display, not for snapping
+      onChange(newValue);
     },
-    [min, max, startY, startValue, onChange, logarithmic, step, isDragging]
+    [min, max, startY, startValue, onChange, logarithmic, isDragging]
   );
 
   const handleKeyDown = useCallback(

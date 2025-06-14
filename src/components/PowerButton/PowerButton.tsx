@@ -28,7 +28,7 @@ const PowerButton: React.FC<PowerButtonProps> = ({
       checked={isOn}
       onCheckedChange={handleCheckedChange}
       label="Power"
-      theme="orange"
+      theme="black"
       topLabel="ON"
       bottomLabel="OFF"
     />

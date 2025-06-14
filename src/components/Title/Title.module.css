@@ -9,10 +9,10 @@
 }
 
 .small {
+  margin-top: calc(var(--spacing-sm) * -1);
   font-size: var(--font-size-sm);
   font-weight: 800;
   letter-spacing: 0.1em;
-  margin-top: calc(var(--spacing-sm) * -1);
 }
 
 .medium {
