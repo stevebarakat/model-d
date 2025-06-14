@@ -33,7 +33,7 @@
     z-index: 1000;
     content: "";
     display: block;
-    height: 60px;
+    height: 15%;
     background: linear-gradient(
       0deg,
       hsl(0deg 0% 80% / 0%) 0%,
@@ -68,19 +68,18 @@
     hsl(217deg 13% 10%)
   );
   border-radius: 0 0 5px 5px;
-  box-shadow: 0 4px 6px hsl(0deg 0% 0% / 30%),
-    inset 0 1px 1px hsl(217deg 13% 18%);
+  box-shadow: 4px 0 6px hsl(0deg 0% 0% / 50%);
   cursor: pointer;
   transition: all 0.15s ease;
 
   &::after {
     position: absolute;
-    inset: 2px 5px 15px;
+    inset: 2px 8px 15px;
     overflow: clip;
     background: linear-gradient(
       180deg,
-      hsl(217deg 13% 18%),
-      hsl(217deg 13% 12%)
+      hsl(217deg 13% 28%),
+      hsl(217deg 13% 17%)
     );
     border-radius: 0 0 4px 4px;
     box-shadow: inset 0 0 12px 0 hsl(0deg 0% 100% / 10%);
@@ -93,9 +92,8 @@
 .blackKeyActive {
   background: linear-gradient(
     to bottom,
-    hsl(217deg 13% 5%) 0,
-    hsl(217deg 13% 15%) 5px,
-    hsl(217deg 13% 10%) 100%
+    hsl(217deg 13% 10%),
+    hsl(217deg 13% 5%)
   );
 
   &::after {

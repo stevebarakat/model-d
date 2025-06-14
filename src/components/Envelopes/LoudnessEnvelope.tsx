@@ -21,14 +21,20 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
         <Row>
           <Knob
             valueLabels={{
-              0: "0",
-              2: "2",
-              4: "4",
-              6: "6",
-              8: "8",
-              10: "10",
+              0: "m-sec.",
+              1: "10",
+              2: "200",
+              3: "",
+              4: "600",
+              5: "",
+              6: "1",
+              7: "",
+              8: "5",
+              9: "10",
+              10: "sec.",
             }}
             value={loudnessAttack}
+            showMidTicks={false}
             min={0}
             max={10}
             step={1}
@@ -38,14 +44,20 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
           />
           <Knob
             valueLabels={{
-              0: "0",
-              2: "2",
-              4: "4",
-              6: "6",
-              8: "8",
-              10: "10",
+              0: "m-sec.",
+              1: "10",
+              2: "200",
+              3: "",
+              4: "600",
+              5: "",
+              6: "1",
+              7: "",
+              8: "5",
+              9: "10",
+              10: "sec.",
             }}
             value={loudnessDecay}
+            showMidTicks={false}
             min={0}
             max={10}
             step={1}

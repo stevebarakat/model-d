@@ -185,6 +185,19 @@ function ArrowKnob({
         opacity: disabled ? 0.5 : 1,
       }}
     >
+      {/* Tick marks around the knob */}
+      {stepValues.map((v) => {
+        const angle = getRotation(v, min, max);
+        return (
+          <div
+            key={"tick-" + v}
+            className={styles.knobTick}
+            style={{
+              transform: `rotate(${angle}deg) translate(-50%, -32px)`, // 38px is just outside the 32px knob ring
+            }}
+          />
+        );
+      })}
       {/* Value labels around the knob */}
       {stepValues.map((v) => {
         const angle = getRotation(v, min, max);
@@ -215,7 +228,6 @@ function ArrowKnob({
       })}
       {<label className={hideLabel ? `sr-only` : styles.label}>{label}</label>}
       <div className={styles.knobRing}>
-        <div className={styles.ticks}></div>
         <div className={styles.knob}>
           <div className={styles.knobBtm}>
             <div

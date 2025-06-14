@@ -15,6 +15,7 @@ type KnobProps = {
   logarithmic?: boolean;
   size?: "small" | "medium" | "large";
   disabled?: boolean;
+  showMidTicks?: boolean;
 };
 
 type MousePosition = {
@@ -66,6 +67,7 @@ function Knob({
   logarithmic = false,
   size = "medium",
   disabled = false,
+  showMidTicks = true,
 }: KnobProps): React.ReactElement {
   const knobRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -220,8 +222,52 @@ function Knob({
         </span>
       )}
       <div className={styles.knobRing}></div>
-      <div className={styles.ticks}></div>
+      {/* <div className={styles.ticks}></div> */}
       <div className={styles.knob}>
+        {/* Tick marks around the knob */}
+        {valueLabels &&
+          (() => {
+            const labelKeys = Object.keys(valueLabels)
+              .map(Number)
+              .sort((a, b) => a - b);
+            const arc = 262.5;
+            const startAngle = -130;
+            const ticks = [];
+            // Main ticks for valueLabels
+            for (let i = 0; i < labelKeys.length; i++) {
+              const tick = labelKeys[i];
+              const angle = startAngle + ((tick - min) / (max - min)) * arc;
+              ticks.push(
+                <div
+                  key={"tick-" + tick}
+                  className={styles.knobTick}
+                  style={{
+                    transform: `rotate(${angle}deg) translate(-50%, -38px)`,
+                    left: "50%",
+                    top: "50%",
+                  }}
+                />
+              );
+              // Add a small tick between this and the next label
+              if (showMidTicks && i < labelKeys.length - 1) {
+                const nextTick = labelKeys[i + 1];
+                const mid = (tick + nextTick) / 2;
+                const midAngle = startAngle + ((mid - min) / (max - min)) * arc;
+                ticks.push(
+                  <div
+                    key={`tick-mid-${tick}-${nextTick}`}
+                    className={styles.knobTickSmall}
+                    style={{
+                      transform: `rotate(${midAngle}deg) translate(-50%, -38px)`,
+                      left: "50%",
+                      top: "50%",
+                    }}
+                  />
+                );
+              }
+            }
+            return ticks;
+          })()}
         {/* Value labels around the knob */}
         {valueLabels &&
           Object.keys(valueLabels).map((tickKey) => {

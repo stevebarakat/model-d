@@ -34,10 +34,10 @@
 
 .knobRing {
   position: absolute;
-  top: calc(50% - calc(var(--knob-size) / 1.75));
+  top: calc(50% - calc(var(--knob-size) / 1.95));
   z-index: 0;
-  width: calc(var(--knob-size) + 5px);
-  height: calc(var(--knob-size) + 5px);
+  width: var(--knob-size);
+  height: var(--knob-size);
   background: linear-gradient(
     to bottom,
     hsl(0deg 0% 70% / 50%) 0%,
@@ -45,8 +45,9 @@
     hsl(0deg 0% 0% / 50%) 35%,
     hsl(0deg 0% 5% / 100%) 100%
   );
-  border: 2px solid #0f0f0f;
+  /* border: 1px solid #0f0f0f; */
   border-radius: 50%;
+  box-shadow: 0 2px 4px 0 hsl(0deg 0% 0% / 50%);
   filter: drop-shadow(0 -1px hsl(0deg 0% 0%));
 }
 
@@ -255,4 +256,28 @@
   background: transparent;
   border: none;
   cursor: pointer;
+}
+
+.knobTick {
+  position: absolute;
+  width: 1px;
+  height: 6px;
+  background: hsl(0 0% 60%);
+  border-radius: 1px;
+  left: 50%;
+  top: 45%; /* slightly outside the knob ring */
+  transform: translate(-50%, 0);
+  z-index: 3;
+}
+
+.knobTickSmall {
+  position: absolute;
+  width: 1px;
+  height: 3px;
+  background: hsl(0 0% 75%);
+  border-radius: 1px;
+  left: 50%;
+  top: 47%; /* slightly outside the knob ring, but closer than main ticks */
+  transform: translate(-50%, 0);
+  z-index: 3;
 }
