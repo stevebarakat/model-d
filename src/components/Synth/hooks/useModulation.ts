@@ -1,36 +1,15 @@
 import { useRef, useEffect } from "react";
 import { useSynthStore } from "@/store/synthStore";
 import { mapOscillatorType } from "../utils/synthUtils";
+import type { ModulationProps } from "../types/synthTypes";
 
-interface UseSynthModulationProps {
-  audioContext: AudioContext | null;
-  filterNode: BiquadFilterNode | null;
-  osc1: { getNode?: () => OscillatorNode | null } | null;
-  osc2: { getNode?: () => OscillatorNode | null } | null;
-  osc3: { getNode?: () => OscillatorNode | null } | null;
-}
-
-export function useSynthModulation({
+function useModulation({
   audioContext,
-  filterNode,
   osc1,
   osc2,
   osc3,
-}: UseSynthModulationProps): void {
-  const {
-    lfoRate,
-    lfoWaveform,
-    oscillatorModulationOn,
-    filterModulationOn,
-    modWheel,
-    osc3Control,
-    osc3FilterEgSwitch,
-    noiseLfoSwitch,
-    modMix,
-    oscillator3,
-  } = useSynthStore();
-
-  // LFO Node Setup
+  filterNode,
+}: ModulationProps) {
   const lfoNodeRef = useRef<OscillatorNode | null>(null);
   const lfoGainRef = useRef<GainNode | null>(null);
   const modOsc3Ref = useRef<OscillatorNode | null>(null);
@@ -45,7 +24,20 @@ export function useSynthModulation({
   const modOsc2GainRef = useRef<GainNode | null>(null);
   const modOsc3GainRef = useRef<GainNode | null>(null);
 
-  // Setup LFO
+  const {
+    lfoRate,
+    lfoWaveform,
+    oscillator3: osc3State,
+    osc3Control,
+    osc3FilterEgSwitch,
+    noiseLfoSwitch,
+    modMix,
+    modWheel,
+    oscillatorModulationOn,
+    filterModulationOn,
+  } = useSynthStore();
+
+  // LFO setup
   useEffect(() => {
     if (!audioContext) return;
 
@@ -58,12 +50,11 @@ export function useSynthModulation({
     // Create new LFO
     const lfo = audioContext.createOscillator();
     lfo.type = lfoWaveform;
-    // Map lfoRate (0-10) to 0.1 Hz to 20 Hz
     const minHz = 0.1;
     const maxHz = 20;
     lfo.frequency.value = minHz * Math.pow(maxHz / minHz, lfoRate / 10);
     const lfoGain = audioContext.createGain();
-    lfoGain.gain.value = 1; // We'll scale in the modulation logic
+    lfoGain.gain.value = 1;
     lfo.connect(lfoGain);
     lfo.start();
     lfoNodeRef.current = lfo;
@@ -76,7 +67,7 @@ export function useSynthModulation({
     };
   }, [audioContext, lfoRate, lfoWaveform]);
 
-  // Setup modulation routing
+  // Modulation sources setup
   useEffect(() => {
     if (!audioContext) return;
 
@@ -91,12 +82,12 @@ export function useSynthModulation({
     // Create modulation-only OSC3
     if (!modOsc3Ref.current) {
       const osc = audioContext.createOscillator();
-      osc.type = mapOscillatorType(oscillator3.waveform);
+      osc.type = mapOscillatorType(osc3State.waveform);
       osc.frequency.value = osc3Control ? 440 : 6;
       osc.start();
       modOsc3Ref.current = osc;
     } else {
-      modOsc3Ref.current.type = mapOscillatorType(oscillator3.waveform);
+      modOsc3Ref.current.type = mapOscillatorType(osc3State.waveform);
       modOsc3Ref.current.frequency.value = osc3Control ? 440 : 6;
     }
 
@@ -122,13 +113,11 @@ export function useSynthModulation({
       modNoiseRef.current = noise;
     }
 
-    // Create modulation envelope gain
+    // Create modulation gains
     if (!modEnvelopeGainRef.current) {
       modEnvelopeGainRef.current = audioContext.createGain();
       modEnvelopeGainRef.current.gain.value = 0;
     }
-
-    // Create crossfade gains
     if (!modLeftGainRef.current)
       modLeftGainRef.current = audioContext.createGain();
     if (!modRightGainRef.current)
@@ -138,27 +127,31 @@ export function useSynthModulation({
     if (!modWheelGainRef.current)
       modWheelGainRef.current = audioContext.createGain();
 
-    // Disconnect all sources
-    modOsc3Ref.current?.disconnect();
-    modNoiseRef.current?.disconnect();
-    modEnvelopeGainRef.current?.disconnect();
-    lfoGainRef.current?.disconnect();
+    // Disconnect and reconnect sources
+    if (modOsc3Ref.current) modOsc3Ref.current.disconnect();
+    if (modNoiseRef.current) modNoiseRef.current.disconnect();
+    if (modEnvelopeGainRef.current) modEnvelopeGainRef.current.disconnect();
+    if (lfoGainRef.current) lfoGainRef.current.disconnect();
 
     // Connect selected sources
     if (osc3FilterEgSwitch) {
-      modOsc3Ref.current?.connect(modLeftGainRef.current);
+      if (modOsc3Ref.current)
+        modOsc3Ref.current.connect(modLeftGainRef.current);
     } else {
-      modEnvelopeGainRef.current?.connect(modLeftGainRef.current);
+      if (modEnvelopeGainRef.current)
+        modEnvelopeGainRef.current.connect(modLeftGainRef.current);
     }
     if (noiseLfoSwitch) {
-      modNoiseRef.current?.connect(modRightGainRef.current);
+      if (modNoiseRef.current)
+        modNoiseRef.current.connect(modRightGainRef.current);
     } else {
-      lfoGainRef.current?.connect(modRightGainRef.current);
+      if (lfoGainRef.current)
+        lfoGainRef.current.connect(modRightGainRef.current);
     }
 
     // Set crossfade mix
     const mix = modMix / 10;
-    const depth = 5; // Modulation depth
+    const depth = 5;
     modLeftGainRef.current.gain.value = (1 - mix) * depth;
     modRightGainRef.current.gain.value = mix * depth;
 
@@ -169,7 +162,7 @@ export function useSynthModulation({
     modWheelGainRef.current.gain.value = modWheel / 100;
 
     // Route to destinations
-    if (oscillatorModulationOn && modWheelGainRef.current) {
+    if (oscillatorModulationOn && audioContext && modWheelGainRef.current) {
       [osc1, osc2, osc3].forEach((osc, index) => {
         const node = osc?.getNode?.();
         if (node) {
@@ -188,7 +181,7 @@ export function useSynthModulation({
     }
 
     if (filterModulationOn && filterNode) {
-      modWheelGainRef.current?.connect(filterNode.frequency);
+      modWheelGainRef.current.connect(filterNode.frequency);
     }
 
     return () => {
@@ -199,14 +192,14 @@ export function useSynthModulation({
       modRightGainRef.current?.disconnect();
       modSumGainRef.current?.disconnect();
       modWheelGainRef.current?.disconnect();
-      lfoGainRef.current?.disconnect();
+      if (lfoGainRef.current) lfoGainRef.current.disconnect();
       modOsc1GainRef.current?.disconnect();
       modOsc2GainRef.current?.disconnect();
       modOsc3GainRef.current?.disconnect();
     };
   }, [
     audioContext,
-    oscillator3.waveform,
+    osc3State.waveform,
     osc3Control,
     osc3FilterEgSwitch,
     noiseLfoSwitch,
@@ -220,4 +213,9 @@ export function useSynthModulation({
     filterNode,
     lfoGainRef,
   ]);
+
+  return {
+    modEnvelopeGain: modEnvelopeGainRef.current,
+  };
 }
+export default useModulation;

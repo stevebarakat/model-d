@@ -28,6 +28,8 @@ export function mapOscillatorType(waveform: string): OscillatorType {
     case "sawtooth":
       return "sawtooth";
     case "pulse1":
+    case "pulse2":
+    case "pulse3":
       return "square";
     default:
       return "sine"; // fallback for custom or unsupported types
@@ -36,6 +38,7 @@ export function mapOscillatorType(waveform: string): OscillatorType {
 
 // Helper to map knob values (0-10) to time values (5ms to 10s)
 export function mapEnvelopeTime(value: number): number {
+  // Map 0-10 to 0.005-10 seconds logarithmically
   const minTime = 0.005; // 5ms
   const maxTime = 10; // 10s
   return minTime * Math.pow(maxTime / minTime, value / 10);
@@ -50,5 +53,6 @@ export function mapCutoff(val: number): number {
 
 // Helper to map 0-10 to a modulation amount (octaves above base cutoff)
 export function mapContourAmount(val: number): number {
+  // 0 = no envelope, 10 = up to 4 octaves above base cutoff
   return val * 0.4; // 0-4 octaves
 }

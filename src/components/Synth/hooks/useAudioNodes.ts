@@ -1,24 +1,17 @@
 import { useRef, useEffect, useState } from "react";
-import { useAudioContext } from "@/hooks/useAudioContext";
 import { useSynthStore } from "@/store/synthStore";
+import { mapCutoff } from "../utils/synthUtils";
+import { AudioNodes } from "../types/synthTypes";
 
-interface SynthAudioNodes {
-  mixerNode: GainNode | null;
-  filterNode: BiquadFilterNode | null;
-  loudnessEnvelopeGain: GainNode | null;
-  masterGain: GainNode | null;
-  isMixerReady: boolean;
-}
-
-export function useSynthAudio(): SynthAudioNodes {
-  const { audioContext } = useAudioContext();
-  const { masterVolume, isMasterActive } = useSynthStore();
-
+function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
   const mixerNodeRef = useRef<GainNode | null>(null);
   const filterNodeRef = useRef<BiquadFilterNode | null>(null);
   const loudnessEnvelopeGainRef = useRef<GainNode | null>(null);
   const masterGainRef = useRef<GainNode | null>(null);
   const [isMixerReady, setIsMixerReady] = useState(false);
+
+  const { filterCutoff, filterEmphasis, masterVolume, isMasterActive } =
+    useSynthStore();
 
   // Initialize audio nodes
   useEffect(() => {
@@ -72,7 +65,30 @@ export function useSynthAudio(): SynthAudioNodes {
     };
   }, [audioContext]);
 
-  // Set master volume on mixerNode
+  // Set filter cutoff and emphasis
+  useEffect(() => {
+    if (!filterNodeRef.current || !audioContext) return;
+
+    filterNodeRef.current.frequency.setValueAtTime(
+      mapCutoff(filterCutoff),
+      audioContext.currentTime
+    );
+
+    // Map 0-10 to Q: 0.7 (no resonance) to 15 (classic Minimoog max resonance)
+    const minQ = 0.7;
+    const maxQ = 15;
+    const q = minQ + (maxQ - minQ) * (filterEmphasis / 10);
+    filterNodeRef.current.Q.setValueAtTime(q, audioContext.currentTime);
+  }, [filterCutoff, filterEmphasis, audioContext]);
+
+  // Set master volume
+  useEffect(() => {
+    if (!masterGainRef.current || !audioContext) return;
+    const gain = Math.pow(masterVolume / 10, 2);
+    masterGainRef.current.gain.setValueAtTime(gain, audioContext.currentTime);
+  }, [masterVolume, audioContext]);
+
+  // Set mixer volume based on master active state
   useEffect(() => {
     if (!audioContext || !mixerNodeRef.current) return;
     if (!isMasterActive) {
@@ -83,14 +99,6 @@ export function useSynthAudio(): SynthAudioNodes {
     }
   }, [masterVolume, isMasterActive, audioContext]);
 
-  // Set master volume on masterGain
-  useEffect(() => {
-    if (masterGainRef.current && audioContext) {
-      const gain = Math.pow(masterVolume / 10, 2);
-      masterGainRef.current.gain.setValueAtTime(gain, audioContext.currentTime);
-    }
-  }, [masterVolume, audioContext]);
-
   return {
     mixerNode: mixerNodeRef.current,
     filterNode: filterNodeRef.current,
@@ -99,3 +107,5 @@ export function useSynthAudio(): SynthAudioNodes {
     isMixerReady,
   };
 }
+
+export default useAudioNodes;
