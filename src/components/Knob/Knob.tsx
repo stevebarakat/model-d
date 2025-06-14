@@ -256,7 +256,7 @@ function Knob({
                 ticks.push(
                   <div
                     key={`tick-mid-${tick}-${nextTick}`}
-                    className={styles.knobTickSmall}
+                    className={styles.knobTick}
                     style={{
                       transform: `rotate(${midAngle}deg) translate(-50%, -38px)`,
                       left: "50%",

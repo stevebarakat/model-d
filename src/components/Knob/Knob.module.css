@@ -269,15 +269,3 @@
   transform: translate(-50%, 0);
   z-index: 3;
 }
-
-.knobTickSmall {
-  position: absolute;
-  width: 1px;
-  height: 3px;
-  background: hsl(0 0% 75%);
-  border-radius: 1px;
-  left: 50%;
-  top: 47%; /* slightly outside the knob ring, but closer than main ticks */
-  transform: translate(-50%, 0);
-  z-index: 3;
-}
