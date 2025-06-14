@@ -317,31 +317,56 @@ function Keyboard({
   ]);
 
   const renderBlackKeys = useCallback(() => {
-    const whiteKeyWidth = 100 / keys.filter((key) => !key.isSharp).length;
+    const whiteKeys = keys.filter((key) => !key.isSharp);
+    const whiteKeyWidth = 100 / whiteKeys.length;
+
+    // Build a map from keys array index to whiteKeys array index
+    const keyIndexToWhiteIndex: { [index: number]: number } = {};
+    let whiteIdx = 0;
+    keys.forEach((key, idx) => {
+      if (!key.isSharp) {
+        keyIndexToWhiteIndex[idx] = whiteIdx;
+        whiteIdx++;
+      }
+    });
 
     return keys
+      .map((key, idx) => ({ ...key, idx }))
       .filter((key) => key.isSharp)
-      .map((key, index) => {
-        const isActive = activeKeys === key.note;
-        const keyIndex = keys.findIndex((k) => k.note === key.note);
-        const whiteKeysBefore = keys
-          .slice(0, keyIndex)
-          .filter((k) => !k.isSharp).length;
-        const position = (whiteKeysBefore - 0.3) * whiteKeyWidth;
-
+      .map((blackKey, bIdx) => {
+        // Find the closest white key before this black key
+        let prevWhiteIdx = blackKey.idx - 1;
+        while (prevWhiteIdx >= 0 && keys[prevWhiteIdx].isSharp) {
+          prevWhiteIdx--;
+        }
+        // Find the closest white key after this black key
+        let nextWhiteIdx = blackKey.idx + 1;
+        while (nextWhiteIdx < keys.length && keys[nextWhiteIdx].isSharp) {
+          nextWhiteIdx++;
+        }
+        // Get their indices in the whiteKeys array
+        const leftWhiteIndex = keyIndexToWhiteIndex[prevWhiteIdx];
+        const rightWhiteIndex = keyIndexToWhiteIndex[nextWhiteIdx];
+        if (leftWhiteIndex === undefined || rightWhiteIndex === undefined)
+          return null;
+        // Position is the center between the two white keys
+        const position =
+          ((leftWhiteIndex + rightWhiteIndex + 1) / 2) * whiteKeyWidth -
+          whiteKeyWidth * 0.35;
+        const isActive = activeKeys === blackKey.note;
         return (
           <BlackKey
-            key={`black-${key.note}-${index}`}
+            key={`black-${blackKey.note}-${bIdx}`}
             isActive={isActive}
             position={position}
             width={whiteKeyWidth * 0.7}
             onPointerDown={() => {
               handleMouseDown();
-              handleKeyPress(key.note);
+              handleKeyPress(blackKey.note);
             }}
-            onPointerUp={() => handleKeyRelease(key.note)}
-            onPointerEnter={() => handleKeyInteraction(key.note)}
-            onPointerLeave={() => handleKeyLeave(key.note)}
+            onPointerUp={() => handleKeyRelease(blackKey.note)}
+            onPointerEnter={() => handleKeyInteraction(blackKey.note)}
+            onPointerLeave={() => handleKeyLeave(blackKey.note)}
           />
         );
       });
