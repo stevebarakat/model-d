@@ -114,11 +114,6 @@ function Synth() {
     const minTime = 0.005; // 5ms
     const maxTime = 10; // 10s
     const mappedTime = minTime * Math.pow(maxTime / minTime, value / 10);
-    console.log(
-      `[DEBUG] Mapping envelope value ${value} to time ${mappedTime.toFixed(
-        3
-      )}s`
-    );
     return mappedTime;
   }
 
@@ -164,7 +159,6 @@ function Synth() {
         filterNodeRef.current = null;
       }
       if (loudnessEnvelopeGainRef.current) {
-        console.log("[DEBUG] Cleaning up loudnessEnvelopeGainRef");
         loudnessEnvelopeGainRef.current.disconnect();
         loudnessEnvelopeGainRef.current = null;
       }
@@ -308,20 +302,11 @@ function Synth() {
       triggerRelease: () => {
         if (!audioContext || !loudnessEnvelopeGainRef.current) return;
 
-        console.log("[DEBUG] triggerRelease called");
-        console.log("[DEBUG] decaySwitchOn:", decaySwitchOn);
-        console.log("[DEBUG] loudnessDecayTime:", loudnessDecayTime);
-        console.log(
-          "[DEBUG] current gain:",
-          loudnessEnvelopeGainRef.current.gain.value
-        );
-
         osc1?.triggerRelease?.();
         osc2?.triggerRelease?.();
         osc3?.triggerRelease?.();
 
         const now = audioContext.currentTime;
-        const decayTime = 0.005 + (filterDecay / 10) * 2.0; // 5ms to 2s
 
         // Handle filter envelope release
         if (filterNodeRef.current && filterModulationOn) {
@@ -345,16 +330,7 @@ function Synth() {
 
         // Handle loudness envelope release
         if (decaySwitchOn) {
-          console.log(`[DEBUG] Release with Decay Switch ON:
-            Decay Time: ${loudnessDecayTime.toFixed(3)}s
-            Current Gain: ${loudnessEnvelopeGainRef.current?.gain.value.toFixed(
-              2
-            )}
-            Raw Decay Value: ${loudnessDecay}
-          `);
-          // If decay switch is on, use loudness decay time for release
           if (loudnessEnvelopeGainRef.current) {
-            const now = audioContext.currentTime;
             loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
             const currentGain = loudnessEnvelopeGainRef.current.gain.value;
             loudnessEnvelopeGainRef.current.gain.setValueAtTime(
@@ -367,21 +343,10 @@ function Synth() {
             );
           }
         } else {
-          console.log(`[DEBUG] Release with Decay Switch OFF:
-            Current Gain: ${loudnessEnvelopeGainRef.current?.gain.value.toFixed(
-              2
-            )}
-          `);
-          // If decay switch is off, release immediately
           if (loudnessEnvelopeGainRef.current) {
-            const now = audioContext.currentTime;
-            // Cancel any ongoing envelope
             loudnessEnvelopeGainRef.current.gain.cancelScheduledValues(now);
-            // Set gain to 0 immediately
             loudnessEnvelopeGainRef.current.gain.setValueAtTime(0, now);
-            // Also disconnect any ongoing connections
             loudnessEnvelopeGainRef.current.disconnect();
-            // Reconnect to master gain
             loudnessEnvelopeGainRef.current.connect(masterGainRef.current!);
           }
         }
@@ -660,7 +625,7 @@ function Synth() {
           modGain.gain.value = baseFreq * 0.0595 * (modWheel / 100);
 
           // Connect the modulation chain
-          modWheelGainRef.current.connect(modGain);
+          modWheelGainRef.current?.connect(modGain);
           modGain.connect(node.frequency);
         }
       });
@@ -670,29 +635,6 @@ function Synth() {
     if (filterModulationOn && filterNodeRef.current) {
       modWheelGainRef.current.connect(filterNodeRef.current.frequency);
     }
-
-    console.log(
-      "modMix:",
-      modMix,
-      "mix:",
-      mix,
-      "modLeftGain:",
-      modLeftGainRef.current.gain.value,
-      "modRightGain:",
-      modRightGainRef.current.gain.value,
-      "osc3FilterEgSwitch:",
-      osc3FilterEgSwitch,
-      "noiseLfoSwitch:",
-      noiseLfoSwitch
-    );
-
-    // Optionally, log which sources are connected:
-    console.log(
-      "Left source:",
-      osc3FilterEgSwitch ? "OSC3" : "Filter EG",
-      "Right source:",
-      noiseLfoSwitch ? "Noise" : "LFO"
-    );
 
     // Cleanup on unmount
     return () => {
@@ -733,8 +675,8 @@ function Synth() {
           <Controllers disabled={!isInitialized} />
           <OscillatorBank disabled={!isInitialized} />
           <Mixer
-            audioContext={audioContext}
-            mixerNode={mixerNode}
+            audioContext={audioContext!}
+            mixerNode={mixerNode!}
             disabled={!isInitialized}
           />
           <Modifiers disabled={!isInitialized} />

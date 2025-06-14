@@ -58,7 +58,6 @@ function Wheel({
       const rect = sliderRef.current.getBoundingClientRect();
       const y = e.clientY - rect.top;
       const newValue = calculateNewValue(y, rect.height, min, max, step);
-      console.log(`[Wheel] Emitting value:`, newValue);
       onChange(newValue);
     },
     [isDragging, min, max, onChange, step]

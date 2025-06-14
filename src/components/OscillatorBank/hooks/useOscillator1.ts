@@ -141,9 +141,6 @@ export function useOscillator1(
           frequency,
           audioContext.currentTime + 0.02
         );
-        console.log(
-          `[Osc1-PB] Real-time update (ramp): note: ${lastNoteRef.current}, baseFreq: ${baseFreq}, bendSemis: ${bendSemis}, finalFreq: ${frequency}`
-        );
       }
     }
   }, [pitchWheel]);

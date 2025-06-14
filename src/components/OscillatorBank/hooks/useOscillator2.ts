@@ -70,9 +70,6 @@ export function useOscillator2(
       const detuneSemis = oscillator2.frequency || 0;
       const bendSemis = ((pitchWheel - 50) / 50) * 2;
       const freq = baseFreq * Math.pow(2, (detuneSemis + bendSemis) / 12);
-      console.log(
-        `[Osc2] note: ${note}, baseFreq: ${baseFreq}, detuneSemis: ${detuneSemis}, bendSemis: ${bendSemis}, finalFreq: ${freq}`
-      );
       const oscNode = oscRef.current.getNode();
       if (!oscNode) {
         if (glideOn && lastFrequencyRef.current !== null) {
@@ -146,9 +143,6 @@ export function useOscillator2(
         oscNode.frequency.linearRampToValueAtTime(
           freq,
           audioContext.currentTime + 0.02
-        );
-        console.log(
-          `[Osc2-PB] Real-time update (ramp): note: ${lastNoteRef.current}, baseFreq: ${baseFreq}, detuneSemis: ${detuneSemis}, bendSemis: ${bendSemis}, finalFreq: ${freq}`
         );
       }
     }
