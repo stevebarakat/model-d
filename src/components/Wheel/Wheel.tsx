@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./Wheel.module.css";
+import { slugify } from "@/utils/helpers";
 
 type ModWheelProps = {
   value: number;
@@ -42,6 +43,7 @@ function Wheel({
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const percentage = calculatePercentage(value, min, max);
+  const id = slugify(label);
 
   function handleMouseDown(e: React.MouseEvent): void {
     if (disabled) return;
@@ -108,6 +110,7 @@ function Wheel({
   return (
     <div className={styles.wheelContainer}>
       <div
+        id={id}
         ref={sliderRef}
         className={`${styles.wheel} ${disabled ? styles.disabled : ""}`}
         onMouseDown={handleMouseDown}
@@ -125,7 +128,9 @@ function Wheel({
         </div>
         <div className={styles.thumb} />
       </div>
-      <label className={styles.label}>{label}</label>
+      <label className={styles.label} htmlFor={id}>
+        {label}
+      </label>
     </div>
   );
 }

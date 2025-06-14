@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./ArrowKnob.module.css";
+import { slugify } from "@/utils/helpers";
 
 type ArrowKnobProps = {
   value: number;
@@ -80,6 +81,7 @@ function ArrowKnob({
   const [startY, setStartY] = useState(0);
   const [startValue, setStartValue] = useState(0);
   const [isRightSide, setIsRightSide] = useState(false);
+  const id = slugify(label);
 
   const rotation = getRotation(value, min, max);
   const displayValue = getDisplayValue(value, step, unit, valueLabels);
@@ -226,11 +228,16 @@ function ArrowKnob({
           </div>
         );
       })}
-      {<label className={hideLabel ? `sr-only` : styles.label}>{label}</label>}
+      {
+        <label className={hideLabel ? `sr-only` : styles.label} htmlFor={id}>
+          {label}
+        </label>
+      }
       <div className={styles.knobRing}>
         <div className={styles.knob}>
           <div className={styles.knobBtm}>
             <div
+              id={id}
               className={styles.outerKnob}
               ref={knobRef}
               style={{ transform: `rotate(${rotation}deg)` }}

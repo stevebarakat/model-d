@@ -157,7 +157,7 @@
 .black .control::before {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNiAyNiI+PHJlY3Qgd2lkdGg9IjEwIiBoZWlnaHQ9IjIiIHg9IjgiIHk9IjEyIiBmaWxsPSJ0cmFuc3BhcmVudCIvPjwvc3ZnPg=="),
     linear-gradient(to right, hsl(0deg 0% 6%), hsl(0deg 0% 12%));
-  box-shadow: -0.475em 0 0 0 hsl(0deg 0% 22%);
+  box-shadow: -0.675em 0 0 0 hsl(0deg 0% 22%);
   border-left-color: hsl(0deg 0% 33%);
 }
 
@@ -263,7 +263,7 @@
 
 .state:checked ~ .control::after {
   border-left: none;
-  box-shadow: 0.675em 0 0 0 hsl(0deg 0% 74%);
+  box-shadow: 0.475em 0 0 0 hsl(0deg 0% 74%);
   transform: rotateY(-50deg);
   border-right-color: hsl(0deg 0% 93%);
 }
