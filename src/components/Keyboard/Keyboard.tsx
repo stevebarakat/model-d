@@ -1,128 +1,16 @@
 import { useState, useCallback, useEffect } from "react";
 import styles from "./Keyboard.module.css";
-import React from "react";
-import { SynthObject } from "@/store/types/synth";
+import type { KeyboardProps } from "./types";
+import WhiteKey from "./WhiteKey";
+import BlackKey from "./BlackKey";
+import {
+  generateKeyboardKeys,
+  getNoteFromKeyEvent,
+  calculateBlackKeyPosition,
+  FIXED_OCTAVE,
+} from "./utils";
 
-type Note = {
-  note: string;
-  isSharp: boolean;
-};
-
-type Synth = SynthObject;
-
-type KeyboardProps = {
-  activeKeys?: string | null;
-  octaveRange?: { min: number; max: number };
-  onKeyDown?: (note: string) => void;
-  onKeyUp?: (note: string) => void;
-  onMouseDown?: () => void;
-  onMouseUp?: () => void;
-  synth: Synth;
-  disabled?: boolean;
-};
-
-const OCTAVE_NOTES: Note[] = [
-  { note: "F", isSharp: false },
-  { note: "F#", isSharp: true },
-  { note: "G", isSharp: false },
-  { note: "G#", isSharp: true },
-  { note: "A", isSharp: false },
-  { note: "A#", isSharp: true },
-  { note: "B", isSharp: false },
-  { note: "C", isSharp: false },
-  { note: "C#", isSharp: true },
-  { note: "D", isSharp: false },
-  { note: "D#", isSharp: true },
-  { note: "E", isSharp: false },
-];
-
-const generateKeyboardKeys = (octaveRange: {
-  min: number;
-  max: number;
-}): Note[] => {
-  const keys = Array.from(
-    { length: octaveRange.max - octaveRange.min + 1 },
-    (_, i) => octaveRange.min + i
-  ).flatMap((octave) =>
-    OCTAVE_NOTES.map((key, index) => {
-      // For notes after F (index >= 7), we need to use the next octave
-      const adjustedOctave = index >= 7 ? octave + 1 : octave;
-      return {
-        note: `${key.note}${adjustedOctave}`,
-        isSharp: key.isSharp,
-      };
-    })
-  );
-
-  // Add 8 more keys at the end to complete the octave up to C
-  const lastOctave = octaveRange.max + 1;
-  const extraNotes = OCTAVE_NOTES.slice(0, 7).map((key) => ({
-    note: `${key.note}${lastOctave}`,
-    isSharp: key.isSharp,
-  }));
-
-  // Add the final C one octave higher
-  return [
-    ...keys,
-    ...extraNotes,
-    { note: `C${lastOctave + 1}`, isSharp: false },
-  ];
-};
-
-const WhiteKey = React.memo(
-  ({
-    isActive,
-    onPointerDown,
-    onPointerUp,
-    onPointerEnter,
-    onPointerLeave,
-  }: {
-    isActive: boolean;
-    onPointerDown: () => void;
-    onPointerUp: () => void;
-    onPointerEnter: () => void;
-    onPointerLeave: () => void;
-  }) => (
-    <div
-      className={`${styles.whiteKey} ${isActive ? styles.whiteKeyActive : ""}`}
-      onPointerDown={onPointerDown}
-      onPointerUp={onPointerUp}
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
-    />
-  )
-);
-
-const BlackKey = React.memo(
-  ({
-    isActive,
-    position,
-    width,
-    onPointerDown,
-    onPointerUp,
-    onPointerEnter,
-    onPointerLeave,
-  }: {
-    isActive: boolean;
-    position: number;
-    width: number;
-    onPointerDown: () => void;
-    onPointerUp: () => void;
-    onPointerEnter: () => void;
-    onPointerLeave: () => void;
-  }) => (
-    <div
-      className={`${styles.blackKey} ${isActive ? styles.blackKeyActive : ""}`}
-      style={{ left: `${position}%`, width: `${width}%` }}
-      onPointerDown={onPointerDown}
-      onPointerUp={onPointerUp}
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
-    />
-  )
-);
-
-function Keyboard({
+export function Keyboard({
   activeKeys = null,
   octaveRange = { min: 1, max: 4 },
   onKeyDown = () => {},
@@ -134,16 +22,12 @@ function Keyboard({
 }: KeyboardProps) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isReleasing, setIsReleasing] = useState(false);
-  const FIXED_OCTAVE = 4;
-
   const keys = generateKeyboardKeys(octaveRange);
 
   const handleKeyPress = useCallback(
     (note: string): void => {
       if (disabled || isReleasing) return;
 
-      // If there's an active key and it's different from the new note,
-      // release it first to allow for glide transition
       if (activeKeys && activeKeys !== note) {
         synth.triggerRelease(activeKeys);
       }
@@ -226,54 +110,18 @@ function Keyboard({
   );
 
   useEffect(() => {
-    const baseKeyboardMap: { [key: string]: string } = {
-      a: "F",
-      w: "F#",
-      s: "G",
-      e: "G#",
-      d: "A",
-      r: "A#",
-      f: "B",
-      g: "C",
-      y: "C#",
-      h: "D",
-      u: "D#",
-      j: "E",
-      k: "F+1",
-    };
-
     function handleKeyboardDown(e: KeyboardEvent) {
       if (!e.key) return;
-      const baseNote = baseKeyboardMap[e.key.toLowerCase()];
-      if (baseNote && !e.repeat) {
-        const note =
-          baseNote === "F+1"
-            ? `F${FIXED_OCTAVE + 1}`
-            : baseNote === "C" ||
-              baseNote === "C#" ||
-              baseNote === "D" ||
-              baseNote === "D#" ||
-              baseNote === "E"
-            ? `${baseNote}${FIXED_OCTAVE + 1}`
-            : `${baseNote}${FIXED_OCTAVE}`;
+      const note = getNoteFromKeyEvent(e.key, FIXED_OCTAVE);
+      if (note && !e.repeat) {
         handleKeyPress(note);
       }
     }
 
     function handleKeyboardUp(e: KeyboardEvent) {
       if (!e.key) return;
-      const baseNote = baseKeyboardMap[e.key.toLowerCase()];
-      if (baseNote) {
-        const note =
-          baseNote === "F+1"
-            ? `F${FIXED_OCTAVE + 1}`
-            : baseNote === "C" ||
-              baseNote === "C#" ||
-              baseNote === "D" ||
-              baseNote === "D#" ||
-              baseNote === "E"
-            ? `${baseNote}${FIXED_OCTAVE + 1}`
-            : `${baseNote}${FIXED_OCTAVE}`;
+      const note = getNoteFromKeyEvent(e.key, FIXED_OCTAVE);
+      if (note) {
         handleKeyRelease(note);
       }
     }
@@ -281,7 +129,7 @@ function Keyboard({
     window.addEventListener("keydown", handleKeyboardDown);
     window.addEventListener("keyup", handleKeyboardUp);
 
-    return function () {
+    return () => {
       window.removeEventListener("keydown", handleKeyboardDown);
       window.removeEventListener("keyup", handleKeyboardUp);
     };
@@ -290,22 +138,19 @@ function Keyboard({
   const renderWhiteKeys = useCallback(() => {
     return keys
       .filter((key) => !key.isSharp)
-      .map((key, index) => {
-        const isActive = activeKeys === key.note;
-        return (
-          <WhiteKey
-            key={`white-${key.note}-${index}`}
-            isActive={isActive}
-            onPointerDown={() => {
-              handleMouseDown();
-              handleKeyPress(key.note);
-            }}
-            onPointerUp={() => handleKeyRelease(key.note)}
-            onPointerEnter={() => handleKeyInteraction(key.note)}
-            onPointerLeave={() => handleKeyLeave(key.note)}
-          />
-        );
-      });
+      .map((key, index) => (
+        <WhiteKey
+          key={`white-${key.note}-${index}`}
+          isActive={activeKeys === key.note}
+          onPointerDown={() => {
+            handleMouseDown();
+            handleKeyPress(key.note);
+          }}
+          onPointerUp={() => handleKeyRelease(key.note)}
+          onPointerEnter={() => handleKeyInteraction(key.note)}
+          onPointerLeave={() => handleKeyLeave(key.note)}
+        />
+      ));
   }, [
     keys,
     activeKeys,
@@ -320,46 +165,23 @@ function Keyboard({
     const whiteKeys = keys.filter((key) => !key.isSharp);
     const whiteKeyWidth = 100 / whiteKeys.length;
 
-    // Build a map from keys array index to whiteKeys array index
-    const keyIndexToWhiteIndex: { [index: number]: number } = {};
-    let whiteIdx = 0;
-    keys.forEach((key, idx) => {
-      if (!key.isSharp) {
-        keyIndexToWhiteIndex[idx] = whiteIdx;
-        whiteIdx++;
-      }
-    });
-
     return keys
       .map((key, idx) => ({ ...key, idx }))
       .filter((key) => key.isSharp)
       .map((blackKey, bIdx) => {
-        // Find the closest white key before this black key
-        let prevWhiteIdx = blackKey.idx - 1;
-        while (prevWhiteIdx >= 0 && keys[prevWhiteIdx].isSharp) {
-          prevWhiteIdx--;
-        }
-        // Find the closest white key after this black key
-        let nextWhiteIdx = blackKey.idx + 1;
-        while (nextWhiteIdx < keys.length && keys[nextWhiteIdx].isSharp) {
-          nextWhiteIdx++;
-        }
-        // Get their indices in the whiteKeys array
-        const leftWhiteIndex = keyIndexToWhiteIndex[prevWhiteIdx];
-        const rightWhiteIndex = keyIndexToWhiteIndex[nextWhiteIdx];
-        if (leftWhiteIndex === undefined || rightWhiteIndex === undefined)
-          return null;
-        // Position is the center between the two white keys
-        const position =
-          ((leftWhiteIndex + rightWhiteIndex + 1) / 2) * whiteKeyWidth -
-          whiteKeyWidth * 0.35;
-        const isActive = activeKeys === blackKey.note;
+        const positionData = calculateBlackKeyPosition(
+          blackKey.idx,
+          keys,
+          whiteKeyWidth
+        );
+        if (!positionData) return null;
+
         return (
           <BlackKey
             key={`black-${blackKey.note}-${bIdx}`}
-            isActive={isActive}
-            position={position}
-            width={whiteKeyWidth * 0.7}
+            isActive={activeKeys === blackKey.note}
+            position={positionData.position}
+            width={positionData.width}
             onPointerDown={() => {
               handleMouseDown();
               handleKeyPress(blackKey.note);
