@@ -145,7 +145,7 @@
     width: 100%;
     height: 100%;
 
-    /* background-image: conic-gradient(
+    background-image: conic-gradient(
       hsl(0deg 0% 90%),
       hsl(0deg 0% 100%),
       hsl(0deg 0% 30%),
@@ -157,7 +157,7 @@
       hsl(0deg 0% 80%),
       hsl(0deg 0% 50%),
       hsl(0deg 0% 90%)
-    ); */
+    );
     border-radius: 50%;
   }
 }

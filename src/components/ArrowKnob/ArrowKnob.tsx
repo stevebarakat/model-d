@@ -229,7 +229,7 @@ function ArrowKnob({
         );
       })}
       {
-        <label className={hideLabel ? `sr-only` : styles.label} htmlFor={id}>
+        <label htmlFor={id} className={hideLabel ? "sr-only" : styles.label}>
           {label}
         </label>
       }

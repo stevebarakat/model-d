@@ -54,7 +54,7 @@ export default function Oscillator1({
         max={ranges.length - 1}
         step={1}
         label="Range"
-        hideLabel={true}
+        hideLabel={false}
         onChange={handleRangeChange}
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
         disabled={disabled}
@@ -73,7 +73,7 @@ export default function Oscillator1({
         max={waveforms.length - 1}
         step={1}
         label="Waveform"
-        hideLabel={true}
+        hideLabel={false}
         onChange={handleWaveformChange}
         valueLabels={waveformIcons.reduce(
           (acc, icon, i) => ({ ...acc, [i]: icon }),
