@@ -1,4 +1,4 @@
-import { HorizontalRockerSwitch } from "@/components/RockerSwitch";
+import { HorizontalRockerSwitch } from "@/components/RockerSwitches";
 import styles from "../OscillatorBank.module.css";
 import { useSynthStore } from "@/store/synthStore";
 

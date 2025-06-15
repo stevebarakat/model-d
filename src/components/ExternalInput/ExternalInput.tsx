@@ -3,7 +3,7 @@ import Knob from "../Knob";
 import LedIndicator from "../LedIndicator";
 import { useExternalInput } from "./hooks";
 import Row from "../Row";
-import HorizontalRockerSwitch from "../RockerSwitch/HorizontalRockerSwitch";
+import { HorizontalRockerSwitch } from "../RockerSwitches";
 import { useEffect } from "react";
 
 type ExternalInputProps = {

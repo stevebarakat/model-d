@@ -1,5 +1,8 @@
 import React from "react";
-import VerticalRockerSwitch from "../RockerSwitch/VerticalRockerSwitch";
+import { VerticalRockerSwitch } from "../RockerSwitches";
+import Column from "../Column";
+import { VintageLED } from "../VintageLED";
+import Title from "../Title";
 
 interface PowerButtonProps {
   isOn: boolean;
@@ -24,14 +27,19 @@ const PowerButton: React.FC<PowerButtonProps> = ({
   );
 
   return (
-    <VerticalRockerSwitch
-      checked={isOn}
-      onCheckedChange={handleCheckedChange}
-      label="Power"
-      theme="black"
-      topLabel="ON"
-      bottomLabel="OFF"
-    />
+    <Column>
+      <VintageLED isOn={isOn} size="large" />
+      <Title size="sm" style={{ marginTop: "var(--spacing-xs)" }}>
+        Power
+      </Title>
+      <VerticalRockerSwitch
+        checked={isOn}
+        onCheckedChange={handleCheckedChange}
+        label="Power"
+        theme="black"
+        topLabel="On"
+      />
+    </Column>
   );
 };
 

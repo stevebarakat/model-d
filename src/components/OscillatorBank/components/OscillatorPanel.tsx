@@ -1,5 +1,5 @@
 import React from "react";
-import { VerticalRockerSwitch } from "@/components/RockerSwitch";
+import { VerticalRockerSwitch } from "@/components/RockerSwitches";
 import Row from "@/components/Row";
 
 export type OscillatorPanelProps = {

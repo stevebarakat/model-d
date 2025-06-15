@@ -1,4 +1,4 @@
-import { HorizontalRockerSwitch } from "../RockerSwitch";
+import { HorizontalRockerSwitch } from "../RockerSwitches";
 import { useSynthStore } from "@/store/synthStore";
 
 interface DecaySwitchProps {

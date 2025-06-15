@@ -1,0 +1,120 @@
+.vintageLed {
+  position: relative;
+  border-radius: 50%;
+  background: #1a1a1a;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  border: 2px solid var(--color-off-white);
+}
+
+.vintageLedInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.vintageLedGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  filter: blur(5px);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.vintageLedReflection {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  filter: blur(1px);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+/* Sizes */
+.vintageLedSmall {
+  width: 12px;
+  height: 12px;
+}
+
+.vintageLedMedium {
+  width: 20px;
+  height: 20px;
+}
+
+.vintageLedLarge {
+  width: 28px;
+  height: 28px;
+}
+
+/* Colors */
+.vintageLedRed {
+  color: #ff0000;
+}
+
+.vintageLedGreen {
+  color: #00ff00;
+}
+
+.vintageLedAmber {
+  color: #ffb000;
+}
+
+.vintageLedBlue {
+  color: #0088ff;
+}
+
+/* States */
+.vintageLedOn .vintageLedInner,
+.vintageLedOn .vintageLedGlow,
+.vintageLedOn .vintageLedReflection {
+  opacity: 1;
+}
+
+.vintageLedWarmedUp .vintageLedInner {
+  opacity: 1;
+}
+
+.vintageLedWarmedUp .vintageLedGlow {
+  opacity: 0.6;
+}
+
+.vintageLedWarmedUp .vintageLedReflection {
+  opacity: 0.8;
+}
+
+/* Container */
+.vintageLedContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vintageLedContainerWithLabelTop,
+.vintageLedContainerWithLabelBottom {
+  flex-direction: column;
+}
+
+.vintageLedContainerWithLabelLeft {
+  flex-direction: row-reverse;
+}
+
+.vintageLedLabel {
+  font-size: 0.875rem;
+  color: #666;
+  user-select: none;
+}

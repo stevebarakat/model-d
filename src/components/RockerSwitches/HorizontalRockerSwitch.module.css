@@ -8,7 +8,7 @@
   transition: all 0.3s ease-in-out;
   user-select: none;
 
-  --switch-width: 44px;
+  --switch-width: 54px;
 }
 
 .topLabel {
@@ -17,7 +17,7 @@
   gap: 10px;
   margin: 0;
   padding: 0;
-  width: calc(var(--switch-width) + 10px);
+  width: var(--switch-width);
   height: fit-content;
   font-size: var(--font-size-xs);
   font-weight: 800;
@@ -55,7 +55,7 @@
   display: flex;
   gap: 10px;
   margin-top: 4px;
-  width: calc(var(--switch-width) + 10px);
+  width: var(--switch-width);
   font-size: var(--font-size-xs);
   font-weight: 800;
   text-transform: uppercase;
@@ -83,12 +83,12 @@
 
 .control {
   position: relative;
-  width: calc(var(--switch-width) + 10px);
+  width: var(--switch-width);
   height: 22px;
   background-color: hsl(0deg 0% 98%);
   border: none;
   border-radius: 0.15em;
-  box-shadow: 0 0 0 2px hsl(0deg 0% 100% / 10%);
+  box-shadow: 0 0 4px 2px hsl (0deg 0% 100% / 10%);
   cursor: pointer;
   transform: rotate(180deg);
   vertical-align: middle;
@@ -169,7 +169,8 @@
 
 /* Orange Theme */
 .orange .control {
-  background-color: hsl(24deg 100% 41%);
+  /* background-color: hsl(24deg 100% 41%); */
+  background-color: transparent;
   border-top: 2px solid var(--border-color);
   border-right: 2px solid var(--border-color);
   border-bottom: 2px solid var(--border-color);
@@ -184,7 +185,7 @@
 .orange .control::before {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNiAyNiI+PHJlY3Qgd2lkdGg9IjEwIiBoZWlnaHQ9IjIiIHg9IjgiIHk9IjEyIiBmaWxsPSJ0cmFuc3BhcmVudCIvPjwvc3ZnPg=="),
     linear-gradient(to right, hsl(24deg 100% 41%), hsl(28deg 79% 52%));
-  box-shadow: -0.475em 0 0 0 hsl(24deg 100% 31%);
+  box-shadow: -0.675em 0 0 0 hsl(24deg 100% 31%);
   border-left-color: hsl(6deg 63% 46%);
 }
 
@@ -196,7 +197,8 @@
 
 /* White Theme */
 .white .control {
-  background-color: hsl(0deg 0% 74%);
+  /* background-color: hsl(0deg 0% 74%); */
+  background-color: transparent;
   border-top: 2px solid var(--border-color);
   border-right: 2px solid var(--border-color);
   border-bottom: 2px solid var(--border-color);
@@ -211,7 +213,7 @@
 .white .control::before {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNiAyNiI+PHJlY3Qgd2lkdGg9IjEwIiBoZWlnaHQ9IjIiIHg9IjgiIHk9IjEyIiBmaWxsPSJ0cmFuc3BhcmVudCIvPjwvc3ZnPg=="),
     linear-gradient(to right, hsl(0deg 0% 74%), hsl(0deg 0% 65%));
-  box-shadow: -0.475em 0 0 0 hsl(0deg 0% 75%);
+  box-shadow: -0.675em 0 0 0 hsl(0deg 0% 75%);
   border-left-color: hsl(0deg 0% 82%);
 }
 
@@ -223,7 +225,8 @@
 
 /* Blue Theme */
 .blue .control {
-  background-color: hsl(195deg 100% 50%);
+  /* background-color: hsl(195deg 100% 50%); */
+  background-color: transparent;
   border-top: 2px solid var(--border-color);
   border-right: 2px solid var(--border-color);
   border-bottom: 2px solid var(--border-color);
@@ -238,8 +241,9 @@
 .blue .control::before {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNiAyNiI+PHJlY3Qgd2lkdGg9IjEwIiBoZWlnaHQ9IjIiIHg9IjgiIHk9IjEyIiBmaWxsPSJ0cmFuc3BhcmVudCIvPjwvc3ZnPg=="),
     linear-gradient(to right, hsl(195deg 100% 50%), hsl(199deg 92% 75%));
-  box-shadow: -0.475em 0 0 0 hsl(195deg 100% 40%);
+  box-shadow: -0.775em 0 0 0 hsl(195deg 100% 40%);
   border-left-color: hsl(195deg 100% 60%);
+  border-radius: 0.1rem 0 0 0.1rem;
 }
 
 .blue .control::after {

@@ -6,7 +6,7 @@ import ExternalInput from "../ExternalInput";
 import Row from "../Row";
 import Column from "../Column";
 import Section from "../Section";
-import HorizontalRockerSwitch from "../RockerSwitch/HorizontalRockerSwitch";
+import { HorizontalRockerSwitch } from "../RockerSwitches";
 
 interface MixerProps {
   audioContext: AudioContext;

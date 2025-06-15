@@ -12,21 +12,21 @@
 }
 
 .knobContainerSmall {
-  --knob-size: 45px;
+  --knob-size: 35px;
 
   width: calc(var(--knob-size) * 1.75);
   height: calc(var(--knob-size) * 1.75);
 }
 
 .knobContainerMedium {
-  --knob-size: 55px;
+  --knob-size: 45px;
 
   width: calc(var(--knob-size) * 1.75);
   height: calc(var(--knob-size) * 1.75);
 }
 
 .knobContainerLarge {
-  --knob-size: 60px;
+  --knob-size: 50px;
 
   width: calc(var(--knob-size) * 1.75);
   height: calc(var(--knob-size) * 1.75);

@@ -1,5 +1,5 @@
 import { useSynthStore } from "@/store/synthStore";
-import { HorizontalRockerSwitch } from "../RockerSwitch";
+import { HorizontalRockerSwitch } from "../RockerSwitches";
 
 interface GlideSwitchProps {
   disabled?: boolean;

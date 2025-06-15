@@ -1,6 +1,9 @@
 import { useNoise } from "./hooks/useNoise";
 import { useSynthStore } from "@/store/synthStore";
-import { HorizontalRockerSwitch, VerticalRockerSwitch } from "../RockerSwitch";
+import {
+  HorizontalRockerSwitch,
+  VerticalRockerSwitch,
+} from "../RockerSwitches";
 import Column from "../Column";
 import Row from "../Row";
 import Knob from "../Knob";

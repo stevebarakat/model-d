@@ -1,4 +1,4 @@
-import { HorizontalRockerSwitch } from "../RockerSwitch";
+import { HorizontalRockerSwitch } from "../RockerSwitches";
 import Column from "../Column";
 import { useSynthStore } from "@/store/synthStore";
 

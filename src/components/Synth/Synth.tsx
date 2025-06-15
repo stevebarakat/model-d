@@ -20,6 +20,7 @@ import PowerButton from "../PowerButton";
 import Power from "../Power";
 import { useAudioNodes, useModulation, useEnvelopes } from "./hooks";
 import { mapCutoff, noteNameToMidi } from "./utils/synthUtils";
+import Column from "../Column";
 
 function Synth() {
   const { activeKeys, setActiveKeys } = useSynthStore();
@@ -109,11 +110,13 @@ function Synth() {
           <Modifiers disabled={!isInitialized} />
           <Output disabled={!isInitialized} />
           <Power>
-            <PowerButton
-              isOn={isInitialized}
-              onPowerOn={initialize}
-              onPowerOff={dispose}
-            />
+            <Column gap="var(--spacing-xs)">
+              <PowerButton
+                isOn={isInitialized}
+                onPowerOn={initialize}
+                onPowerOff={dispose}
+              />
+            </Column>
           </Power>
         </div>
         <div className={styles.keyboardPanel}>

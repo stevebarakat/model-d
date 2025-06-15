@@ -1,4 +1,4 @@
-import { HorizontalRockerSwitch } from "../RockerSwitch";
+import { HorizontalRockerSwitch } from "../RockerSwitches";
 import Title from "../Title";
 import Knob from "../Knob";
 import Tune from "../Tune";
