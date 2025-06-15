@@ -108,8 +108,7 @@ function Synth() {
             disabled={!isInitialized}
           />
           <Modifiers disabled={!isInitialized} />
-          <Output disabled={!isInitialized} />
-          <Power>
+          <Output disabled={!isInitialized}>
             <Column gap="var(--spacing-xs)">
               <PowerButton
                 isOn={isInitialized}
@@ -117,7 +116,7 @@ function Synth() {
                 onPowerOff={dispose}
               />
             </Column>
-          </Power>
+          </Output>
         </div>
         <div className={styles.keyboardPanel}>
           <SidePanel disabled={!isInitialized} />

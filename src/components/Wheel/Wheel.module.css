@@ -13,7 +13,7 @@
   );
 
   width: 14px;
-  height: 140px;
+  height: 100px;
   background: linear-gradient(180deg, hsl(217deg 30% 20%), hsl(217deg 40% 25%));
   background: var(--base-texture);
   box-shadow: 0 1px 2px hsl(217deg 40% 3% / 95%),

@@ -8,19 +8,12 @@ import Row from "../Row";
 
 type OutputProps = {
   disabled?: boolean;
+  children?: React.ReactNode;
 };
 
-export default function Output({ disabled = false }: OutputProps) {
-  const {
-    masterVolume,
-    setMasterVolume,
-    isMasterActive,
-    setIsMasterActive,
-    phonesVolume = 0,
-    setPhonesVolume = () => {},
-    isPhonesActive = false,
-    setIsPhonesActive = () => {},
-  } = useSynthStore();
+export default function Output({ disabled = false, children }: OutputProps) {
+  const { masterVolume, setMasterVolume, isMasterActive, setIsMasterActive } =
+    useSynthStore();
   return (
     <Section>
       <Column
@@ -61,47 +54,8 @@ export default function Output({ disabled = false }: OutputProps) {
             disabled={disabled}
           />
         </Row>
-        <Row>
-          <HorizontalRockerSwitch
-            theme="blue"
-            checked={false}
-            onCheckedChange={disabled ? () => {} : () => {}}
-            label="A - 440"
-            topLabel="A - 440"
-            bottomLabelRight="On"
-            disabled={disabled}
-          />
-        </Row>
-        <Row gap="var(--spacing-md)">
-          <Knob
-            valueLabels={{
-              0: "0",
-              2: "2",
-              4: "4",
-              6: "6",
-              8: "8",
-              10: "10",
-            }}
-            value={phonesVolume}
-            min={0}
-            max={10}
-            step={0.1}
-            onChange={disabled ? () => {} : setPhonesVolume}
-            label="Phones Volume"
-            title="Volume"
-            disabled={disabled}
-          />
-          <HorizontalRockerSwitch
-            theme="blue"
-            checked={isPhonesActive}
-            onCheckedChange={disabled ? () => {} : setIsPhonesActive}
-            label="Enable Headphones"
-            topLabel="Phones"
-            bottomLabelRight="On"
-            disabled={disabled}
-          />
-        </Row>
       </Column>
+      {children}
       <Title>Output</Title>
     </Section>
   );

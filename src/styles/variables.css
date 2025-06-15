@@ -7,16 +7,16 @@
   --color-text-primary: hsl(0deg 0% 60%);
 
   /* Spacing System */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 0.75rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.25rem;
-  --spacing-xl: 1.5rem;
+  --spacing-xs: 0.125rem;
+  --spacing-sm: 0.25rem;
+  --spacing-md: 0.5rem;
+  --spacing-lg: 0.75rem;
+  --spacing-xl: 1rem;
 
   /* Typography */
   --font-primary: "Futura", sans-serif;
   --font-size-xs: 0.4875rem;
-  --font-size-sm: 0.6625rem;
-  --font-size-md: 0.75rem;
-  --font-size-lg: 1.5rem;
+  --font-size-sm: 0.5512rem;
+  --font-size-md: 0.6625rem;
+  --font-size-lg: 1rem;
 }

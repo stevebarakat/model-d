@@ -62,7 +62,7 @@
     linear-gradient(to right, #fafafa, #e1e1e1);
   border-right: none;
   border-radius: 0.075em 0 0 0.075em;
-  box-shadow: -0.475em 0 0 0 #bcbcbc;
+  box-shadow: -0.975em 0 0 0 #bcbcbc;
   transform: rotateY(50deg);
   content: "";
   transform-origin: 100% 50%;
@@ -84,10 +84,6 @@
 /* Theme Base Styles */
 .black .control {
   background-color: #0a0a0a;
-  border-top: 2px solid var(--border-color);
-  border-right: 2px solid var(--border-color);
-  border-bottom: 2px solid var(--border-color);
-  border-left: 1px solid var(--border-color);
 }
 
 .black .control::before,
@@ -110,10 +106,6 @@
 
 .orange .control {
   background-color: hsl(24deg 100% 41%);
-  border-top: 2px solid var(--border-color);
-  border-right: 2px solid var(--border-color);
-  border-bottom: 2px solid var(--border-color);
-  border-left: 1px solid var(--border-color);
 }
 
 .orange .control::before,
@@ -136,10 +128,6 @@
 
 .blue .control {
   background-color: hsl(195deg 100% 50%);
-  border-top: 2px solid var(--border-color);
-  border-right: 2px solid var(--border-color);
-  border-bottom: 2px solid var(--border-color);
-  border-left: 1px solid var(--border-color);
 }
 
 .blue .control::before,
