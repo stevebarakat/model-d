@@ -40,19 +40,10 @@ function HorizontalRockerSwitch({
       className={
         styles.horizontalRockerSwitch +
         (styles[theme] ? " " + styles[theme] : "") +
-        (disabled ? " " + styles.disabled : "")
+        (disabled ? " disabled" : "")
       }
-      style={
-        disabled
-          ? { opacity: 0.5, pointerEvents: "none", ...style }
-          : { ...style }
-      }
+      style={style}
     >
-      {/* Label for screen readers */}
-      <label htmlFor={id} className="sr-only">
-        {label}
-      </label>
-
       {/* Top Label */}
       <div className={styles.topLabel}>
         {topLabelLeft && <span className={styles.left}>{topLabelLeft}</span>}
@@ -63,26 +54,19 @@ function HorizontalRockerSwitch({
       {/* Left Label */}
       {leftLabel && <span className={styles.leftLabel}>{leftLabel}</span>}
 
-      {/* Switch Input */}
-      <label
-        htmlFor={id}
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+      <label className={styles.switchContainer} htmlFor={id}>
+        {/* Switch Input */}
         <input
           id={id}
           className={styles.state}
           type="checkbox"
-          name="switch"
           onChange={(e) => onCheckedChange(e.target.checked)}
           checked={checked}
           disabled={disabled}
         />
-        <div className={styles.control}></div>
+        <div className={styles.control}>
+          <span className="sr-only">{label}</span>
+        </div>
       </label>
 
       {/* Bottom Label */}
