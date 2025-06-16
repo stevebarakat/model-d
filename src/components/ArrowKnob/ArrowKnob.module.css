@@ -135,10 +135,10 @@
   position: absolute;
   top: -35px;
   left: 50%;
-  transform: translateX(-50%);
   margin-bottom: calc(var(--spacing-sm) * -1);
   font-weight: 800;
   text-transform: uppercase;
+  transform: translateX(-50%);
 }
 
 .knobValue {

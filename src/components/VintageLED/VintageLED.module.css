@@ -1,22 +1,22 @@
 .vintageLed {
   position: relative;
-  border-radius: 50%;
   background: #1a1a1a;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
   border: 2px solid var(--color-off-white);
+  border-radius: 50%;
+  box-shadow: inset 0 0 10px rgb(0 0 0 / 50%);
+  transition: all 0.3s ease;
 }
 
 .vintageLedInner {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   width: 80%;
   height: 80%;
+  background: currentcolor;
   border-radius: 50%;
-  background: currentColor;
   opacity: 0;
+  transform: translate(-50%, -50%);
   transition: opacity 0.15s ease;
 }
 
@@ -38,11 +38,11 @@
   left: 10%;
   width: 30%;
   height: 30%;
+  background: rgb(255 255 255 / 40%);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
-  filter: blur(1px);
   opacity: 0;
   transition: opacity 0.15s ease;
+  filter: blur(1px);
 }
 
 /* Sizes */
@@ -63,11 +63,11 @@
 
 /* Colors */
 .vintageLedRed {
-  color: #ff0000;
+  color: #f00;
 }
 
 .vintageLedGreen {
-  color: #00ff00;
+  color: #0f0;
 }
 
 .vintageLedAmber {
@@ -75,7 +75,7 @@
 }
 
 .vintageLedBlue {
-  color: #0088ff;
+  color: #08f;
 }
 
 /* States */
@@ -114,7 +114,7 @@
 }
 
 .vintageLedLabel {
-  font-size: 0.875rem;
   color: #666;
+  font-size: 0.875rem;
   user-select: none;
 }
