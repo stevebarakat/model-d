@@ -54,7 +54,7 @@ function HorizontalRockerSwitch({
       {/* Left Label */}
       {leftLabel && <span className={styles.leftLabel}>{leftLabel}</span>}
 
-      <label className={styles.switchContainer} htmlFor={id}>
+      <label htmlFor={id}>
         {/* Switch Input */}
         <input
           id={id}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { VerticalRockerSwitch } from "../RockerSwitches";
 import { VintageLED } from "../VintageLED";
 import Title from "../Title";

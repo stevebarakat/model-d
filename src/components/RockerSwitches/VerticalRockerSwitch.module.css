@@ -31,9 +31,13 @@
   display: inline-block;
   width: 54px;
   height: 22px;
-  background-color: #fafafa;
   border: none;
   border-radius: 0.15em;
+  border-top: 2px solid var(--border-color);
+  border-right: 2px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
+  border-left: 2px solid var(--border-color);
+  border-radius: 0.1rem;
   box-shadow: 0 0 0 2px hsl(0deg 0% 100% / 10%);
   cursor: pointer;
   rotate: 90deg;
@@ -102,10 +106,6 @@
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNSAyNSI+PGNpcmNsZSBjeD0iMTIuNSIgY3k9IjEyLjUiIHI9IjQuNSIgc3Ryb2tlPSJ0cmFuc3BhcmVudCIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJ0cmFuc3BhcmVudCIgLz48L3N2Zz4="),
     linear-gradient(to left, #0a0a0a, #1a1a1a);
   box-shadow: 0 0 0 0 #333;
-}
-
-.orange .control {
-  background-color: hsl(24deg 100% 41%);
 }
 
 .orange .control::before,
