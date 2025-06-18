@@ -16,7 +16,7 @@ function Modifiers({ disabled = false }: ModifiersProps) {
         <Filter disabled={disabled} />
         <FilterEnvelope disabled={disabled} />
       </Column>
-      <Row style={{ borderTop: "2px solid var(--color-off-white)" }} />
+      <Row style={{ borderTop: "2px solid var(--color-white-50)" }} />
       <Column style={{ paddingLeft: "2.5rem", paddingRight: "0.5rem" }}>
         <LoudnessEnvelope disabled={disabled} />
       </Column>

@@ -28,7 +28,7 @@
   transform: rotate(180deg);
   perspective: 12em;
 
-  --border-color: var(--color-off-black);
+  --border-color: black;
 }
 
 .control::before,
@@ -51,9 +51,9 @@
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNiAyNiI+PHJlY3Qgd2lkdGg9IjEwIiBoZWlnaHQ9IjIiIHg9IjgiIHk9IjEyIiBmaWxsPSJ0cmFuc3BhcmVudCIvPjwvc3ZnPg=="),
     linear-gradient(to right, hsl(0deg 0% 98%), hsl(0deg 0% 88%));
   border-right: none;
-  border-radius: 0.05rem 0 0 0.05rem;
+  border-radius: 0.125rem 0 0 0.125rem;
   box-shadow: -0.975em 0 0 0 hsl(0deg 0% 74%);
-  transform: rotateY(50deg);
+  transform: rotateY(55deg);
   content: "";
   transform-origin: 100% 50%;
   border-left-color: hsl(0deg 0% 93%);

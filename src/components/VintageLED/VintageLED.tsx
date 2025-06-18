@@ -21,7 +21,7 @@ export interface VintageLEDProps {
   /** Position of the label relative to the LED */
   labelPosition?: "top" | "right" | "bottom" | "left";
   /** Click handler for the LED */
-  onClick?: () => void;
+  onCheckedChange: (e: React.FormEvent<HTMLInputElement>) => void;
 }
 
 /**
@@ -34,7 +34,7 @@ export function VintageLED({
   warmupEffect = true,
   className = "",
   label,
-  onClick,
+  onCheckedChange,
 }: VintageLEDProps) {
   const [isWarmedUp, setIsWarmedUp] = useState(isOn && !warmupEffect);
 
@@ -65,8 +65,13 @@ export function VintageLED({
   );
 
   return (
-    <div className={styles.vintageLedContainer} onClick={onClick}>
+    <div>
       <div className={ledClasses}>
+        <input
+          type="checkbox"
+          className={styles.vintageLedInput}
+          onChange={onCheckedChange}
+        />
         <div className={styles.vintageLedInner}>
           <div className={styles.vintageLedGlow}></div>
           <div className={styles.vintageLedReflection}></div>

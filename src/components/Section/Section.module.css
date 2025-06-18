@@ -7,5 +7,5 @@
   gap: 0;
   padding: 0;
   padding-bottom: var(--spacing-xl);
-  border-right: 2px solid var(--color-off-white);
+  border-right: 2px solid var(--color-white-50);
 }

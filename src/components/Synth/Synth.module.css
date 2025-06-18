@@ -8,8 +8,7 @@
 
   /* background: url("/images/minimoog-template.png") no-repeat center center; */
 
-  /* background-color: var(--color-synth-bg); */
-  background-color: hsl(224deg 77% 12%);
+  background-color: var(--color-synth-bg);
   background-size: cover;
   user-select: none;
 }

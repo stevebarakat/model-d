@@ -1,9 +1,10 @@
 :root {
   /* Color System */
   --color-background: hsl(0deg 0% 10%);
-  --color-synth-bg: hsl(240deg 50% 10%);
-  --color-off-black: hsl(0deg 0% 5%);
-  --color-off-white: hsl(0deg 0% 100% / 60%);
+  --color-synth-bg: hsl(0deg 0% 22%);
+  --color-off-black: hsl(0deg 0% 6.25%);
+  --color-off-white: hsl(0deg 0% 93.75%);
+  --color-white-50: hsl(0deg 0% 100% / 50%);
   --color-text-primary: hsl(0deg 0% 60%);
 
   /* Spacing System */

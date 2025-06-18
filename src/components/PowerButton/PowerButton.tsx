@@ -1,23 +1,19 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { VerticalRockerSwitch } from "../RockerSwitches";
 import Column from "../Column";
 import { VintageLED } from "../VintageLED";
 import Title from "../Title";
 
-interface PowerButtonProps {
+type PowerButtonProps = {
   isOn: boolean;
   onPowerOn: () => void;
   onPowerOff: () => void;
-}
+};
 
-const PowerButton: React.FC<PowerButtonProps> = ({
-  isOn,
-  onPowerOn,
-  onPowerOff,
-}) => {
-  const handleCheckedChange = React.useCallback(
-    (checked: boolean) => {
-      if (checked) {
+function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
+  const handleCheckedChange = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      if (e.currentTarget.checked) {
         onPowerOn();
       } else {
         onPowerOff();
@@ -28,7 +24,11 @@ const PowerButton: React.FC<PowerButtonProps> = ({
 
   return (
     <Column>
-      <VintageLED isOn={isOn} size="large" />
+      <VintageLED
+        isOn={isOn}
+        size="large"
+        onCheckedChange={handleCheckedChange}
+      />
       <Title size="sm" style={{ marginTop: "var(--spacing-xs)" }}>
         Power
       </Title>
@@ -41,6 +41,6 @@ const PowerButton: React.FC<PowerButtonProps> = ({
       />
     </Column>
   );
-};
+}
 
 export default PowerButton;
