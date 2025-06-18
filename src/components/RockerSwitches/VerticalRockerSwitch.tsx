@@ -3,10 +3,9 @@ import { slugify } from "@/utils";
 
 type VerticalRockerSwitchProps = {
   checked: boolean;
-  onCheckedChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  onCheckedChange: (checked: boolean) => void;
   label: string;
   topLabel?: string | React.ReactElement;
-  leftLabel?: string;
   bottomLabel?: string;
   theme?: "black" | "orange" | "blue" | "white";
   disabled?: boolean;
@@ -59,7 +58,7 @@ function VerticalRockerSwitch({
           className={styles.state}
           type="checkbox"
           name="switch"
-          onChange={onCheckedChange}
+          onChange={() => onCheckedChange(!checked)}
           checked={checked}
           disabled={disabled}
         />

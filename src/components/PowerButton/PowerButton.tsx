@@ -1,8 +1,10 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { VerticalRockerSwitch } from "../RockerSwitches";
-import Column from "../Column";
 import { VintageLED } from "../VintageLED";
 import Title from "../Title";
+import { useAudioContext } from "@/hooks/useAudioContext";
+import Row from "../Row";
+import Column from "../Column";
 
 type PowerButtonProps = {
   isOn: boolean;
@@ -11,9 +13,23 @@ type PowerButtonProps = {
 };
 
 function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
+  const { isInitialized, initialize, dispose } = useAudioContext();
+
+  useEffect(() => {
+    if (isInitialized) {
+      initialize();
+    }
+
+    return () => {
+      if (isInitialized) {
+        dispose();
+      }
+    };
+  }, [isInitialized, initialize, dispose]);
+
   const handleCheckedChange = useCallback(
-    (e: React.FormEvent<HTMLInputElement>) => {
-      if (e.currentTarget.checked) {
+    (checked: boolean) => {
+      if (checked) {
         onPowerOn();
       } else {
         onPowerOff();
@@ -23,15 +39,17 @@ function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
   );
 
   return (
-    <Column>
-      <VintageLED
-        isOn={isOn}
-        size="large"
-        onCheckedChange={handleCheckedChange}
-      />
-      <Title size="sm" style={{ marginTop: "var(--spacing-xs)" }}>
-        Power
-      </Title>
+    <Row gap="var(--spacing-xs)" justify="center">
+      <Column gap="var(--spacing-xs)">
+        <VintageLED
+          isOn={isOn}
+          size="large"
+          onCheckedChange={() => handleCheckedChange(!isOn)}
+        />
+        <Title size="sm" style={{ marginTop: "var(--spacing-xs)" }}>
+          Power
+        </Title>
+      </Column>
       <VerticalRockerSwitch
         checked={isOn}
         onCheckedChange={handleCheckedChange}
@@ -39,7 +57,7 @@ function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
         theme="black"
         topLabel="On"
       />
-    </Column>
+    </Row>
   );
 }
 

@@ -17,10 +17,10 @@ import { useSynthStore } from "@/store/synthStore";
 import { useAudioContext } from "@/hooks/useAudioContext";
 import styles from "./Synth.module.css";
 import PowerButton from "../PowerButton";
-import Power from "../Power";
 import { useAudioNodes, useModulation, useEnvelopes } from "./hooks";
 import { mapCutoff, noteNameToMidi } from "./utils/synthUtils";
 import Column from "../Column";
+import Row from "../Row";
 
 function Synth() {
   const { activeKeys, setActiveKeys } = useSynthStore();
@@ -109,13 +109,13 @@ function Synth() {
           />
           <Modifiers disabled={!isInitialized} />
           <Output disabled={!isInitialized}>
-            <Column gap="var(--spacing-xs)">
+            <Row gap="dar(--spacing-xs)">
               <PowerButton
                 isOn={isInitialized}
                 onPowerOn={initialize}
                 onPowerOff={dispose}
               />
-            </Column>
+            </Row>
           </Output>
         </div>
         <div className={styles.keyboardPanel}>

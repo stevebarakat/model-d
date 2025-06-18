@@ -16,6 +16,7 @@ export default function Output({ disabled = false, children }: OutputProps) {
     useSynthStore();
   return (
     <Section>
+      {children}
       <Column
         gap="var(--spacing-xl)"
         style={{ paddingLeft: "0.5rem", paddingRight: "0.5rem" }}
@@ -55,7 +56,6 @@ export default function Output({ disabled = false, children }: OutputProps) {
           />
         </Row>
       </Column>
-      {children}
       <Title>Output</Title>
     </Section>
   );

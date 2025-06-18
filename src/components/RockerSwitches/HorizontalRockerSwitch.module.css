@@ -87,15 +87,15 @@
 
 .black .control::before {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNiAyNiI+PHJlY3Qgd2lkdGg9IjEwIiBoZWlnaHQ9IjIiIHg9IjgiIHk9IjEyIiBmaWxsPSJ0cmFuc3BhcmVudCIvPjwvc3ZnPg=="),
-    linear-gradient(to right, hsl(0deg 0% 6%), hsl(0deg 0% 12%));
-  box-shadow: -0.975em 0 0 0 hsl(0deg 0% 22%);
-  border-left-color: hsl(0deg 0% 33%);
+    linear-gradient(to right, hsl(0deg 0% 15%), hsl(0deg 0% 25%));
+  box-shadow: -0.975em 0 0 0 hsl(0deg 0% 35%);
+  border-left-color: hsl(0deg 0% 45%);
 }
 
 .black .control::after {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNSAyNSI+PGNpcmNsZSBjeD0iMTIuNSIgY3k9IjEyLjUiIHI9IjQuNSIgc3Ryb2tlPSJ0cmFuc3BhcmVudCIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJ0cmFuc3BhcmVudCIgLz48L3N2Zz4="),
-    linear-gradient(to left, hsl(0deg 0% 6%), hsl(0deg 0% 12%));
-  box-shadow: 0 0 0 0 hsl(0deg 0% 22%);
+    linear-gradient(to left, hsl(0deg 0% 15%), hsl(0deg 0% 25%));
+  box-shadow: 0 0 0 0 hsl(0deg 0% 35%);
 }
 
 /* Orange Theme */
@@ -195,13 +195,13 @@
 
 /* Black Theme State */
 .black .state:checked ~ .control::before {
-  box-shadow: 0 0 0 0 hsl(0deg 0% 20%);
-  border-left-color: hsl(0deg 0% 10%);
+  box-shadow: 0 0 0 0 hsl(0deg 0% 35%);
+  border-left-color: hsl(0deg 0% 20%);
 }
 
 .black .state:checked ~ .control::after {
-  box-shadow: 0.975em 0 0 0 hsl(0deg 0% 20%);
-  border-right-color: hsl(0deg 0% 33%);
+  box-shadow: 0.975em 0 0 0 hsl(0deg 0% 35%);
+  border-right-color: hsl(0deg 0% 45%);
 }
 
 /* Orange Theme State */
