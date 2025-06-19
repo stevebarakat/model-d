@@ -27,6 +27,6 @@
   --font-size-lg: 1rem;
 
   /* Synth */
-  --color-synth-bg: var(--color-gray-xl);
+  --color-synth-bg: var(--color-gray-xd);
   --color-synth-border: var(--color-gray-xd);
 }
