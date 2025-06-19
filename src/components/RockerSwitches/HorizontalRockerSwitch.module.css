@@ -16,7 +16,26 @@
   --switch-gloss-img: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTIwIj4KICA8cmVjdCBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjEiIHk9IjcwIiB3aWR0aD0iMjUwIiBoZWlnaHQ9IjgwIi8+Cjwvc3ZnPgo=");
 }
 
-.control {
+.switchContainer {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: calc(var(--switch-width) + var(--spacing-sm));
+  height: calc(var(--switch-height) + var(--spacing-sm));
+  background: red;
+  z-index: 1111;
+}
+
+.gloss {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: var(--color-white-25);
+}
+
+.switch {
   position: relative;
   width: var(--switch-width);
   height: var(--switch-height);
@@ -27,12 +46,12 @@
   cursor: pointer;
   transform: rotate(180deg);
   perspective: 7.5rem;
-  box-shadow: 0 1px 1px hsl(0deg 0% 10% / 50%);
+  /* box-shadow: 0 1px 1px hsl(0deg 0% 10% / 50%); */
   box-shadow: 0 0 0 2px var(--color-gray-d);
 }
 
-.control::before,
-.control::after {
+.switch::before,
+.switch::after {
   position: absolute;
   top: 0;
   height: 100%;
@@ -43,7 +62,7 @@
   will-change: transform;
 }
 
-.control::before {
+.switch::before {
   width: 50%;
   left: 0;
   border-radius: 0.125rem 0 0 0.125rem;
@@ -51,12 +70,12 @@
   content: "";
   transform-origin: 100% 50%;
 }
-.state:checked ~ .control::before {
+.state:checked ~ .switch::before {
   width: 52.5%;
   left: -2.25%;
 }
 
-.control::after {
+.switch::after {
   width: 50%;
   right: 0;
   border-left: none;
@@ -67,7 +86,7 @@
   transform-origin: 0 50%;
 }
 
-.state:checked ~ .control::after {
+.state:checked ~ .switch::after {
   width: 50%;
   right: 0%;
 }
@@ -78,18 +97,18 @@
 
 /* Orange Theme */
 
-.orange .control::before,
-.orange .control::after {
+.orange .switch::before,
+.orange .switch::after {
   border: none;
 }
 
-.orange .control::before {
+.orange .switch::before {
   background-image: var(--switch-bg-img),
     linear-gradient(to right, hsl(24deg 100% 41%), hsl(28deg 79% 52%));
   box-shadow: calc(var(--switch-depth) * -1) 0 0 0 hsl(24deg 100% 31%);
 }
 
-.orange .control::after {
+.orange .switch::after {
   background-image: var(--switch-bg-img),
     linear-gradient(to left, hsl(24deg 100% 41%), hsl(28deg 79% 52%));
   box-shadow: 0 0 0 0 hsl(24deg 100% 31%);
@@ -97,18 +116,18 @@
 
 /* Blue Theme */
 
-.blue .control::before,
-.blue .control::after {
+.blue .switch::before,
+.blue .switch::after {
   border: none;
 }
 
-.blue .control::before {
+.blue .switch::before {
   background-image: var(--switch-bg-img),
     linear-gradient(to right, hsl(195deg 100% 50%), hsl(199deg 92% 75%));
   box-shadow: calc(var(--switch-depth) * -1) 0 0 0 hsl(195deg 100% 40%);
 }
 
-.blue .control::after {
+.blue .switch::after {
   background-image: var(--switch-bg-img),
     linear-gradient(to left, hsl(195deg 100% 50%), hsl(199deg 92% 75%));
   box-shadow: 0 0 0 0 hsl(195deg 100% 40%);
@@ -116,18 +135,18 @@
 
 /* Black Theme */
 
-.black .control::before,
-.black .control::after {
+.black .switch::before,
+.black .switch::after {
   border: none;
 }
 
-.black .control::before {
+.black .switch::before {
   background-image: var(--switch-bg-img),
     linear-gradient(to right, hsl(0deg 0% 41%), hsl(4deg 0% 52%));
   box-shadow: calc(var(--switch-depth) * -1) 0 0 0 hsl(0deg 0% 31%);
 }
 
-.black .control::after {
+.black .switch::after {
   background-image: var(--switch-bg-img),
     linear-gradient(to left, hsl(0deg 0% 41%), hsl(4deg 0% 52%));
   box-shadow: 0 0 0 0 hsl(24deg 0% 31%);
@@ -135,37 +154,37 @@
 
 /* White Theme */
 
-.white .control::before,
-.white .control::after {
+.white .switch::before,
+.white .switch::after {
   border: none;
 }
 
-.white .control::before {
+.white .switch::before {
   background-image: var(--switch-bg-img),
     linear-gradient(to right, hsl(0deg 0% 74%), hsl(0deg 0% 65%));
   box-shadow: calc(var(--switch-depth) * -1) 0 0 0 hsl(0deg 0% 75%);
 }
 
-.white .control::after {
+.white .switch::after {
   background-image: var(--switch-bg-img),
     linear-gradient(to left, hsl(0deg 0% 74%), hsl(0deg 0% 65%));
   box-shadow: 0 0 0 0 hsl(0deg 0% 75%);
 }
 
 /* Base State Styles */
-.state:checked ~ .control::before,
-.state:checked ~ .control::after {
+.state:checked ~ .switch::before,
+.state:checked ~ .switch::after {
   background-position: center center, 0 0;
 }
 
-.state:checked ~ .control::before {
+.state:checked ~ .switch::before {
   border-right: none;
   box-shadow: 0 0 0 0 hsl(0deg 0% 74%);
   transform: rotateY(0);
   border-left-color: hsl(0deg 0% 88%);
 }
 
-.state:checked ~ .control::after {
+.state:checked ~ .switch::after {
   border-left: none;
   box-shadow: var(--switch-depth) 0 0 0 hsl(0deg 0% 74%);
   transform: rotateY(-55deg);
@@ -173,45 +192,45 @@
 }
 
 /* Black Theme State */
-.black .state:checked ~ .control::before {
+.black .state:checked ~ .switch::before {
   box-shadow: 0 0 0 0 hsl(0deg 0% 31%);
   border-left-color: hsl(4deg 0% 52%);
 }
 
-.black .state:checked ~ .control::after {
+.black .state:checked ~ .switch::after {
   box-shadow: var(--switch-depth) 0 0 0 hsl(24deg 0% 31%);
   border-right-color: hsl(6deg 3% 46%);
 }
 
 /* Orange Theme State */
-.orange .state:checked ~ .control::before {
+.orange .state:checked ~ .switch::before {
   box-shadow: 0 0 0 0 hsl(24deg 100% 31%);
   border-left-color: hsl(28deg 79% 52%);
 }
 
-.orange .state:checked ~ .control::after {
+.orange .state:checked ~ .switch::after {
   box-shadow: var(--switch-depth) 0 0 0 hsl(24deg 100% 31%);
   border-right-color: hsl(6deg 63% 46%);
 }
 
 /* Blue Theme State */
-.blue .state:checked ~ .control::before {
+.blue .state:checked ~ .switch::before {
   box-shadow: 0 0 0 0 hsl(195deg 100% 40%);
   border-left-color: hsl(199deg 92% 75%);
 }
 
-.blue .state:checked ~ .control::after {
+.blue .state:checked ~ .switch::after {
   box-shadow: var(--switch-depth) 0 0 0 hsl(195deg 100% 40%);
   border-right-color: hsl(195deg 100% 60%);
 }
 
 /* White Theme State */
-.white .state:checked ~ .control::before {
+.white .state:checked ~ .switch::before {
   border-radius: 0.1rem 0 0 0.1rem;
   box-shadow: 0 0 0 0 hsl(0deg 0% 75%);
 }
 
-.white .state:checked ~ .control::after {
+.white .state:checked ~ .switch::after {
   border-radius: 0 0.1rem 0.1rem 0;
   box-shadow: var(--switch-depth) 0 0 0 hsl(0deg 0% 75%);
 }

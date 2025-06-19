@@ -34,7 +34,28 @@ function HorizontalRockerSwitch({
 }: HorizontalRockerSwitchProps) {
   // Covert label to slug for id
   const id = slugify(label);
+  const hasTopLabel = topLabelLeft || topLabel || topLabelRight;
+  const hasBottomLabel = bottomLabelLeft || bottomLabel || bottomLabelRight;
 
+  const topLabels = hasTopLabel && (
+    <div className={styles.topLabel}>
+      {topLabelLeft && <span className={styles.left}>{topLabelLeft}</span>}
+      {topLabel && <span className={styles.center}>{topLabel}</span>}
+      {topLabelRight && <span className={styles.right}>{topLabelRight}</span>}
+    </div>
+  );
+
+  const bottomLabels = hasBottomLabel && (
+    <div className={styles.bottomLabel}>
+      {bottomLabelLeft && (
+        <span className={styles.left}>{bottomLabelLeft}</span>
+      )}
+      {bottomLabel && <span className={styles.center}>{bottomLabel}</span>}
+      {bottomLabelRight && (
+        <span className={styles.right}>{bottomLabelRight}</span>
+      )}
+    </div>
+  );
   return (
     <div
       className={
@@ -44,18 +65,11 @@ function HorizontalRockerSwitch({
       }
       style={style}
     >
-      {/* Top Label */}
-      <div className={styles.topLabel}>
-        {topLabelLeft && <span className={styles.left}>{topLabelLeft}</span>}
-        {topLabel && <span className={styles.center}>{topLabel}</span>}
-        {topLabelRight && <span className={styles.right}>{topLabelRight}</span>}
-      </div>
+      {topLabels && topLabels}
 
-      {/* Left Label */}
       {leftLabel && <span className={styles.leftLabel}>{leftLabel}</span>}
 
       <label htmlFor={id}>
-        {/* Switch Input */}
         <input
           id={id}
           className={styles.state}
@@ -64,21 +78,15 @@ function HorizontalRockerSwitch({
           checked={checked}
           disabled={disabled}
         />
-        <div className={styles.control}>
-          <span className="sr-only">{label}</span>
+        <div className={styles.switchContainer}>
+          <div className={styles.gloss} />
+          <div className={styles.switch}>
+            <span className="sr-only">{label}</span>
+          </div>
         </div>
       </label>
 
-      {/* Bottom Label */}
-      <div className={`${styles.bottomLabel}`}>
-        {bottomLabelLeft && (
-          <span className={styles.left}>{bottomLabelLeft}</span>
-        )}
-        {bottomLabel && <span className={styles.center}>{bottomLabel}</span>}
-        {bottomLabelRight && (
-          <span className={styles.right}>{bottomLabelRight}</span>
-        )}
-      </div>
+      {bottomLabels && bottomLabels}
     </div>
   );
 }
