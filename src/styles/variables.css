@@ -10,6 +10,7 @@
   --color-off-white: hsl(0deg 0% 93.75%);
   --color-white-50: hsl(0deg 0% 100% / 50%);
   --color-white-25: hsl(0deg 0% 100% / 25%);
+  --color-white-10: hsl(0deg 0% 100% / 10%);
   --color-text-primary: hsl(0deg 0% 60%);
 
   /* Spacing System */

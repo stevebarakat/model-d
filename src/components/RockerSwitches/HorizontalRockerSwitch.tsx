@@ -53,6 +53,11 @@ function HorizontalRockerSwitch({
     );
   }
 
+  function LeftLabel({ leftLabel }: { leftLabel: string | undefined }) {
+    if (!leftLabel) return null;
+    return <span className={styles.leftLabel}>{leftLabel}</span>;
+  }
+
   function BottomLabels({ bottomLabels }: { bottomLabels: string[] }) {
     if (bottomLabels.length === 0) return null;
 
@@ -80,7 +85,7 @@ function HorizontalRockerSwitch({
     >
       <TopLabels topLabels={topLabels} />
 
-      {leftLabel && <span className={styles.leftLabel}>{leftLabel}</span>}
+      <LeftLabel leftLabel={leftLabel} />
 
       <label htmlFor={id}>
         <input
@@ -91,11 +96,9 @@ function HorizontalRockerSwitch({
           checked={checked}
           disabled={disabled}
         />
-        <div className={styles.switchContainer}>
-          <div className={styles.gloss} />
-          <div className={styles.switch}>
-            <span className="sr-only">{label}</span>
-          </div>
+        {/* <div className={styles.gloss} /> */}
+        <div className={styles.switch}>
+          <span className="sr-only">{label}</span>
         </div>
       </label>
 
