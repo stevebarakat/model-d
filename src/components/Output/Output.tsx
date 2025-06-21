@@ -1,5 +1,5 @@
 import Knob from "../Knob";
-import { HorizontalRockerSwitch } from "../RockerSwitches";
+import { RockerSwitch } from "../RockerSwitches";
 import Title from "../Title";
 import { useSynthStore } from "@/store/synthStore";
 import Section from "../Section";
@@ -39,7 +39,7 @@ export default function Output({ disabled = false, children }: OutputProps) {
             label="Volume"
             disabled={disabled}
           />
-          <HorizontalRockerSwitch
+          <RockerSwitch
             theme="blue"
             checked={isMasterActive}
             onCheckedChange={

@@ -1,4 +1,4 @@
-import styles from "./HorizontalRockerSwitch.module.css";
+import styles from "./RockerSwitch.module.css";
 import { slugify } from "@/utils";
 
 type HorizontalRockerSwitchProps = {
@@ -17,7 +17,7 @@ type HorizontalRockerSwitchProps = {
   style?: React.CSSProperties;
 };
 
-function HorizontalRockerSwitch({
+function RockerSwitch({
   checked,
   onCheckedChange,
   label = "",
@@ -107,4 +107,4 @@ function HorizontalRockerSwitch({
   );
 }
 
-export default HorizontalRockerSwitch;
+export default RockerSwitch;

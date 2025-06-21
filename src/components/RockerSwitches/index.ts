@@ -1,2 +1,2 @@
-export { default as HorizontalRockerSwitch } from "./HorizontalRockerSwitch";
+export { default as RockerSwitch } from "./RockerSwitch";
 export { default as VerticalRockerSwitch } from "./VerticalRockerSwitch";

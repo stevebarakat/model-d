@@ -6,7 +6,7 @@ import ExternalInput from "../ExternalInput";
 import Row from "../Row";
 import Column from "../Column";
 import Section from "../Section";
-import { HorizontalRockerSwitch } from "../RockerSwitches";
+import { RockerSwitch } from "../RockerSwitches";
 
 interface MixerProps {
   audioContext: AudioContext;
@@ -47,7 +47,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               size="medium"
               disabled={disabled}
             />
-            <HorizontalRockerSwitch
+            <RockerSwitch
               style={{ left: "15px" }}
               theme="blue"
               checked={mixer.osc1.enabled}
@@ -85,7 +85,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               size="medium"
               disabled={disabled}
             />
-            <HorizontalRockerSwitch
+            <RockerSwitch
               style={{ left: "15px" }}
               theme="blue"
               checked={mixer.osc2.enabled}
@@ -123,7 +123,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               size="medium"
               disabled={disabled}
             />
-            <HorizontalRockerSwitch
+            <RockerSwitch
               style={{ left: "15px" }}
               theme="blue"
               checked={mixer.osc3.enabled}

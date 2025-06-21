@@ -3,7 +3,7 @@ import Knob from "../Knob";
 import LedIndicator from "../LedIndicator";
 import { useExternalInput } from "./hooks";
 import Row from "../Row";
-import { HorizontalRockerSwitch } from "../RockerSwitches";
+import { RockerSwitch } from "../RockerSwitches";
 import { useEffect } from "react";
 
 type ExternalInputProps = {
@@ -24,7 +24,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
 
   return (
     <Row>
-      <HorizontalRockerSwitch
+      <RockerSwitch
         theme="blue"
         checked={mixer.external.enabled}
         onCheckedChange={(checked) => setMixerExternal({ enabled: checked })}

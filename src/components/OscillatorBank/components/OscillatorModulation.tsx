@@ -1,4 +1,4 @@
-import { HorizontalRockerSwitch } from "@/components/RockerSwitches";
+import { RockerSwitch } from "@/components/RockerSwitches";
 import styles from "../OscillatorBank.module.css";
 import { useSynthStore } from "@/store/synthStore";
 
@@ -11,7 +11,7 @@ function OscillatorModulation({ disabled = false }: { disabled?: boolean }) {
   );
   return (
     <div className={styles.oscModulation}>
-      <HorizontalRockerSwitch
+      <RockerSwitch
         theme="orange"
         checked={oscillatorModulationOn}
         onCheckedChange={setOscillatorModulationOn}

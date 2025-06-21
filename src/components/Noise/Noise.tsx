@@ -1,9 +1,6 @@
 import { useNoise } from "./hooks/useNoise";
 import { useSynthStore } from "@/store/synthStore";
-import {
-  HorizontalRockerSwitch,
-  VerticalRockerSwitch,
-} from "../RockerSwitches";
+import { RockerSwitch, VerticalRockerSwitch } from "../RockerSwitches";
 import Column from "../Column";
 import Row from "../Row";
 import Knob from "../Knob";
@@ -21,7 +18,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
     <Column>
       <Row>
         <Row>
-          <HorizontalRockerSwitch
+          <RockerSwitch
             theme="blue"
             checked={mixer.noise.enabled}
             onCheckedChange={(checked) => setMixerNoise({ enabled: checked })}

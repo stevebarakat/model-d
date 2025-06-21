@@ -1,4 +1,4 @@
-import { HorizontalRockerSwitch } from "../RockerSwitches";
+import { RockerSwitch } from "../RockerSwitches";
 import Column from "../Column";
 import { useSynthStore } from "@/store/synthStore";
 
@@ -13,7 +13,7 @@ function KeyboardControl({ disabled }: { disabled: boolean }) {
   );
   return (
     <Column>
-      <HorizontalRockerSwitch
+      <RockerSwitch
         theme="orange"
         checked={keyboardControl1}
         onCheckedChange={setKeyboardControl1}
@@ -23,7 +23,7 @@ function KeyboardControl({ disabled }: { disabled: boolean }) {
         bottomLabel="Keyboard Control"
         disabled={disabled}
       />
-      <HorizontalRockerSwitch
+      <RockerSwitch
         theme="orange"
         checked={keyboardControl2}
         onCheckedChange={setKeyboardControl2}

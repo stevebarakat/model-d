@@ -1,4 +1,4 @@
-import { HorizontalRockerSwitch } from "../RockerSwitches";
+import { RockerSwitch } from "../RockerSwitches";
 import Title from "../Title";
 import Knob from "../Knob";
 import Tune from "../Tune";
@@ -50,7 +50,7 @@ function Controllers({ disabled = false }: ControllersProps) {
           />
         </Row>
         <Row justify="space-around">
-          <HorizontalRockerSwitch
+          <RockerSwitch
             checked={osc3FilterEgSwitch}
             onCheckedChange={disabled ? () => {} : setOsc3FilterEgSwitch}
             label="Send to mod 1"
@@ -58,7 +58,7 @@ function Controllers({ disabled = false }: ControllersProps) {
             bottomLabelRight="Filter Eg"
             disabled={disabled}
           />
-          <HorizontalRockerSwitch
+          <RockerSwitch
             checked={noiseLfoSwitch}
             onCheckedChange={disabled ? () => {} : setNoiseLfoSwitch}
             label="Send to mod 2"

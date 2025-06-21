@@ -1,4 +1,4 @@
-import { HorizontalRockerSwitch } from "@/components/RockerSwitches";
+import { RockerSwitch } from "@/components/RockerSwitches";
 import { useSynthStore } from "@/store/synthStore";
 
 function ModulationSwitch({ disabled }: { disabled: boolean }) {
@@ -8,7 +8,7 @@ function ModulationSwitch({ disabled }: { disabled: boolean }) {
   );
   return (
     <div>
-      <HorizontalRockerSwitch
+      <RockerSwitch
         theme="orange"
         checked={filterModulationOn}
         onCheckedChange={setFilterModulationOn}
