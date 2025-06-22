@@ -215,8 +215,7 @@
 .labelMedium {
   font-size: var(--font-size-sm);
   white-space: nowrap;
-  bottom: 95%;
-  background-color: rgba(255, 0, 0, 0.315);
+  bottom: 100%;
 }
 
 .labelLarge,
