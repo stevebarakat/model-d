@@ -7,12 +7,13 @@ import Row from "../Row";
 import Column from "../Column";
 import Section from "../Section";
 import { RockerSwitch } from "../RockerSwitch";
+import Line from "../Line";
 
-interface MixerProps {
+type MixerProps = {
   audioContext: AudioContext;
   mixerNode: AudioNode;
   disabled?: boolean;
-}
+};
 
 function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
   const { mixer, setMixerSource } = useSynthStore();
@@ -20,7 +21,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
   return (
     <Section>
       <Row>
-        <Column>
+        <Column gap="0.5rem">
           <Row>
             <Knob
               valueLabels={{
@@ -47,20 +48,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               size="medium"
               disabled={disabled}
               style={{
-                top: "-0.5rem",
+                top: "-0.25rem",
               }}
             />
-            <div
-              style={{
-                position: "absolute",
-                top: "1.5rem",
-                left: "5rem",
-                transform: "translate(-50%, -50%)",
-                width: "1.5rem",
-                height: "1px",
-                backgroundColor: "hsl(0, 55%, 50%)",
-              }}
-            ></div>
+            <Line />
             <RockerSwitch
               style={{ left: "1.5rem" }}
               theme="blue"
@@ -99,9 +90,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               size="medium"
               disabled={disabled}
               style={{
-                top: "-0.5rem",
+                top: "-0.25rem",
               }}
             />
+            <Line />
             <RockerSwitch
               style={{ left: "1.5rem" }}
               theme="blue"
@@ -140,9 +132,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               size="medium"
               disabled={disabled}
               style={{
-                top: "-0.5rem",
+                top: "-0.25rem",
               }}
             />
+            <Line />
             <RockerSwitch
               style={{ left: "1.5rem" }}
               theme="blue"
@@ -156,7 +149,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
             />
           </Row>
         </Column>
-        <Column style={{ paddingRight: "5rem", left: "35px" }}>
+        <Column style={{ paddingRight: "5rem", left: "35px", gap: "0.5rem" }}>
           <ExternalInput audioContext={audioContext} mixerNode={mixerNode} />
           <Noise audioContext={audioContext} mixerNode={mixerNode} />
         </Column>

@@ -5,6 +5,7 @@ import { useExternalInput } from "./hooks";
 import Row from "../Row";
 import { RockerSwitch } from "../RockerSwitch";
 import { useEffect } from "react";
+import Line from "../Line";
 
 type ExternalInputProps = {
   audioContext: AudioContext;
@@ -36,6 +37,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
           left: "-3.5rem",
         }}
       />
+      <Line side="right" />
       <Knob
         valueLabels={{
           0: "0",
@@ -65,7 +67,8 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
         }}
         disabled={audioContext === null}
         style={{
-          bottom: ".5rem",
+          left: "1rem",
+          bottom: "0.25rem",
         }}
       />
       <LedIndicator
