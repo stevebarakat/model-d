@@ -3,7 +3,7 @@
   --knob-container-multiplier: 1.75;
   --knob-border-radius: 50%;
   --knob-shadow-color: hsl(0deg 0% 0%);
-  --knob-highlight-color: hsla(0, 0%, 100%, 0.5);
+  --knob-highlight-color: hsl(0deg 0% 100% / 50%);
   --knob-tick-color: hsl(0deg 0% 60%);
   --knob-dot-color: hsl(0deg 0% 75%);
   --knob-dot-gradient-start: hsl(220deg 13% 85%);
@@ -71,7 +71,6 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: var(--center-transform);
   z-index: 0;
   width: var(--knob-size);
   height: var(--knob-size);
@@ -83,6 +82,7 @@
     hsl(0deg 0% 10%) 100%
   );
   border-radius: var(--knob-border-radius);
+  transform: var(--center-transform);
   filter: drop-shadow(0 -1px var(--knob-shadow-color));
 }
 
@@ -106,15 +106,15 @@
 /* Common knob type styles */
 .radial,
 .arrow {
-  border-radius: var(--knob-border-radius);
   position: absolute;
   top: 0;
   left: 0;
   z-index: 5;
+  display: grid;
   width: 100%;
   height: 100%;
+  border-radius: var(--knob-border-radius);
   cursor: pointer;
-  display: grid;
   place-items: center;
 }
 
@@ -244,15 +244,15 @@
 /* Value label */
 .valueLabel {
   position: absolute;
-  left: 50%;
   top: 50%;
-  transform: var(--center-transform);
+  left: 50%;
   font-size: var(--font-size-xs);
   font-weight: 700;
-  user-select: none;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
+  transform: var(--center-transform);
+  user-select: none;
   pointer-events: none;
 
   svg {
