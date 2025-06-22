@@ -50,7 +50,6 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
               onChange={(v) => {
                 setMixerNoise({ volume: v });
               }}
-              logarithmic={false}
               disabled={audioContext === null}
             />
             <RockerSwitch

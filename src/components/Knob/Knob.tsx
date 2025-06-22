@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { slugify } from "@/utils";
 import styles from "./Knob.module.css";
 
@@ -12,7 +12,6 @@ type KnobProps = {
   unit?: string;
   onChange: (value: number) => void;
   valueLabels?: Record<number, string | React.ReactElement>;
-  logarithmic?: boolean;
   size?: "small" | "medium" | "large";
   disabled?: boolean;
   showMidTicks?: boolean;
@@ -28,24 +27,15 @@ function getRotation(
   value: number,
   min: number,
   max: number,
-  logarithmic: boolean,
   type: "arrow" | "radial" = "radial"
 ): number {
   const range = max - min;
-  let percentage;
-  if (logarithmic) {
-    const logMin = Math.log(min);
-    const logMax = Math.log(max);
-    const logValue = Math.log(value);
-    percentage = (logValue - logMin) / (logMax - logMin);
-  } else {
-    percentage = (value - min) / range;
-  }
+  const percentage = (value - min) / range;
 
   if (type === "arrow") {
     return percentage * 150 - 75; // -75 to +75 degrees (9:30 to 2:30)
   } else {
-    return percentage * 300 - 150; // -150 to +150 degrees (original range)
+    return percentage * 300 - 150; // -150 to +150 degrees (7:15 to 4:45)
   }
 }
 
@@ -71,7 +61,6 @@ function Knob({
   unit = "",
   onChange,
   valueLabels,
-  logarithmic = false,
   size = "medium",
   disabled = false,
   showMidTicks = true,
@@ -79,13 +68,12 @@ function Knob({
 }: KnobProps): React.ReactElement {
   const knobRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [isKeyboardActive, setIsKeyboardActive] = useState(false);
   const [startY, setStartY] = useState(0);
   const [startValue, setStartValue] = useState(0);
   const labelClass = title ? styles.labelHidden : styles.label;
   const id = slugify(label);
 
-  const rotation = getRotation(value, min, max, logarithmic, type);
+  const rotation = getRotation(value, min, max, type);
   const displayValue = getDisplayValue(value, step, unit, valueLabels);
   const ariaValueText =
     typeof displayValue === "string"
@@ -101,48 +89,45 @@ function Knob({
     setStartValue(value);
   }
 
-  const handleMouseMove = useCallback(
-    (e: MousePosition): void => {
+  useEffect(() => {
+    if (!isDragging) return;
+
+    function handleMouseUp(): void {
+      setIsDragging(false);
+    }
+    function handleMouseMove(e: MousePosition): void {
       if (!isDragging) {
         return;
       }
 
-      // Increase sensitivity for logarithmic knobs
-      const sensitivity = logarithmic ? 2.0 : 1.0;
+      const sensitivity = 1.0;
       const deltaY = (startY - e.clientY) * sensitivity;
       const range = max - min;
       let newValue;
 
-      if (logarithmic) {
-        const logMin = Math.log(min);
-        const logMax = Math.log(max);
-        const logRange = logMax - logMin;
-        const logStartValue = Math.log(Math.max(min, startValue));
-        // Adjust delta calculation for logarithmic scale
-        const logDelta = (deltaY / 200) * logRange;
-        const logNewValue = Math.min(
-          logMax,
-          Math.max(logMin, logStartValue + logDelta)
-        );
-        newValue = Math.exp(logNewValue);
-      } else {
-        newValue = Math.min(
-          max,
-          Math.max(min, startValue + (deltaY / 100) * range)
-        );
-      }
+      newValue = Math.min(
+        max,
+        Math.max(min, startValue + (deltaY / 100) * range)
+      );
 
       // Ensure we don't go below min or above max
       newValue = Math.min(max, Math.max(min, newValue));
 
       // Only apply precision for display, not for snapping
       onChange(newValue);
-    },
-    [min, max, startY, startValue, onChange, logarithmic, isDragging]
-  );
+    }
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent): void => {
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, min, max, startY, startValue, onChange]);
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent): void {
       if (!knobRef.current?.contains(document.activeElement)) return;
 
       const isShiftPressed = e.shiftKey;
@@ -164,38 +149,11 @@ function Knob({
           return;
       }
 
-      setIsKeyboardActive(true);
       onChange(Number(newValue.toFixed(2)));
-    },
-    [value, min, max, step, onChange]
-  );
-
-  useEffect(() => {
-    if (!isDragging) return;
-
-    function handleMouseUp(): void {
-      setIsDragging(false);
     }
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging, min, max, startY, startValue, onChange, handleMouseMove]);
-
-  useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [value, min, max, step, onChange, handleKeyDown]);
-
-  useEffect(() => {
-    if (!isKeyboardActive) return;
-    const timer = setTimeout(() => setIsKeyboardActive(false), 1000);
-    return () => clearTimeout(timer);
-  }, [isKeyboardActive, value]);
+  }, [value, min, max, step, onChange]);
 
   return (
     <div
@@ -244,7 +202,7 @@ function Knob({
                   }}
                 />
               );
-              // Add a small tick between this and the next label (only for non-arrow types)
+              // Add a small tick between this and the next label (only for radial type)
               if (
                 showMidTicks &&
                 type !== "arrow" &&
@@ -318,29 +276,18 @@ function Knob({
       </div>
       <input
         id={id}
+        tabIndex={-1}
         type="range"
-        min={logarithmic ? Math.log(min) : min}
-        max={logarithmic ? Math.log(max) : max}
-        step={
-          min === 0 && max === 1
-            ? 1
-            : logarithmic
-            ? (Math.log(max) - Math.log(min)) / 100
-            : step
-        }
-        value={logarithmic ? Math.log(value) : value}
+        min={min}
+        max={max}
+        step={min === 0 && max === 1 ? 1 : step}
+        value={value}
         onChange={
           disabled
             ? undefined
             : (e) => {
                 const rawValue = Number(e.target.value);
-                const newValue = logarithmic ? Math.exp(rawValue) : rawValue;
-                // For binary switches (0/1), ensure we get exact values
-                if (min === 0 && max === 1) {
-                  onChange(Math.round(newValue));
-                } else {
-                  onChange(Number(newValue.toFixed(step >= 1 ? 0 : 2)));
-                }
+                onChange(Number(rawValue.toFixed(step >= 1 ? 0 : 2)));
               }
         }
         className={styles.rangeInput}

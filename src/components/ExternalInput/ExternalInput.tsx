@@ -63,7 +63,6 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
             setMixerExternal({ volume: v });
           }
         }}
-        logarithmic={true}
         disabled={audioContext === null}
       />
       <LedIndicator
