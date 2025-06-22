@@ -61,6 +61,7 @@ export default function Oscillator3({
     >
       <Knob
         type="arrow"
+        size="large"
         value={ranges.indexOf(oscillator3.range)}
         min={0}
         max={ranges.length - 1}
@@ -95,6 +96,7 @@ export default function Oscillator3({
       />
       <Knob
         type="arrow"
+        size="large"
         value={waveforms.indexOf(oscillator3.waveform)}
         min={0}
         max={waveforms.length - 1}

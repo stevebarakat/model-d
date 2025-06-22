@@ -50,6 +50,7 @@ export default function Oscillator1({
       <Spacer width="54px" />
       <Knob
         type="arrow"
+        size="large"
         value={ranges.indexOf(oscillator1.range)}
         min={0}
         max={ranges.length - 1}
@@ -69,6 +70,7 @@ export default function Oscillator1({
       </Spacer>
       <Knob
         type="arrow"
+        size="large"
         value={waveforms.indexOf(oscillator1.waveform)}
         min={0}
         max={waveforms.length - 1}

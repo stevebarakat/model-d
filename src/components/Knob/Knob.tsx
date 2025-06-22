@@ -281,11 +281,8 @@ function Knob({
                 key={tick}
                 className={styles.valueLabel}
                 style={{
-                  position: "absolute",
                   left: `${x}%`,
                   top: `${y}%`,
-                  transform: "translate(-50%, -50%)",
-                  pointerEvents: "none",
                 }}
               >
                 {valueLabels[tick]}
@@ -293,20 +290,30 @@ function Knob({
             );
           })}
         <div
-          className={type === "arrow" ? styles.arrow : styles.radial}
-          ref={knobRef}
-          style={{ transform: `rotate(${rotation}deg)` }}
-          onMouseDown={handleMouseDown}
-          tabIndex={disabled ? -1 : 0}
-          role="slider"
-          aria-valuemin={min}
-          aria-valuemax={max}
-          aria-valuenow={value}
-          aria-label={label}
-          aria-valuetext={ariaValueText}
-          aria-disabled={disabled}
+          className={styles.knobBtm}
+          style={{
+            filter:
+              type === "radial"
+                ? "drop-shadow(0 1px 0 hsla(0, 0%, 30%))"
+                : "drop-shadow(0 -1px 0 hsla(0, 0%, 60%))",
+          }}
         >
-          <div className={styles.dot}></div>
+          <div
+            className={type === "arrow" ? styles.arrow : styles.radial}
+            ref={knobRef}
+            style={{ transform: `rotate(${rotation}deg)` }}
+            onMouseDown={handleMouseDown}
+            tabIndex={disabled ? -1 : 0}
+            role="slider"
+            aria-valuemin={min}
+            aria-valuemax={max}
+            aria-valuenow={value}
+            aria-label={label}
+            aria-valuetext={ariaValueText}
+            aria-disabled={disabled}
+          >
+            <div className={styles.dot} />
+          </div>
         </div>
       </div>
       <input

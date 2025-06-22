@@ -45,16 +45,12 @@
   height: var(--knob-size);
   background: linear-gradient(
     to bottom,
-    hsl(0deg 0% 70% / 50%) 0%,
-    hsl(0deg 0% 25% / 50%) 35%,
-    hsl(0deg 0% 0% / 50%) 35%,
-    hsl(0deg 0% 5% / 100%) 100%
+    hsl(0deg 0% 35%) 0%,
+    hsl(0deg 0% 12.5%) 35%,
+    hsl(0deg 0% 5%) 35%,
+    hsl(0deg 0% 10%) 100%
   );
-  background-position: center center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
   border-radius: 50%;
-  /* background: red; */
   filter: drop-shadow(0 -1px hsl(0deg 0% 0%));
 }
 
@@ -63,57 +59,15 @@
   width: var(--knob-size);
   height: var(--knob-size);
   border-radius: 50%;
-  filter: drop-shadow(0 -1px 0 hsl(0deg 0% 50% / 50%));
 }
 
 .knobBtm {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: var(--knob-size);
   height: var(--knob-size);
-  filter: drop-shadow(0 1px 1px 1px hsl(0, 0%, 100%));
-}
-
-.arrow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  display: grid;
-  width: 100%;
-  height: 100%;
-  scale: 1;
-  background: url("./images/arrow-knob.svg") no-repeat center center;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  place-items: center;
-
-  &::before {
-    position: absolute;
-    z-index: -1;
-    width: 35%;
-    height: 35%;
-    background-image: conic-gradient(
-      hsl(0deg 0% 90%),
-      hsl(0deg 0% 100%),
-      hsl(0deg 0% 30%),
-      hsl(0deg 0% 80%),
-      hsl(0deg 0% 50%),
-      hsl(0deg 0% 90%),
-      hsl(0deg 0% 100%),
-      hsl(0deg 0% 30%),
-      hsl(0deg 0% 80%),
-      hsl(0deg 0% 50%),
-      hsl(0deg 0% 90%)
-    );
-    background-position: center center;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    border-radius: 50%;
-    content: "";
-  }
+  filter: drop-shadow(0 -1px 0 hsla(0, 0%, 100%, 0.5));
 }
 
 .radial {
@@ -126,8 +80,6 @@
   height: 100%;
   scale: 0.95;
   background: url("./images/knob.svg") no-repeat center center;
-  border: none;
-  border-radius: 50%;
   cursor: pointer;
   place-items: center;
 
@@ -151,31 +103,77 @@
       hsl(0deg 0% 50%),
       hsl(0deg 0% 90%)
     );
-
-    /* background-image: url("./images/brushed-metal.webp"); */
     background-position: center center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     border-radius: 50%;
     content: "";
   }
+  .dot {
+    position: absolute;
+    top: 12.5%;
+    left: 50%;
+    z-index: 5;
+    width: 3px;
+    height: 3px;
+    background: linear-gradient(
+      to bottom,
+      hsl(220deg 13% 85%),
+      hsl(220deg 13% 55%)
+    );
+    border-radius: 50%;
+    transform: translate(-50%, -100%);
+    content: "";
+  }
 }
 
-.dot {
+.arrow {
   position: absolute;
-  top: 12.5%;
-  left: 50%;
+  top: 0;
+  left: 0;
   z-index: 5;
-  width: 3px;
-  height: 3px;
-  background: linear-gradient(
-    to bottom,
-    hsl(220deg 13% 85%),
-    hsl(220deg 13% 55%)
-  );
-  border-radius: 50%;
-  transform: translate(-50%, -100%);
-  content: "";
+  display: grid;
+  width: 100%;
+  height: 100%;
+  scale: 1.05;
+  background: url("./images/arrow-knob.svg") no-repeat center center;
+  cursor: pointer;
+  place-items: center;
+
+  &::before {
+    position: absolute;
+    z-index: -1;
+    width: 35%;
+    height: 35%;
+    background-image: conic-gradient(
+      hsl(0deg 0% 90%),
+      hsl(0deg 0% 100%),
+      hsl(0deg 0% 30%),
+      hsl(0deg 0% 80%),
+      hsl(0deg 0% 50%),
+      hsl(0deg 0% 90%),
+      hsl(0deg 0% 100%),
+      hsl(0deg 0% 30%),
+      hsl(0deg 0% 80%),
+      hsl(0deg 0% 50%),
+      hsl(0deg 0% 90%)
+    );
+    border-radius: 50%;
+    content: "";
+  }
+
+  .dot {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    z-index: 5;
+    width: 1px;
+    height: 10px;
+    background: hsl(0deg 0% 75%);
+    border-radius: 1px;
+    transform: translate(-50%, -100%);
+    content: "";
+  }
 }
 
 .title,
@@ -211,10 +209,15 @@
 }
 
 .valueLabel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   font-size: var(--font-size-xs);
   font-weight: 700;
   user-select: none;
   text-align: center;
+  text-transform: uppercase;
   white-space: nowrap;
   pointer-events: none;
   svg {
