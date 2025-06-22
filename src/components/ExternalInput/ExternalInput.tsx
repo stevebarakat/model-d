@@ -33,7 +33,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
         disabled={audioContext === null}
         style={{
           position: "absolute",
-          left: "-72px",
+          left: "-3.5rem",
         }}
       />
       <Knob
@@ -64,6 +64,9 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
           }
         }}
         disabled={audioContext === null}
+        style={{
+          bottom: ".5rem",
+        }}
       />
       <LedIndicator
         label="Signal"

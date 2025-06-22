@@ -1,8 +1,8 @@
 import { RockerSwitch } from "../RockerSwitch";
 import Title from "../Title";
-import Knob from "../Knob";
 import Tune from "../Tune";
 import Glide from "../Glide";
+import ModulationMix from "../ModulationMix";
 import Section from "../Section";
 import Column from "../Column";
 import Row from "../Row";
@@ -13,8 +13,6 @@ interface ControllersProps {
 }
 
 function Controllers({ disabled = false }: ControllersProps) {
-  const modMix = useSynthStore((s) => s.modMix);
-  const setModMix = useSynthStore((s) => s.setModMix);
   const osc3FilterEgSwitch = useSynthStore((s) => s.osc3FilterEgSwitch);
   const setOsc3FilterEgSwitch = useSynthStore((s) => s.setOsc3FilterEgSwitch);
   const noiseLfoSwitch = useSynthStore((s) => s.noiseLfoSwitch);
@@ -31,23 +29,7 @@ function Controllers({ disabled = false }: ControllersProps) {
         <Tune disabled={disabled} />
         <Row gap="0.25rem">
           <Glide disabled={disabled} />
-          <Knob
-            value={modMix}
-            min={0}
-            max={10}
-            step={1}
-            label="Modulation Mix"
-            onChange={disabled ? () => {} : setModMix}
-            valueLabels={{
-              "0": "0",
-              "2": "2",
-              "4": "4",
-              "6": "6",
-              "8": "8",
-              "10": "10",
-            }}
-            disabled={disabled}
-          />
+          <ModulationMix disabled={disabled} />
         </Row>
         <Row
           justify="space-around"

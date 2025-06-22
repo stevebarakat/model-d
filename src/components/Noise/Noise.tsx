@@ -27,7 +27,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
             disabled={audioContext === null}
             style={{
               position: "absolute",
-              left: "-72px",
+              left: "-3.5rem",
             }}
           />
           <Row>
@@ -51,6 +51,9 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
                 setMixerNoise({ volume: v });
               }}
               disabled={audioContext === null}
+              style={{
+                bottom: ".5rem",
+              }}
             />
             <RockerSwitch
               orientation="vertical"

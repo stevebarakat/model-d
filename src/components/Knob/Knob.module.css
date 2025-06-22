@@ -203,7 +203,7 @@
 .title,
 .label {
   position: absolute;
-  bottom: 102.5%;
+  bottom: 100%;
   display: block;
   font-weight: 800;
   text-align: center;
@@ -215,6 +215,8 @@
 .labelMedium {
   font-size: var(--font-size-sm);
   white-space: nowrap;
+  bottom: 95%;
+  background-color: rgba(255, 0, 0, 0.315);
 }
 
 .labelLarge,

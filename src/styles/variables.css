@@ -11,7 +11,7 @@
   --color-white-50: hsl(0deg 0% 100% / 50%);
   --color-white-25: hsl(0deg 0% 100% / 25%);
   --color-white-10: hsl(0deg 0% 100% / 10%);
-  --color-text-primary: hsl(0deg 0% 60%);
+  --color-text-primary: hsl(0deg 0% 75%);
 
   /* Spacing System */
   --spacing-xs: 0.125rem;
@@ -25,7 +25,7 @@
   --font-size-xs: 0.4875rem;
   --font-size-sm: 0.5512rem;
   --font-size-md: 0.6625rem;
-  --font-size-lg: 1rem;
+  --font-size-lg: 1.2rem;
 
   /* Synth */
   --color-synth-bg: var(--color-gray-xd);

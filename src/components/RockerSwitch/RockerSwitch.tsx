@@ -98,7 +98,6 @@ function RockerSwitch({
           checked={checked}
           disabled={disabled}
         />
-        {/* <div className={styles.gloss} /> */}
         <div className={styles.switch}>
           <span className="sr-only">{label}</span>
         </div>

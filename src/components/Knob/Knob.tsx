@@ -16,6 +16,7 @@ type KnobProps = {
   disabled?: boolean;
   showMidTicks?: boolean;
   type?: "arrow" | "radial";
+  style?: React.CSSProperties;
 };
 
 type MousePosition = {
@@ -65,6 +66,7 @@ function Knob({
   disabled = false,
   showMidTicks = true,
   type = "radial",
+  style,
 }: KnobProps): React.ReactElement {
   const knobRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -157,6 +159,7 @@ function Knob({
 
   return (
     <div
+      style={style}
       className={`${styles.knobContainer} ${disabled && styles.disabled} ${
         styles[`knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`]
       }`}
