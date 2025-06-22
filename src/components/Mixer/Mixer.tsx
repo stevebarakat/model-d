@@ -46,7 +46,21 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               }
               size="medium"
               disabled={disabled}
+              style={{
+                top: "-0.5rem",
+              }}
             />
+            <div
+              style={{
+                position: "absolute",
+                top: "1.5rem",
+                left: "5rem",
+                transform: "translate(-50%, -50%)",
+                width: "1.5rem",
+                height: "1px",
+                backgroundColor: "hsl(0, 55%, 50%)",
+              }}
+            ></div>
             <RockerSwitch
               style={{ left: "1.5rem" }}
               theme="blue"
@@ -84,6 +98,9 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               }
               size="medium"
               disabled={disabled}
+              style={{
+                top: "-0.5rem",
+              }}
             />
             <RockerSwitch
               style={{ left: "1.5rem" }}
@@ -122,6 +139,9 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               }
               size="medium"
               disabled={disabled}
+              style={{
+                top: "-0.5rem",
+              }}
             />
             <RockerSwitch
               style={{ left: "1.5rem" }}
