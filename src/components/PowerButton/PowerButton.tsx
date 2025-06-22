@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { VerticalRockerSwitch } from "../RockerSwitches";
+import { RockerSwitch } from "../RockerSwitches";
 import { VintageLED } from "../VintageLED";
 import Title from "../Title";
 import { useAudioContext } from "@/hooks/useAudioContext";
@@ -50,7 +50,8 @@ function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
           Power
         </Title>
       </Column>
-      <VerticalRockerSwitch
+      <RockerSwitch
+        orientation="vertical"
         checked={isOn}
         onCheckedChange={handleCheckedChange}
         label="Power"

@@ -1,6 +1,6 @@
 import { useNoise } from "./hooks/useNoise";
 import { useSynthStore } from "@/store/synthStore";
-import { RockerSwitch, VerticalRockerSwitch } from "../RockerSwitches";
+import { RockerSwitch } from "../RockerSwitches";
 import Column from "../Column";
 import Row from "../Row";
 import Knob from "../Knob";
@@ -53,7 +53,8 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
               logarithmic={false}
               disabled={audioContext === null}
             />
-            <VerticalRockerSwitch
+            <RockerSwitch
+              orientation="vertical"
               theme="blue"
               checked={mixer.noise.noiseType === "white"}
               onCheckedChange={(checked) =>

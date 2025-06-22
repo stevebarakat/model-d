@@ -1,5 +1,5 @@
 import React from "react";
-import { VerticalRockerSwitch } from "@/components/RockerSwitches";
+import { RockerSwitch } from "@/components/RockerSwitches";
 import Row from "@/components/Row";
 
 export type OscillatorPanelProps = {
@@ -25,7 +25,8 @@ function OscillatorPanel({
   return (
     <Row style={{ paddingBottom: position === 1 ? "10px" : "0px" }}>
       {showControlSwitch && controlSwitchProps && (
-        <VerticalRockerSwitch
+        <RockerSwitch
+          orientation="vertical"
           {...controlSwitchProps}
           label={controlSwitchProps.label}
           topLabel={

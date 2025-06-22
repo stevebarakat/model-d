@@ -6,15 +6,16 @@ type HorizontalRockerSwitchProps = {
   onCheckedChange: (checked: boolean) => void;
   label: string;
   topLabelLeft?: string;
-  topLabel?: string;
+  topLabel?: string | React.ReactElement;
   topLabelRight?: string;
   leftLabel?: string;
   bottomLabelLeft?: string;
-  bottomLabel?: string;
+  bottomLabel?: string | React.ReactElement;
   bottomLabelRight?: string;
   theme?: "black" | "orange" | "blue" | "white";
   disabled?: boolean;
   style?: React.CSSProperties;
+  orientation?: "horizontal" | "vertical";
 };
 
 function RockerSwitch({
@@ -31,6 +32,7 @@ function RockerSwitch({
   bottomLabelRight,
   disabled = false,
   style,
+  orientation = "horizontal",
 }: HorizontalRockerSwitchProps) {
   // Covert label to slug for id
   const id = slugify(label);
@@ -77,7 +79,7 @@ function RockerSwitch({
   return (
     <div
       className={
-        styles.horizontalRockerSwitch +
+        styles[orientation] +
         (styles[theme] ? " " + styles[theme] : "") +
         (disabled ? " disabled" : "")
       }
