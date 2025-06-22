@@ -213,7 +213,6 @@ function Knob({
         </span>
       )}
       <div className={styles.knobRing}></div>
-      {/* <div className={styles.ticks}></div> */}
       <div className={styles.knob}>
         {/* Tick marks around the knob */}
         {valueLabels &&
@@ -233,9 +232,7 @@ function Knob({
                   key={"tick-" + tick}
                   className={styles.knobTick}
                   style={{
-                    transform: `rotate(${angle}deg) translate(-50%, -38px)`,
-                    left: "50%",
-                    top: "50%",
+                    transform: `rotate(${angle}deg) translate(-50%, calc(-1 * var(--tick-offset)))`,
                   }}
                 />
               );
@@ -249,9 +246,7 @@ function Knob({
                     key={`tick-mid-${tick}-${nextTick}`}
                     className={styles.knobTick}
                     style={{
-                      transform: `rotate(${midAngle}deg) translate(-50%, -38px)`,
-                      left: "50%",
-                      top: "50%",
+                      transform: `rotate(${midAngle}deg) translate(-50%, calc(-1 * var(--tick-offset)))`,
                     }}
                   />
                 );
