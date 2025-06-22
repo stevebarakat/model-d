@@ -28,7 +28,8 @@ function getRotation(
   value: number,
   min: number,
   max: number,
-  logarithmic: boolean
+  logarithmic: boolean,
+  type: "arrow" | "radial" = "radial"
 ): number {
   const range = max - min;
   let percentage;
@@ -40,7 +41,12 @@ function getRotation(
   } else {
     percentage = (value - min) / range;
   }
-  return percentage * 300 - 150; // -150 to +150 degrees
+
+  if (type === "arrow") {
+    return percentage * 150 - 75; // -75 to +75 degrees (9:30 to 2:30)
+  } else {
+    return percentage * 300 - 150; // -150 to +150 degrees (original range)
+  }
 }
 
 function getDisplayValue(
@@ -79,7 +85,7 @@ function Knob({
   const labelClass = title ? styles.labelHidden : styles.label;
   const id = slugify(label);
 
-  const rotation = getRotation(value, min, max, logarithmic);
+  const rotation = getRotation(value, min, max, logarithmic, type);
   const displayValue = getDisplayValue(value, step, unit, valueLabels);
   const ariaValueText =
     typeof displayValue === "string"
@@ -222,8 +228,8 @@ function Knob({
             const labelKeys = Object.keys(valueLabels)
               .map(Number)
               .sort((a, b) => a - b);
-            const arc = 262.5;
-            const startAngle = -130;
+            const arc = type === "arrow" ? 150 : 262.5;
+            const startAngle = type === "arrow" ? -75 : -130;
             const ticks = [];
             // Main ticks for valueLabels
             for (let i = 0; i < labelKeys.length; i++) {
@@ -264,8 +270,8 @@ function Knob({
         {valueLabels &&
           Object.keys(valueLabels).map((tickKey) => {
             const tick = Number(tickKey);
-            const arc = 270;
-            const startAngle = 135;
+            const arc = type === "arrow" ? 150 : 270;
+            const startAngle = type === "arrow" ? -165 : 135;
             const angle = startAngle + ((tick - min) / (max - min)) * arc;
             const rad = (angle * Math.PI) / 180;
             const x = 50 + Math.cos(rad) * 80;

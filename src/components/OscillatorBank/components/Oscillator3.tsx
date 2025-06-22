@@ -1,6 +1,5 @@
 import { useSynthStore } from "@/store/synthStore";
 import OscillatorPanel from "./OscillatorPanel";
-import ArrowKnob from "@/components/ArrowKnob/ArrowKnob";
 import Knob from "@/components/Knob/Knob";
 import {
   TriangleIcon,
@@ -60,13 +59,14 @@ export default function Oscillator3({
       }}
       disabled={disabled}
     >
-      <ArrowKnob
+      <Knob
+        type="arrow"
         value={ranges.indexOf(oscillator3.range)}
         min={0}
         max={ranges.length - 1}
         step={1}
+        title=" "
         label="Range"
-        hideLabel={true}
         onChange={handleRangeChange}
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
         disabled={disabled}
@@ -93,13 +93,14 @@ export default function Oscillator3({
         }}
         disabled={disabled}
       />
-      <ArrowKnob
+      <Knob
+        type="arrow"
         value={waveforms.indexOf(oscillator3.waveform)}
         min={0}
         max={waveforms.length - 1}
         step={1}
         label="Waveform"
-        hideLabel={true}
+        title=" "
         onChange={handleWaveformChange}
         valueLabels={waveformIcons.reduce(
           (acc, icon, i) => ({ ...acc, [i]: icon }),
