@@ -16,6 +16,7 @@ type KnobProps = {
   size?: "small" | "medium" | "large";
   disabled?: boolean;
   showMidTicks?: boolean;
+  type?: "arrow" | "radial";
 };
 
 type MousePosition = {
@@ -68,6 +69,7 @@ function Knob({
   size = "medium",
   disabled = false,
   showMidTicks = true,
+  type = "radial",
 }: KnobProps): React.ReactElement {
   const knobRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -236,8 +238,12 @@ function Knob({
                   }}
                 />
               );
-              // Add a small tick between this and the next label
-              if (showMidTicks && i < labelKeys.length - 1) {
+              // Add a small tick between this and the next label (only for non-arrow types)
+              if (
+                showMidTicks &&
+                type !== "arrow" &&
+                i < labelKeys.length - 1
+              ) {
                 const nextTick = labelKeys[i + 1];
                 const mid = (tick + nextTick) / 2;
                 const midAngle = startAngle + ((mid - min) / (max - min)) * arc;
@@ -280,23 +286,21 @@ function Knob({
               </div>
             );
           })}
-        <div className={styles.knobBtm}>
-          <div
-            className={styles.outerKnob}
-            ref={knobRef}
-            style={{ transform: `rotate(${rotation}deg)` }}
-            onMouseDown={handleMouseDown}
-            tabIndex={disabled ? -1 : 0}
-            role="slider"
-            aria-valuemin={min}
-            aria-valuemax={max}
-            aria-valuenow={value}
-            aria-label={label}
-            aria-valuetext={ariaValueText}
-            aria-disabled={disabled}
-          >
-            <div className={styles.dot}></div>
-          </div>
+        <div
+          className={type === "arrow" ? styles.arrow : styles.radial}
+          ref={knobRef}
+          style={{ transform: `rotate(${rotation}deg)` }}
+          onMouseDown={handleMouseDown}
+          tabIndex={disabled ? -1 : 0}
+          role="slider"
+          aria-valuemin={min}
+          aria-valuemax={max}
+          aria-valuenow={value}
+          aria-label={label}
+          aria-valuetext={ariaValueText}
+          aria-disabled={disabled}
+        >
+          <div className={styles.dot}></div>
         </div>
       </div>
       <input
