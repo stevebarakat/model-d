@@ -1,4 +1,4 @@
-import { RockerSwitch } from "../RockerSwitches";
+import { RockerSwitch } from "../RockerSwitch";
 import { useSynthStore } from "@/store/synthStore";
 
 interface DecaySwitchProps {

@@ -1,5 +1,5 @@
 import Knob from "../Knob";
-import { RockerSwitch } from "../RockerSwitches";
+import { RockerSwitch } from "../RockerSwitch";
 import Title from "../Title";
 import { useSynthStore } from "@/store/synthStore";
 import Section from "../Section";

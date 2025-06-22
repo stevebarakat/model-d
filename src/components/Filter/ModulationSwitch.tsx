@@ -1,4 +1,4 @@
-import { RockerSwitch } from "@/components/RockerSwitches";
+import { RockerSwitch } from "@/components/RockerSwitch";
 import { useSynthStore } from "@/store/synthStore";
 
 function ModulationSwitch({ disabled }: { disabled: boolean }) {

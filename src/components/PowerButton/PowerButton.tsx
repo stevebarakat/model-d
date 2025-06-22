@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { RockerSwitch } from "../RockerSwitches";
+import { RockerSwitch } from "../RockerSwitch";
 import { VintageLED } from "../VintageLED";
 import Title from "../Title";
 import { useAudioContext } from "@/hooks/useAudioContext";
