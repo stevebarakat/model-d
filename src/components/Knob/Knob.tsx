@@ -300,7 +300,6 @@ function Knob({
             aria-valuetext={ariaValueText}
             aria-disabled={disabled}
           >
-            <div className={styles.innerKnob}></div>
             <div className={styles.dot}></div>
           </div>
         </div>
