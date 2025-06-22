@@ -1,7 +1,4 @@
-import ModulationSwitch from "@/components/Filter/ModulationSwitch";
-import KeyboardControl from "@/components/Filter/KeyboardControl";
 import Knob from "../Knob";
-import { styles } from "@/components/Modifiers";
 import Row from "../Row";
 import Title from "../Title";
 import { useSynthStore } from "@/store/synthStore";
@@ -23,10 +20,6 @@ function Filter({ disabled = false }: FilterProps) {
   );
   return (
     <div>
-      <div className={styles.filterSwitches}>
-        <ModulationSwitch disabled={disabled} />
-        <KeyboardControl disabled={disabled} />
-      </div>
       <Title disabled={disabled} size="md">
         Filter
       </Title>
