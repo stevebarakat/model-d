@@ -23,11 +23,11 @@ function Controllers({ disabled = false }: ControllersProps) {
   return (
     <Section
       style={{
-        paddingLeft: "var(--spacing-xs)",
-        paddingRight: "var(--spacing-xs)",
+        paddingLeft: "var(--spacing-md)",
+        paddingRight: "var(--spacing-md)",
       }}
     >
-      <Column gap="var(--spacing-xs)">
+      <Column gap="var(--spacing-lg)">
         <Tune disabled={disabled} />
         <Row gap="0.25rem">
           <Glide disabled={disabled} />
@@ -49,7 +49,10 @@ function Controllers({ disabled = false }: ControllersProps) {
             disabled={disabled}
           />
         </Row>
-        <Row justify="space-around">
+        <Row
+          justify="space-around"
+          style={{ marginBottom: "var(--spacing-md)" }}
+        >
           <RockerSwitch
             checked={osc3FilterEgSwitch}
             onCheckedChange={disabled ? () => {} : setOsc3FilterEgSwitch}

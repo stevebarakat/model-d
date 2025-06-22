@@ -1,6 +1,11 @@
 import { RockerSwitch } from "@/components/RockerSwitch";
-import styles from "../OscillatorBank.module.css";
 import { useSynthStore } from "@/store/synthStore";
+
+const style: React.CSSProperties = {
+  position: "absolute",
+  top: "22.5%",
+  left: "-1.5rem",
+};
 
 function OscillatorModulation({ disabled = false }: { disabled?: boolean }) {
   const oscillatorModulationOn = useSynthStore(
@@ -10,7 +15,7 @@ function OscillatorModulation({ disabled = false }: { disabled?: boolean }) {
     (state) => state.setOscillatorModulationOn
   );
   return (
-    <div className={styles.oscModulation}>
+    <div style={style}>
       <RockerSwitch
         theme="orange"
         checked={oscillatorModulationOn}

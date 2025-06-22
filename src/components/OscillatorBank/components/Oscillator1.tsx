@@ -47,7 +47,7 @@ export default function Oscillator1({
 
   return (
     <OscillatorPanel disabled={disabled}>
-      <Spacer width="54px" />
+      <Spacer width="3rem" />
       <Knob
         type="arrow"
         size="large"
@@ -60,7 +60,7 @@ export default function Oscillator1({
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
         disabled={disabled}
       />
-      <Spacer width="35%" style={{ marginTop: "-100px" }}>
+      <Spacer width="32%" style={{ marginTop: "-6.75rem" }}>
         <Title size="md" disabled={disabled}>
           Oscillator - 1
         </Title>
