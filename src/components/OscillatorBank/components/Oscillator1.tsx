@@ -46,7 +46,7 @@ export default function Oscillator1({
   }
 
   return (
-    <OscillatorPanel position={1} disabled={disabled}>
+    <OscillatorPanel disabled={disabled}>
       <Spacer width="54px" />
       <Knob
         type="arrow"

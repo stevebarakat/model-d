@@ -293,17 +293,18 @@
 
 .leftLabel {
   position: absolute;
-  left: calc(var(--spacing-sm) * -1);
+  left: calc(var(--spacing-md) * -1);
   display: flex;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
 }
 
 .bottomLabel {
   position: relative;
   display: flex;
-  gap: 10px;
+  gap: var(--spacing-lg);
   margin-top: 4px;
-  width: var(--switch-width);
+  width: fit-content;
+  min-width: var(--switch-width);
   font-size: var(--font-size-xs);
   font-weight: 800;
   text-transform: uppercase;
