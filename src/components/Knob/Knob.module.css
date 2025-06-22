@@ -15,6 +15,19 @@
   --knob-surface-dark: hsl(0deg 0% 30%);
   --knob-surface-medium: hsl(0deg 0% 80%);
   --knob-surface-gray: hsl(0deg 0% 50%);
+  --metal-cap: conic-gradient(
+    var(--knob-surface-light),
+    var(--knob-surface-white),
+    var(--knob-surface-dark),
+    var(--knob-surface-medium),
+    var(--knob-surface-gray),
+    var(--knob-surface-light),
+    var(--knob-surface-white),
+    var(--knob-surface-dark),
+    var(--knob-surface-medium),
+    var(--knob-surface-gray),
+    var(--knob-surface-light)
+  );
 
   /* Common positioning values */
   --center-transform: translate(-50%, -50%);
@@ -118,6 +131,23 @@
   place-items: center;
 }
 
+.dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
+  width: var(--dot-size-small);
+  height: var(--dot-size-small);
+  background: linear-gradient(
+    to bottom,
+    var(--knob-dot-gradient-start),
+    var(--knob-dot-gradient-end)
+  );
+  border-radius: var(--knob-border-radius);
+  transform: var(--dot-transform);
+  content: "";
+}
+
 /* Radial knob specific styles */
 .radial {
   top: 7.5%;
@@ -131,35 +161,13 @@
     z-index: -1;
     width: 70%;
     height: 70%;
-    background-image: conic-gradient(
-      var(--knob-surface-light),
-      var(--knob-surface-white),
-      var(--knob-surface-dark),
-      var(--knob-surface-medium),
-      var(--knob-surface-gray),
-      var(--knob-surface-light),
-      var(--knob-surface-white),
-      var(--knob-surface-dark),
-      var(--knob-surface-medium),
-      var(--knob-surface-gray),
-      var(--knob-surface-light)
-    );
+    background-image: var(--metal-cap);
     border-radius: var(--knob-border-radius);
     content: "";
   }
 
   .dot {
-    position: absolute;
     top: 12.5%;
-    left: 50%;
-    z-index: 5;
-    width: var(--dot-size-small);
-    height: var(--dot-size-small);
-    background: linear-gradient(
-      to bottom,
-      var(--knob-dot-gradient-start),
-      var(--knob-dot-gradient-end)
-    );
     border-radius: var(--knob-border-radius);
     transform: var(--dot-transform);
     content: "";
@@ -176,31 +184,15 @@
     z-index: -1;
     width: 35%;
     height: 35%;
-    background-image: conic-gradient(
-      var(--knob-surface-light),
-      var(--knob-surface-white),
-      var(--knob-surface-dark),
-      var(--knob-surface-medium),
-      var(--knob-surface-gray),
-      var(--knob-surface-light),
-      var(--knob-surface-white),
-      var(--knob-surface-dark),
-      var(--knob-surface-medium),
-      var(--knob-surface-gray),
-      var(--knob-surface-light)
-    );
+    background-image: var(--metal-cap);
     border-radius: var(--knob-border-radius);
     content: "";
   }
 
   .dot {
-    position: absolute;
     top: 25%;
-    left: 50%;
-    z-index: 5;
-    width: var(--tick-width);
     height: var(--dot-size-large);
-    background: var(--knob-dot-color);
+    width: var(--tick-width);
     border-radius: var(--tick-width);
     transform: var(--dot-transform);
     content: "";
