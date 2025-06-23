@@ -13,8 +13,8 @@ function DecaySwitch({ disabled = false }: DecaySwitchProps) {
     <RockerSwitch
       theme="white"
       label="Decay"
-      topLabelLeft="Decay"
-      topLabelRight="On"
+      topLabel="Decay"
+      bottomLabelRight="On"
       checked={decaySwitchOn}
       onCheckedChange={disabled ? () => {} : setDecaySwitchOn}
       disabled={disabled}

@@ -12,8 +12,8 @@ function GlideSwitch({ disabled = false }: GlideSwitchProps) {
     <RockerSwitch
       theme="white"
       label="Glide (On/Off)"
-      topLabelLeft="Glide"
-      topLabelRight="On"
+      topLabel="Glide"
+      bottomLabelRight="On"
       checked={glideOn}
       onCheckedChange={disabled ? () => {} : setGlideOn}
       disabled={disabled}

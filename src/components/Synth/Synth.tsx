@@ -19,7 +19,6 @@ import styles from "./Synth.module.css";
 import PowerButton from "../PowerButton";
 import { useAudioNodes, useModulation, useEnvelopes } from "./hooks";
 import { mapCutoff, noteNameToMidi } from "./utils/synthUtils";
-import Column from "../Column";
 import Row from "../Row";
 
 function Synth() {
@@ -99,6 +98,7 @@ function Synth() {
     <div className={styles.synthContainer}>
       <Side />
       <div className={styles.synth}>
+        <div className={styles.backPanel}></div>
         <div className={styles.controlsPanel}>
           <Controllers disabled={!isInitialized} />
           <OscillatorBank disabled={!isInitialized} />
@@ -116,6 +116,11 @@ function Synth() {
             />
           </Output>
         </div>
+        <Row justify="flex-end">
+          <div className={styles.minimoogLogo}>
+            <img src="/images/minimoog-logo.png" alt="Minimoog Logo" />
+          </div>
+        </Row>
         <div className={styles.keyboardPanel}>
           <SidePanel disabled={!isInitialized} />
           <Keyboard

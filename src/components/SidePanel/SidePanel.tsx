@@ -6,7 +6,6 @@ import DecaySwitch from "../DecaySwitch";
 import LfoRate from "../LfoRate";
 import Column from "../Column";
 import Row from "../Row";
-import LfoWaveformSwitch from "../LfoWaveformSwitch";
 
 interface SidePanelProps {
   disabled?: boolean;
@@ -18,7 +17,6 @@ function SidePanel({ disabled = false }: SidePanelProps) {
       <Row gap="var(--spacing-md)">
         <LfoRate disabled={disabled} />
         <div className={styles.switches}>
-          <LfoWaveformSwitch disabled={disabled} />
           <GlideSwitch disabled={disabled} />
           <DecaySwitch disabled={disabled} />
         </div>

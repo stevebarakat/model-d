@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 2.4%;
-  height: 100%;
-  border: 1px solid white;
+  min-width: 1.5rem;
+  min-height: 100%;
+  border: 1px dotted white;
 }
