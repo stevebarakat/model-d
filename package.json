@@ -8,13 +8,16 @@
     "build": "vite build",
     "lint": "eslint .",
     "lint:css": "stylelint \"src/**/*.css\" --fix",
+    "lint:css:check": "stylelint \"src/**/*.css\"",
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "analyze:css": "npm run lint:css:check && echo 'CSS analysis complete'"
   },
   "dependencies": {
     "@radix-ui/react-tooltip": "^1.2.7",
+    "clsx": "^2.1.1",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -33,6 +36,7 @@
     "@vitejs/plugin-react": "^4.4.1",
     "@vitest/ui": "^3.1.4",
     "autoprefixer": "^10.4.18",
+    "cssnano": "^7.0.7",
     "eslint": "^9.9.1",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.11",

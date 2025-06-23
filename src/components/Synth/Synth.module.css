@@ -28,12 +28,12 @@
 
   .minimoogLogo {
     position: relative;
-    opacity: 0.85;
-    mix-blend-mode: exclusion;
     z-index: 1;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    opacity: 0.85;
+    mix-blend-mode: exclusion;
 
     img {
       width: 60%;

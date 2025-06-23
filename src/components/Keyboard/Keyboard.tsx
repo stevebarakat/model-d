@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import styles from "./Keyboard.module.css";
+import { cn } from "@/utils/helpers";
 import type { KeyboardProps } from "./types";
 import WhiteKey from "./WhiteKey";
 import BlackKey from "./BlackKey";
@@ -141,6 +142,7 @@ export function Keyboard({
       .map((key, index) => (
         <WhiteKey
           key={`white-${key.note}-${index}`}
+          disabled={disabled}
           isActive={activeKeys === key.note}
           onPointerDown={() => {
             handleMouseDown();
@@ -159,6 +161,7 @@ export function Keyboard({
     handleKeyRelease,
     handleKeyInteraction,
     handleKeyLeave,
+    disabled,
   ]);
 
   const renderBlackKeys = useCallback(() => {
@@ -178,6 +181,7 @@ export function Keyboard({
 
         return (
           <BlackKey
+            disabled={disabled}
             key={`black-${blackKey.note}-${bIdx}`}
             isActive={activeKeys === blackKey.note}
             position={positionData.position}
@@ -200,22 +204,21 @@ export function Keyboard({
     handleKeyRelease,
     handleKeyInteraction,
     handleKeyLeave,
+    disabled,
   ]);
 
   return (
     <div
-      className={
-        styles.keyboardContainer + (disabled ? " " + styles.disabled : "")
-      }
+      className={cn(styles.keyboardContainer, disabled && styles.disabled)}
       onPointerUp={handleMouseUp}
       onPointerLeave={handleMouseLeave}
     >
       <div className={styles.keyboard}>
         <div className={styles.pianoKeys}>
-          <div className={styles.leftShadow} />
           {renderWhiteKeys()}
-          <div className={styles.rightShadow} />
           {renderBlackKeys()}
+          <div className={styles.leftShadow} />
+          <div className={styles.rightShadow} />
         </div>
       </div>
     </div>

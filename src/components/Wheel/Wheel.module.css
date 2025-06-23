@@ -23,9 +23,7 @@
 
 .thumb {
   position: absolute;
-  top: calc(
-    100% - clamp(4.5px, calc(var(--thumb-position, 0%)), calc(100% - 4.5px))
-  );
+  top: calc(100% - var(--thumb-position));
   left: 0;
   width: 14px;
   height: 9px;
@@ -58,11 +56,15 @@
   left: 50%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(90deg, hsl(0 0% 10% / 0.5), hsl(0 0% 20% / 0.5));
+  background: linear-gradient(
+    90deg,
+    hsl(0deg 0% 10% / 50%),
+    hsl(0deg 0% 20% / 50%)
+  );
   filter: blur(6px);
 }
 
 .disabled {
-  opacity: 0.5;
   cursor: not-allowed;
+  opacity: 0.5;
 }

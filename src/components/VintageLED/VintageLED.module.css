@@ -41,7 +41,6 @@
       var(--color-white-25)
     );
     border-radius: 50% 50% 0 0;
-
     filter: blur(0.5px);
     transition: opacity 0.15s ease;
     content: "";
@@ -54,10 +53,10 @@
   left: 50%;
   width: 50%;
   height: 50%;
-  transform: translate(-50%, -50%);
   background: var(--color-white-75);
   border-radius: 50%;
   opacity: 0.75;
+  transform: translate(-50%, -50%);
   transition: opacity 0.15s ease;
   filter: blur(3px);
 }

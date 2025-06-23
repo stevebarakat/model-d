@@ -14,6 +14,19 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  css: {
+    modules: {
+      // Generate readable class names in development
+      generateScopedName:
+        process.env.NODE_ENV === "development"
+          ? "[name]__[local]___[hash:base64:5]"
+          : "[hash:base64:8]",
+      // Enable CSS modules for all .module.css files
+      localsConvention: "camelCase",
+    },
+    // Enable CSS source maps for better debugging
+    devSourcemap: true,
+  },
   test: {
     globals: true,
     environment: "jsdom",

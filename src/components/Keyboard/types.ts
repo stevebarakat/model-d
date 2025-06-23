@@ -24,6 +24,7 @@ export type WhiteKeyProps = {
   onPointerUp: () => void;
   onPointerEnter: () => void;
   onPointerLeave: () => void;
+  disabled?: boolean;
 };
 
 export type BlackKeyProps = WhiteKeyProps & {

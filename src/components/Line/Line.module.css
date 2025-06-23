@@ -1,8 +1,8 @@
 .line {
   position: absolute;
-  background-color: var(--color-text-primary);
   top: 1.8rem;
-  transform: translate(-50%, -50%);
   width: 1.25rem;
   height: 1.25px;
+  background-color: var(--color-text-primary);
+  transform: translate(-50%, -50%);
 }
