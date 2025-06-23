@@ -70,12 +70,12 @@ const className = cssModule(
 import { cn } from "@/utils/helpers";
 import styles from "./Button.module.css";
 
-interface ButtonProps {
+type ButtonProps = {
   variant?: "primary" | "secondary";
   size?: "small" | "medium" | "large";
   disabled?: boolean;
   children: React.ReactNode;
-}
+};
 
 export function Button({
   variant = "primary",

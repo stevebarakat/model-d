@@ -2,12 +2,12 @@ import React from "react";
 import { calculateLabelPosition } from "../utils";
 import styles from "../Knob.module.css";
 
-interface KnobLabelsProps {
+type KnobLabelsProps = {
   valueLabels: Record<number, string | React.ReactElement>;
   min: number;
   max: number;
   type: "arrow" | "radial";
-}
+};
 
 export function KnobLabels({ valueLabels, min, max, type }: KnobLabelsProps) {
   return (

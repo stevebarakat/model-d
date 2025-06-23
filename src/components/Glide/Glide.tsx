@@ -1,9 +1,9 @@
 import { useSynthStore } from "@/store/synthStore";
 import Knob from "../Knob";
 
-interface GlideProps {
+type GlideProps = {
   disabled?: boolean;
-}
+};
 
 function Glide({ disabled = false }: GlideProps) {
   const glideTime = useSynthStore((s) => s.glideTime);

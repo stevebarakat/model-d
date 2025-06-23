@@ -1,9 +1,9 @@
 import { RockerSwitch } from "../RockerSwitch";
 import { useSynthStore } from "@/store/synthStore";
 
-interface DecaySwitchProps {
+type DecaySwitchProps = {
   disabled?: boolean;
-}
+};
 
 function DecaySwitch({ disabled = false }: DecaySwitchProps) {
   const decaySwitchOn = useSynthStore((state) => state.decaySwitchOn);

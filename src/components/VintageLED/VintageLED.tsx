@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { cn } from "../../utils/helpers";
+import { cn, cssModule } from "@/utils/helpers";
 import styles from "./VintageLED.module.css";
 
 export type LEDColor = "red" | "green" | "amber" | "blue";
 export type LEDSize = "small" | "medium" | "large";
 
-export interface VintageLEDProps {
+export type VintageLEDProps = {
   /** The color of the LED */
   color?: LEDColor;
   /** Whether the LED is on or off */
@@ -22,7 +22,7 @@ export interface VintageLEDProps {
   labelPosition?: "top" | "right" | "bottom" | "left";
   /** Click handler for the LED */
   onCheckedChange: (e: React.FormEvent<HTMLInputElement>) => void;
-}
+};
 
 /**
  * VintageLED component that simulates the appearance of old-school indicator lights
@@ -32,8 +32,9 @@ export function VintageLED({
   isOn = true,
   size = "medium",
   warmupEffect = true,
-  className = "",
+  className,
   label,
+  labelPosition = "bottom",
   onCheckedChange,
 }: VintageLEDProps) {
   const [isWarmedUp, setIsWarmedUp] = useState(isOn && !warmupEffect);
@@ -55,21 +56,26 @@ export function VintageLED({
     };
   }, [isOn, warmupEffect]);
 
-  const ledClasses = cn(
-    styles.vintageLed,
-    styles[`vintageLed${color.charAt(0).toUpperCase() + color.slice(1)}`],
-    styles[`vintageLed${size.charAt(0).toUpperCase() + size.slice(1)}`],
-    isOn ? styles.vintageLedOn : "",
-    isWarmedUp && styles.vintageLedWarmedUp,
-    className
+  // Using the new cssModule utility for better conditional class handling
+  const ledClasses = cssModule(
+    styles,
+    "vintageLed",
+    `vintageLed${color.charAt(0).toUpperCase() + color.slice(1)}`,
+    `vintageLed${size.charAt(0).toUpperCase() + size.slice(1)}`,
+    isOn && "vintageLedOn",
+    isWarmedUp && "vintageLedWarmedUp"
   );
 
+  // Using cn utility for combining with external className
+  const containerClasses = cn(ledClasses, className);
+
   return (
-    <div>
-      <div className={ledClasses}>
+    <div className={styles.container}>
+      <div className={containerClasses}>
         <input
           type="checkbox"
           className={styles.vintageLedInput}
+          checked={isOn}
           onChange={onCheckedChange}
         />
         <div className={styles.vintageLedInner}>
@@ -77,7 +83,20 @@ export function VintageLED({
           <div className={styles.vintageLedReflection}></div>
         </div>
       </div>
-      {label && <span className={styles.vintageLedLabel}>{label}</span>}
+      {label && (
+        <span
+          className={cn(
+            styles.vintageLedLabel,
+            styles[
+              `label${
+                labelPosition.charAt(0).toUpperCase() + labelPosition.slice(1)
+              }`
+            ]
+          )}
+        >
+          {label}
+        </span>
+      )}
     </div>
   );
 }

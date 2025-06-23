@@ -3,9 +3,9 @@ import { useCallback } from "react";
 import { RockerSwitch } from "../RockerSwitch";
 import { useSynthStore } from "@/store/synthStore";
 
-interface LfoWaveformSwitchProps {
+type LfoWaveformSwitchProps = {
   disabled?: boolean;
-}
+};
 
 function LfoWaveformSwitch({ disabled = false }: LfoWaveformSwitchProps) {
   const lfoWaveform = useSynthStore((state) => state.lfoWaveform);

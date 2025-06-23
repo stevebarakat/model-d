@@ -1,6 +1,6 @@
 import styles from "./Row.module.css";
 
-interface RowProps {
+type RowProps = {
   children?: React.ReactNode;
   align?: "center" | "flex-start" | "flex-end" | "stretch" | "baseline";
   justify?:
@@ -12,7 +12,7 @@ interface RowProps {
     | "space-evenly";
   gap?: string;
   style?: React.CSSProperties;
-}
+};
 
 function Row({
   children,

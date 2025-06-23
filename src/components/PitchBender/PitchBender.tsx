@@ -1,9 +1,9 @@
 import Wheel from "../Wheel";
 import { useSynthStore } from "@/store/synthStore";
 
-interface PitchBenderProps {
+type PitchBenderProps = {
   disabled?: boolean;
-}
+};
 
 function PitchBender({ disabled = false }: PitchBenderProps) {
   const pitchWheel = useSynthStore((s) => s.pitchWheel);

@@ -1,3 +1,12 @@
+/* Container for the LED and label */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* Hidden input for accessibility */
 .vintageLedInput {
   position: absolute;
   top: 0;
@@ -6,15 +15,19 @@
   width: 100%;
   height: 100%;
   opacity: 0;
+  cursor: pointer;
 }
 
+/* Base LED styles */
 .vintageLed {
   position: relative;
   border: 3px solid var(--color-white-50);
-  border-radius: 50%;
-  transition: all 0.3s ease;
+  border-radius: var(--radius-full);
+  transition: var(--transition-slow);
+  cursor: pointer;
 }
 
+/* LED inner content */
 .vintageLedInner {
   position: absolute;
   top: 52.5%;
@@ -23,10 +36,10 @@
   height: 97.5%;
   overflow: hidden;
   background: currentcolor;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   opacity: 0.25;
   transform: translate(-50%, -50%);
-  transition: opacity 0.15s ease;
+  transition: opacity var(--transition-fast);
 
   &::after {
     position: absolute;
@@ -42,11 +55,21 @@
     );
     border-radius: 50% 50% 0 0;
     filter: blur(0.5px);
-    transition: opacity 0.15s ease;
+    transition: opacity var(--transition-fast);
     content: "";
   }
 }
 
+/* LED glow effect */
+.vintageLedGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+/* LED reflection */
 .vintageLedReflection {
   position: absolute;
   top: 50%;
@@ -54,14 +77,14 @@
   width: 50%;
   height: 50%;
   background: var(--color-white-75);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   opacity: 0.75;
   transform: translate(-50%, -50%);
-  transition: opacity 0.15s ease;
+  transition: opacity var(--transition-fast);
   filter: blur(3px);
 }
 
-/* Sizes */
+/* Size variants */
 .vintageLedSmall {
   width: 12px;
   height: 12px;
@@ -77,14 +100,66 @@
   height: 28px;
 }
 
-/* Just for the red LED */
+/* Color variants */
 .vintageLedRed {
   color: hsl(0deg 100% 50%);
 }
 
-/* Just for the red LED */
+.vintageLedGreen {
+  color: hsl(120deg 100% 50%);
+}
+
+.vintageLedAmber {
+  color: hsl(45deg 100% 50%);
+}
+
+.vintageLedBlue {
+  color: hsl(240deg 100% 50%);
+}
+
+/* Active state */
 .vintageLedOn .vintageLedInner,
 .vintageLedOn .vintageLedReflection {
-  box-shadow: 0 0 15px 5px hsl(0deg 100% 50% / 50%);
   opacity: 1;
+}
+
+.vintageLedOn .vintageLedGlow {
+  opacity: 1;
+}
+
+/* Red LED specific glow effect */
+.vintageLedRed.vintageLedOn .vintageLedInner,
+.vintageLedRed.vintageLedOn .vintageLedReflection {
+  box-shadow: 0 0 15px 5px hsl(0deg 100% 50% / 50%);
+}
+
+/* Label styles */
+.vintageLedLabel {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  text-align: center;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Label position variants */
+.labelTop {
+  order: -1;
+}
+
+.labelBottom {
+  order: 1;
+}
+
+.labelLeft {
+  flex-direction: row;
+  align-items: center;
+  order: -1;
+}
+
+.labelRight {
+  flex-direction: row;
+  align-items: center;
+  order: 1;
 }

@@ -3,13 +3,12 @@ import Title from "@/components/Title";
 import Filter from "@/components/Filter";
 import Section from "../Section";
 import Column from "../Column";
-import Row from "../Row";
 import ModulationSwitch from "../Filter/ModulationSwitch";
 import KeyboardControl from "../Filter/KeyboardControl";
 
-interface ModifiersProps {
+type ModifiersProps = {
   disabled?: boolean;
-}
+};
 
 const style: React.CSSProperties = {
   position: "absolute",

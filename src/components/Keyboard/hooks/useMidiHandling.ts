@@ -26,24 +26,24 @@ function expScale(value: MIDIValue): MIDIValue {
 }
 
 // Type definitions for Web MIDI API
-interface MIDIMessageEvent {
+type MIDIMessageEvent = {
   data: Uint8Array;
-}
+};
 
-interface MIDIPort {
+type MIDIPort = {
   type: "input" | "output";
   state: "connected" | "disconnected";
   onmidimessage: ((event: MIDIMessageEvent) => void) | null;
-}
+};
 
-interface MIDIInput extends MIDIPort {
+type MIDIInput = MIDIPort & {
   type: "input";
-}
+};
 
-interface MIDIAccess {
+type MIDIAccess = {
   inputs: Map<string, MIDIInput>;
   onstatechange: ((event: { port: MIDIPort }) => void) | null;
-}
+};
 
 declare global {
   interface Navigator {

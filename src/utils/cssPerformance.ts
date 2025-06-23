@@ -2,13 +2,13 @@
  * CSS Modules Performance Monitoring Utilities
  */
 
-interface CSSModuleStats {
+type CSSModuleStats = {
   moduleCount: number;
   totalClasses: number;
   averageClassesPerModule: number;
   largestModule: string;
   largestModuleClassCount: number;
-}
+};
 
 /**
  * Analyze CSS modules for performance insights

@@ -6,9 +6,9 @@ import Title from "../Title";
 import Section from "../Section";
 import Column from "../Column";
 
-interface OscillatorBankProps {
+type OscillatorBankProps = {
   disabled?: boolean;
-}
+};
 
 function OscillatorBank({ disabled = false }: OscillatorBankProps) {
   return (

@@ -7,9 +7,9 @@ import LfoRate from "../LfoRate";
 import Column from "../Column";
 import Row from "../Row";
 
-interface SidePanelProps {
+type SidePanelProps = {
   disabled?: boolean;
-}
+};
 
 function SidePanel({ disabled = false }: SidePanelProps) {
   return (

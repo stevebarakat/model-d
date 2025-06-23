@@ -3,9 +3,9 @@ import { useSynthStore } from "@/store/synthStore";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useCallback } from "react";
 
-interface LFORateProps {
+type LFORateProps = {
   disabled?: boolean;
-}
+};
 
 function LFORate({ disabled = false }: LFORateProps) {
   const lfoWaveform = useSynthStore((state) => state.lfoWaveform);

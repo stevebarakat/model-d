@@ -1,9 +1,9 @@
 import { useSynthStore } from "@/store/synthStore";
 import { RockerSwitch } from "../RockerSwitch";
 
-interface GlideSwitchProps {
+type GlideSwitchProps = {
   disabled?: boolean;
-}
+};
 
 function GlideSwitch({ disabled = false }: GlideSwitchProps) {
   const glideOn = useSynthStore((s) => s.glideOn);

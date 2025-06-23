@@ -8,9 +8,9 @@ import Column from "../Column";
 import Row from "../Row";
 import { useSynthStore } from "@/store/synthStore";
 
-interface ControllersProps {
+type ControllersProps = {
   disabled?: boolean;
-}
+};
 
 function Controllers({ disabled = false }: ControllersProps) {
   const osc3FilterEgSwitch = useSynthStore((s) => s.osc3FilterEgSwitch);

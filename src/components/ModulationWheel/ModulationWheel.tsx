@@ -1,9 +1,9 @@
 import Wheel from "../Wheel";
 import { useSynthStore } from "@/store/synthStore";
 
-interface ModulationWheelProps {
+type ModulationWheelProps = {
   disabled?: boolean;
-}
+};
 
 function ModulationWheel({ disabled = false }: ModulationWheelProps) {
   const modWheel = useSynthStore((state) => state.modWheel);

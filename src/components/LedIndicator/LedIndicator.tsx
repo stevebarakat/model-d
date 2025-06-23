@@ -1,14 +1,14 @@
 import { useRef, useEffect } from "react";
 import styles from "./LedIndicator.module.css";
 
-interface LedIndicatorProps {
+type LedIndicatorProps = {
   isEnabled: boolean;
   volume: number;
   audioLevel: number;
   disabled: boolean;
   label?: string;
   style?: React.CSSProperties;
-}
+};
 
 function LedIndicator({
   isEnabled,

@@ -2,13 +2,13 @@ import React from "react";
 import { calculateTickAngle } from "../utils";
 import styles from "../Knob.module.css";
 
-interface KnobTicksProps {
+type KnobTicksProps = {
   valueLabels: Record<number, string | React.ReactElement>;
   min: number;
   max: number;
   type: "arrow" | "radial";
   showMidTicks: boolean;
-}
+};
 
 export function KnobTicks({
   valueLabels,
