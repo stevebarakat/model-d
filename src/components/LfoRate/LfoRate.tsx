@@ -50,9 +50,8 @@ function LFORate({ disabled = false }: LFORateProps) {
       </Tooltip.Root>
       <div
         style={{
-          marginTop: 4,
-          fontSize: 12,
-          fontWeight: 700,
+          marginTop: "var(--spacing-xs)",
+          fontSize: "var(--font-size-xs)",
           textTransform: "uppercase",
         }}
       >

@@ -8,8 +8,12 @@
   --color-gray-l: hsl(0deg 0% 75%);
   --color-gray-xl: hsl(0deg 0% 87.5%);
   --color-off-white: hsl(0deg 0% 93.75%);
+  --color-white-75: hsl(0deg 0% 100% / 75%);
   --color-white-50: hsl(0deg 0% 100% / 50%);
+  --color-white-40: hsl(0deg 0% 100% / 40%);
+  --color-white-30: hsl(0deg 0% 100% / 30%);
   --color-white-25: hsl(0deg 0% 100% / 25%);
+  --color-white-15: hsl(0deg 0% 100% / 15%);
   --color-white-10: hsl(0deg 0% 100% / 10%);
   --color-text-primary: hsl(0deg 0% 75%);
 
