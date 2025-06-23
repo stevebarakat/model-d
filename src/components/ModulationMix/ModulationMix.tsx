@@ -18,12 +18,24 @@ function ModulationMix({ disabled = false }: ModulationMixProps) {
       label="Modulation Mix"
       onChange={disabled ? () => {} : setModMix}
       valueLabels={{
-        "0": "0",
+        "0": (
+          <span style={{ fontSize: "var(--font-size-xxs)" }}>
+            Osc. 3/
+            <br />
+            Filter Eg
+          </span>
+        ),
         "2": "2",
         "4": "4",
         "6": "6",
         "8": "8",
-        "10": "10",
+        "10": (
+          <span style={{ fontSize: "var(--font-size-xxs)" }}>
+            Noise/
+            <br />
+            LFO
+          </span>
+        ),
       }}
       disabled={disabled}
     />

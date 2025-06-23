@@ -27,7 +27,7 @@ function Controllers({ disabled = false }: ControllersProps) {
     >
       <Column gap="var(--spacing-lg)">
         <Tune disabled={disabled} />
-        <Row gap="0.25rem">
+        <Row gap="var(--spacing-sm)">
           <Glide disabled={disabled} />
           <ModulationMix disabled={disabled} />
         </Row>
