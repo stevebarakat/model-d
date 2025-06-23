@@ -84,6 +84,9 @@
   .switch {
     top: 1.25rem;
     transform: rotate(90deg);
+    border: 1px solid black;
+    border-left: 2.5px solid black;
+    border-right: 2.5px solid black;
   }
 
   --switch-gloss-img: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTIwIj4KICA8cmVjdCB3aWR0aD0iMjUwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMCIvPgo8L3N2Zz4K");

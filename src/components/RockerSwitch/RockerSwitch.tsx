@@ -65,8 +65,13 @@ function RockerSwitch({
     );
   }
 
-  function LeftLabel({ leftLabel }: { leftLabel: string | undefined }) {
-    if (!leftLabel) return null;
+  type LeftLabelProps = {
+    leftLabel: string | React.ReactElement | undefined;
+    disabled: boolean;
+  };
+
+  function LeftLabel({ leftLabel, disabled }: LeftLabelProps) {
+    if (!leftLabel || disabled) return null;
     return <span className={styles.leftLabel}>{leftLabel}</span>;
   }
 
@@ -101,7 +106,7 @@ function RockerSwitch({
     >
       <TopLabels topLabels={topLabels} />
 
-      <LeftLabel leftLabel={leftLabel} />
+      <LeftLabel leftLabel={leftLabel} disabled={disabled} />
 
       <label htmlFor={id}>
         <input

@@ -28,6 +28,7 @@ function MainOutput({ disabled = false }: { disabled?: boolean }) {
       <RockerSwitch
         theme="blue"
         checked={isMasterActive}
+        disabled={disabled}
         onCheckedChange={
           disabled
             ? () => {}
