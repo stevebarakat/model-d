@@ -22,6 +22,7 @@
 
   /* Typography */
   --font-primary: "Futura", sans-serif;
+  --font-size-xxs: 0.4375rem;
   --font-size-xs: 0.4875rem;
   --font-size-sm: 0.5512rem;
   --font-size-md: 0.6625rem;

@@ -26,6 +26,7 @@ function OscillatorPanel({
     <Row style={style}>
       {showControlSwitch && controlSwitchProps && (
         <RockerSwitch
+          style={{ marginLeft: "-0.25rem", marginRight: "-0.5rem" }}
           orientation="vertical"
           {...controlSwitchProps}
           label={controlSwitchProps.label}
