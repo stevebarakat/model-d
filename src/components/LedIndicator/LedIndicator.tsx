@@ -7,6 +7,7 @@ interface LedIndicatorProps {
   audioLevel: number;
   disabled: boolean;
   label?: string;
+  style?: React.CSSProperties;
 }
 
 function LedIndicator({
@@ -15,6 +16,7 @@ function LedIndicator({
   audioLevel,
   disabled,
   label,
+  style,
 }: LedIndicatorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -78,6 +80,7 @@ function LedIndicator({
   return (
     <div
       className={`${styles.overloadContainer} ${disabled && styles.disabled}`}
+      style={style}
     >
       <div className={styles.overloadLabel}>{label}</div>
       <div className={styles.overloadBackground}>

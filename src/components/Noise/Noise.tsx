@@ -17,7 +17,6 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
 
   return (
     <Column>
-      <Line side="right" />
       <Row>
         <RockerSwitch
           theme="blue"
@@ -31,7 +30,8 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
             left: "-3.5rem",
           }}
         />
-        <Row>
+        <Line side="right" />
+        <Row gap="var(--spacing-xl)">
           <Knob
             valueLabels={{
               0: "0",
@@ -67,6 +67,10 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
             topLabel="White"
             bottomLabel="Pink"
             disabled={audioContext === null}
+            style={{
+              left: "0.5rem",
+              marginBottom: "0.25rem",
+            }}
           />
         </Row>
       </Row>

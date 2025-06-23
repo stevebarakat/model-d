@@ -78,7 +78,11 @@ function RockerSwitch({
         {bottomLabelLeft && (
           <span className={styles.left}>{bottomLabelLeft}</span>
         )}
-        {bottomLabel && <span className={styles.center}>{bottomLabel}</span>}
+        {bottomLabel && (
+          <span className={styles.center + " " + styles[`${orientation}Label`]}>
+            {bottomLabel}
+          </span>
+        )}
         {bottomLabelRight && (
           <span className={styles.right}>{bottomLabelRight}</span>
         )}

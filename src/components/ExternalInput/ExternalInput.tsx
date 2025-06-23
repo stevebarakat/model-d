@@ -78,6 +78,9 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
           volume={mixer.external.volume}
           audioLevel={audioLevel}
           disabled={audioContext === null}
+          style={{
+            left: "1.5rem",
+          }}
         />
       </Row>
     </Row>

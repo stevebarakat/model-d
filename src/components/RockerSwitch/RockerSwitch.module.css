@@ -287,6 +287,11 @@
   text-transform: uppercase;
   white-space: nowrap;
 
+  .verticalLabel {
+    position: relative;
+    top: 2.25rem;
+  }
+
   .left {
     text-align: left;
   }

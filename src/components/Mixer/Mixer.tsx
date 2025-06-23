@@ -19,9 +19,9 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
   const { mixer, setMixerSource } = useSynthStore();
 
   return (
-    <Section>
+    <Section style={{ margin: "0 0.25rem" }}>
       <Row>
-        <Column gap="0.5rem">
+        <Column gap="1.45rem">
           <Row>
             <Knob
               valueLabels={{
@@ -149,7 +149,9 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
             />
           </Row>
         </Column>
-        <Column style={{ paddingRight: "5rem", left: "35px", gap: "0.5rem" }}>
+        <Column
+          style={{ paddingRight: "5rem", left: "2.2rem", gap: "1.45rem" }}
+        >
           <ExternalInput audioContext={audioContext} mixerNode={mixerNode} />
           <Noise audioContext={audioContext} mixerNode={mixerNode} />
         </Column>
