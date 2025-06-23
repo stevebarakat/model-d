@@ -10,18 +10,17 @@
 
 .vintageLed {
   position: relative;
-  border: 2px solid var(--color-white-50);
+  border: 3px solid var(--color-white-50);
   border-radius: 50%;
-  /* box-shadow: inset 0 0 10px rgb(0 0 0 / 50%); */
   transition: all 0.3s ease;
 }
 
 .vintageLedInner {
   position: absolute;
   top: 52.5%;
-  left: 50%;
-  width: 90%;
-  height: 90%;
+  left: 49%;
+  width: 97.5%;
+  height: 97.5%;
   overflow: hidden;
   background: currentcolor;
   border-radius: 50%;
@@ -35,11 +34,15 @@
     left: 0;
     z-index: 1;
     width: 100%;
-    height: 50%;
-    background: var(--color-white-40);
+    height: 55%;
+    background: linear-gradient(
+      to bottom,
+      var(--color-white-50),
+      var(--color-white-25)
+    );
     border-radius: 50% 50% 0 0;
 
-    /* filter: blur(1px); */
+    filter: blur(0.5px);
     transition: opacity 0.15s ease;
     content: "";
   }
