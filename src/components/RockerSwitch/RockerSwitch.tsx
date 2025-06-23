@@ -5,13 +5,13 @@ type RockerSwitchProps = {
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
   label: string;
-  topLabelLeft?: string;
+  topLabelLeft?: string | React.ReactElement;
   topLabel?: string | React.ReactElement;
-  topLabelRight?: string;
-  leftLabel?: string;
-  bottomLabelLeft?: string;
+  topLabelRight?: string | React.ReactElement;
+  leftLabel?: string | React.ReactElement;
+  bottomLabelLeft?: string | React.ReactElement;
   bottomLabel?: string | React.ReactElement;
-  bottomLabelRight?: string;
+  bottomLabelRight?: string | React.ReactElement;
   theme?: "black" | "orange" | "blue" | "white";
   disabled?: boolean;
   style?: React.CSSProperties;
