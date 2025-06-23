@@ -49,7 +49,7 @@ export default function Oscillator2({
 
   return (
     <OscillatorPanel disabled={disabled} style={{ paddingBottom: ".5rem" }}>
-      <Spacer width="1.9rem" />
+      <Spacer width="2rem" />
       <Knob
         type="arrow"
         size="large"

@@ -49,7 +49,17 @@ function RockerSwitch({
     return (
       <div className={styles.topLabel}>
         {topLabelLeft && <span className={styles.left}>{topLabelLeft}</span>}
-        {topLabel && <span className={styles.center}>{topLabel}</span>}
+        {topLabel && (
+          <span
+            className={styles.center}
+            style={{
+              background:
+                orientation === "vertical" ? "none" : "var(--color-synth-bg)",
+            }}
+          >
+            {topLabel}
+          </span>
+        )}
         {topLabelRight && <span className={styles.right}>{topLabelRight}</span>}
       </div>
     );
