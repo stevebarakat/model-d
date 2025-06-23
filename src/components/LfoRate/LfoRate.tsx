@@ -2,6 +2,7 @@ import Knob from "../Knob";
 import { useSynthStore } from "@/store/synthStore";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useCallback } from "react";
+import { Triangle, Square } from "lucide-react";
 
 interface LFORateProps {
   disabled?: boolean;
@@ -51,11 +52,16 @@ function LFORate({ disabled = false }: LFORateProps) {
       <div
         style={{
           marginTop: "var(--spacing-xs)",
-          fontSize: "var(--font-size-xs)",
+          fontSize: "var(--font-size-sm)",
           textTransform: "uppercase",
         }}
       >
-        {lfoWaveform === "triangle" ? "Triangle" : "Square"}
+        Shape:{" "}
+        {lfoWaveform === "triangle" ? (
+          <Triangle size={10} strokeWidth={3} />
+        ) : (
+          <Square size={10} strokeWidth={3} />
+        )}
       </div>
     </div>
   );
