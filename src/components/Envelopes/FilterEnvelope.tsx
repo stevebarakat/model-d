@@ -8,7 +8,7 @@ function FilterEnvelope({ disabled = false }: { disabled?: boolean }) {
   const filterSustain = useSynthStore((state) => state.filterSustain);
   const setFilterEnvelope = useSynthStore((state) => state.setFilterEnvelope);
   return (
-    <Row>
+    <Row gap="var(--spacing-lg)">
       <Knob
         valueLabels={{
           0: "m-sec.",

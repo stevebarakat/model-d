@@ -23,7 +23,7 @@ function Filter({ disabled = false }: FilterProps) {
       <Title disabled={disabled} size="md">
         Filter
       </Title>
-      <Row>
+      <Row gap="var(--spacing-lg)">
         <Knob
           valueLabels={{
             0: "-4",

@@ -14,12 +14,16 @@ interface ModifiersProps {
 const style: React.CSSProperties = {
   position: "absolute",
   top: "20%",
-  left: "-1.5rem",
+  left: "-1.75rem",
 };
+
 function Modifiers({ disabled = false }: ModifiersProps) {
   return (
     <Section>
-      <Column style={{ paddingLeft: "2.5rem", paddingRight: "0.5rem" }}>
+      <Column
+        style={{ paddingLeft: "1.75rem", paddingRight: "0.25rem" }}
+        gap="var(--spacing-md)"
+      >
         <div style={style}>
           <ModulationSwitch disabled={disabled} />
           <KeyboardControl disabled={disabled} />
@@ -27,8 +31,15 @@ function Modifiers({ disabled = false }: ModifiersProps) {
         <Filter disabled={disabled} />
         <FilterEnvelope disabled={disabled} />
       </Column>
-      <Row style={{ borderTop: "2px solid var(--color-white-50)" }} />
-      <Column style={{ paddingLeft: "2.5rem", paddingRight: "0.5rem" }}>
+      <Column
+        style={{
+          borderTop: "2px solid var(--color-white-50)",
+          paddingLeft: "1.75rem",
+          width: "102%",
+          marginLeft: "-0.25rem",
+          paddingBottom: "var(--spacing-md)",
+        }}
+      >
         <LoudnessEnvelope disabled={disabled} />
       </Column>
       <Title>Modifiers</Title>

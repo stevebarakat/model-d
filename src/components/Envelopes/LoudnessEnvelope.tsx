@@ -18,7 +18,7 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
         Loudness Contour
       </Title>
       <Column>
-        <Row>
+        <Row gap="var(--spacing-lg)">
           <Knob
             valueLabels={{
               0: "m-sec.",

@@ -244,10 +244,6 @@
   font-weight: 800;
   text-transform: uppercase;
 
-  span {
-    font-size: var(--font-size-xxs);
-  }
-
   .left {
     height: 0;
     text-align: left;

@@ -2,10 +2,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   gap: 0;
   padding: 0;
-  padding-bottom: var(--spacing-xl);
   border-right: 2px solid var(--color-white-50);
 }

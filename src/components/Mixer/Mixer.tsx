@@ -21,7 +21,7 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
   return (
     <Section style={{ margin: "0 0.25rem" }}>
       <Row>
-        <Column gap="1.45rem">
+        <Column gap="1.2rem">
           <Row>
             <Knob
               valueLabels={{

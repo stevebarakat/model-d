@@ -12,7 +12,11 @@ interface OscillatorBankProps {
 
 function OscillatorBank({ disabled = false }: OscillatorBankProps) {
   return (
-    <Section style={{ paddingRight: "var(--spacing-xs)" }}>
+    <Section
+      style={{
+        paddingRight: "var(--spacing-xs)",
+      }}
+    >
       <Column>
         <OscillatorModulation disabled={disabled} />
         <Oscillator1 disabled={disabled} />

@@ -1,6 +1,6 @@
 import styles from "./Column.module.css";
 
-interface ColumnProps {
+type ColumnProps = {
   children: React.ReactNode;
   align?: "center" | "flex-start" | "flex-end" | "stretch" | "baseline";
   justify?:
@@ -12,7 +12,7 @@ interface ColumnProps {
     | "space-evenly";
   gap?: string;
   style?: React.CSSProperties;
-}
+};
 
 function Column({
   children,

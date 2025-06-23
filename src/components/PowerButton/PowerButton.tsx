@@ -39,7 +39,7 @@ function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
   );
 
   return (
-    <Row gap="var(--spacing-xs)" justify="center">
+    <Column gap="var(--spacing-xl)" style={{ height: "fit-content" }}>
       <Column gap="var(--spacing-xs)">
         <VintageLED
           isOn={isOn}
@@ -58,7 +58,7 @@ function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
         theme="black"
         topLabel="On"
       />
-    </Row>
+    </Column>
   );
 }
 

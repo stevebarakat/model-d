@@ -109,13 +109,11 @@ function Synth() {
           />
           <Modifiers disabled={!isInitialized} />
           <Output disabled={!isInitialized}>
-            <Row gap="dar(--spacing-xs)">
-              <PowerButton
-                isOn={isInitialized}
-                onPowerOn={initialize}
-                onPowerOff={dispose}
-              />
-            </Row>
+            <PowerButton
+              isOn={isInitialized}
+              onPowerOn={initialize}
+              onPowerOff={dispose}
+            />
           </Output>
         </div>
         <div className={styles.keyboardPanel}>

@@ -31,7 +31,7 @@ function OscillatorPanel({
           {...controlSwitchProps}
           label={controlSwitchProps.label}
           topLabel={
-            <span>
+            <span style={{ fontSize: "var(--font-size-xxs)" }}>
               Osc. 3<br />
               Control
             </span>
