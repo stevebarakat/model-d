@@ -204,7 +204,7 @@
 .label {
   position: absolute;
   bottom: 100%;
-  display: block;
+  display: inline-block;
   font-weight: 800;
   text-align: center;
   text-transform: uppercase;
@@ -221,6 +221,7 @@
 .labelLarge,
 .titleLarge {
   font-size: var(--font-size-md);
+  bottom: 100%;
 }
 
 /* Screen reader only label */

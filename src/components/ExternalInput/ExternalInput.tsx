@@ -38,46 +38,48 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
         }}
       />
       <Line side="right" />
-      <Knob
-        valueLabels={{
-          0: "0",
-          2: "2",
-          4: "4",
-          6: "6",
-          8: "8",
-          10: "10",
-        }}
-        value={mixer.external.volume}
-        min={0.001}
-        max={10}
-        step={0.1}
-        label="External Input Volume"
-        title={
-          <span>
-            External
-            <br />
-            Input Volume
-          </span>
-        }
-        onChange={(v) => {
-          // Only update if the value is different
-          if (v !== mixer.external.volume) {
-            setMixerExternal({ volume: v });
+      <Row gap="var(--spacing-xl)">
+        <Knob
+          valueLabels={{
+            0: "0",
+            2: "2",
+            4: "4",
+            6: "6",
+            8: "8",
+            10: "10",
+          }}
+          value={mixer.external.volume}
+          min={0.001}
+          max={10}
+          step={0.1}
+          label="External Input Volume"
+          title={
+            <span>
+              External
+              <br />
+              Input Volume
+            </span>
           }
-        }}
-        disabled={audioContext === null}
-        style={{
-          left: "1rem",
-          bottom: "0.25rem",
-        }}
-      />
-      <LedIndicator
-        label="Signal"
-        isEnabled={mixer.external.enabled}
-        volume={mixer.external.volume}
-        audioLevel={audioLevel}
-        disabled={audioContext === null}
-      />
+          onChange={(v) => {
+            // Only update if the value is different
+            if (v !== mixer.external.volume) {
+              setMixerExternal({ volume: v });
+            }
+          }}
+          disabled={audioContext === null}
+          style={{
+            left: "1rem",
+            bottom: "0.25rem",
+          }}
+        />
+        <LedIndicator
+          label="Signal"
+          isEnabled={mixer.external.enabled}
+          volume={mixer.external.volume}
+          audioLevel={audioLevel}
+          disabled={audioContext === null}
+        />
+      </Row>
     </Row>
   );
 }

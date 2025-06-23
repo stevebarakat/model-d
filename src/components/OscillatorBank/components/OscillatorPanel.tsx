@@ -12,6 +12,7 @@ export type OscillatorPanelProps = {
   };
   children: React.ReactNode;
   disabled?: boolean;
+  style?: React.CSSProperties;
 };
 
 function OscillatorPanel({
@@ -19,9 +20,10 @@ function OscillatorPanel({
   controlSwitchProps,
   children,
   disabled = false,
+  style,
 }: OscillatorPanelProps) {
   return (
-    <Row>
+    <Row style={style}>
       {showControlSwitch && controlSwitchProps && (
         <RockerSwitch
           orientation="vertical"

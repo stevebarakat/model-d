@@ -46,7 +46,7 @@ export default function Oscillator1({
   }
 
   return (
-    <OscillatorPanel disabled={disabled}>
+    <OscillatorPanel disabled={disabled} style={{ marginBottom: "-0.5rem" }}>
       <Spacer width="3rem" />
       <Knob
         type="arrow"
