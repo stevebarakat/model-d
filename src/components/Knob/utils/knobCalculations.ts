@@ -1,11 +1,45 @@
+// Logarithmic scaling utility functions
+export function toLogarithmic(value: number, min: number, max: number): number {
+  if (min <= 0 || max <= 0) {
+    // Fallback to linear scaling for non-positive ranges
+    return value;
+  }
+  const logMin = Math.log(min);
+  const logMax = Math.log(max);
+  const logValue = Math.log(value);
+  return (logValue - logMin) / (logMax - logMin);
+}
+
+export function fromLogarithmic(
+  normalizedValue: number,
+  min: number,
+  max: number
+): number {
+  if (min <= 0 || max <= 0) {
+    // Fallback to linear scaling for non-positive ranges
+    return min + normalizedValue * (max - min);
+  }
+  const logMin = Math.log(min);
+  const logMax = Math.log(max);
+  const logValue = logMin + normalizedValue * (logMax - logMin);
+  return Math.exp(logValue);
+}
+
 export function getRotation(
   value: number,
   min: number,
   max: number,
-  type: "arrow" | "radial" = "radial"
+  type: "arrow" | "radial" = "radial",
+  logarithmic: boolean = false
 ): number {
-  const range = max - min;
-  const percentage = (value - min) / range;
+  let percentage: number;
+
+  if (logarithmic) {
+    percentage = toLogarithmic(value, min, max);
+  } else {
+    const range = max - min;
+    percentage = (value - min) / range;
+  }
 
   if (type === "arrow") {
     return percentage * 150 - 75; // -75 to +75 degrees (9:30 to 2:30)
@@ -43,10 +77,25 @@ export function calculateValueFromDelta(
   min: number,
   max: number,
   step: number,
-  type: "radial" | "arrow" = "radial"
+  type: "radial" | "arrow" = "radial",
+  logarithmic: boolean = false
 ): number {
-  const range = max - min;
-  let newValue = startValue + (deltaY * sensitivity * range) / 200;
+  let newValue: number;
+
+  if (logarithmic) {
+    // For logarithmic scaling, we need to work with the normalized value
+    const normalizedStart = toLogarithmic(startValue, min, max);
+    const range = 1; // Normalized range is always 0-1
+    const normalizedDelta = (deltaY * sensitivity * range) / 200;
+    const normalizedNew = Math.max(
+      0,
+      Math.min(1, normalizedStart + normalizedDelta)
+    );
+    newValue = fromLogarithmic(normalizedNew, min, max);
+  } else {
+    const range = max - min;
+    newValue = startValue + (deltaY * sensitivity * range) / 200;
+  }
 
   // Apply step snapping only for arrow knobs
   if (type === "arrow" && step > 0) {
@@ -69,11 +118,20 @@ export function calculateLabelPosition(
   tick: number,
   min: number,
   max: number,
-  type: "arrow" | "radial"
+  type: "arrow" | "radial",
+  logarithmic: boolean = false
 ): { x: number; y: number } {
+  let percentage: number;
+
+  if (logarithmic) {
+    percentage = toLogarithmic(tick, min, max);
+  } else {
+    percentage = (tick - min) / (max - min);
+  }
+
   const arc = type === "arrow" ? 150 : 290;
   const startAngle = type === "arrow" ? -165 : 125;
-  const angle = startAngle + ((tick - min) / (max - min)) * arc;
+  const angle = startAngle + percentage * arc;
   const rad = (angle * Math.PI) / 180;
   const x = 50 + Math.cos(rad) * 80;
   const y = 50 + Math.sin(rad) * 80;
@@ -85,9 +143,18 @@ export function calculateTickAngle(
   tick: number,
   min: number,
   max: number,
-  type: "arrow" | "radial"
+  type: "arrow" | "radial",
+  logarithmic: boolean = false
 ): number {
+  let percentage: number;
+
+  if (logarithmic) {
+    percentage = toLogarithmic(tick, min, max);
+  } else {
+    percentage = (tick - min) / (max - min);
+  }
+
   const arc = type === "arrow" ? 150 : 290;
   const startAngle = type === "arrow" ? -75 : -145;
-  return startAngle + ((tick - min) / (max - min)) * arc;
+  return startAngle + percentage * arc;
 }

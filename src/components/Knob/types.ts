@@ -13,6 +13,7 @@ type KnobProps = {
   size?: "small" | "medium" | "large";
   showMidTicks?: boolean;
   type?: "arrow" | "radial";
+  logarithmic?: boolean;
   style?: React.CSSProperties;
 };
 

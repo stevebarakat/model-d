@@ -5,4 +5,6 @@ export {
   calculateValueFromDelta,
   calculateLabelPosition,
   calculateTickAngle,
+  toLogarithmic,
+  fromLogarithmic,
 } from "./knobCalculations";

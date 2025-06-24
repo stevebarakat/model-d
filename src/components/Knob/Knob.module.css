@@ -150,7 +150,7 @@
 .radial {
   top: 7.5%;
   scale: 0.95;
-  background: url("./images/knob.svg") no-repeat center center;
+  background: url("./images/radial-knob.svg") no-repeat center center;
 
   &::before {
     position: absolute;
@@ -187,6 +187,7 @@
     content: "";
   }
 
+  /* More of a line than a "dot" for the arrow knob */
   .dot {
     top: 25%;
     width: var(--tick-width);

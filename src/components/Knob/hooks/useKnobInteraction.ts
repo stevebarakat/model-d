@@ -9,6 +9,7 @@ type UseKnobInteractionProps = {
   step: number;
   type: "radial" | "arrow";
   onChange: (value: number) => void;
+  logarithmic?: boolean;
 };
 
 export function useKnobInteraction({
@@ -18,6 +19,7 @@ export function useKnobInteraction({
   step,
   type,
   onChange,
+  logarithmic = false,
 }: UseKnobInteractionProps) {
   const { knobRef } = useKnobKeyboard({
     value,
@@ -26,6 +28,7 @@ export function useKnobInteraction({
     step,
     type,
     onChange,
+    logarithmic,
   });
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
@@ -80,7 +83,8 @@ export function useKnobInteraction({
         min,
         max,
         step,
-        type
+        type,
+        logarithmic
       );
 
       // Only apply threshold-based updates for arrow knobs
@@ -105,6 +109,7 @@ export function useKnobInteraction({
       type,
       value,
       updateValue,
+      logarithmic,
     ]
   );
 

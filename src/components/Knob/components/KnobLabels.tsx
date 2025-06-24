@@ -7,14 +7,27 @@ type KnobLabelsProps = {
   min: number;
   max: number;
   type: "arrow" | "radial";
+  logarithmic?: boolean;
 };
 
-export function KnobLabels({ valueLabels, min, max, type }: KnobLabelsProps) {
+export function KnobLabels({
+  valueLabels,
+  min,
+  max,
+  type,
+  logarithmic = false,
+}: KnobLabelsProps) {
   return (
     <>
       {Object.keys(valueLabels).map((tickKey) => {
         const tick = Number(tickKey);
-        const { x, y } = calculateLabelPosition(tick, min, max, type);
+        const { x, y } = calculateLabelPosition(
+          tick,
+          min,
+          max,
+          type,
+          logarithmic
+        );
 
         return (
           <div

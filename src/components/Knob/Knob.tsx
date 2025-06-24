@@ -4,6 +4,15 @@ import { KnobTicks, KnobLabels } from "./components";
 import { KnobProps } from "./types";
 import styles from "./Knob.module.css";
 
+/**
+ * Knob component with support for both linear and logarithmic scaling.
+ *
+ * @param logarithmic - When true, applies logarithmic scaling to the knob values.
+ *   This is useful for frequency controls, volume controls, and other parameters
+ *   where exponential scaling provides better user experience.
+ *   Logarithmic scaling works best with positive min/max values.
+ *   For non-positive ranges, it falls back to linear scaling.
+ */
 function Knob({
   value,
   min,
@@ -17,6 +26,7 @@ function Knob({
   size = "medium",
   showMidTicks = true,
   type = "radial",
+  logarithmic = false,
   style,
 }: KnobProps) {
   const { knobRef, handlePointerDown } = useKnobInteraction({
@@ -26,10 +36,11 @@ function Knob({
     step,
     type,
     onChange,
+    logarithmic,
   });
 
   const labelClass = title ? styles.labelHidden : styles.label;
-  const rotation = getRotation(value, min, max, type);
+  const rotation = getRotation(value, min, max, type, logarithmic);
   const displayValue = getDisplayValue(value, step, unit, valueLabels);
   const ariaValueText =
     typeof displayValue === "string"
@@ -71,6 +82,7 @@ function Knob({
             max={max}
             type={type}
             showMidTicks={showMidTicks}
+            logarithmic={logarithmic}
           />
         )}
 
@@ -81,6 +93,7 @@ function Knob({
             min={min}
             max={max}
             type={type}
+            logarithmic={logarithmic}
           />
         )}
 

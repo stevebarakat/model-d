@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
+import { calculateValueFromDelta } from "../utils";
 
 type UseKnobKeyboardProps = {
   value: number;
@@ -7,6 +8,7 @@ type UseKnobKeyboardProps = {
   step: number;
   type: "radial" | "arrow";
   onChange: (value: number) => void;
+  logarithmic?: boolean;
 };
 
 export function useKnobKeyboard({
@@ -16,6 +18,7 @@ export function useKnobKeyboard({
   step,
   type,
   onChange,
+  logarithmic = false,
 }: UseKnobKeyboardProps) {
   const knobRef = useRef<HTMLDivElement>(null);
 
@@ -32,11 +35,31 @@ export function useKnobKeyboard({
       switch (e.key) {
         case "ArrowUp":
         case "ArrowRight":
-          newValue = Math.min(max, value + stepSize);
+          // Use calculateValueFromDelta for consistent behavior with mouse interaction
+          newValue = calculateValueFromDelta(
+            -stepSize * 10, // Negative delta for increase
+            value,
+            1,
+            min,
+            max,
+            step,
+            type,
+            logarithmic
+          );
           break;
         case "ArrowDown":
         case "ArrowLeft":
-          newValue = Math.max(min, value - stepSize);
+          // Use calculateValueFromDelta for consistent behavior with mouse interaction
+          newValue = calculateValueFromDelta(
+            stepSize * 10, // Positive delta for decrease
+            value,
+            1,
+            min,
+            max,
+            step,
+            type,
+            logarithmic
+          );
           break;
         default:
           return;
@@ -49,7 +72,7 @@ export function useKnobKeyboard({
 
       onChange(newValue);
     },
-    [value, min, max, step, type, onChange]
+    [value, min, max, step, type, onChange, logarithmic]
   );
 
   useEffect(() => {
