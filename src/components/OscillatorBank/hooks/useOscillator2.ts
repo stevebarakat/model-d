@@ -129,7 +129,7 @@ export function useOscillator2(
       clearInterval(vibratoIntervalRef.current);
       vibratoIntervalRef.current = null;
     }
-  }, [audioContext]);
+  }, []);
 
   useEffect(() => {
     if (oscRef.current && lastNoteRef.current) {
@@ -146,7 +146,7 @@ export function useOscillator2(
         );
       }
     }
-  }, [pitchWheel]);
+  }, [audioContext, masterTune, oscillator2.frequency, pitchWheel]);
 
   useEffect(() => {
     return () => {

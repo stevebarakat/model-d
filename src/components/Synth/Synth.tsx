@@ -5,6 +5,7 @@ import {
   useOscillator2,
   useOscillator3,
 } from "@/components/OscillatorBank/hooks";
+import { useMidiHandling } from "@/components/Keyboard/hooks";
 import Modifiers from "../Modifiers";
 import Mixer from "../Mixer";
 import OscillatorBank from "../OscillatorBank";
@@ -65,6 +66,9 @@ function Synth() {
     osc2,
     osc3,
   });
+
+  // Set up MIDI handling with the synth object
+  useMidiHandling(synthObj);
 
   // Update filter based on key tracking
   useEffect(() => {

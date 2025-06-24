@@ -71,32 +71,47 @@ function midiNoteToNote(midiNote: MIDIValue): NoteName {
   return `${noteNames[noteIndex]}${octave}`;
 }
 
-export function useMidiHandling() {
-  const { setActiveKeys, setPitchWheel, setModWheel, keyboardRef } =
-    useSynthStore();
+type SynthObject = {
+  triggerAttack: (note: string) => void;
+  triggerRelease: (note: string) => void;
+};
+
+export function useMidiHandling(synthObj: SynthObject | null) {
+  const { setActiveKeys, setPitchWheel, setModWheel } = useSynthStore();
 
   const currentPitch = useRef<MIDIValue>(50);
   const currentMod = useRef<MIDIValue>(0);
   const pendingMod = useRef<MIDIValue | null>(null);
   const pendingPitch = useRef<MIDIValue | null>(null);
   const animationFrameId = useRef<number | undefined>(undefined);
+  const setActiveKeysRef = useRef(setActiveKeys);
+  const setPitchWheelRef = useRef(setPitchWheel);
+  const setModWheelRef = useRef(setModWheel);
+  const synthObjRef = useRef(synthObj);
+
+  // Update refs when store values change
+  useEffect(() => {
+    setActiveKeysRef.current = setActiveKeys;
+    setPitchWheelRef.current = setPitchWheel;
+    setModWheelRef.current = setModWheel;
+    synthObjRef.current = synthObj;
+  }, [setActiveKeys, setPitchWheel, setModWheel, synthObj]);
 
   const processUpdates = useCallback(() => {
     if (pendingMod.current !== null) {
-      setModWheel(pendingMod.current);
+      setModWheelRef.current(pendingMod.current);
       currentMod.current = pendingMod.current;
-      keyboardRef.synth?.updateSettings({ modWheel: pendingMod.current });
       pendingMod.current = null;
     }
 
     if (pendingPitch.current !== null) {
-      setPitchWheel(pendingPitch.current);
+      setPitchWheelRef.current(pendingPitch.current);
       currentPitch.current = pendingPitch.current;
       pendingPitch.current = null;
     }
 
     animationFrameId.current = requestAnimationFrame(processUpdates);
-  }, [setModWheel, setPitchWheel, keyboardRef]);
+  }, []);
 
   useEffect(() => {
     animationFrameId.current = requestAnimationFrame(processUpdates);
@@ -107,57 +122,55 @@ export function useMidiHandling() {
     };
   }, [processUpdates]);
 
-  const handleMidiMessage = useCallback(
-    (event: MIDIMessageEvent) => {
-      const [status, data1, data2] = event.data;
-      const messageType = status & 0xf0;
-      let note: NoteName;
-      let rawValue: MIDIValue;
-      let newModValue: MIDIValue;
-      let newPitchValue: MIDIValue;
+  const handleMidiMessage = useCallback((event: MIDIMessageEvent) => {
+    const [status, data1, data2] = event.data;
+    const messageType = status & 0xf0;
+    let note: NoteName;
+    let rawValue: MIDIValue;
+    let newModValue: MIDIValue;
+    let newPitchValue: MIDIValue;
 
-      switch (messageType) {
-        case MIDI_NOTE_ON:
-          note = midiNoteToNote(data1);
-          if (data2 > 0) {
-            setActiveKeys(note);
-            keyboardRef.synth?.triggerAttack(note);
-          } else {
-            setActiveKeys(null);
-            keyboardRef.synth?.triggerRelease(note);
-          }
-          break;
+    switch (messageType) {
+      case MIDI_NOTE_ON:
+        note = midiNoteToNote(data1);
+        if (data2 > 0) {
+          setActiveKeysRef.current(note);
+          synthObjRef.current?.triggerAttack(note);
+        } else {
+          // Note ON with velocity 0 is equivalent to Note OFF
+          setActiveKeysRef.current(null);
+          synthObjRef.current?.triggerRelease(note);
+        }
+        break;
 
-        case MIDI_NOTE_OFF:
-          note = midiNoteToNote(data1);
-          setActiveKeys(null);
-          keyboardRef.synth?.triggerRelease(note);
-          break;
+      case MIDI_NOTE_OFF:
+        note = midiNoteToNote(data1);
+        setActiveKeysRef.current(null);
+        synthObjRef.current?.triggerRelease(note);
+        break;
 
-        case MIDI_CONTROL_CHANGE:
-          switch (data1) {
-            case CC_MODULATION:
-              newModValue = expScale(data2);
-              pendingMod.current = newModValue;
-              break;
-            case CC_VOLUME:
-              // Handle volume if needed
-              break;
-            case CC_PAN:
-              // Handle pan if needed
-              break;
-          }
-          break;
+      case MIDI_CONTROL_CHANGE:
+        switch (data1) {
+          case CC_MODULATION:
+            newModValue = expScale(data2);
+            pendingMod.current = newModValue;
+            break;
+          case CC_VOLUME:
+            // Handle volume if needed
+            break;
+          case CC_PAN:
+            // Handle pan if needed
+            break;
+        }
+        break;
 
-        case MIDI_PITCH_BEND:
-          rawValue = data1 + (data2 << 7);
-          newPitchValue = Math.round((rawValue / 16383) * 100);
-          pendingPitch.current = newPitchValue;
-          break;
-      }
-    },
-    [setActiveKeys, keyboardRef]
-  );
+      case MIDI_PITCH_BEND:
+        rawValue = data1 + (data2 << 7);
+        newPitchValue = Math.round((rawValue / 16383) * 100);
+        pendingPitch.current = newPitchValue;
+        break;
+    }
+  }, []);
 
   useEffect(() => {
     async function setupMidi() {
