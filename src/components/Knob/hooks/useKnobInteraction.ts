@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getSensitivity, calculateValueFromDelta } from "../utils";
+import { calculateValueFromDelta } from "../utils";
 import { useKnobKeyboard } from "./useKnobKeyboard";
 
 type UseKnobInteractionProps = {
@@ -7,7 +7,6 @@ type UseKnobInteractionProps = {
   min: number;
   max: number;
   step: number;
-  size: "small" | "medium" | "large";
   type: "radial" | "arrow";
   onChange: (value: number) => void;
 };
@@ -17,7 +16,6 @@ export function useKnobInteraction({
   min,
   max,
   step,
-  size,
   type,
   onChange,
 }: UseKnobInteractionProps) {
@@ -34,7 +32,7 @@ export function useKnobInteraction({
   const [startValue, setStartValue] = useState(0);
   const [lastUpdateTime, setLastUpdateTime] = useState(0);
 
-  const sensitivity = getSensitivity(max, min, size);
+  const sensitivity = 1;
 
   const updateValue = useCallback(
     (newValue: number) => {
@@ -124,27 +122,6 @@ export function useKnobInteraction({
     [isDragging, knobRef]
   );
 
-  const handleWheel = useCallback(
-    (e: React.WheelEvent): void => {
-      e.preventDefault();
-
-      const wheelSensitivity = sensitivity * 0.1;
-      const delta = e.deltaY > 0 ? -1 : 1;
-      const newValue = calculateValueFromDelta(
-        delta,
-        value,
-        wheelSensitivity,
-        min,
-        max,
-        step,
-        type
-      );
-
-      onChange(newValue);
-    },
-    [value, sensitivity, min, max, step, type, onChange]
-  );
-
   // Set up global event listeners
   useEffect(() => {
     if (!isDragging) return;
@@ -164,6 +141,5 @@ export function useKnobInteraction({
     knobRef,
     isDragging,
     handlePointerDown,
-    handleWheel,
   };
 }

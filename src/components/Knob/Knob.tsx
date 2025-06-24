@@ -19,12 +19,11 @@ function Knob({
   type = "radial",
   style,
 }: KnobProps) {
-  const { knobRef, handlePointerDown, handleWheel } = useKnobInteraction({
+  const { knobRef, handlePointerDown } = useKnobInteraction({
     value,
     min,
     max,
     step,
-    size,
     type,
     onChange,
   });
@@ -96,7 +95,6 @@ function Knob({
             ref={knobRef}
             style={{ transform: `rotate(${rotation}deg)` }}
             onPointerDown={handlePointerDown}
-            onWheel={handleWheel}
             tabIndex={0}
             role="slider"
             aria-valuemin={min}

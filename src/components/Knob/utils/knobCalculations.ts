@@ -46,7 +46,7 @@ export function calculateValueFromDelta(
   type: "radial" | "arrow" = "radial"
 ): number {
   const range = max - min;
-  let newValue = startValue + (deltaY * sensitivity * range) / 100;
+  let newValue = startValue + (deltaY * sensitivity * range) / 200;
 
   // Apply step snapping only for arrow knobs
   if (type === "arrow" && step > 0) {
