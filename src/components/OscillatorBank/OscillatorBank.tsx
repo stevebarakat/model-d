@@ -10,7 +10,7 @@ function OscillatorBank() {
   return (
     <Section
       style={{
-        paddingRight: "var(--spacing-xs)",
+        paddingRight: "var(--spacing-xxs)",
       }}
     >
       <Column>

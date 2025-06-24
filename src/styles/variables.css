@@ -18,6 +18,7 @@
   --color-text-primary: hsl(0deg 0% 75%);
 
   /* Spacing System */
+  --spacing-xxs: 0.0625rem;
   --spacing-xs: 0.125rem;
   --spacing-sm: 0.25rem;
   --spacing-md: 0.5rem;

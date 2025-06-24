@@ -8,7 +8,7 @@ export type OscillatorPanelProps = {
     checked: boolean;
     onCheckedChange: (checked: boolean) => void;
     label: string;
-    theme?: "black" | "orange" | "blue";
+    theme?: "black" | "orange" | "blue" | "white";
   };
   children: React.ReactNode;
   style?: React.CSSProperties;
