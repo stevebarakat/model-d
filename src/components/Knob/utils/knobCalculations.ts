@@ -1,9 +1,16 @@
-// Logarithmic scaling utility functions
+// Logarithmic scaling functions
 export function toLogarithmic(value: number, min: number, max: number): number {
+  // Handle edge cases where logarithmic scaling isn't appropriate
   if (min <= 0 || max <= 0) {
-    // Fallback to linear scaling for non-positive ranges
-    return value;
+    // For ranges that include zero or negative values, fall back to linear
+    return (value - min) / (max - min);
   }
+
+  // For very small ranges, also use linear to avoid precision issues
+  if (max / min < 1.1) {
+    return (value - min) / (max - min);
+  }
+
   const logMin = Math.log(min);
   const logMax = Math.log(max);
   const logValue = Math.log(value);
@@ -15,10 +22,17 @@ export function fromLogarithmic(
   min: number,
   max: number
 ): number {
+  // Handle edge cases where logarithmic scaling isn't appropriate
   if (min <= 0 || max <= 0) {
-    // Fallback to linear scaling for non-positive ranges
+    // For ranges that include zero or negative values, fall back to linear
     return min + normalizedValue * (max - min);
   }
+
+  // For very small ranges, also use linear to avoid precision issues
+  if (max / min < 1.1) {
+    return min + normalizedValue * (max - min);
+  }
+
   const logMin = Math.log(min);
   const logMax = Math.log(max);
   const logValue = logMin + normalizedValue * (logMax - logMin);
@@ -35,8 +49,10 @@ export function getRotation(
   let percentage: number;
 
   if (logarithmic) {
+    // Use logarithmic scaling for visual rotation to match the control behavior
     percentage = toLogarithmic(value, min, max);
   } else {
+    // Linear scaling (original behavior)
     const range = max - min;
     percentage = (value - min) / range;
   }
@@ -80,20 +96,21 @@ export function calculateValueFromDelta(
   type: "radial" | "arrow" = "radial",
   logarithmic: boolean = false
 ): number {
+  const range = max - min;
   let newValue: number;
 
   if (logarithmic) {
-    // For logarithmic scaling, we need to work with the normalized value
+    // For logarithmic knobs, we work in normalized logarithmic space
     const normalizedStart = toLogarithmic(startValue, min, max);
-    const range = 1; // Normalized range is always 0-1
-    const normalizedDelta = (deltaY * sensitivity * range) / 200;
-    const normalizedNew = Math.max(
-      0,
-      Math.min(1, normalizedStart + normalizedDelta)
+    const normalizedDelta = (deltaY * sensitivity) / 200;
+    const normalizedNew = normalizedStart + normalizedDelta;
+    newValue = fromLogarithmic(
+      Math.max(0, Math.min(1, normalizedNew)),
+      min,
+      max
     );
-    newValue = fromLogarithmic(normalizedNew, min, max);
   } else {
-    const range = max - min;
+    // Linear behavior (original)
     newValue = startValue + (deltaY * sensitivity * range) / 200;
   }
 
@@ -118,19 +135,11 @@ export function calculateLabelPosition(
   tick: number,
   min: number,
   max: number,
-  type: "arrow" | "radial",
-  logarithmic: boolean = false
+  type: "arrow" | "radial"
 ): { x: number; y: number } {
-  let percentage: number;
-
-  if (logarithmic) {
-    percentage = toLogarithmic(tick, min, max);
-  } else {
-    percentage = (tick - min) / (max - min);
-  }
-
   const arc = type === "arrow" ? 150 : 290;
   const startAngle = type === "arrow" ? -165 : 125;
+  const percentage = (tick - min) / (max - min);
   const angle = startAngle + percentage * arc;
   const rad = (angle * Math.PI) / 180;
   const x = 50 + Math.cos(rad) * 80;
@@ -143,18 +152,10 @@ export function calculateTickAngle(
   tick: number,
   min: number,
   max: number,
-  type: "arrow" | "radial",
-  logarithmic: boolean = false
+  type: "arrow" | "radial"
 ): number {
-  let percentage: number;
-
-  if (logarithmic) {
-    percentage = toLogarithmic(tick, min, max);
-  } else {
-    percentage = (tick - min) / (max - min);
-  }
-
   const arc = type === "arrow" ? 150 : 290;
   const startAngle = type === "arrow" ? -75 : -145;
+  const percentage = (tick - min) / (max - min);
   return startAngle + percentage * arc;
 }

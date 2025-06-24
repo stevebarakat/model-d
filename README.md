@@ -31,6 +31,11 @@ This project aims to recreate the iconic Minimoog Model D synthesizer in the bro
 - Modulation sources: LFO, noise, oscillator 3, filter EG
 - MIDI and keyboard input support
 - Visual signal flow diagram
+- **Authentic Minimoog Interface**: Faithful recreation of the original hardware interface
+- **Real-time Audio Synthesis**: Full Web Audio API implementation
+- **MIDI Support**: Connect your MIDI keyboard for real-time control
+- **Responsive Design**: Works on desktop and mobile devices
+- **Logarithmic Knob Controls**: Natural-feeling frequency and filter controls
 
 ---
 
@@ -135,3 +140,32 @@ dev-preferences.json       # Project configuration and preferences
 ## License
 
 [MIT](LICENSE)
+
+## Knob Component
+
+The Knob component supports both linear and logarithmic scaling for different types of controls:
+
+### Linear Knobs (Default)
+
+Use for controls like volume, mix levels, and other linear parameters:
+
+```tsx
+<Knob value={volume} min={0} max={10} label="Volume" onChange={setVolume} />
+```
+
+### Logarithmic Knobs
+
+Use for frequency controls, filter cutoff, and other parameters that benefit from exponential scaling:
+
+```tsx
+<Knob
+  value={frequency}
+  min={20}
+  max={20000}
+  label="Frequency"
+  onChange={setFrequency}
+  logarithmic={true}
+/>
+```
+
+The logarithmic prop provides natural-feeling control for frequency ranges and other exponential parameters while maintaining linear visual representation of labels and tick marks.

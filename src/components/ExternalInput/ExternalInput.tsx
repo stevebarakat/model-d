@@ -47,6 +47,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
             8: "8",
             10: "10",
           }}
+          logarithmic={true}
           value={mixer.external.volume}
           min={0.001}
           max={10}

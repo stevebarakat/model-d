@@ -35,9 +35,8 @@ export function useKnobKeyboard({
       switch (e.key) {
         case "ArrowUp":
         case "ArrowRight":
-          // Use calculateValueFromDelta for consistent behavior with mouse interaction
           newValue = calculateValueFromDelta(
-            -stepSize * 10, // Negative delta for increase
+            -stepSize * 10,
             value,
             1,
             min,
@@ -49,9 +48,8 @@ export function useKnobKeyboard({
           break;
         case "ArrowDown":
         case "ArrowLeft":
-          // Use calculateValueFromDelta for consistent behavior with mouse interaction
           newValue = calculateValueFromDelta(
-            stepSize * 10, // Positive delta for decrease
+            stepSize * 10,
             value,
             1,
             min,
