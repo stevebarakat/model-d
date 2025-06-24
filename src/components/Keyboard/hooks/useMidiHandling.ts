@@ -33,6 +33,8 @@ type MIDIMessageEvent = {
 type MIDIPort = {
   type: "input" | "output";
   state: "connected" | "disconnected";
+  id: string;
+  name: string;
   onmidimessage: ((event: MIDIMessageEvent) => void) | null;
 };
 
@@ -88,6 +90,7 @@ export function useMidiHandling(synthObj: SynthObject | null) {
   const setPitchWheelRef = useRef(setPitchWheel);
   const setModWheelRef = useRef(setModWheel);
   const synthObjRef = useRef(synthObj);
+  const setupInputs = useRef<Set<string>>(new Set());
 
   // Update refs when store values change
   useEffect(() => {
@@ -130,14 +133,28 @@ export function useMidiHandling(synthObj: SynthObject | null) {
     let newModValue: MIDIValue;
     let newPitchValue: MIDIValue;
 
+    console.log("MIDI Message:", {
+      status: status.toString(16),
+      data1,
+      data2,
+      messageType: messageType.toString(16),
+      timestamp: Date.now(),
+    });
+
     switch (messageType) {
       case MIDI_NOTE_ON:
         note = midiNoteToNote(data1);
         if (data2 > 0) {
+          console.log("MIDI Note ON:", {
+            note,
+            velocity: data2,
+            midiNote: data1,
+          });
           setActiveKeysRef.current(note);
           synthObjRef.current?.triggerAttack(note);
         } else {
           // Note ON with velocity 0 is equivalent to Note OFF
+          console.log("MIDI Note OFF (velocity 0):", { note, midiNote: data1 });
           setActiveKeysRef.current(null);
           synthObjRef.current?.triggerRelease(note);
         }
@@ -145,6 +162,7 @@ export function useMidiHandling(synthObj: SynthObject | null) {
 
       case MIDI_NOTE_OFF:
         note = midiNoteToNote(data1);
+        console.log("MIDI Note OFF:", { note, midiNote: data1 });
         setActiveKeysRef.current(null);
         synthObjRef.current?.triggerRelease(note);
         break;
@@ -154,13 +172,21 @@ export function useMidiHandling(synthObj: SynthObject | null) {
           case CC_MODULATION:
             newModValue = expScale(data2);
             pendingMod.current = newModValue;
+            console.log("MIDI Modulation:", {
+              raw: data2,
+              scaled: newModValue,
+            });
             break;
           case CC_VOLUME:
+            console.log("MIDI Volume:", data2);
             // Handle volume if needed
             break;
           case CC_PAN:
+            console.log("MIDI Pan:", data2);
             // Handle pan if needed
             break;
+          default:
+            console.log("MIDI CC:", { controller: data1, value: data2 });
         }
         break;
 
@@ -168,7 +194,14 @@ export function useMidiHandling(synthObj: SynthObject | null) {
         rawValue = data1 + (data2 << 7);
         newPitchValue = Math.round((rawValue / 16383) * 100);
         pendingPitch.current = newPitchValue;
+        console.log("MIDI Pitch Bend:", {
+          raw: rawValue,
+          scaled: newPitchValue,
+        });
         break;
+
+      default:
+        console.log("Unknown MIDI message type:", messageType.toString(16));
     }
   }, []);
 
@@ -178,13 +211,23 @@ export function useMidiHandling(synthObj: SynthObject | null) {
         const midiAccess = await navigator.requestMIDIAccess();
 
         midiAccess.inputs.forEach((input) => {
-          input.onmidimessage = handleMidiMessage;
+          // Only set up each input once
+          if (!setupInputs.current.has(input.id)) {
+            console.log("Setting up MIDI input:", input.name, input.id);
+            input.onmidimessage = handleMidiMessage;
+            setupInputs.current.add(input.id);
+          }
         });
 
         midiAccess.onstatechange = (event) => {
           const port = event.port;
           if (port && port.type === "input" && port.state === "connected") {
-            port.onmidimessage = handleMidiMessage;
+            // Only set up new inputs that haven't been set up before
+            if (!setupInputs.current.has(port.id)) {
+              console.log("New MIDI input connected:", port.name, port.id);
+              port.onmidimessage = handleMidiMessage;
+              setupInputs.current.add(port.id);
+            }
           }
         };
       } catch (error) {
