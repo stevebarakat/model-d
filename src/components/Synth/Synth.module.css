@@ -4,7 +4,7 @@
   margin: 0 auto;
   width: 100%;
   max-width: 1200px;
-  /* background-image: url("/images/minimoog-template-25.png"); */
+  background-image: url("/images/minimoog-template-25.png");
   background-color: var(--color-synth-bg);
   background-position: center;
   background-size: cover;
@@ -33,7 +33,7 @@
 
 .backPanel {
   position: relative;
-  height: 2.25rem;
+  height: 4.75rem;
   border-top: 1px dotted white;
 }
 

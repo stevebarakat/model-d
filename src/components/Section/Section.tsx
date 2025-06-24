@@ -11,9 +11,8 @@ const defaultStyle: React.CSSProperties = {
   position: "relative",
   display: "flex",
   flexDirection: "column",
-  padding: "2rem 0 1rem",
+  paddingBottom: "1.25rem",
   borderRight: "2px solid var(--color-white-50)",
-  height: "100%",
 };
 
 function Section({

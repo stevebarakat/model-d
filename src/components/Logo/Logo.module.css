@@ -8,8 +8,9 @@
   align-items: center;
   opacity: 0.85;
   mix-blend-mode: exclusion;
+  padding: var(--spacing-sm);
 
   img {
-    width: 60%;
+    width: 50%;
   }
 }

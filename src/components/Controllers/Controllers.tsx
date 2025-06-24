@@ -17,13 +17,13 @@ function Controllers() {
   return (
     <Section
       style={{
-        paddingLeft: "var(--spacing-md)",
-        paddingRight: "var(--spacing-md)",
+        paddingLeft: "var(--spacing-sm)",
+        paddingRight: "var(--spacing-sm)",
       }}
     >
       <Column gap="var(--spacing-lg)">
         <Tune />
-        <Row gap="var(--spacing-sm)">
+        <Row gap="var(--spacing-md)">
           <Glide />
           <ModulationMix />
         </Row>
