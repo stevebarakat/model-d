@@ -32,6 +32,7 @@ function Filter() {
           step={0.5}
           label="Cutoff Frequency"
           onChange={setFilterCutoff}
+          logarithmic={true}
         />
         <Knob
           valueLabels={{
@@ -48,6 +49,7 @@ function Filter() {
           step={1}
           label="Emphasis"
           onChange={setFilterEmphasis}
+          logarithmic={true}
         />
         <Knob
           valueLabels={{
