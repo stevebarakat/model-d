@@ -31,6 +31,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
                 8: "8",
                 10: "10",
               }}
+              logarithmic={true}
               value={mixer.osc1.volume}
               min={0}
               max={10}
@@ -67,6 +68,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
                 8: "8",
                 10: "10",
               }}
+              logarithmic={true}
               value={mixer.osc2.volume}
               min={0}
               max={10}
@@ -103,6 +105,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
                 8: "8",
                 10: "10",
               }}
+              logarithmic={true}
               value={mixer.osc3.volume}
               min={0}
               max={10}

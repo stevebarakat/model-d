@@ -41,6 +41,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
               10: "10",
             }}
             value={Number.isFinite(mixer.noise.volume) ? mixer.noise.volume : 0}
+            logarithmic={true}
             min={0}
             max={10}
             step={1}

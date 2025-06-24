@@ -5,12 +5,12 @@
   width: 100%;
   max-width: 1200px;
   background-color: var(--color-synth-bg);
-  background-size: cover;
-  user-select: none;
+  background-position: center;
+
   /* background-image: url("/images/minimoog-template.png"); */
   background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
+  user-select: none;
 }
 
 .synth {

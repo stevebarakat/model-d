@@ -8,6 +8,7 @@ function ModulationMix() {
   return (
     <Knob
       value={modMix}
+      logarithmic={true}
       min={0}
       max={10}
       step={1}
