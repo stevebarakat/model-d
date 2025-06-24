@@ -75,11 +75,12 @@ function midiNoteToNote(midiNote: MIDIValue): NoteName {
 
 type SynthObject = {
   triggerAttack: (note: string) => void;
-  triggerRelease: (note: string) => void;
+  triggerRelease: () => void;
 };
 
 export function useMidiHandling(synthObj: SynthObject | null) {
-  const { setActiveKeys, setPitchWheel, setModWheel } = useSynthStore();
+  const { setActiveKeys, setPitchWheel, setModWheel, activeKeys } =
+    useSynthStore();
 
   const currentPitch = useRef<MIDIValue>(50);
   const currentMod = useRef<MIDIValue>(0);
@@ -91,6 +92,7 @@ export function useMidiHandling(synthObj: SynthObject | null) {
   const setModWheelRef = useRef(setModWheel);
   const synthObjRef = useRef(synthObj);
   const setupInputs = useRef<Set<string>>(new Set());
+  const activeKeysRef = useRef(activeKeys);
 
   // Update refs when store values change
   useEffect(() => {
@@ -98,7 +100,8 @@ export function useMidiHandling(synthObj: SynthObject | null) {
     setPitchWheelRef.current = setPitchWheel;
     setModWheelRef.current = setModWheel;
     synthObjRef.current = synthObj;
-  }, [setActiveKeys, setPitchWheel, setModWheel, synthObj]);
+    activeKeysRef.current = activeKeys;
+  }, [setActiveKeys, setPitchWheel, setModWheel, synthObj, activeKeys]);
 
   const processUpdates = useCallback(() => {
     if (pendingMod.current !== null) {
@@ -142,7 +145,7 @@ export function useMidiHandling(synthObj: SynthObject | null) {
     });
 
     switch (messageType) {
-      case MIDI_NOTE_ON:
+      case MIDI_NOTE_ON: {
         note = midiNoteToNote(data1);
         if (data2 > 0) {
           console.log("MIDI Note ON:", {
@@ -150,24 +153,37 @@ export function useMidiHandling(synthObj: SynthObject | null) {
             velocity: data2,
             midiNote: data1,
           });
+          // For monophonic synth: release current note before playing new one
+          const currentActiveKey = activeKeysRef.current;
+          if (currentActiveKey && currentActiveKey !== note) {
+            synthObjRef.current?.triggerRelease();
+          }
           setActiveKeysRef.current(note);
           synthObjRef.current?.triggerAttack(note);
         } else {
           // Note ON with velocity 0 is equivalent to Note OFF
           console.log("MIDI Note OFF (velocity 0):", { note, midiNote: data1 });
-          setActiveKeysRef.current(null);
-          synthObjRef.current?.triggerRelease(note);
+          const currentActiveKey = activeKeysRef.current;
+          if (currentActiveKey === note) {
+            setActiveKeysRef.current(null);
+            synthObjRef.current?.triggerRelease();
+          }
         }
         break;
+      }
 
-      case MIDI_NOTE_OFF:
+      case MIDI_NOTE_OFF: {
         note = midiNoteToNote(data1);
         console.log("MIDI Note OFF:", { note, midiNote: data1 });
-        setActiveKeysRef.current(null);
-        synthObjRef.current?.triggerRelease(note);
+        const currentActiveKey = activeKeysRef.current;
+        if (currentActiveKey === note) {
+          setActiveKeysRef.current(null);
+          synthObjRef.current?.triggerRelease();
+        }
         break;
+      }
 
-      case MIDI_CONTROL_CHANGE:
+      case MIDI_CONTROL_CHANGE: {
         switch (data1) {
           case CC_MODULATION:
             newModValue = expScale(data2);
@@ -189,8 +205,9 @@ export function useMidiHandling(synthObj: SynthObject | null) {
             console.log("MIDI CC:", { controller: data1, value: data2 });
         }
         break;
+      }
 
-      case MIDI_PITCH_BEND:
+      case MIDI_PITCH_BEND: {
         rawValue = data1 + (data2 << 7);
         newPitchValue = Math.round((rawValue / 16383) * 100);
         pendingPitch.current = newPitchValue;
@@ -199,6 +216,7 @@ export function useMidiHandling(synthObj: SynthObject | null) {
           scaled: newPitchValue,
         });
         break;
+      }
 
       default:
         console.log("Unknown MIDI message type:", messageType.toString(16));
