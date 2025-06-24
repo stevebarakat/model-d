@@ -1,7 +1,6 @@
 .wheel {
   position: relative;
   cursor: pointer;
-  user-select: none;
 }
 
 .track {
@@ -46,7 +45,6 @@
   font-weight: 800;
   text-align: center;
   text-transform: uppercase;
-  user-select: none;
   letter-spacing: 0.08em;
 }
 

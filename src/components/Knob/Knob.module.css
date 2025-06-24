@@ -48,7 +48,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  user-select: none;
 }
 
 /* Container size variants */
@@ -126,7 +125,6 @@
   cursor: pointer;
   transition: transform 0.05s ease-out;
   place-items: center;
-  user-select: none;
 }
 
 .dot {
@@ -225,7 +223,6 @@
   font-weight: 800;
   text-align: center;
   text-transform: uppercase;
-  user-select: none;
 }
 
 .titleMedium,
@@ -263,7 +260,6 @@
   text-transform: uppercase;
   white-space: nowrap;
   transform: var(--center-transform);
-  user-select: none;
   pointer-events: none;
 
   svg {
