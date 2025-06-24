@@ -6,11 +6,7 @@ import Title from "../Title";
 import Section from "../Section";
 import Column from "../Column";
 
-type OscillatorBankProps = {
-  disabled?: boolean;
-};
-
-function OscillatorBank({ disabled = false }: OscillatorBankProps) {
+function OscillatorBank() {
   return (
     <Section
       style={{
@@ -18,10 +14,10 @@ function OscillatorBank({ disabled = false }: OscillatorBankProps) {
       }}
     >
       <Column>
-        <OscillatorModulation disabled={disabled} />
-        <Oscillator1 disabled={disabled} />
-        <Oscillator2 disabled={disabled} />
-        <Oscillator3 disabled={disabled} />
+        <OscillatorModulation />
+        <Oscillator1 />
+        <Oscillator2 />
+        <Oscillator3 />
       </Column>
       <Title>Oscillator Bank</Title>
     </Section>

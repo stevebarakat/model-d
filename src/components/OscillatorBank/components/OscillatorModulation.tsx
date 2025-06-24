@@ -7,7 +7,7 @@ const style: React.CSSProperties = {
   left: "-1.5rem",
 };
 
-function OscillatorModulation({ disabled = false }: { disabled?: boolean }) {
+function OscillatorModulation() {
   const oscillatorModulationOn = useSynthStore(
     (state) => state.oscillatorModulationOn
   );
@@ -23,7 +23,6 @@ function OscillatorModulation({ disabled = false }: { disabled?: boolean }) {
         label="Oscillator Modulation"
         topLabel="Oscillator Modulation"
         bottomLabelRight="On"
-        disabled={disabled}
       />
     </div>
   );

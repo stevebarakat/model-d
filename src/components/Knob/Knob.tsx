@@ -15,7 +15,6 @@ function Knob({
   onChange,
   valueLabels,
   size = "medium",
-  disabled = false,
   showMidTicks = true,
   type = "radial",
   style,
@@ -26,7 +25,6 @@ function Knob({
     max,
     step,
     size,
-    disabled,
     onChange,
   });
 
@@ -41,7 +39,7 @@ function Knob({
   return (
     <div
       style={style}
-      className={`${styles.knobContainer} ${disabled && styles.disabled} ${
+      className={`${styles.knobContainer} ${
         styles[`knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`]
       }`}
     >
@@ -98,14 +96,13 @@ function Knob({
             style={{ transform: `rotate(${rotation}deg)` }}
             onPointerDown={handlePointerDown}
             onWheel={handleWheel}
-            tabIndex={disabled ? -1 : 0}
+            tabIndex={0}
             role="slider"
             aria-valuemin={min}
             aria-valuemax={max}
             aria-valuenow={value}
             aria-label={label}
             aria-valuetext={ariaValueText}
-            aria-disabled={disabled}
           >
             <div className={styles.dot} />
           </div>

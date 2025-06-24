@@ -12,10 +12,9 @@ import Line from "../Line";
 type MixerProps = {
   audioContext: AudioContext;
   mixerNode: AudioNode;
-  disabled?: boolean;
 };
 
-function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
+function Mixer({ audioContext, mixerNode }: MixerProps) {
   const { mixer, setMixerSource } = useSynthStore();
 
   return (
@@ -38,15 +37,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               step={1}
               title="Volume"
               label="Oscillator 1 Volume"
-              onChange={
-                disabled
-                  ? () => {}
-                  : (v) => {
-                      setMixerSource("osc1", { volume: v });
-                    }
-              }
+              onChange={(v) => {
+                setMixerSource("osc1", { volume: v });
+              }}
               size="medium"
-              disabled={disabled}
               style={{
                 top: "-0.25rem",
               }}
@@ -61,7 +55,6 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               }}
               label="Oscillator 1"
               bottomLabelRight="On"
-              disabled={disabled}
             />
           </Row>
           <Row>
@@ -80,15 +73,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               step={1}
               title=" "
               label="Oscillator 2 Volume"
-              onChange={
-                disabled
-                  ? () => {}
-                  : (v) => {
-                      setMixerSource("osc2", { volume: v });
-                    }
-              }
+              onChange={(v) => {
+                setMixerSource("osc2", { volume: v });
+              }}
               size="medium"
-              disabled={disabled}
               style={{
                 top: "-0.25rem",
               }}
@@ -103,7 +91,6 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               }}
               label="Oscillator 2"
               bottomLabelRight="On"
-              disabled={disabled}
             />
           </Row>
           <Row>
@@ -122,15 +109,10 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               step={1}
               title=" "
               label="Oscillator 3 Volume"
-              onChange={
-                disabled
-                  ? () => {}
-                  : (v) => {
-                      setMixerSource("osc3", { volume: v });
-                    }
-              }
+              onChange={(v) => {
+                setMixerSource("osc3", { volume: v });
+              }}
               size="medium"
-              disabled={disabled}
               style={{
                 top: "-0.25rem",
               }}
@@ -145,7 +127,6 @@ function Mixer({ audioContext, mixerNode, disabled = false }: MixerProps) {
               }}
               label="Oscillator 3"
               bottomLabelRight="On"
-              disabled={disabled}
             />
           </Row>
         </Column>

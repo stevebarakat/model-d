@@ -11,7 +11,6 @@ export type OscillatorPanelProps = {
     theme?: "black" | "orange" | "blue";
   };
   children: React.ReactNode;
-  disabled?: boolean;
   style?: React.CSSProperties;
 };
 
@@ -19,7 +18,6 @@ function OscillatorPanel({
   showControlSwitch = false,
   controlSwitchProps,
   children,
-  disabled = false,
   style,
 }: OscillatorPanelProps) {
   return (
@@ -36,7 +34,6 @@ function OscillatorPanel({
               Control
             </span>
           }
-          disabled={disabled}
         />
       )}
       {children}

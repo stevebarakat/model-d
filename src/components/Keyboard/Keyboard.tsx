@@ -1,6 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
 import styles from "./Keyboard.module.css";
-import { cn } from "@/utils/helpers";
 import type { KeyboardProps } from "./types";
 import WhiteKey from "./WhiteKey";
 import BlackKey from "./BlackKey";
@@ -19,7 +18,6 @@ export function Keyboard({
   onMouseDown = () => {},
   onMouseUp = () => {},
   synth,
-  disabled = false,
 }: KeyboardProps) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isReleasing, setIsReleasing] = useState(false);
@@ -27,7 +25,7 @@ export function Keyboard({
 
   const handleKeyPress = useCallback(
     (note: string): void => {
-      if (disabled || isReleasing) return;
+      if (isReleasing) return;
 
       if (activeKeys && activeKeys !== note) {
         synth.triggerRelease(activeKeys);
@@ -36,28 +34,28 @@ export function Keyboard({
       synth.triggerAttack(note);
       onKeyDown(note);
     },
-    [onKeyDown, synth, disabled, isReleasing, activeKeys]
+    [onKeyDown, synth, isReleasing, activeKeys]
   );
 
   const handleKeyRelease = useCallback(
     (note: string): void => {
-      if (disabled || isReleasing || note !== activeKeys) return;
+      if (isReleasing || note !== activeKeys) return;
       setIsReleasing(true);
       synth.triggerRelease(note);
       onKeyUp(note);
       setIsReleasing(false);
     },
-    [onKeyUp, synth, activeKeys, disabled, isReleasing]
+    [onKeyUp, synth, activeKeys, isReleasing]
   );
 
   const handleMouseDown = useCallback((): void => {
-    if (disabled || isReleasing) return;
+    if (isReleasing) return;
     setIsMouseDown(true);
     onMouseDown();
-  }, [onMouseDown, disabled, isReleasing]);
+  }, [onMouseDown, isReleasing]);
 
   const handleMouseUp = useCallback((): void => {
-    if (disabled || isReleasing) return;
+    if (isReleasing) return;
     setIsMouseDown(false);
     if (activeKeys) {
       setIsReleasing(true);
@@ -66,10 +64,10 @@ export function Keyboard({
       setIsReleasing(false);
     }
     onMouseUp();
-  }, [activeKeys, onKeyUp, onMouseUp, synth, disabled, isReleasing]);
+  }, [activeKeys, onKeyUp, onMouseUp, synth, isReleasing]);
 
   const handleMouseLeave = useCallback((): void => {
-    if (disabled || isReleasing) return;
+    if (isReleasing) return;
     if (isMouseDown) {
       setIsMouseDown(false);
       if (activeKeys) {
@@ -80,34 +78,24 @@ export function Keyboard({
       }
       onMouseUp();
     }
-  }, [
-    isMouseDown,
-    activeKeys,
-    onKeyUp,
-    onMouseUp,
-    synth,
-    disabled,
-    isReleasing,
-  ]);
+  }, [isMouseDown, activeKeys, onKeyUp, onMouseUp, synth, isReleasing]);
 
   const handleKeyInteraction = useCallback(
     (note: string): void => {
-      if (disabled) return;
       if (isMouseDown) {
         handleKeyPress(note);
       }
     },
-    [isMouseDown, handleKeyPress, disabled]
+    [isMouseDown, handleKeyPress]
   );
 
   const handleKeyLeave = useCallback(
     (note: string): void => {
-      if (disabled) return;
       if (isMouseDown) {
         handleKeyRelease(note);
       }
     },
-    [isMouseDown, handleKeyRelease, disabled]
+    [isMouseDown, handleKeyRelease]
   );
 
   useEffect(() => {
@@ -142,7 +130,6 @@ export function Keyboard({
       .map((key, index) => (
         <WhiteKey
           key={`white-${key.note}-${index}`}
-          disabled={disabled}
           isActive={activeKeys === key.note}
           onPointerDown={() => {
             handleMouseDown();
@@ -161,7 +148,6 @@ export function Keyboard({
     handleKeyRelease,
     handleKeyInteraction,
     handleKeyLeave,
-    disabled,
   ]);
 
   const renderBlackKeys = useCallback(() => {
@@ -181,7 +167,6 @@ export function Keyboard({
 
         return (
           <BlackKey
-            disabled={disabled}
             key={`black-${blackKey.note}-${bIdx}`}
             isActive={activeKeys === blackKey.note}
             position={positionData.position}
@@ -204,12 +189,11 @@ export function Keyboard({
     handleKeyRelease,
     handleKeyInteraction,
     handleKeyLeave,
-    disabled,
   ]);
 
   return (
     <div
-      className={cn(styles.keyboardContainer, disabled && styles.disabled)}
+      className={styles.keyboardContainer}
       onPointerUp={handleMouseUp}
       onPointerLeave={handleMouseLeave}
     >

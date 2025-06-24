@@ -9,10 +9,6 @@
   align-items: center;
   width: var(--overload-size);
   height: var(--overload-size);
-
-  &.disabled {
-    opacity: 0.5;
-  }
 }
 
 .overloadLabel {

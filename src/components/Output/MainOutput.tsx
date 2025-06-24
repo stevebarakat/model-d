@@ -3,7 +3,7 @@ import Row from "../Row";
 import { RockerSwitch } from "../RockerSwitch";
 import Knob from "../Knob";
 
-function MainOutput({ disabled = false }: { disabled?: boolean }) {
+function MainOutput() {
   const { masterVolume, setMasterVolume, isMasterActive, setIsMasterActive } =
     useSynthStore();
   return (
@@ -21,21 +21,15 @@ function MainOutput({ disabled = false }: { disabled?: boolean }) {
         min={0}
         max={10}
         step={0.1}
-        onChange={disabled ? () => {} : setMasterVolume}
+        onChange={setMasterVolume}
         label="Volume"
-        disabled={disabled}
       />
       <RockerSwitch
         theme="blue"
         checked={isMasterActive}
-        disabled={disabled}
-        onCheckedChange={
-          disabled
-            ? () => {}
-            : (checked) => {
-                setIsMasterActive(checked);
-              }
-        }
+        onCheckedChange={(checked) => {
+          setIsMasterActive(checked);
+        }}
         label="Main Output"
         topLabel="Main&nbsp;Output"
         bottomLabelRight="On"

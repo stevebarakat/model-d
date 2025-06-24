@@ -3,11 +3,7 @@ import { useSynthStore } from "@/store/synthStore";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useCallback } from "react";
 
-type LFORateProps = {
-  disabled?: boolean;
-};
-
-function LFORate({ disabled = false }: LFORateProps) {
+function LFORate() {
   const lfoWaveform = useSynthStore((state) => state.lfoWaveform);
   const setLfoWaveform = useSynthStore((state) => state.setLfoWaveform);
   const lfoRate = useSynthStore((state) => state.lfoRate);
@@ -23,7 +19,7 @@ function LFORate({ disabled = false }: LFORateProps) {
     >
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
-          <div onDoubleClick={disabled ? undefined : handleDoubleClick}>
+          <div onDoubleClick={handleDoubleClick}>
             <Knob
               size="small"
               valueLabels={{
@@ -39,8 +35,7 @@ function LFORate({ disabled = false }: LFORateProps) {
               max={10}
               step={1}
               label="LFO Rate"
-              onChange={disabled ? () => {} : setLfoRate}
-              disabled={disabled}
+              onChange={setLfoRate}
             />
           </div>
         </Tooltip.Trigger>

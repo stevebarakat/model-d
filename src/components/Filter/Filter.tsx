@@ -3,11 +3,7 @@ import Row from "../Row";
 import Title from "../Title";
 import { useSynthStore } from "@/store/synthStore";
 
-type FilterProps = {
-  disabled?: boolean;
-};
-
-function Filter({ disabled = false }: FilterProps) {
+function Filter() {
   const filterCutoff = useSynthStore((state) => state.filterCutoff);
   const filterEmphasis = useSynthStore((state) => state.filterEmphasis);
   const setFilterCutoff = useSynthStore((state) => state.setFilterCutoff);
@@ -20,9 +16,7 @@ function Filter({ disabled = false }: FilterProps) {
   );
   return (
     <div>
-      <Title disabled={disabled} size="md">
-        Filter
-      </Title>
+      <Title size="md">Filter</Title>
       <Row gap="var(--spacing-lg)">
         <Knob
           valueLabels={{
@@ -37,7 +31,6 @@ function Filter({ disabled = false }: FilterProps) {
           max={10}
           step={0.5}
           label="Cutoff Frequency"
-          disabled={disabled}
           onChange={setFilterCutoff}
         />
         <Knob
@@ -54,7 +47,6 @@ function Filter({ disabled = false }: FilterProps) {
           max={10}
           step={1}
           label="Emphasis"
-          disabled={disabled}
           onChange={setFilterEmphasis}
         />
         <Knob
@@ -78,7 +70,6 @@ function Filter({ disabled = false }: FilterProps) {
             </span>
           }
           label="Amount of Contour"
-          disabled={disabled}
           onChange={setFilterContourAmount}
         />
       </Row>

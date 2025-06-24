@@ -7,23 +7,19 @@ import LfoRate from "../LfoRate";
 import Column from "../Column";
 import Row from "../Row";
 
-type SidePanelProps = {
-  disabled?: boolean;
-};
-
-function SidePanel({ disabled = false }: SidePanelProps) {
+function SidePanel() {
   return (
     <Column style={{ marginTop: "var(--spacing-md)" }}>
       <Row gap="var(--spacing-md)">
-        <LfoRate disabled={disabled} />
+        <LfoRate />
         <div className={styles.switches}>
-          <GlideSwitch disabled={disabled} />
-          <DecaySwitch disabled={disabled} />
+          <GlideSwitch />
+          <DecaySwitch />
         </div>
       </Row>
       <Row gap="var(--spacing-xl)" justify="center">
-        <PitchBender disabled={disabled} />
-        <ModulationWheel disabled={disabled} />
+        <PitchBender />
+        <ModulationWheel />
       </Row>
     </Column>
   );

@@ -24,7 +24,6 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
           onCheckedChange={(checked) => setMixerNoise({ enabled: checked })}
           label="Noise"
           bottomLabelRight="On"
-          disabled={audioContext === null}
           style={{
             position: "absolute",
             left: "-3.5rem",
@@ -49,7 +48,6 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
             onChange={(v) => {
               setMixerNoise({ volume: v });
             }}
-            disabled={audioContext === null}
             style={{
               bottom: "0.25rem",
               left: "1rem",
@@ -66,7 +64,6 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
             label="Noise Type"
             topLabel="White"
             bottomLabel="Pink"
-            disabled={audioContext === null}
             style={{
               left: "0.5rem",
               marginBottom: "0.25rem",

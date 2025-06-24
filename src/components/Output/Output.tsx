@@ -6,18 +6,17 @@ import Row from "../Row";
 import Logo from "../Logo";
 
 type OutputProps = {
-  disabled?: boolean;
   children?: React.ReactNode;
 };
 
-export default function Output({ disabled = false, children }: OutputProps) {
+export default function Output({ children }: OutputProps) {
   return (
     <Section>
       <Column
         // gap="4.3rem"
         style={{ paddingLeft: "0.5rem", paddingRight: "0.5rem" }}
       >
-        <MainOutput disabled={disabled} />
+        <MainOutput />
         {children}
         <Logo />
         <Row

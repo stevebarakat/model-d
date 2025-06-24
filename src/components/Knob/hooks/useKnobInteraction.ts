@@ -8,7 +8,6 @@ type UseKnobInteractionProps = {
   max: number;
   step: number;
   size: "small" | "medium" | "large";
-  disabled: boolean;
   onChange: (value: number) => void;
 };
 
@@ -18,7 +17,6 @@ export function useKnobInteraction({
   max,
   step,
   size,
-  disabled,
   onChange,
 }: UseKnobInteractionProps) {
   const { knobRef } = useKnobKeyboard({ value, min, max, step, onChange });
@@ -43,8 +41,6 @@ export function useKnobInteraction({
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent): void => {
-      if (disabled) return;
-
       e.preventDefault();
       setIsDragging(true);
       setStartY(e.clientY);
@@ -55,7 +51,7 @@ export function useKnobInteraction({
         knobRef.current.setPointerCapture(e.pointerId);
       }
     },
-    [disabled, value, knobRef]
+    [value, knobRef]
   );
 
   const handlePointerMove = useCallback(
@@ -106,8 +102,6 @@ export function useKnobInteraction({
 
   const handleWheel = useCallback(
     (e: React.WheelEvent): void => {
-      if (disabled) return;
-
       e.preventDefault();
 
       const wheelSensitivity = sensitivity * 0.1;
@@ -123,7 +117,7 @@ export function useKnobInteraction({
 
       onChange(newValue);
     },
-    [disabled, value, sensitivity, min, max, step, onChange]
+    [value, sensitivity, min, max, step, onChange]
   );
 
   // Set up global event listeners

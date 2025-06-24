@@ -2,7 +2,7 @@ import { RockerSwitch } from "../RockerSwitch";
 import Column from "../Column";
 import { useSynthStore } from "@/store/synthStore";
 
-function KeyboardControl({ disabled }: { disabled: boolean }) {
+function KeyboardControl() {
   const keyboardControl1 = useSynthStore((state) => state.keyboardControl1);
   const keyboardControl2 = useSynthStore((state) => state.keyboardControl2);
   const setKeyboardControl1 = useSynthStore(
@@ -21,7 +21,6 @@ function KeyboardControl({ disabled }: { disabled: boolean }) {
         leftLabel="1"
         topLabelRight="On"
         bottomLabel="Keyboard Control"
-        disabled={disabled}
       />
       <RockerSwitch
         theme="orange"
@@ -30,7 +29,6 @@ function KeyboardControl({ disabled }: { disabled: boolean }) {
         label="Keyboard Control 2"
         leftLabel="2"
         bottomLabelRight="On"
-        disabled={disabled}
       />
     </Column>
   );

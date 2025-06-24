@@ -100,15 +100,11 @@ function Synth() {
       <div className={styles.synth}>
         <div className={styles.backPanel}></div>
         <div className={styles.controlsPanel}>
-          <Controllers disabled={!isInitialized} />
-          <OscillatorBank disabled={!isInitialized} />
-          <Mixer
-            audioContext={audioContext!}
-            mixerNode={mixerNode!}
-            disabled={!isInitialized}
-          />
-          <Modifiers disabled={!isInitialized} />
-          <Output disabled={!isInitialized}>
+          <Controllers />
+          <OscillatorBank />
+          <Mixer audioContext={audioContext!} mixerNode={mixerNode!} />
+          <Modifiers />
+          <Output>
             <PowerButton
               isOn={isInitialized}
               onPowerOn={initialize}
@@ -124,14 +120,13 @@ function Synth() {
           }}
         ></Row>
         <div className={styles.keyboardPanel}>
-          <SidePanel disabled={!isInitialized} />
+          <SidePanel />
           <Keyboard
             activeKeys={activeKeys}
             octaveRange={{ min: 3, max: 5 }}
             onKeyDown={setActiveKeys}
             onKeyUp={() => setActiveKeys(null)}
             synth={synthObj}
-            disabled={!isInitialized}
           />
         </div>
       </div>

@@ -1,11 +1,7 @@
 import Knob from "../Knob";
 import { useSynthStore } from "@/store/synthStore";
 
-type ModulationMixProps = {
-  disabled?: boolean;
-};
-
-function ModulationMix({ disabled = false }: ModulationMixProps) {
+function ModulationMix() {
   const modMix = useSynthStore((s) => s.modMix);
   const setModMix = useSynthStore((s) => s.setModMix);
 
@@ -16,7 +12,7 @@ function ModulationMix({ disabled = false }: ModulationMixProps) {
       max={10}
       step={1}
       label="Modulation Mix"
-      onChange={disabled ? () => {} : setModMix}
+      onChange={setModMix}
       valueLabels={{
         "0": (
           <span style={{ fontSize: "var(--font-size-xxs)" }}>
@@ -37,7 +33,6 @@ function ModulationMix({ disabled = false }: ModulationMixProps) {
           </span>
         ),
       }}
-      disabled={disabled}
     />
   );
 }

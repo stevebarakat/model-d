@@ -6,17 +6,13 @@ import Column from "../Column";
 import ModulationSwitch from "../Filter/ModulationSwitch";
 import KeyboardControl from "../Filter/KeyboardControl";
 
-type ModifiersProps = {
-  disabled?: boolean;
-};
-
 const style: React.CSSProperties = {
   position: "absolute",
   top: "20%",
   left: "-1.75rem",
 };
 
-function Modifiers({ disabled = false }: ModifiersProps) {
+function Modifiers() {
   return (
     <Section>
       <Column
@@ -24,11 +20,11 @@ function Modifiers({ disabled = false }: ModifiersProps) {
         gap="var(--spacing-md)"
       >
         <div style={style}>
-          <ModulationSwitch disabled={disabled} />
-          <KeyboardControl disabled={disabled} />
+          <ModulationSwitch />
+          <KeyboardControl />
         </div>
-        <Filter disabled={disabled} />
-        <FilterEnvelope disabled={disabled} />
+        <Filter />
+        <FilterEnvelope />
       </Column>
       <Column
         style={{
@@ -39,7 +35,7 @@ function Modifiers({ disabled = false }: ModifiersProps) {
           paddingBottom: "var(--spacing-md)",
         }}
       >
-        <LoudnessEnvelope disabled={disabled} />
+        <LoudnessEnvelope />
       </Column>
       <Title>Modifiers</Title>
     </Section>

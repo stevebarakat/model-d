@@ -31,7 +31,6 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
         onCheckedChange={(checked) => setMixerExternal({ enabled: checked })}
         label="External Input"
         bottomLabelRight="On"
-        disabled={audioContext === null}
         style={{
           position: "absolute",
           left: "-3.5rem",
@@ -66,7 +65,6 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
               setMixerExternal({ volume: v });
             }
           }}
-          disabled={audioContext === null}
           style={{
             left: "1rem",
             bottom: "0.25rem",
@@ -77,7 +75,6 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
           isEnabled={mixer.external.enabled}
           volume={mixer.external.volume}
           audioLevel={audioLevel}
-          disabled={audioContext === null}
           style={{
             left: "1.5rem",
           }}

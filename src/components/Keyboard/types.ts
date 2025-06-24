@@ -15,7 +15,6 @@ export type KeyboardProps = {
   onMouseDown?: () => void;
   onMouseUp?: () => void;
   synth: Synth;
-  disabled?: boolean;
 };
 
 export type WhiteKeyProps = {
@@ -24,7 +23,6 @@ export type WhiteKeyProps = {
   onPointerUp: () => void;
   onPointerEnter: () => void;
   onPointerLeave: () => void;
-  disabled?: boolean;
 };
 
 export type BlackKeyProps = WhiteKeyProps & {

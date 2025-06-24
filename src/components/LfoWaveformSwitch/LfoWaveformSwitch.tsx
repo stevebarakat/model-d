@@ -3,11 +3,7 @@ import { useCallback } from "react";
 import { RockerSwitch } from "../RockerSwitch";
 import { useSynthStore } from "@/store/synthStore";
 
-type LfoWaveformSwitchProps = {
-  disabled?: boolean;
-};
-
-function LfoWaveformSwitch({ disabled = false }: LfoWaveformSwitchProps) {
+function LfoWaveformSwitch() {
   const lfoWaveform = useSynthStore((state) => state.lfoWaveform);
   const setLfoWaveform = useSynthStore((state) => state.setLfoWaveform);
   const changeLfoWaveform = useCallback(() => {
@@ -21,7 +17,6 @@ function LfoWaveformSwitch({ disabled = false }: LfoWaveformSwitchProps) {
       label="LFO Waveform"
       topLabelRight={<Triangle size={10} strokeWidth={2} />}
       topLabelLeft={<Square size={10} strokeWidth={2} />}
-      disabled={disabled}
     />
   );
 }

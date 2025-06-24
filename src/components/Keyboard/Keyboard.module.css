@@ -137,7 +137,3 @@
   pointer-events: none;
   filter: blur(9px);
 }
-
-.disabled {
-  cursor: not-allowed;
-}

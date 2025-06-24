@@ -13,7 +13,6 @@ type RockerSwitchProps = {
   bottomLabel?: string | React.ReactElement;
   bottomLabelRight?: string | React.ReactElement;
   theme?: "black" | "orange" | "blue" | "white";
-  disabled?: boolean;
   style?: React.CSSProperties;
   orientation?: "horizontal" | "vertical";
 };
@@ -30,7 +29,6 @@ function RockerSwitch({
   bottomLabelLeft,
   bottomLabel,
   bottomLabelRight,
-  disabled = false,
   style,
   orientation = "horizontal",
 }: RockerSwitchProps) {
@@ -65,13 +63,12 @@ function RockerSwitch({
     );
   }
 
-  type LeftLabelProps = {
+  function LeftLabel({
+    leftLabel,
+  }: {
     leftLabel: string | React.ReactElement | undefined;
-    disabled: boolean;
-  };
-
-  function LeftLabel({ leftLabel, disabled }: LeftLabelProps) {
-    if (!leftLabel || disabled) return null;
+  }) {
+    if (!leftLabel) return null;
     return <span className={styles.leftLabel}>{leftLabel}</span>;
   }
 
@@ -98,15 +95,13 @@ function RockerSwitch({
   return (
     <div
       className={
-        styles[orientation] +
-        (styles[theme] ? " " + styles[theme] : "") +
-        (disabled ? " disabled" : "")
+        styles[orientation] + (styles[theme] ? " " + styles[theme] : "")
       }
       style={style}
     >
       <TopLabels topLabels={topLabels} />
 
-      <LeftLabel leftLabel={leftLabel} disabled={disabled} />
+      <LeftLabel leftLabel={leftLabel} />
 
       <label htmlFor={id}>
         <input
@@ -115,7 +110,6 @@ function RockerSwitch({
           type="checkbox"
           onChange={(e) => onCheckedChange(e.target.checked)}
           checked={checked}
-          disabled={disabled}
         />
         <div className={styles.switch}>
           <span className="sr-only">{label}</span>

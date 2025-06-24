@@ -4,7 +4,7 @@ import Title from "../Title";
 import Column from "../Column";
 import { useSynthStore } from "@/store/synthStore";
 
-function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
+function LoudnessEnvelope() {
   const {
     loudnessAttack,
     loudnessDecay,
@@ -14,9 +14,7 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
 
   return (
     <Column>
-      <Title disabled={disabled} size="md">
-        Loudness Contour
-      </Title>
+      <Title size="md">Loudness Contour</Title>
       <Column>
         <Row gap="var(--spacing-lg)">
           <Knob
@@ -40,7 +38,6 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
             step={1}
             label="Attack Time"
             onChange={(value) => setLoudnessEnvelope({ attack: value })}
-            disabled={disabled}
           />
           <Knob
             valueLabels={{
@@ -63,7 +60,6 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
             step={1}
             label="Decay Time"
             onChange={(value) => setLoudnessEnvelope({ decay: value })}
-            disabled={disabled}
           />
           <Knob
             valueLabels={{
@@ -80,7 +76,6 @@ function LoudnessEnvelope({ disabled = false }: { disabled?: boolean }) {
             step={1}
             label="Sustain Level"
             onChange={(value) => setLoudnessEnvelope({ sustain: value })}
-            disabled={disabled}
           />
         </Row>
       </Column>

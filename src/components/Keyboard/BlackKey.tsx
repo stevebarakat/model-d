@@ -10,13 +10,10 @@ export function BlackKey({
   onPointerUp,
   onPointerEnter,
   onPointerLeave,
-  disabled,
 }: BlackKeyProps) {
   return (
     <div
-      className={`${styles.blackKey} ${isActive ? styles.blackKeyActive : ""} ${
-        disabled ? styles.disabled : ""
-      }`}
+      className={`${styles.blackKey} ${isActive ? styles.blackKeyActive : ""}`}
       style={{ left: `${position}%`, width: `${width}%` }}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}

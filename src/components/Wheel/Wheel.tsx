@@ -9,7 +9,6 @@ type ModWheelProps = {
   step?: number;
   onChange: (value: number) => void;
   onMouseUp?: () => void;
-  disabled?: boolean;
   label?: string;
 };
 
@@ -37,7 +36,6 @@ function Wheel({
   step = 1,
   onChange,
   onMouseUp,
-  disabled = false,
   label = "Mod",
 }: ModWheelProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -46,7 +44,6 @@ function Wheel({
   const id = slugify(label);
 
   function handleMouseDown(e: React.MouseEvent): void {
-    if (disabled) return;
     setIsDragging(true);
     handleMouseMove(e);
   }
@@ -65,8 +62,6 @@ function Wheel({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent): void => {
-      if (disabled) return;
-
       const isShiftPressed = e.shiftKey;
       const multiplier = isShiftPressed ? 10 : 1;
       const stepSize = step * multiplier;
@@ -86,7 +81,7 @@ function Wheel({
 
       onChange(Math.max(min, Math.min(max, newValue)));
     },
-    [disabled, max, min, onChange, step, value]
+    [max, min, onChange, step, value]
   );
 
   useEffect(() => {
@@ -111,11 +106,11 @@ function Wheel({
       <div
         id={id}
         ref={sliderRef}
-        className={`${styles.wheel} ${disabled ? styles.disabled : ""}`}
+        className={styles.wheel}
         onMouseDown={handleMouseDown}
         onKeyDown={handleKeyDown}
         style={{ "--thumb-position": `${percentage}%` } as React.CSSProperties}
-        tabIndex={disabled ? -1 : 0}
+        tabIndex={0}
         role="slider"
         aria-valuemin={min}
         aria-valuemax={max}

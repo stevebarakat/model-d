@@ -8,13 +8,10 @@ export function WhiteKey({
   onPointerUp,
   onPointerEnter,
   onPointerLeave,
-  disabled,
 }: WhiteKeyProps) {
   return (
     <div
-      className={`${styles.whiteKey} ${isActive ? styles.whiteKeyActive : ""} ${
-        disabled ? styles.disabled : ""
-      }`}
+      className={`${styles.whiteKey} ${isActive ? styles.whiteKeyActive : ""}`}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
       onPointerEnter={onPointerEnter}

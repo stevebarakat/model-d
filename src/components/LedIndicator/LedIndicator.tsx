@@ -5,7 +5,6 @@ type LedIndicatorProps = {
   isEnabled: boolean;
   volume: number;
   audioLevel: number;
-  disabled: boolean;
   label?: string;
   style?: React.CSSProperties;
 };
@@ -14,7 +13,6 @@ function LedIndicator({
   isEnabled,
   volume,
   audioLevel,
-  disabled,
   label,
   style,
 }: LedIndicatorProps) {
@@ -60,7 +58,7 @@ function LedIndicator({
       ctx.fillStyle = `rgb(${red}, 0, 0)`;
       ctx.fill();
     } else {
-      // Draw dark circle when disabled or volume is 0
+      // Draw dark circle when volume is 0
       ctx.beginPath();
       ctx.arc(
         canvas.width / 2,
@@ -72,16 +70,13 @@ function LedIndicator({
       ctx.fillStyle = "#212121";
       ctx.fill();
 
-      // Remove glow when disabled
+      // Remove glow
       canvas.style.setProperty("--glow-intensity", "0");
     }
   }, [isEnabled, volume, audioLevel]);
 
   return (
-    <div
-      className={`${styles.overloadContainer} ${disabled && styles.disabled}`}
-      style={style}
-    >
+    <div className={styles.overloadContainer} style={style}>
       <div className={styles.overloadLabel}>{label}</div>
       <div className={styles.overloadBackground}>
         <canvas ref={canvasRef} className={styles.overload} />

@@ -1,20 +1,16 @@
 import Wheel from "../Wheel";
 import { useSynthStore } from "@/store/synthStore";
 
-type PitchBenderProps = {
-  disabled?: boolean;
-};
-
-function PitchBender({ disabled = false }: PitchBenderProps) {
+function PitchBender() {
   const pitchWheel = useSynthStore((s) => s.pitchWheel);
   const setPitchWheel = useSynthStore((s) => s.setPitchWheel);
 
   const handleChange = (value: number) => {
-    if (!disabled) setPitchWheel(value);
+    setPitchWheel(value);
   };
 
   const handleMouseUp = () => {
-    if (!disabled) setPitchWheel(50); // Center position
+    setPitchWheel(50); // Center position
   };
 
   return (
@@ -26,7 +22,6 @@ function PitchBender({ disabled = false }: PitchBenderProps) {
       onChange={handleChange}
       onMouseUp={handleMouseUp}
       label="Pitch"
-      disabled={disabled}
     />
   );
 }

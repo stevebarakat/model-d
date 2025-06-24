@@ -8,11 +8,7 @@ import Column from "../Column";
 import Row from "../Row";
 import { useSynthStore } from "@/store/synthStore";
 
-type ControllersProps = {
-  disabled?: boolean;
-};
-
-function Controllers({ disabled = false }: ControllersProps) {
+function Controllers() {
   const osc3FilterEgSwitch = useSynthStore((s) => s.osc3FilterEgSwitch);
   const setOsc3FilterEgSwitch = useSynthStore((s) => s.setOsc3FilterEgSwitch);
   const noiseLfoSwitch = useSynthStore((s) => s.noiseLfoSwitch);
@@ -26,10 +22,10 @@ function Controllers({ disabled = false }: ControllersProps) {
       }}
     >
       <Column gap="var(--spacing-lg)">
-        <Tune disabled={disabled} />
+        <Tune />
         <Row gap="var(--spacing-sm)">
-          <Glide disabled={disabled} />
-          <ModulationMix disabled={disabled} />
+          <Glide />
+          <ModulationMix />
         </Row>
         <Row
           justify="space-around"
@@ -37,19 +33,17 @@ function Controllers({ disabled = false }: ControllersProps) {
         >
           <RockerSwitch
             checked={osc3FilterEgSwitch}
-            onCheckedChange={disabled ? () => {} : setOsc3FilterEgSwitch}
+            onCheckedChange={setOsc3FilterEgSwitch}
             label="Send to mod 1"
             bottomLabelLeft="Osc. 3"
             bottomLabelRight="Filter Eg"
-            disabled={disabled}
           />
           <RockerSwitch
             checked={noiseLfoSwitch}
-            onCheckedChange={disabled ? () => {} : setNoiseLfoSwitch}
+            onCheckedChange={setNoiseLfoSwitch}
             label="Send to mod 2"
             bottomLabelLeft="Noise"
             bottomLabelRight="LFO"
-            disabled={disabled}
           />
         </Row>
       </Column>
