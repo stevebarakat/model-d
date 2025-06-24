@@ -42,13 +42,14 @@ function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
     <Column gap="var(--spacing-xl)" style={{ height: "fit-content" }}>
       <Column gap="var(--spacing-xs)">
         <VintageLED
+          label="Power"
           isOn={isOn}
           size="large"
           onCheckedChange={() => handleCheckedChange(!isOn)}
         />
-        <Title size="sm" style={{ marginTop: "var(--spacing-xs)" }}>
+        {/* <Title size="sm" style={{ marginTop: "var(--spacing-xs)" }}>
           Power
-        </Title>
+        </Title> */}
       </Column>
       <RockerSwitch
         orientation="vertical"

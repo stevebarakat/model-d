@@ -116,11 +116,13 @@ function Synth() {
             />
           </Output>
         </div>
-        <Row justify="flex-end">
-          <div className={styles.minimoogLogo}>
-            <img src="/images/minimoog-logo.png" alt="Minimoog Logo" />
-          </div>
-        </Row>
+        <Row
+          justify="flex-end"
+          style={{
+            height: "2rem",
+            borderBottom: "var(--color-off-white) dotted 1px",
+          }}
+        ></Row>
         <div className={styles.keyboardPanel}>
           <SidePanel disabled={!isInitialized} />
           <Keyboard

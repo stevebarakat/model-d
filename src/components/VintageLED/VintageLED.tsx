@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import { cn, cssModule } from "@/utils/helpers";
 import styles from "./VintageLED.module.css";
+import Title from "../Title";
 
-export type LEDColor = "red" | "green" | "amber" | "blue";
 export type LEDSize = "small" | "medium" | "large";
 
 export type VintageLEDProps = {
-  /** The color of the LED */
-  color?: LEDColor;
   /** Whether the LED is on or off */
   isOn?: boolean;
   /** The size of the LED */
@@ -28,7 +26,6 @@ export type VintageLEDProps = {
  * VintageLED component that simulates the appearance of old-school indicator lights
  */
 export function VintageLED({
-  color = "red",
   isOn = true,
   size = "medium",
   warmupEffect = true,
@@ -60,7 +57,7 @@ export function VintageLED({
   const ledClasses = cssModule(
     styles,
     "vintageLed",
-    `vintageLed${color.charAt(0).toUpperCase() + color.slice(1)}`,
+    `vintageLedRed`,
     `vintageLed${size.charAt(0).toUpperCase() + size.slice(1)}`,
     isOn && "vintageLedOn",
     isWarmedUp && "vintageLedWarmedUp"
@@ -83,20 +80,10 @@ export function VintageLED({
           <div className={styles.vintageLedReflection}></div>
         </div>
       </div>
-      {label && (
-        <span
-          className={cn(
-            styles.vintageLedLabel,
-            styles[
-              `label${
-                labelPosition.charAt(0).toUpperCase() + labelPosition.slice(1)
-              }`
-            ]
-          )}
-        >
-          {label}
-        </span>
-      )}
+
+      <Title size="sm" style={{ marginTop: "var(--spacing-xs)" }}>
+        {label}
+      </Title>
     </div>
   );
 }

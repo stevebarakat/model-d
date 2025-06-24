@@ -105,18 +105,6 @@
   color: hsl(0deg 100% 50%);
 }
 
-.vintageLedGreen {
-  color: hsl(120deg 100% 50%);
-}
-
-.vintageLedAmber {
-  color: hsl(45deg 100% 50%);
-}
-
-.vintageLedBlue {
-  color: hsl(240deg 100% 50%);
-}
-
 /* Active state */
 .vintageLedOn .vintageLedInner,
 .vintageLedOn .vintageLedReflection {
@@ -135,12 +123,16 @@
 
 /* Label styles */
 .vintageLedLabel {
-  font-size: var(--font-size-xs);
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
   text-align: center;
   color: var(--color-text-primary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Label position variants */
