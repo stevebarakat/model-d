@@ -53,9 +53,15 @@ export function useExternalInput(
     animationFrameRef.current = requestAnimationFrame(updateAudioLevel);
   }, [mixer.external.enabled, mixer.external.volume]);
 
+  // Setup audio nodes and request microphone access only when enabled
   useEffect(() => {
     async function setup() {
       if (!audioContext || audioContext.state !== "running") {
+        return;
+      }
+
+      // Only proceed if external input is enabled
+      if (!mixer.external.enabled) {
         return;
       }
 
@@ -72,7 +78,12 @@ export function useExternalInput(
           analyzerRef.current.fftSize = 256;
         }
 
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        // Only request microphone access if we don't already have it
+        if (
+          !inputRef.current &&
+          navigator.mediaDevices &&
+          navigator.mediaDevices.getUserMedia
+        ) {
           try {
             const stream = await navigator.mediaDevices.getUserMedia({
               audio: true,
@@ -104,8 +115,14 @@ export function useExternalInput(
           } catch (err) {
             console.error("ExternalInput: Error accessing microphone:", err);
           }
-        } else {
-          console.error("ExternalInput: getUserMedia not supported");
+        } else if (inputRef.current) {
+          // If we already have input, just connect and start animation
+          if (mixerNode) {
+            gainRef.current?.connect(mixerNode);
+          } else {
+            gainRef.current?.connect(audioContext.destination);
+          }
+          updateAudioLevel();
         }
       } catch (err) {
         console.error("ExternalInput: Error in setup:", err);
