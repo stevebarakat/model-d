@@ -4,6 +4,7 @@ import Knob from "../Knob";
 function Glide() {
   const glideTime = useSynthStore((s) => s.glideTime);
   const setGlideTime = useSynthStore((s) => s.setGlideTime);
+
   return (
     <Knob
       value={glideTime}

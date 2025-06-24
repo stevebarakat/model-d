@@ -25,6 +25,7 @@ function Knob({
     max,
     step,
     size,
+    type,
     onChange,
   });
 

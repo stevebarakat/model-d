@@ -20,6 +20,7 @@ import PowerButton from "../PowerButton";
 import { useAudioNodes, useModulation, useEnvelopes } from "./hooks";
 import { mapCutoff, noteNameToMidi } from "./utils/synthUtils";
 import Row from "../Row";
+import Logo from "../Logo";
 
 function Synth() {
   const { activeKeys, setActiveKeys } = useSynthStore();
@@ -115,10 +116,12 @@ function Synth() {
         <Row
           justify="flex-end"
           style={{
-            height: "2rem",
             borderBottom: "var(--color-off-white) dotted 1px",
+            padding: "var(--spacing-md)",
           }}
-        ></Row>
+        >
+          <Logo />
+        </Row>
         <div className={styles.keyboardPanel}>
           <SidePanel />
           <Keyboard

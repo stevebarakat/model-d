@@ -115,43 +115,27 @@
   opacity: 1;
 }
 
+/* Warmup effect - LED starts dim and gradually brightens */
+.vintageLedOn:not(.vintageLedWarmedUp) .vintageLedInner {
+  opacity: 0.4;
+}
+
+.vintageLedOn:not(.vintageLedWarmedUp) .vintageLedReflection {
+  opacity: 0.4;
+}
+
+.vintageLedOn:not(.vintageLedWarmedUp) .vintageLedGlow {
+  opacity: 0.3;
+}
+
 /* Red LED specific glow effect */
 .vintageLedRed.vintageLedOn .vintageLedInner,
 .vintageLedRed.vintageLedOn .vintageLedReflection {
   box-shadow: 0 0 15px 5px hsl(0deg 100% 50% / 50%);
 }
 
-/* Label styles */
-.vintageLedLabel {
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  text-align: center;
-  color: var(--color-text-primary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Label position variants */
-.labelTop {
-  order: -1;
-}
-
-.labelBottom {
-  order: 1;
-}
-
-.labelLeft {
-  flex-direction: row;
-  align-items: center;
-  order: -1;
-}
-
-.labelRight {
-  flex-direction: row;
-  align-items: center;
-  order: 1;
+/* Red LED warmup glow effect */
+.vintageLedRed.vintageLedOn:not(.vintageLedWarmedUp) .vintageLedInner,
+.vintageLedRed.vintageLedOn:not(.vintageLedWarmedUp) .vintageLedReflection {
+  box-shadow: 0 0 8px 3px hsl(0deg 100% 50% / 30%);
 }

@@ -44,7 +44,6 @@ function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
         <VintageLED
           label="Power"
           isOn={isOn}
-          size="large"
           onCheckedChange={() => handleCheckedChange(!isOn)}
         />
         {/* <Title size="sm" style={{ marginTop: "var(--spacing-xs)" }}>

@@ -8,16 +8,12 @@ export type LEDSize = "small" | "medium" | "large";
 export type VintageLEDProps = {
   /** Whether the LED is on or off */
   isOn?: boolean;
-  /** The size of the LED */
-  size?: LEDSize;
   /** Whether to animate the warm-up effect when turning on */
   warmupEffect?: boolean;
   /** Additional CSS class names */
   className?: string;
   /** Label text for the LED (optional) */
   label?: string;
-  /** Position of the label relative to the LED */
-  labelPosition?: "top" | "right" | "bottom" | "left";
   /** Click handler for the LED */
   onCheckedChange: (e: React.FormEvent<HTMLInputElement>) => void;
 };
@@ -27,11 +23,9 @@ export type VintageLEDProps = {
  */
 export function VintageLED({
   isOn = true,
-  size = "medium",
   warmupEffect = true,
   className,
   label,
-  labelPosition = "bottom",
   onCheckedChange,
 }: VintageLEDProps) {
   const [isWarmedUp, setIsWarmedUp] = useState(isOn && !warmupEffect);
@@ -58,7 +52,7 @@ export function VintageLED({
     styles,
     "vintageLed",
     `vintageLedRed`,
-    `vintageLed${size.charAt(0).toUpperCase() + size.slice(1)}`,
+    `vintageLedLarge`,
     isOn && "vintageLedOn",
     isWarmedUp && "vintageLedWarmedUp"
   );

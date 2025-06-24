@@ -8,6 +8,7 @@ type UseKnobInteractionProps = {
   max: number;
   step: number;
   size: "small" | "medium" | "large";
+  type: "radial" | "arrow";
   onChange: (value: number) => void;
 };
 
@@ -17,9 +18,17 @@ export function useKnobInteraction({
   max,
   step,
   size,
+  type,
   onChange,
 }: UseKnobInteractionProps) {
-  const { knobRef } = useKnobKeyboard({ value, min, max, step, onChange });
+  const { knobRef } = useKnobKeyboard({
+    value,
+    min,
+    max,
+    step,
+    type,
+    onChange,
+  });
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
   const [startValue, setStartValue] = useState(0);
@@ -33,10 +42,17 @@ export function useKnobInteraction({
       // Limit updates to 60fps (16ms)
       if (now - lastUpdateTime < 16) return;
 
+      // Only apply threshold-based updates for arrow knobs
+      // Radial knobs should update freely
+      if (type === "arrow") {
+        const threshold = step < 1 ? step / 10 : 0.1;
+        if (Math.abs(newValue - value) < threshold) return;
+      }
+
       setLastUpdateTime(now);
       onChange(newValue);
     },
-    [onChange, lastUpdateTime]
+    [onChange, lastUpdateTime, value, step, type]
   );
 
   const handlePointerDown = useCallback(
@@ -65,11 +81,18 @@ export function useKnobInteraction({
         1,
         min,
         max,
-        step
+        step,
+        type
       );
 
-      // Only update if value actually changed
-      if (Math.abs(newValue - value) > 0.001) {
+      // Only apply threshold-based updates for arrow knobs
+      // Radial knobs should update freely
+      if (type === "arrow") {
+        const threshold = step < 1 ? step / 10 : 0.1;
+        if (Math.abs(newValue - value) >= threshold) {
+          updateValue(newValue);
+        }
+      } else {
         updateValue(newValue);
       }
     },
@@ -81,6 +104,7 @@ export function useKnobInteraction({
       min,
       max,
       step,
+      type,
       value,
       updateValue,
     ]
@@ -112,12 +136,13 @@ export function useKnobInteraction({
         wheelSensitivity,
         min,
         max,
-        step
+        step,
+        type
       );
 
       onChange(newValue);
     },
-    [value, sensitivity, min, max, step, onChange]
+    [value, sensitivity, min, max, step, type, onChange]
   );
 
   // Set up global event listeners

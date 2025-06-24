@@ -42,14 +42,23 @@ export function calculateValueFromDelta(
   sensitivity: number,
   min: number,
   max: number,
-  step: number
+  step: number,
+  type: "radial" | "arrow" = "radial"
 ): number {
   const range = max - min;
   let newValue = startValue + (deltaY * sensitivity * range) / 100;
 
-  // Apply step snapping if step is defined
-  if (step > 0) {
-    newValue = Math.round(newValue / step) * step;
+  // Apply step snapping only for arrow knobs
+  if (type === "arrow" && step > 0) {
+    // Use a more precise method to avoid floating-point errors
+    const steps = Math.round(newValue / step);
+    newValue = steps * step;
+
+    // Fix floating-point precision issues by rounding to appropriate decimal places
+    const decimalPlaces = step < 1 ? Math.abs(Math.floor(Math.log10(step))) : 0;
+    newValue =
+      Math.round(newValue * Math.pow(10, decimalPlaces)) /
+      Math.pow(10, decimalPlaces);
   }
 
   // Clamp to min/max

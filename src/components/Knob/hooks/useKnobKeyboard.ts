@@ -5,6 +5,7 @@ type UseKnobKeyboardProps = {
   min: number;
   max: number;
   step: number;
+  type: "radial" | "arrow";
   onChange: (value: number) => void;
 };
 
@@ -13,6 +14,7 @@ export function useKnobKeyboard({
   min,
   max,
   step,
+  type,
   onChange,
 }: UseKnobKeyboardProps) {
   const knobRef = useRef<HTMLDivElement>(null);
@@ -40,9 +42,14 @@ export function useKnobKeyboard({
           return;
       }
 
-      onChange(Number(newValue.toFixed(step >= 1 ? 0 : 2)));
+      // Only apply step snapping for arrow knobs
+      if (type === "arrow") {
+        newValue = Number(newValue.toFixed(step >= 1 ? 0 : 2));
+      }
+
+      onChange(newValue);
     },
-    [value, min, max, step, onChange]
+    [value, min, max, step, type, onChange]
   );
 
   useEffect(() => {
