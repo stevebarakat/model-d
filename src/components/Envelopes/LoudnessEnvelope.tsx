@@ -13,10 +13,10 @@ function LoudnessEnvelope() {
   } = useSynthStore();
 
   return (
-    <Column>
+    <Column style={{ paddingRight: "0.75rem" }}>
       <Title size="md">Loudness Contour</Title>
       <Column>
-        <Row gap="var(--spacing-lg)">
+        <Row gap="var(--spacing-xl)">
           <Knob
             valueLabels={{
               0: "m-sec.",

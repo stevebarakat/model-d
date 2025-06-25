@@ -17,7 +17,7 @@ function Filter() {
   return (
     <div>
       <Title size="md">Filter</Title>
-      <Row gap="var(--spacing-lg)">
+      <Row gap="var(--spacing-xl)">
         <Knob
           valueLabels={{
             0: "-4",
