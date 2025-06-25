@@ -6,13 +6,9 @@ import Title from "../Title";
 import Section from "../Section";
 import Column from "../Column";
 
-type OscillatorBankProps = {
-  style?: React.CSSProperties;
-};
-
-function OscillatorBank({ style }: OscillatorBankProps) {
+function OscillatorBank() {
   return (
-    <Section style={style}>
+    <Section>
       <Column>
         <OscillatorModulation />
         <Oscillator1 />
