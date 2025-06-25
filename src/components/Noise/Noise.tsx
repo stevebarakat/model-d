@@ -30,7 +30,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
           }}
         />
         <Line side="right" />
-        <Row gap="var(--spacing-xl)">
+        <Row gap="var(--spacing-xs)">
           <Knob
             valueLabels={{
               0: "0",
@@ -66,7 +66,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
             topLabel="White"
             bottomLabel="Pink"
             style={{
-              left: "0.5rem",
+              left: "0.25rem",
               marginBottom: "0.25rem",
             }}
           />
