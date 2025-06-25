@@ -18,12 +18,12 @@ function Controllers() {
     <Section
       style={{
         paddingLeft: "var(--spacing-sm)",
-        paddingRight: "var(--spacing-sm)",
+        paddingRight: "var(--spacing-lg)",
       }}
     >
       <Column gap="var(--spacing-lg)">
         <Tune />
-        <Row gap="var(--spacing-md)">
+        <Row gap="var(--spacing-xl)">
           <Glide />
           <ModulationMix />
         </Row>

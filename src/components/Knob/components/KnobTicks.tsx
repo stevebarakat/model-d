@@ -8,6 +8,7 @@ type KnobTicksProps = {
   max: number;
   type: "arrow" | "radial";
   showMidTicks: boolean;
+  size: "small" | "medium" | "large";
 };
 
 export function KnobTicks({
@@ -16,6 +17,7 @@ export function KnobTicks({
   max,
   type,
   showMidTicks,
+  size,
 }: KnobTicksProps) {
   const labelKeys = Object.keys(valueLabels)
     .map(Number)
@@ -26,14 +28,14 @@ export function KnobTicks({
   // Main ticks for valueLabels
   for (let i = 0; i < labelKeys.length; i++) {
     const tick = labelKeys[i];
-    const angle = calculateTickAngle(tick, min, max, type);
+    const angle = calculateTickAngle(tick, min, max, type, size);
 
     ticks.push(
       <div
         key={`tick-${tick}`}
         className={styles.knobTick}
         style={{
-          transform: `rotate(${angle}deg) translate(-50%, calc(-1 * var(--tick-offset)))`,
+          transform: `rotate(${angle}deg) translateY( calc(-1 * var(--tick-offset)))`,
         }}
       />
     );
@@ -42,7 +44,7 @@ export function KnobTicks({
     if (showMidTicks && type !== "arrow" && i < labelKeys.length - 1) {
       const nextTick = labelKeys[i + 1];
       const mid = (tick + nextTick) / 2;
-      const midAngle = calculateTickAngle(mid, min, max, type);
+      const midAngle = calculateTickAngle(mid, min, max, type, size);
 
       ticks.push(
         <div

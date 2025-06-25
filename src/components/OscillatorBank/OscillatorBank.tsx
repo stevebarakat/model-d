@@ -6,13 +6,13 @@ import Title from "../Title";
 import Section from "../Section";
 import Column from "../Column";
 
-function OscillatorBank() {
+type OscillatorBankProps = {
+  style?: React.CSSProperties;
+};
+
+function OscillatorBank({ style }: OscillatorBankProps) {
   return (
-    <Section
-      style={{
-        paddingRight: "var(--spacing-xxs)",
-      }}
-    >
+    <Section style={style}>
       <Column>
         <OscillatorModulation />
         <Oscillator1 />

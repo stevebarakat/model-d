@@ -63,7 +63,7 @@
 
 .knobContainerLarge {
   --knob-size: 3rem;
-  --tick-offset: 1.75rem;
+  --tick-offset: 1.65rem;
   --tick-height: 3px;
 }
 
@@ -71,8 +71,8 @@
 .knobContainerSmall,
 .knobContainerMedium,
 .knobContainerLarge {
-  width: calc(var(--knob-size) * var(--knob-container-multiplier));
-  height: calc(var(--knob-size) * var(--knob-container-multiplier));
+  width: calc(var(--knob-size) * 1.5);
+  height: calc(var(--knob-size) * 1.65);
 }
 
 /* Knob ring background */
@@ -224,13 +224,13 @@
   font-weight: 800;
   text-align: center;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .titleMedium,
 .labelMedium {
   bottom: 100%;
   font-size: var(--font-size-sm);
-  white-space: nowrap;
 }
 
 .labelLarge,
@@ -272,7 +272,7 @@
 /* Knob tick indicator */
 .knobTick {
   position: absolute;
-  top: 42.5%;
+  top: 50%;
   left: 50%;
   z-index: 3;
   width: var(--tick-width);

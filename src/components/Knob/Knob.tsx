@@ -3,6 +3,7 @@ import { useKnobInteraction } from "./hooks";
 import { KnobTicks, KnobLabels } from "./components";
 import { KnobProps } from "./types";
 import styles from "./Knob.module.css";
+import { slugify } from "@/utils/";
 
 function Knob({
   value,
@@ -30,6 +31,7 @@ function Knob({
     logarithmic,
   });
 
+  const id = slugify(label);
   const labelClass = title ? styles.labelHidden : styles.label;
   const rotation = getRotation(value, min, max, type, logarithmic);
   const displayValue = getDisplayValue(value, step, unit, valueLabels);
@@ -46,6 +48,7 @@ function Knob({
       }`}
     >
       <label
+        htmlFor={id}
         className={`${labelClass} ${
           styles[`label${size.charAt(0).toUpperCase() + size.slice(1)}`]
         }`}
@@ -73,6 +76,7 @@ function Knob({
             max={max}
             type={type}
             showMidTicks={showMidTicks}
+            size={size}
           />
         )}
 
@@ -83,6 +87,7 @@ function Knob({
             min={min}
             max={max}
             type={type}
+            size={size}
           />
         )}
 
@@ -93,6 +98,7 @@ function Knob({
           }}
         >
           <div
+            id={id}
             className={type === "arrow" ? styles.arrow : styles.radial}
             ref={knobRef}
             style={{ transform: `rotate(${rotation}deg)` }}

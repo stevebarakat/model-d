@@ -11,7 +11,7 @@ const defaultStyle: React.CSSProperties = {
   position: "relative",
   display: "flex",
   flexDirection: "column",
-  paddingBottom: "1.25rem",
+  paddingBottom: "1.75rem",
   borderRight: "2px solid var(--color-white-50)",
 };
 

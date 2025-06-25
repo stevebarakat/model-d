@@ -55,7 +55,7 @@ export default function Oscillator1() {
         onChange={handleRangeChange}
         valueLabels={ranges.reduce((acc, r, i) => ({ ...acc, [i]: r }), {})}
       />
-      <Spacer width="32%" style={{ marginTop: "-6.75rem" }}>
+      <Spacer width="28%" style={{ marginTop: "-6.75rem" }}>
         <Title size="md">Oscillator - 1</Title>
         <Title size="sm">Frequency</Title>
       </Spacer>
