@@ -22,6 +22,8 @@ import { useAudioNodes, useModulation, useEnvelopes } from "./hooks";
 import { mapCutoff, noteNameToMidi } from "./utils/synthUtils";
 import Row from "../Row";
 import Logo from "../Logo";
+import Column from "../Column";
+import Section from "../Section";
 
 function Synth() {
   const { activeKeys, setActiveKeys } = useSynthStore();
@@ -109,13 +111,14 @@ function Synth() {
           <OscillatorBank />
           <Mixer audioContext={audioContext!} mixerNode={mixerNode!} />
           <Modifiers />
-          <Output>
+          <Output></Output>
+          <Section>
             <PowerButton
               isOn={isInitialized}
               onPowerOn={initialize}
               onPowerOff={dispose}
             />
-          </Output>
+          </Section>
         </div>
         <Row
           justify="flex-end"
