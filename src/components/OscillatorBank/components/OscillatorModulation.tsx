@@ -3,7 +3,7 @@ import { useSynthStore } from "@/store/synthStore";
 
 const style: React.CSSProperties = {
   position: "absolute",
-  top: "22.5%",
+  top: "25%",
   left: "-1.5rem",
 };
 

@@ -6,7 +6,7 @@ import Column from "../Column";
 import ModulationSwitch from "../Filter/ModulationSwitch";
 import KeyboardControl from "../Filter/KeyboardControl";
 
-const style: React.CSSProperties = {
+const filterSwitches: React.CSSProperties = {
   position: "absolute",
   top: "20%",
   left: "-1.75rem",
@@ -19,7 +19,7 @@ function Modifiers() {
         style={{ paddingLeft: "1.75rem", paddingRight: "0.25rem" }}
         gap="var(--spacing-md)"
       >
-        <div style={style}>
+        <div style={filterSwitches}>
           <ModulationSwitch />
           <KeyboardControl />
         </div>
