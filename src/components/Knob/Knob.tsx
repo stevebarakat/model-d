@@ -1,4 +1,3 @@
-import React from "react";
 import { getRotation, getDisplayValue } from "./utils";
 import { useKnobInteraction } from "./hooks";
 import { KnobTicks, KnobLabels } from "./components";

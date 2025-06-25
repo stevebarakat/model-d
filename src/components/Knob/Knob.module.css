@@ -64,6 +64,7 @@
 .knobContainerLarge {
   --knob-size: 3rem;
   --tick-offset: 1.75rem;
+  --tick-height: 3px;
 }
 
 /* Common container sizing */

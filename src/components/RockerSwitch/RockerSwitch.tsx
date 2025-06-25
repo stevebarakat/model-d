@@ -1,5 +1,5 @@
 import styles from "./RockerSwitch.module.css";
-import { slugify } from "@/utils";
+import { slugify, cn } from "@/utils";
 
 type RockerSwitchProps = {
   checked: boolean;
@@ -92,17 +92,8 @@ function RockerSwitch({
     );
   }
 
-  return (
-    <div
-      className={
-        styles[orientation] + (styles[theme] ? " " + styles[theme] : "")
-      }
-      style={style}
-    >
-      <TopLabels topLabels={topLabels} />
-
-      <LeftLabel leftLabel={leftLabel} />
-
+  function Switch() {
+    return (
       <label htmlFor={id}>
         <input
           id={id}
@@ -115,6 +106,16 @@ function RockerSwitch({
           <span className="sr-only">{label}</span>
         </div>
       </label>
+    );
+  }
+
+  return (
+    <div className={cn(styles[orientation], styles[theme])} style={style}>
+      <TopLabels topLabels={topLabels} />
+
+      <LeftLabel leftLabel={leftLabel} />
+
+      <Switch />
 
       <BottomLabels bottomLabels={bottomLabels} />
     </div>
