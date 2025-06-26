@@ -2,28 +2,17 @@ import Title from "../Title";
 import Section from "../Section";
 import Column from "../Column";
 import MainOutput from "./MainOutput";
-import Row from "../Row";
+import Phones from "./Phones";
 
-type OutputProps = {
-  children?: React.ReactNode;
-};
-
-export default function Output({ children }: OutputProps) {
+export default function Output() {
   return (
     <Section>
       <Column
-        // gap="4.3rem"
+        gap="4.3rem"
         style={{ padding: "0.5rem", paddingRight: "0.5rem" }}
       >
-        {children}
-        <Row
-          style={{
-            borderTop: "var(--color-white-50) solid 2px",
-            width: "115%",
-            padding: "var(--spacing-md) 0",
-          }}
-        ></Row>
         <MainOutput />
+        <Phones />
       </Column>
       <Title>Output</Title>
     </Section>

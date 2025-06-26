@@ -58,8 +58,8 @@ export function createSynthActions(
       })),
     setGlideOn: (on: boolean) => set({ glideOn: on }),
     setGlideTime: (time: number) => set({ glideTime: time }),
-    setMasterVolume: (value) => set({ masterVolume: value }),
-    setIsMasterActive: (value) => set({ isMasterActive: value }),
+    setMainVolume: (value) => set({ mainVolume: value }),
+    setIsMainActive: (value) => set({ isMainActive: value }),
     setFilterEnvelope: (env) =>
       set((state: SynthState) => ({
         filterAttack:

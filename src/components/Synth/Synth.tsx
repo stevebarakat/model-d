@@ -111,7 +111,7 @@ function Synth() {
           <OscillatorBank />
           <Mixer audioContext={audioContext!} mixerNode={mixerNode!} />
           <Modifiers />
-          <Output></Output>
+          <Output />
           <Section>
             <PowerButton
               isOn={isInitialized}

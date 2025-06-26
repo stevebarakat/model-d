@@ -10,7 +10,7 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
   const masterGainRef = useRef<GainNode | null>(null);
   const [isMixerReady, setIsMixerReady] = useState(false);
 
-  const { filterCutoff, filterEmphasis, masterVolume, isMasterActive } =
+  const { filterCutoff, filterEmphasis, mainVolume, isMainActive } =
     useSynthStore();
 
   // Initialize audio nodes
@@ -84,20 +84,20 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
   // Set master volume
   useEffect(() => {
     if (!masterGainRef.current || !audioContext) return;
-    const gain = Math.pow(masterVolume / 10, 2);
+    const gain = Math.pow(mainVolume / 10, 2);
     masterGainRef.current.gain.setValueAtTime(gain, audioContext.currentTime);
-  }, [masterVolume, audioContext]);
+  }, [mainVolume, audioContext]);
 
   // Set mixer volume based on master active state
   useEffect(() => {
     if (!audioContext || !mixerNodeRef.current) return;
-    if (!isMasterActive) {
+    if (!isMainActive) {
       mixerNodeRef.current.gain.setValueAtTime(0, audioContext.currentTime);
     } else {
-      const gain = Math.pow(masterVolume / 10, 2);
+      const gain = Math.pow(mainVolume / 10, 2);
       mixerNodeRef.current.gain.setValueAtTime(gain, audioContext.currentTime);
     }
-  }, [masterVolume, isMasterActive, audioContext]);
+  }, [mainVolume, isMainActive, audioContext]);
 
   return {
     mixerNode: mixerNodeRef.current,
