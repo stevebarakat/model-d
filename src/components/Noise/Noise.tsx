@@ -12,7 +12,7 @@ type NoiseProps = {
 };
 
 function Noise({ audioContext, mixerNode }: NoiseProps) {
-  const { mixer, setMixerNoise } = useSynthStore();
+  const { mixer, setMixerNoise, isDisabled } = useSynthStore();
   useNoise(audioContext, mixerNode);
 
   return (
@@ -28,6 +28,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
             position: "absolute",
             left: "-3.5rem",
           }}
+          disabled={isDisabled}
         />
         <Line side="right" />
         <Row gap="var(--spacing-xs)">
@@ -53,6 +54,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
               bottom: "0.25rem",
               left: "1rem",
             }}
+            disabled={isDisabled}
           />
 
           <RockerSwitch
@@ -69,6 +71,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
               left: "0.25rem",
               marginBottom: "0.25rem",
             }}
+            disabled={isDisabled}
           />
         </Row>
       </Row>

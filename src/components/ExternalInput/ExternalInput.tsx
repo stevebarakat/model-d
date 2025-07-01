@@ -13,7 +13,7 @@ type ExternalInputProps = {
 };
 
 function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
-  const { mixer, setMixerExternal } = useSynthStore();
+  const { mixer, setMixerExternal, isDisabled } = useSynthStore();
   const { audioLevel } = useExternalInput(audioContext, mixerNode);
 
   // Initialize volume to minimum value if it's 0
@@ -27,6 +27,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
     <Row>
       <RockerSwitch
         theme="blue"
+        disabled={isDisabled}
         checked={mixer.external.enabled}
         onCheckedChange={(checked) => setMixerExternal({ enabled: checked })}
         label="External Input"
@@ -70,6 +71,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
             left: "1rem",
             bottom: "0.25rem",
           }}
+          disabled={isDisabled}
         />
         <LedIndicator
           label="Signal"

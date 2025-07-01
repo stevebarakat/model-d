@@ -19,10 +19,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
   const isDisabled = useSynthStore((s) => s.isDisabled);
 
   return (
-    <Section
-      style={{ margin: "0 0.25rem" }}
-      className={isDisabled ? "disabled" : ""}
-    >
+    <Section style={{ margin: "0 0.25rem" }}>
       <Row>
         <Column gap="1.2rem">
           <Row>
@@ -49,6 +46,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
               style={{
                 top: "-0.25rem",
               }}
+              disabled={isDisabled}
             />
             <Line />
             <RockerSwitch
@@ -60,6 +58,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
               }}
               label="Oscillator 1"
               bottomLabelRight="On"
+              disabled={isDisabled}
             />
           </Row>
           <Row>
@@ -86,6 +85,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
               style={{
                 top: "-0.25rem",
               }}
+              disabled={isDisabled}
             />
             <Line />
             <RockerSwitch
@@ -97,6 +97,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
               }}
               label="Oscillator 2"
               bottomLabelRight="On"
+              disabled={isDisabled}
             />
           </Row>
           <Row>
@@ -123,6 +124,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
               style={{
                 top: "-0.25rem",
               }}
+              disabled={isDisabled}
             />
             <Line />
             <RockerSwitch
@@ -134,6 +136,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
               }}
               label="Oscillator 3"
               bottomLabelRight="On"
+              disabled={isDisabled}
             />
           </Row>
         </Column>
