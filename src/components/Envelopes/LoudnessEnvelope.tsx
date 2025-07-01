@@ -11,7 +11,7 @@ function LoudnessEnvelope() {
     loudnessSustain,
     isDisabled,
     setLoudnessEnvelope,
-  } = useSynthStore((state) => state);
+  } = useSynthStore();
 
   return (
     <Column style={{ paddingRight: "0.75rem" }}>

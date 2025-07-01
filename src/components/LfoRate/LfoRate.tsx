@@ -4,11 +4,8 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { useCallback } from "react";
 
 function LFORate() {
-  const lfoWaveform = useSynthStore((state) => state.lfoWaveform);
-  const setLfoWaveform = useSynthStore((state) => state.setLfoWaveform);
-  const lfoRate = useSynthStore((state) => state.lfoRate);
-  const setLfoRate = useSynthStore((state) => state.setLfoRate);
-  // TODO: Wire value/onChange to actual LFO rate state
+  const { lfoWaveform, setLfoWaveform, lfoRate, setLfoRate } = useSynthStore();
+  const isDisabled = useSynthStore((s) => s.isDisabled);
   const handleDoubleClick = useCallback(() => {
     setLfoWaveform(lfoWaveform === "triangle" ? "square" : "triangle");
   }, [lfoWaveform, setLfoWaveform]);
@@ -36,6 +33,7 @@ function LFORate() {
               step={1}
               label="LFO Rate"
               onChange={setLfoRate}
+              disabled={isDisabled}
             />
           </div>
         </Tooltip.Trigger>

@@ -3,9 +3,13 @@ import Row from "../Row";
 import { useSynthStore } from "@/store/synthStore";
 
 function FilterEnvelope() {
-  const { filterAttack, filterDecay, filterSustain, isDisabled } =
-    useSynthStore((state) => state);
-  const { setFilterEnvelope } = useSynthStore((state) => state);
+  const {
+    filterAttack,
+    filterDecay,
+    filterSustain,
+    isDisabled,
+    setFilterEnvelope,
+  } = useSynthStore();
 
   return (
     <Row gap="var(--spacing-xl)">

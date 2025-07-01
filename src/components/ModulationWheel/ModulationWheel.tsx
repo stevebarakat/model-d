@@ -2,8 +2,7 @@ import Wheel from "../Wheel";
 import { useSynthStore } from "@/store/synthStore";
 
 function ModulationWheel() {
-  const modWheel = useSynthStore((state) => state.modWheel);
-  const setModWheel = useSynthStore((state) => state.setModWheel);
+  const { modWheel, setModWheel, isDisabled } = useSynthStore();
   return (
     <Wheel
       value={modWheel}
@@ -11,6 +10,7 @@ function ModulationWheel() {
       max={100}
       onChange={setModWheel}
       label="Mod"
+      isDisabled={isDisabled}
     />
   );
 }

@@ -4,10 +4,15 @@ import Title from "../Title";
 import { useSynthStore } from "@/store/synthStore";
 
 function Filter() {
-  const { filterCutoff, filterEmphasis, filterContourAmount, isDisabled } =
-    useSynthStore((state) => state);
-  const { setFilterCutoff, setFilterEmphasis, setFilterContourAmount } =
-    useSynthStore((state) => state);
+  const {
+    filterCutoff,
+    filterEmphasis,
+    filterContourAmount,
+    isDisabled,
+    setFilterCutoff,
+    setFilterEmphasis,
+    setFilterContourAmount,
+  } = useSynthStore();
 
   return (
     <div>

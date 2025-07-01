@@ -10,6 +10,7 @@ type ModWheelProps = {
   onChange: (value: number) => void;
   onMouseUp?: () => void;
   label?: string;
+  isDisabled?: boolean;
 };
 
 function calculatePercentage(value: number, min: number, max: number): number {
@@ -37,6 +38,7 @@ function Wheel({
   onChange,
   onMouseUp,
   label = "Mod",
+  isDisabled = false,
 }: ModWheelProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -102,7 +104,7 @@ function Wheel({
   }, [handleMouseMove, onMouseUp, isDragging]);
 
   return (
-    <div className={styles.wheelContainer}>
+    <div className={styles.wheelContainer + (isDisabled ? " disabled" : "")}>
       <div
         id={id}
         ref={sliderRef}
@@ -116,8 +118,12 @@ function Wheel({
         aria-valuemax={max}
         aria-valuenow={value}
         aria-label={label}
+        aria-disabled={isDisabled}
       >
-        <div className={styles.track}>
+        <div
+          className={styles.track}
+          style={{ cursor: isDisabled ? "not-allowed" : "unset" }}
+        >
           <div className={styles.shadow} />
         </div>
         <div className={styles.thumb} />

@@ -2,8 +2,7 @@ import { useSynthStore } from "@/store/synthStore";
 import { RockerSwitch } from "../RockerSwitch";
 
 function GlideSwitch() {
-  const glideOn = useSynthStore((s) => s.glideOn);
-  const setGlideOn = useSynthStore((s) => s.setGlideOn);
+  const { glideOn, setGlideOn, isDisabled } = useSynthStore();
   return (
     <RockerSwitch
       theme="white"
@@ -12,6 +11,7 @@ function GlideSwitch() {
       bottomLabelRight="On"
       checked={glideOn}
       onCheckedChange={setGlideOn}
+      disabled={isDisabled}
     />
   );
 }

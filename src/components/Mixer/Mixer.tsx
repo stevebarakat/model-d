@@ -15,8 +15,7 @@ type MixerProps = {
 };
 
 function Mixer({ audioContext, mixerNode }: MixerProps) {
-  const { mixer, setMixerSource } = useSynthStore();
-  const isDisabled = useSynthStore((s) => s.isDisabled);
+  const { mixer, setMixerSource, isDisabled } = useSynthStore();
 
   return (
     <Section style={{ margin: "0 0.25rem" }}>
