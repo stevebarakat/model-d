@@ -76,7 +76,14 @@ function useEnvelopes({
             const now = audioContext.currentTime;
 
             filterNode.frequency.cancelScheduledValues(now);
-            filterNode.frequency.setValueAtTime(trackedCutoff, now);
+
+            // For smooth note transitions, start from current frequency if it's close
+            const currentFreq = filterNode.frequency.value;
+            const freqDiff =
+              Math.abs(currentFreq - trackedCutoff) / trackedCutoff;
+            const startFreq = freqDiff < 0.5 ? currentFreq : trackedCutoff; // Smooth transition if close
+
+            filterNode.frequency.setValueAtTime(startFreq, now);
             filterNode.frequency.linearRampToValueAtTime(
               envMax,
               now + attackTime
@@ -98,7 +105,12 @@ function useEnvelopes({
         const now = audioContext.currentTime;
         if (loudnessEnvelopeGain) {
           loudnessEnvelopeGain.gain.cancelScheduledValues(now);
-          loudnessEnvelopeGain.gain.setValueAtTime(0, now);
+
+          // For smooth note transitions, start from current gain if it's not zero
+          const currentGain = loudnessEnvelopeGain.gain.value;
+          const startGain = currentGain > 0.01 ? currentGain * 0.3 : 0; // Smooth transition
+
+          loudnessEnvelopeGain.gain.setValueAtTime(startGain, now);
           loudnessEnvelopeGain.gain.linearRampToValueAtTime(
             1,
             now + loudnessAttackTime
@@ -153,7 +165,14 @@ function useEnvelopes({
         } else {
           if (loudnessEnvelopeGain) {
             loudnessEnvelopeGain.gain.cancelScheduledValues(now);
-            loudnessEnvelopeGain.gain.setValueAtTime(0, now);
+            const currentGain = loudnessEnvelopeGain.gain.value;
+            loudnessEnvelopeGain.gain.setValueAtTime(currentGain, now);
+            // Add a small release time to prevent popping
+            const releaseTime = Math.max(0.01, loudnessDecayTime * 0.1); // At least 10ms
+            loudnessEnvelopeGain.gain.linearRampToValueAtTime(
+              0,
+              now + releaseTime
+            );
           }
         }
       },
