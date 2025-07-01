@@ -1,8 +1,8 @@
 import { RockerSwitch } from "../RockerSwitch";
-import { useAudioContext } from "@/hooks/useAudioContext";
+import { useSynthStore } from "@/store/synthStore";
 
 function Tuner() {
-  const { isInitialized } = useAudioContext();
+  const isDisabled = useSynthStore((state) => state.isDisabled);
 
   return (
     <RockerSwitch
@@ -12,7 +12,7 @@ function Tuner() {
       label="Tuner"
       topLabel="A-440"
       bottomLabelRight="On"
-      disabled={!isInitialized}
+      disabled={isDisabled}
     />
   );
 }

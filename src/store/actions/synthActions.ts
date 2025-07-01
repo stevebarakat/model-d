@@ -12,6 +12,7 @@ export function createSynthActions(
   set: Parameters<StateCreator<SynthState & SynthActions>>[0]
 ): SynthActions {
   return {
+    setIsDisabled: (disabled: boolean) => set({ isDisabled: disabled }),
     setActiveKeys: (key) =>
       set((state: SynthState) => ({
         activeKeys: typeof key === "function" ? key(state.activeKeys) : key,

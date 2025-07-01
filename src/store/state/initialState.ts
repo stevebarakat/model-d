@@ -11,6 +11,7 @@ export function createInitialState(): Omit<
   | "setOscillator3"
 > {
   return {
+    isDisabled: true,
     activeKeys: null,
     keyboardRef: { synth: null },
     pitchWheel: 50,

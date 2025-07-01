@@ -4,16 +4,11 @@ import Title from "../Title";
 import { useSynthStore } from "@/store/synthStore";
 
 function Filter() {
-  const filterCutoff = useSynthStore((state) => state.filterCutoff);
-  const filterEmphasis = useSynthStore((state) => state.filterEmphasis);
-  const setFilterCutoff = useSynthStore((state) => state.setFilterCutoff);
-  const setFilterEmphasis = useSynthStore((state) => state.setFilterEmphasis);
-  const filterContourAmount = useSynthStore(
-    (state) => state.filterContourAmount
-  );
-  const setFilterContourAmount = useSynthStore(
-    (state) => state.setFilterContourAmount
-  );
+  const { filterCutoff, filterEmphasis, filterContourAmount, isDisabled } =
+    useSynthStore((state) => state);
+  const { setFilterCutoff, setFilterEmphasis, setFilterContourAmount } =
+    useSynthStore((state) => state);
+
   return (
     <div>
       <Title size="md">Filter</Title>
@@ -33,6 +28,7 @@ function Filter() {
           label="Cutoff Frequency"
           onChange={setFilterCutoff}
           logarithmic={true}
+          disabled={isDisabled}
         />
         <Knob
           valueLabels={{
@@ -50,6 +46,7 @@ function Filter() {
           label="Emphasis"
           onChange={setFilterEmphasis}
           logarithmic={true}
+          disabled={isDisabled}
         />
         <Knob
           valueLabels={{
@@ -73,6 +70,7 @@ function Filter() {
           }
           label="Amount of Contour"
           onChange={setFilterContourAmount}
+          disabled={isDisabled}
         />
       </Row>
     </div>

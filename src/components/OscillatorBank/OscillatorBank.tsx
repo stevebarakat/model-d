@@ -5,10 +5,13 @@ import Oscillator3 from "./components/Oscillator3";
 import Title from "../Title";
 import Section from "../Section";
 import Column from "../Column";
+import { useSynthStore } from "@/store/synthStore";
 
 function OscillatorBank() {
+  const isDisabled = useSynthStore((s) => s.isDisabled);
+
   return (
-    <Section>
+    <Section className={isDisabled ? "disabled" : ""}>
       <Column>
         <OscillatorModulation />
         <Oscillator1 />

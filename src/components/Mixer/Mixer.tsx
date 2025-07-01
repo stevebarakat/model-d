@@ -16,9 +16,13 @@ type MixerProps = {
 
 function Mixer({ audioContext, mixerNode }: MixerProps) {
   const { mixer, setMixerSource } = useSynthStore();
+  const isDisabled = useSynthStore((s) => s.isDisabled);
 
   return (
-    <Section style={{ margin: "0 0.25rem" }}>
+    <Section
+      style={{ margin: "0 0.25rem" }}
+      className={isDisabled ? "disabled" : ""}
+    >
       <Row>
         <Column gap="1.2rem">
           <Row>

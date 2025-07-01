@@ -2,10 +2,11 @@ import { RockerSwitch } from "@/components/RockerSwitch";
 import { useSynthStore } from "@/store/synthStore";
 
 function ModulationSwitch() {
-  const filterModulationOn = useSynthStore((state) => state.filterModulationOn);
+  const { filterModulationOn, isDisabled } = useSynthStore((state) => state);
   const setFilterModulationOn = useSynthStore(
     (state) => state.setFilterModulationOn
   );
+
   return (
     <div>
       <RockerSwitch
@@ -15,6 +16,7 @@ function ModulationSwitch() {
         label="Filter Modulation"
         topLabel="Filter Modulation"
         bottomLabelRight="On"
+        disabled={isDisabled}
       />
     </div>
   );

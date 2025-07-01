@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { useSynthStore } from "@/store/synthStore";
 
 export function useAudioContext() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const setIsDisabled = useSynthStore((state) => state.setIsDisabled);
 
   const initialize = async () => {
     try {
@@ -15,6 +17,7 @@ export function useAudioContext() {
       }
 
       setIsInitialized(true);
+      setIsDisabled(false);
     } catch (error) {
       console.error("Error initializing AudioContext:", error);
     }
@@ -25,6 +28,7 @@ export function useAudioContext() {
       await audioContextRef.current.close();
       audioContextRef.current = null;
       setIsInitialized(false);
+      setIsDisabled(true);
     }
   };
 
@@ -34,9 +38,10 @@ export function useAudioContext() {
         audioContextRef.current.close();
         audioContextRef.current = null;
         setIsInitialized(false);
+        setIsDisabled(true);
       }
     };
-  }, []);
+  }, [setIsDisabled]);
 
   return {
     audioContext: audioContextRef.current,

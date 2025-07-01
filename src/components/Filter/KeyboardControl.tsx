@@ -3,8 +3,9 @@ import Column from "../Column";
 import { useSynthStore } from "@/store/synthStore";
 
 function KeyboardControl() {
-  const keyboardControl1 = useSynthStore((state) => state.keyboardControl1);
-  const keyboardControl2 = useSynthStore((state) => state.keyboardControl2);
+  const { keyboardControl1, keyboardControl2, isDisabled } = useSynthStore(
+    (state) => state
+  );
   const setKeyboardControl1 = useSynthStore(
     (state) => state.setKeyboardControl1
   );
@@ -21,6 +22,7 @@ function KeyboardControl() {
         leftLabel="1"
         topLabelRight="On"
         bottomLabel="Keyboard Control"
+        disabled={isDisabled}
       />
       <RockerSwitch
         theme="orange"
@@ -29,6 +31,7 @@ function KeyboardControl() {
         label="Keyboard Control 2"
         leftLabel="2"
         bottomLabelRight="On"
+        disabled={isDisabled}
       />
     </Column>
   );

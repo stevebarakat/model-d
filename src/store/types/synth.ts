@@ -44,6 +44,9 @@ export type MixerState = {
 };
 
 export type SynthState = {
+  // Audio context state
+  isDisabled: boolean;
+
   // Keyboard state
   activeKeys: Note | null;
   keyboardRef: {
@@ -97,6 +100,7 @@ export type SynthState = {
 };
 
 export type SynthActions = {
+  setIsDisabled: (disabled: boolean) => void;
   setActiveKeys: (
     key: Note | null | ((prev: Note | null) => Note | null)
   ) => void;

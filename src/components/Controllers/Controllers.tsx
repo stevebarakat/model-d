@@ -13,9 +13,11 @@ function Controllers() {
   const setOsc3FilterEgSwitch = useSynthStore((s) => s.setOsc3FilterEgSwitch);
   const noiseLfoSwitch = useSynthStore((s) => s.noiseLfoSwitch);
   const setNoiseLfoSwitch = useSynthStore((s) => s.setNoiseLfoSwitch);
+  const isDisabled = useSynthStore((s) => s.isDisabled);
 
   return (
     <Section
+      className={isDisabled ? "disabled" : ""}
       style={{
         paddingLeft: "var(--spacing-sm)",
         paddingRight: "var(--spacing-lg)",

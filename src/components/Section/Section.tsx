@@ -5,6 +5,7 @@ type SectionProps = {
   style?: React.CSSProperties;
   justify?: "flex-start" | "center" | "flex-end" | "space-between";
   align?: "flex-start" | "center" | "flex-end" | "space-between";
+  className?: string;
 };
 
 const defaultStyle: React.CSSProperties = {
@@ -20,9 +21,11 @@ function Section({
   style,
   justify = "flex-end",
   align = "center",
+  className,
 }: SectionProps) {
   return (
     <div
+      className={className}
       style={{
         ...defaultStyle,
         ...style,
