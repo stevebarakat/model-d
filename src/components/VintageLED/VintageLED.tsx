@@ -21,7 +21,7 @@ export type VintageLEDProps = {
 /**
  * VintageLED component that simulates the appearance of old-school indicator lights
  */
-export function VintageLED({
+function VintageLED({
   isOn = true,
   warmupEffect = true,
   className,
@@ -81,3 +81,5 @@ export function VintageLED({
     </div>
   );
 }
+
+export default VintageLED;

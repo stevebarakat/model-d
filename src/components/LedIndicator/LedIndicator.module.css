@@ -1,83 +1,134 @@
-.overloadContainer {
-  --overload-size: 12px;
-
-  position: relative;
-  left: 15%;
+/* Container for the LED and label */
+.container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: var(--overload-size);
-  height: var(--overload-size);
+  left: var(--spacing-lg);
+  position: relative;
 }
 
-.overloadLabel {
-  position: relative;
-  margin-bottom: calc(var(--overload-size) * 4);
-  font-weight: 800;
-  text-align: center;
+/* Label styling */
+.label {
   text-transform: uppercase;
+  margin-bottom: var(--spacing-md);
+  font-weight: 800;
 }
 
-.overload {
+/* Base LED styles */
+.vintageLed {
   position: relative;
-  z-index: 1;
-  width: var(--overload-size);
-  height: var(--overload-size);
-  background-color: hsl(0deg 0% 13%);
-  border-radius: 50%;
-  box-shadow: inset 0 0 2.5px hsl(0deg 0% 0%), 0 1px 1px hsl(0deg 0% 34%);
-  transition: all 0.1s ease-out;
-
-  &::before {
-    position: absolute;
-    z-index: -1;
-    background: radial-gradient(
-      circle at center,
-      hsl(0deg 100% 50% / calc(var(--glow-intensity) * 0.5)) 0%,
-      transparent 70%
-    );
-    border-radius: 50%;
-    opacity: var(--glow-intensity);
-    transition: opacity 0.1s ease-out;
-    content: "";
-    inset: -4px;
-  }
+  border: 3px solid var(--color-white-50);
+  border-radius: var(--radius-full);
+  transition: var(--transition-fast);
 }
 
-.overload:not([style*="--glow-intensity: 0"]) {
-  background-color: hsl(0deg 100% calc(var(--glow-intensity) * 50%));
-  box-shadow: inset 0 0 2.5px hsl(0deg 0% 0%), 0 1px 1px hsl(0deg 0% 34%),
-    0 0 calc(var(--glow-intensity) * 20px) hsl(0deg 100% 50%),
-    0 0 calc(var(--glow-intensity) * 40px) hsl(0deg 100% 50% / 50%);
-  filter: brightness(calc(1 + var(--glow-intensity) * 0.5));
-}
-
-.overloadBackground {
+/* LED inner content */
+.vintageLedInner {
   position: absolute;
-  z-index: 10000;
-  display: block;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: calc(var(--overload-size) * 2.5);
-  height: calc(var(--overload-size) * 2.5);
-  background: hsl(0deg 0% 10%);
-  border-top: 1px solid hsl(215deg 10% 45%);
-  border-radius: 50%;
+  top: 52.5%;
+  left: 49%;
+  width: 97.5%;
+  height: 97.5%;
+  overflow: hidden;
+  background: currentcolor;
+  border-radius: var(--radius-full);
+  opacity: 0.25;
+  transform: translate(-50%, -50%);
+  transition: var(--transition-fast);
 
   &::after {
     position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 55%;
     background: linear-gradient(
       to bottom,
-      hsl(0deg 0% 70% / 50%) 0%,
-      hsl(0deg 0% 25% / 50%) 35%,
-      hsl(0deg 0% 0% / 50%) 55%,
-      hsl(0deg 0% 5% / 100%) 100%
+      var(--color-white-50),
+      var(--color-white-25)
     );
-    border-radius: 50%;
+    border-radius: 50% 50% 0 0;
+    filter: blur(0.5px);
+    transition: opacity var(--transition-fast);
     content: "";
-    inset: 0;
-    pointer-events: none;
   }
+}
+
+/* LED glow effect */
+.vintageLedGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  opacity: 0;
+  transition: var(--transition-fast);
+}
+
+/* LED reflection */
+.vintageLedReflection {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  background: var(--color-white-75);
+  border-radius: var(--radius-full);
+  opacity: 0.75;
+  transform: translate(-50%, -50%);
+  transition: var(--transition-fast);
+  filter: blur(3px);
+}
+
+/* Size variants */
+.vintageLedSmall {
+  width: 12px;
+  height: 12px;
+}
+
+.vintageLedMedium {
+  width: 20px;
+  height: 20px;
+}
+
+.vintageLedLarge {
+  width: 28px;
+  height: 28px;
+}
+
+/* Color variants */
+.vintageLedRed {
+  color: hsl(0deg 100% 50%);
+}
+
+/* Active state with intensity-based opacity */
+.vintageLedOn .vintageLedInner {
+  opacity: calc(0.25 + calc(0.75 * var(--led-intensity, 1)));
+}
+
+.vintageLedOn .vintageLedReflection {
+  opacity: calc(0.75 * var(--led-intensity, 1));
+}
+
+.vintageLedOn .vintageLedGlow {
+  opacity: var(--led-intensity, 1);
+}
+
+/* Red LED specific glow effect with intensity */
+.vintageLedRed.vintageLedOn .vintageLedInner,
+.vintageLedRed.vintageLedOn .vintageLedReflection {
+  box-shadow: 0 0 calc(20px * var(--led-intensity, 1))
+    calc(8px * var(--led-intensity, 1))
+    hsl(0deg 100% 50% / calc(60% * var(--led-intensity, 1)));
+}
+
+/* Intensity-based color variation for overload indication */
+.vintageLedRed.vintageLedOn .vintageLedInner {
+  background: hsl(0deg 100% calc(40% + calc(30% * var(--led-intensity, 1))));
+}
+
+/* Additional glow effect for high intensity */
+.vintageLedRed.vintageLedOn .vintageLedGlow {
+  box-shadow: 0 0 calc(30px * var(--led-intensity, 1))
+    calc(15px * var(--led-intensity, 1))
+    hsl(0deg 100% 50% / calc(40% * var(--led-intensity, 1)));
 }

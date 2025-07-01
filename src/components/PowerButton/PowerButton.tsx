@@ -1,9 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { RockerSwitch } from "../RockerSwitch";
-import { VintageLED } from "../VintageLED";
-import Title from "../Title";
+import VintageLED from "../VintageLED";
 import { useAudioContext } from "@/hooks/useAudioContext";
-import Row from "../Row";
 import Column from "../Column";
 
 type PowerButtonProps = {
@@ -46,9 +44,6 @@ function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
           isOn={isOn}
           onCheckedChange={() => handleCheckedChange(!isOn)}
         />
-        {/* <Title size="sm" style={{ marginTop: "var(--spacing-xs)" }}>
-          Power
-        </Title> */}
       </Column>
       <RockerSwitch
         orientation="vertical"
