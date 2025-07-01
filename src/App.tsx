@@ -1,11 +1,14 @@
 import Synth from "./components/Synth";
-import * as Tooltip from "@radix-ui/react-tooltip";
+import PresetsDropdown from "./components/PresetsDropdown";
 
 function App() {
   return (
-    <Tooltip.Provider>
-      <Synth />
-    </Tooltip.Provider>
+    <div style={{ padding: "20px", minHeight: "100vh", background: "#0a0a0a" }}>
+      <PresetsDropdown />
+      <div style={{ marginTop: "20px" }}>
+        <Synth />
+      </div>
+    </div>
   );
 }
 

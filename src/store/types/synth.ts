@@ -145,4 +145,5 @@ export type SynthActions = {
     sustain?: number;
   }) => void;
   setDecaySwitchOn: (on: boolean) => void;
+  loadPreset: (preset: Partial<SynthState>) => void;
 };

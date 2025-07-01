@@ -45,10 +45,13 @@ export function mapEnvelopeTime(value: number): number {
 }
 
 // Helper to map 0-10 to 20 Hz - 20,000 Hz logarithmically
+// Enhanced for fatter sound with slightly warmer default
 export function mapCutoff(val: number): number {
   const minFreq = 20;
   const maxFreq = 20000;
-  return minFreq * Math.pow(maxFreq / minFreq, val / 10);
+  // Slightly boost the cutoff for a fatter, more present sound
+  const boostedVal = Math.min(10, val + 0.5);
+  return minFreq * Math.pow(maxFreq / minFreq, boostedVal / 10);
 }
 
 // Helper to map 0-10 to a modulation amount (octaves above base cutoff)

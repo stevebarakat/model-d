@@ -23,7 +23,7 @@ const pulseWavesCache = new WeakMap<
 >();
 
 function createTriangleSawtoothWave(audioContext: AudioContext): PeriodicWave {
-  const n = 64;
+  const n = 128; // Increased harmonics for fatter sound
   const real = new Float32Array(n);
   const imag = new Float32Array(n);
   for (let i = 1; i < n; i++) {
@@ -32,7 +32,8 @@ function createTriangleSawtoothWave(audioContext: AudioContext): PeriodicWave {
         ? (8 / Math.PI ** 2) * (1 / i ** 2) * (i % 4 === 1 ? 1 : -1)
         : 0;
     const saw = (2 / (i * Math.PI)) * (i % 2 === 0 ? 0 : 1);
-    real[i] = 0.5 * triangle + 0.5 * saw;
+    // Enhanced blend with more sawtooth content for fatter sound
+    real[i] = 0.3 * triangle + 0.7 * saw;
     imag[i] = 0;
   }
   return audioContext.createPeriodicWave(real, imag);

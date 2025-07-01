@@ -28,6 +28,16 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
     mixerNodeRef.current = mixer;
     setIsMixerReady(true);
 
+    // Add subtle saturation for fatter sound
+    const saturationNode = audioContext.createWaveShaper();
+    const saturationCurve = new Float32Array(4096);
+    for (let i = 0; i < 4096; i++) {
+      const x = (i * 2) / 4096 - 1;
+      saturationCurve[i] = Math.tanh(x * 1.5) / 1.5; // Subtle saturation
+    }
+    saturationNode.curve = saturationCurve;
+    saturationNode.oversample = "4x";
+
     const loudnessGain = audioContext.createGain();
     loudnessGain.gain.value = 1;
     loudnessEnvelopeGainRef.current = loudnessGain;
@@ -36,9 +46,10 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
     masterGain.gain.value = 1;
     masterGainRef.current = masterGain;
 
-    // Connect: Mixer -> Filter -> Loudness Envelope -> Master -> Destination
-    if (mixer && filter && loudnessGain && masterGain) {
-      mixer.connect(filter);
+    // Connect: Mixer -> Saturation -> Filter -> Loudness Envelope -> Master -> Destination
+    if (mixer && saturationNode && filter && loudnessGain && masterGain) {
+      mixer.connect(saturationNode);
+      saturationNode.connect(filter);
       filter.connect(loudnessGain);
       loudnessGain.connect(masterGain);
       masterGain.connect(audioContext.destination);
@@ -75,9 +86,11 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
     );
 
     // Map 0-10 to Q: 0.7 (no resonance) to 15 (classic Minimoog max resonance)
+    // Add slight boost to default resonance for fatter sound
     const minQ = 0.7;
     const maxQ = 15;
-    const q = minQ + (maxQ - minQ) * (filterEmphasis / 10);
+    const boostedEmphasis = Math.min(10, filterEmphasis + 1); // Boost resonance by 1
+    const q = minQ + (maxQ - minQ) * (boostedEmphasis / 10);
     filterNodeRef.current.Q.setValueAtTime(q, audioContext.currentTime);
   }, [filterCutoff, filterEmphasis, audioContext]);
 

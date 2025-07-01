@@ -37,8 +37,20 @@ function LFORate() {
             />
           </div>
         </Tooltip.Trigger>
-        <Tooltip.Content side="top" align="center" sideOffset={8}>
-          double click to change waveform
+        <Tooltip.Content
+          side="top"
+          align="center"
+          sideOffset={8}
+          style={{
+            backgroundColor: "var(--color-background)",
+            color: "var(--color-text)",
+            padding: "var(--spacing-sm)",
+            borderRadius: "var(--spacing-sm)",
+            fontSize: "var(--font-size-md)",
+          }}
+        >
+          double click to change waveform. <br />
+          current waveform: {lfoWaveform}
         </Tooltip.Content>
       </Tooltip.Root>
     </div>

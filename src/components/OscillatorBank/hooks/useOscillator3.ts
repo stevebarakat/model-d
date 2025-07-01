@@ -31,8 +31,10 @@ export function useOscillator3(
 
   useEffect(() => {
     if (oscRef.current) {
+      // Boost oscillator volume slightly for fatter sound
+      const boostedVolume = Math.min(1, (mixer.osc3.volume / 10) * 1.1);
       oscRef.current.getGainNode().gain.value = mixer.osc3.enabled
-        ? mixer.osc3.volume / 10
+        ? boostedVolume
         : 0;
     }
   }, [mixer.osc3.enabled, mixer.osc3.volume]);
@@ -71,7 +73,11 @@ export function useOscillator3(
       const baseFreq = noteToFrequency(note) * Math.pow(2, masterTune / 12);
       const detuneSemis = oscillator3.frequency || 0;
       const bendSemis = ((pitchWheel - 50) / 50) * 2;
-      const freq = baseFreq * Math.pow(2, (detuneSemis + bendSemis) / 12);
+      // Add subtle detuning for fatter sound (osc3 slightly sharp)
+      const detuneCents = 1; // 1 cent sharp
+      const freq =
+        baseFreq *
+        Math.pow(2, (detuneSemis + bendSemis + detuneCents / 100) / 12);
 
       if (glideOn && lastFrequencyRef.current !== null) {
         oscRef.current.start(lastFrequencyRef.current);

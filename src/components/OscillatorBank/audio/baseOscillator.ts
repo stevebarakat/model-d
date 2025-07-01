@@ -30,7 +30,7 @@ export function createPulseWave(
   audioContext: AudioContext,
   dutyCycle: number
 ): PeriodicWave {
-  const n = 64;
+  const n = 128; // Increased harmonics for fatter sound
   const real = new Float32Array(n);
   const imag = new Float32Array(n);
   for (let i = 1; i < n; i++) {

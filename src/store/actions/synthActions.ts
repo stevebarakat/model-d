@@ -94,5 +94,10 @@ export function createSynthActions(
           env.sustain !== undefined ? env.sustain : state.loudnessSustain,
       })),
     setDecaySwitchOn: (on: boolean) => set({ decaySwitchOn: on }),
+    loadPreset: (preset: Partial<SynthState>) =>
+      set((state: SynthState) => ({
+        ...state,
+        ...preset,
+      })),
   };
 }
