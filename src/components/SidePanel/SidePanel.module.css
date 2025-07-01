@@ -1,7 +1,6 @@
 .switches {
-  position: relative;
-  top: -10px;
   display: flex;
   flex-direction: column;
   width: fit-content;
+  gap: var(--spacing-xs);
 }
