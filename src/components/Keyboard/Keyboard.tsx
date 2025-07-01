@@ -1,8 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import styles from "./Keyboard.module.css";
 import type { KeyboardProps } from "./types";
-import WhiteKey from "./WhiteKey";
-import BlackKey from "./BlackKey";
+import { WhiteKey, BlackKey } from "./components";
 import {
   generateKeyboardKeys,
   getNoteFromKeyEvent,
