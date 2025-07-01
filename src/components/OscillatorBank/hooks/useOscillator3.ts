@@ -1,8 +1,9 @@
 import { useEffect, useRef, useCallback } from "react";
 import { useSynthStore } from "@/store/synthStore";
 import { createOscillator3, Osc3Instance } from "../audio/oscillator3";
+import { noteToFrequency } from "@/utils/noteToFrequency";
 
-export type Oscillator3Waveform =
+type Oscillator3Waveform =
   | "triangle"
   | "rev_saw"
   | "sawtooth"
@@ -29,32 +30,6 @@ export function useOscillator3(
   const vibratoIntervalRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!audioContext) {
-      oscRef.current = null;
-      return;
-    }
-    oscRef.current = createOscillator3(
-      {
-        audioContext,
-        waveform: oscillator3.waveform as Oscillator3Waveform,
-        frequency: oscillator3.frequency,
-        range: oscillator3.range,
-      },
-      mixerNode ?? undefined
-    );
-    return () => {
-      oscRef.current?.stop();
-      oscRef.current = null;
-    };
-  }, [
-    audioContext,
-    oscillator3.frequency,
-    oscillator3.range,
-    oscillator3.waveform,
-    mixerNode,
-  ]);
-
-  useEffect(() => {
     if (oscRef.current) {
       oscRef.current.getGainNode().gain.value = mixer.osc3.enabled
         ? mixer.osc3.volume / 10
@@ -69,43 +44,52 @@ export function useOscillator3(
     });
   }, [oscillator3.waveform, oscillator3.range]);
 
+  // Apply range changes to current frequency
+  useEffect(() => {
+    if (oscRef.current && lastFrequencyRef.current !== null) {
+      oscRef.current.setFrequency(lastFrequencyRef.current);
+    }
+  }, [oscillator3.range]);
+
   const triggerAttack = useCallback(
     (note: string) => {
-      if (!audioContext || !oscRef.current) return;
+      if (!audioContext) return;
+
+      if (!oscRef.current) {
+        oscRef.current = createOscillator3(
+          {
+            audioContext,
+            waveform: oscillator3.waveform as Oscillator3Waveform,
+            frequency: oscillator3.frequency,
+            range: oscillator3.range,
+          },
+          mixerNode ?? undefined
+        );
+      }
+
       lastNoteRef.current = note;
       const baseFreq = noteToFrequency(note) * Math.pow(2, masterTune / 12);
       const detuneSemis = oscillator3.frequency || 0;
       const bendSemis = ((pitchWheel - 50) / 50) * 2;
       const freq = baseFreq * Math.pow(2, (detuneSemis + bendSemis) / 12);
-      const oscNode = oscRef.current.getNode();
-      if (!oscNode) {
-        if (glideOn && lastFrequencyRef.current !== null) {
-          oscRef.current.start(lastFrequencyRef.current);
-          const newOscNode = oscRef.current.getNode();
-          if (newOscNode) {
-            const mappedGlideTime = Math.pow(10, glideTime / 5) * 0.02;
-            newOscNode.frequency.linearRampToValueAtTime(
-              freq,
-              audioContext.currentTime + mappedGlideTime
-            );
-          }
-        } else {
-          oscRef.current.start(freq);
-        }
-      } else {
-        if (glideOn) {
+
+      if (glideOn && lastFrequencyRef.current !== null) {
+        oscRef.current.start(lastFrequencyRef.current);
+        const oscNode = oscRef.current.getNode();
+        if (oscNode) {
           const mappedGlideTime = Math.pow(10, glideTime / 5) * 0.02;
           oscNode.frequency.linearRampToValueAtTime(
             freq,
             audioContext.currentTime + mappedGlideTime
           );
-        } else {
-          oscNode.frequency.setValueAtTime(freq, audioContext.currentTime);
         }
+      } else {
+        oscRef.current.start(freq);
       }
       lastFrequencyRef.current = freq;
       // Vibrato
       if (vibratoAmount > 0 && oscRef.current) {
+        const oscNode = oscRef.current.getNode();
         const t0 = audioContext.currentTime;
         vibratoIntervalRef.current = window.setInterval(() => {
           const t = performance.now() / 1000 - t0;
@@ -122,6 +106,7 @@ export function useOscillator3(
     },
     [
       audioContext,
+      mixerNode,
       oscillator3,
       masterTune,
       pitchWheel,
@@ -136,7 +121,7 @@ export function useOscillator3(
       clearInterval(vibratoIntervalRef.current);
       vibratoIntervalRef.current = null;
     }
-  }, [audioContext]);
+  }, []);
 
   useEffect(() => {
     if (oscRef.current && lastNoteRef.current) {
@@ -181,30 +166,4 @@ export function useOscillator3(
     triggerRelease,
     getNode: () => oscRef.current?.getNode() ?? null,
   };
-}
-
-function noteToFrequency(note: string): number {
-  const match = note.match(/^([A-G]#?)(\d)$/);
-  if (!match) return 440;
-  const noteNames = [
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-    "A",
-    "A#",
-    "B",
-  ];
-  const [, name, octaveStr] = match;
-  const octave = parseInt(octaveStr, 10);
-  const n = noteNames.indexOf(name);
-  if (n < 0 || isNaN(octave)) return 440;
-  const midi = 12 * (octave + 1) + n;
-  const freq = 440 * Math.pow(2, (midi - 69) / 12);
-  return isFinite(freq) ? freq : 440;
 }
