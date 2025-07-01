@@ -23,6 +23,7 @@ import { mapCutoff, noteNameToMidi } from "./utils/synthUtils";
 import Row from "../Row";
 import Logo from "../Logo";
 import Section from "../Section";
+import PresetsDropdown from "../PresetsDropdown";
 
 function Synth() {
   const { activeKeys, setActiveKeys } = useSynthStore();
@@ -101,46 +102,49 @@ function Synth() {
   }, [filterNode, audioContext, activeKeys]);
 
   return (
-    <div className={styles.synthContainer}>
-      <Side />
-      <div className={styles.synth}>
-        <div className={styles.backPanel}></div>
-        <div className={styles.controlsPanel}>
-          <Controllers />
-          <OscillatorBank />
-          <Mixer audioContext={audioContext!} mixerNode={mixerNode!} />
-          <Modifiers />
-          <Output />
-          <Section>
-            <PowerButton
-              isOn={isInitialized}
-              onPowerOn={initialize}
-              onPowerOff={dispose}
+    <>
+      <PresetsDropdown disabled={!isInitialized} />
+      <div className={styles.synthContainer}>
+        <Side />
+        <div className={styles.synth}>
+          <div className={styles.backPanel}></div>
+          <div className={styles.controlsPanel}>
+            <Controllers />
+            <OscillatorBank />
+            <Mixer audioContext={audioContext!} mixerNode={mixerNode!} />
+            <Modifiers />
+            <Output />
+            <Section style={{ borderRight: "none" }}>
+              <PowerButton
+                isOn={isInitialized}
+                onPowerOn={initialize}
+                onPowerOff={dispose}
+              />
+            </Section>
+          </div>
+          <Row
+            justify="flex-end"
+            style={{
+              borderBottom: "var(--color-off-white) dotted 1px",
+              padding: "var(--spacing-md)",
+            }}
+          >
+            <Logo />
+          </Row>
+          <div className={styles.keyboardPanel}>
+            <SidePanel />
+            <Keyboard
+              activeKeys={activeKeys}
+              octaveRange={{ min: 3, max: 5 }}
+              onKeyDown={setActiveKeys}
+              onKeyUp={() => setActiveKeys(null)}
+              synth={synthObj}
             />
-          </Section>
+          </div>
         </div>
-        <Row
-          justify="flex-end"
-          style={{
-            borderBottom: "var(--color-off-white) dotted 1px",
-            padding: "var(--spacing-md)",
-          }}
-        >
-          <Logo />
-        </Row>
-        <div className={styles.keyboardPanel}>
-          <SidePanel />
-          <Keyboard
-            activeKeys={activeKeys}
-            octaveRange={{ min: 3, max: 5 }}
-            onKeyDown={setActiveKeys}
-            onKeyUp={() => setActiveKeys(null)}
-            synth={synthObj}
-          />
-        </div>
+        <Side />
       </div>
-      <Side />
-    </div>
+    </>
   );
 }
 

@@ -1,7 +1,7 @@
 import { RockerSwitch } from "../RockerSwitch";
 import { useSynthStore } from "@/store/synthStore";
 
-function Tuner() {
+function Limiter() {
   const isDisabled = useSynthStore((state) => state.isDisabled);
 
   return (
@@ -9,12 +9,12 @@ function Tuner() {
       theme="blue"
       checked={false}
       onCheckedChange={() => {}}
-      label="Tuner"
-      topLabel="A-440"
+      label="Limiter"
+      topLabel="Limiter"
       bottomLabelRight="On"
       disabled={isDisabled}
     />
   );
 }
 
-export default Tuner;
+export default Limiter;

@@ -3,7 +3,7 @@ import { useSynthStore } from "@/store/synthStore";
 import { presets, getCategories } from "@/data/presets";
 import styles from "./PresetsDropdown.module.css";
 
-const PresetsDropdown: React.FC = () => {
+const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [currentPreset, setCurrentPreset] = useState<string | null>(null);
@@ -87,14 +87,18 @@ const PresetsDropdown: React.FC = () => {
 
   return (
     <div className={styles.container} ref={dropdownRef}>
-      <div className={styles.dropdown}>
+      <div className={`${styles.dropdown} ${disabled ? "disabled" : ""}`}>
         <button
           className={styles.trigger}
+          style={{
+            cursor: disabled ? "not-allowed" : "pointer",
+          }}
           onClick={() => setIsOpen(!isOpen)}
           onKeyDown={handleKeyDown}
           aria-expanded={isOpen}
           aria-haspopup="listbox"
           aria-label="Select a preset"
+          disabled={disabled}
         >
           <span className={styles.triggerText}>
             {currentPreset || "Select Preset"}
