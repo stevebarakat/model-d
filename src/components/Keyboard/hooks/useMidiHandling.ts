@@ -162,13 +162,23 @@ export function useMidiHandling(synthObj: SynthObject | null) {
           // Add to pressed keys
           pressedKeysRef.current.add(note);
 
+          console.log("MIDI Note ON - Debug:", {
+            note,
+            currentActiveKey,
+            pressedKeys: Array.from(pressedKeysRef.current),
+          });
+
           if (currentActiveKey && currentActiveKey !== note) {
             // Legato mode: change pitch of current note
+            console.log("Legato mode: changing pitch to", note);
             setActiveKeysRef.current(note);
+            activeKeysRef.current = note; // Update ref immediately
             synthObjRef.current?.triggerAttack(note);
           } else if (!currentActiveKey) {
             // First key press: start a new note
+            console.log("First key press: starting new note", note);
             setActiveKeysRef.current(note);
+            activeKeysRef.current = note; // Update ref immediately
             synthObjRef.current?.triggerAttack(note);
           }
         } else {
@@ -179,6 +189,13 @@ export function useMidiHandling(synthObj: SynthObject | null) {
           pressedKeysRef.current.delete(note);
 
           const currentActiveKey = activeKeysRef.current;
+          console.log("MIDI Note OFF (velocity 0) - Debug:", {
+            note,
+            currentActiveKey,
+            pressedKeys: Array.from(pressedKeysRef.current),
+            remainingKeys: Array.from(pressedKeysRef.current),
+          });
+
           if (currentActiveKey === note) {
             // Check if there are other pressed keys
             const remainingKeys = Array.from(pressedKeysRef.current);
@@ -186,11 +203,15 @@ export function useMidiHandling(synthObj: SynthObject | null) {
             if (remainingKeys.length > 0) {
               // Switch to the most recently pressed remaining key
               const nextKey = remainingKeys[remainingKeys.length - 1];
+              console.log("Switching to next key (velocity 0):", nextKey);
               setActiveKeysRef.current(nextKey);
+              activeKeysRef.current = nextKey; // Update ref immediately
               synthObjRef.current?.triggerAttack(nextKey);
             } else {
               // No more keys pressed, release the note
+              console.log("No more keys pressed, releasing note (velocity 0)");
               setActiveKeysRef.current(null);
+              activeKeysRef.current = null; // Update ref immediately
               synthObjRef.current?.triggerRelease();
             }
           }
@@ -206,6 +227,13 @@ export function useMidiHandling(synthObj: SynthObject | null) {
         pressedKeysRef.current.delete(note);
 
         const currentActiveKey = activeKeysRef.current;
+        console.log("MIDI Note OFF - Debug:", {
+          note,
+          currentActiveKey,
+          pressedKeys: Array.from(pressedKeysRef.current),
+          remainingKeys: Array.from(pressedKeysRef.current),
+        });
+
         if (currentActiveKey === note) {
           // Check if there are other pressed keys
           const remainingKeys = Array.from(pressedKeysRef.current);
@@ -213,11 +241,15 @@ export function useMidiHandling(synthObj: SynthObject | null) {
           if (remainingKeys.length > 0) {
             // Switch to the most recently pressed remaining key
             const nextKey = remainingKeys[remainingKeys.length - 1];
+            console.log("Switching to next key:", nextKey);
             setActiveKeysRef.current(nextKey);
+            activeKeysRef.current = nextKey; // Update ref immediately
             synthObjRef.current?.triggerAttack(nextKey);
           } else {
             // No more keys pressed, release the note
+            console.log("No more keys pressed, releasing note");
             setActiveKeysRef.current(null);
+            activeKeysRef.current = null; // Update ref immediately
             synthObjRef.current?.triggerRelease();
           }
         }
