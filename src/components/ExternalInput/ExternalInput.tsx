@@ -68,7 +68,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
             }
           }}
           style={{
-            left: "1rem",
+            left: "1.25rem",
             bottom: "0.25rem",
           }}
           disabled={isDisabled}

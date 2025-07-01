@@ -10,7 +10,6 @@
 /* Label styling */
 .label {
   text-transform: uppercase;
-  margin-bottom: var(--spacing-md);
   font-weight: 800;
 }
 
