@@ -49,7 +49,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
             />
             <Line />
             <RockerSwitch
-              style={{ left: "1.5rem" }}
+              style={{ left: "1.65rem" }}
               theme="blue"
               checked={mixer.osc1.enabled}
               onCheckedChange={(checked) => {
@@ -88,7 +88,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
             />
             <Line />
             <RockerSwitch
-              style={{ left: "1.5rem" }}
+              style={{ left: "1.65rem" }}
               theme="blue"
               checked={mixer.osc2.enabled}
               onCheckedChange={(checked) => {
@@ -127,7 +127,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
             />
             <Line />
             <RockerSwitch
-              style={{ left: "1.5rem" }}
+              style={{ left: "1.65rem" }}
               theme="blue"
               checked={mixer.osc3.enabled}
               onCheckedChange={(checked) => {

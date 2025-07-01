@@ -34,7 +34,7 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
         bottomLabelRight="On"
         style={{
           position: "absolute",
-          left: "-3.5rem",
+          left: "-3.25rem",
         }}
       />
       <Line side="right" />

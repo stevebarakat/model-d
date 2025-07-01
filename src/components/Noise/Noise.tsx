@@ -26,7 +26,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
           bottomLabelRight="On"
           style={{
             position: "absolute",
-            left: "-3.5rem",
+            left: "-3.25rem",
           }}
           disabled={isDisabled}
         />
@@ -68,7 +68,7 @@ function Noise({ audioContext, mixerNode }: NoiseProps) {
             topLabel="White"
             bottomLabel="Pink"
             style={{
-              left: "0.25rem",
+              left: "1.25rem",
               marginBottom: "0.25rem",
             }}
             disabled={isDisabled}
