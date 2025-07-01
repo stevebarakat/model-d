@@ -3,7 +3,7 @@
   --knob-container-multiplier: 1.75;
   --knob-border-radius: 50%;
   --knob-shadow-color: hsl(0deg 0% 0%);
-  --knob-highlight-color: hsl(0deg 0% 100% / 50%);
+  --knob-highlight-color: hsl(0deg 0% 30% / 50%);
   --knob-tick-color: hsl(0deg 0% 60%);
   --knob-dot-color: hsl(0deg 0% 75%);
   --knob-dot-gradient-start: hsl(220deg 13% 85%);
@@ -54,11 +54,13 @@
 .knobContainerSmall {
   --knob-size: 2rem;
   --tick-offset: 1.25rem;
+  --tick-height: 4px;
 }
 
 .knobContainerMedium {
   --knob-size: 2.5rem;
   --tick-offset: 1.5rem;
+  --tick-height: 5px;
 }
 
 .knobContainerLarge {
@@ -272,9 +274,8 @@
 /* Knob tick indicator */
 .knobTick {
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
-  z-index: 3;
   width: var(--tick-width);
   height: var(--tick-height);
   background: var(--knob-tick-color);

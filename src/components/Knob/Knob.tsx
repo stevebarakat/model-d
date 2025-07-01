@@ -67,8 +67,8 @@ function Knob({
         </span>
       )}
 
-      <div className={styles.knobRing}></div>
       <div className={styles.knob}>
+        <div className={styles.knobRing}></div>
         {/* Tick marks around the knob */}
         {valueLabels && (
           <KnobTicks
@@ -92,12 +92,7 @@ function Knob({
           />
         )}
 
-        <div
-          className={styles.knobBtm}
-          style={{
-            filter: "drop-shadow(0 -1px 0 hsla(0, 0%, 30%))",
-          }}
-        >
+        <div className={styles.knobBtm}>
           <div
             id={id}
             className={

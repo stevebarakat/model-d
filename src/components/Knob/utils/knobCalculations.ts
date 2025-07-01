@@ -144,9 +144,9 @@ export function calculateLabelPosition(
   const angle = startAngle + percentage * arc;
   const rad = (angle * Math.PI) / 180;
   const x =
-    50 + Math.cos(rad) * (size === "small" ? 80 : size === "medium" ? 70 : 75);
+    50 + Math.cos(rad) * (size === "small" ? 80 : size === "medium" ? 80 : 70);
   const y =
-    50 + Math.sin(rad) * (size === "small" ? 80 : size === "medium" ? 70 : 75);
+    50 + Math.sin(rad) * (size === "small" ? 82 : size === "medium" ? 80 : 70);
 
   return { x, y };
 }
@@ -155,8 +155,7 @@ export function calculateTickAngle(
   tick: number,
   min: number,
   max: number,
-  type: "arrow" | "radial",
-  size: "small" | "medium" | "large"
+  type: "arrow" | "radial"
 ): number {
   const arc = type === "arrow" ? 150 : 290;
   const startAngle = type === "arrow" ? -75 : -145;
