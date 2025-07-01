@@ -6,11 +6,8 @@ function KeyboardControl() {
   const { keyboardControl1, keyboardControl2, isDisabled } = useSynthStore(
     (state) => state
   );
-  const setKeyboardControl1 = useSynthStore(
-    (state) => state.setKeyboardControl1
-  );
-  const setKeyboardControl2 = useSynthStore(
-    (state) => state.setKeyboardControl2
+  const { setKeyboardControl1, setKeyboardControl2 } = useSynthStore(
+    (state) => state
   );
   return (
     <Column>
