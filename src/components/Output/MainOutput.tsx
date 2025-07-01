@@ -4,8 +4,13 @@ import { RockerSwitch } from "../RockerSwitch";
 import Knob from "../Knob";
 
 function MainOutput() {
-  const { mainVolume, setMainVolume, isMainActive, setIsMainActive } =
-    useSynthStore();
+  const {
+    mainVolume,
+    setMainVolume,
+    isMainActive,
+    setIsMainActive,
+    isDisabled,
+  } = useSynthStore();
 
   return (
     <Row gap="var(--spacing-md)" style={{ padding: "var(--spacing-md) 0" }}>
@@ -25,6 +30,7 @@ function MainOutput() {
         step={0.1}
         onChange={setMainVolume}
         label="Volume"
+        disabled={isDisabled}
       />
       <RockerSwitch
         theme="blue"
@@ -35,6 +41,7 @@ function MainOutput() {
         label="Main Output"
         topLabel="Main&nbsp;Output"
         bottomLabelRight="On"
+        disabled={isDisabled}
       />
     </Row>
   );

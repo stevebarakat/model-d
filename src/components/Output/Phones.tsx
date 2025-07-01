@@ -1,14 +1,10 @@
-// import { useSynthStore } from "@/store/synthStore";
+import { useSynthStore } from "@/store/synthStore";
 import Row from "../Row";
 import { RockerSwitch } from "../RockerSwitch";
 import Knob from "../Knob";
 
 function Phones() {
-  // const { phonesVolume, setPhonesVolume, arePhonesActive, setArePhonesActive } =
-  //   useSynthStore();
-
-  // const phonesVolume = 0;
-  // const arePhonesActive = false;
+  const { isDisabled } = useSynthStore();
 
   return (
     <Row gap="var(--spacing-md)" style={{ padding: "var(--spacing-md) 0" }}>
@@ -28,16 +24,16 @@ function Phones() {
         step={0.1}
         onChange={() => {}}
         label="Volume"
+        disabled={isDisabled}
       />
       <RockerSwitch
         theme="blue"
         checked={false}
-        onCheckedChange={() => {
-          // setArePhonesActive(checked);
-        }}
+        onCheckedChange={() => {}}
         label="Phones"
         topLabel="Phones"
         bottomLabelRight="On"
+        disabled={isDisabled}
       />
     </Row>
   );
