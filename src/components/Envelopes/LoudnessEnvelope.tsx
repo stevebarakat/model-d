@@ -9,8 +9,9 @@ function LoudnessEnvelope() {
     loudnessAttack,
     loudnessDecay,
     loudnessSustain,
+    isDisabled,
     setLoudnessEnvelope,
-  } = useSynthStore();
+  } = useSynthStore((state) => state);
 
   return (
     <Column style={{ paddingRight: "0.75rem" }}>
@@ -38,6 +39,7 @@ function LoudnessEnvelope() {
             step={1}
             label="Attack Time"
             onChange={(value) => setLoudnessEnvelope({ attack: value })}
+            disabled={isDisabled}
           />
           <Knob
             valueLabels={{
@@ -60,6 +62,7 @@ function LoudnessEnvelope() {
             step={1}
             label="Decay Time"
             onChange={(value) => setLoudnessEnvelope({ decay: value })}
+            disabled={isDisabled}
           />
           <Knob
             valueLabels={{
@@ -76,6 +79,7 @@ function LoudnessEnvelope() {
             step={1}
             label="Sustain Level"
             onChange={(value) => setLoudnessEnvelope({ sustain: value })}
+            disabled={isDisabled}
           />
         </Row>
       </Column>
