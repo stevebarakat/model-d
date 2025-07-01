@@ -12,6 +12,7 @@ export type OscillatorPanelProps = {
   };
   children: React.ReactNode;
   style?: React.CSSProperties;
+  isDisabled?: boolean;
 };
 
 function OscillatorPanel({
@@ -19,6 +20,7 @@ function OscillatorPanel({
   controlSwitchProps,
   children,
   style,
+  isDisabled,
 }: OscillatorPanelProps) {
   return (
     <Row style={style}>
@@ -34,6 +36,7 @@ function OscillatorPanel({
               Control
             </span>
           }
+          disabled={isDisabled}
         />
       )}
       {children}

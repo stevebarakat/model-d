@@ -53,6 +53,7 @@ export default function Oscillator3() {
         label: "Osc. 3 Control",
         theme: "orange",
       }}
+      isDisabled={isDisabled}
     >
       <Knob
         type="arrow"

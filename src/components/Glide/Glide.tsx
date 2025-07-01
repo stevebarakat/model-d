@@ -2,8 +2,7 @@ import { useSynthStore } from "@/store/synthStore";
 import Knob from "../Knob";
 
 function Glide() {
-  const glideTime = useSynthStore((s) => s.glideTime);
-  const setGlideTime = useSynthStore((s) => s.setGlideTime);
+  const { glideTime, setGlideTime, isDisabled } = useSynthStore();
 
   return (
     <Knob
@@ -21,6 +20,7 @@ function Glide() {
         "8": "8",
         "10": "10",
       }}
+      disabled={isDisabled}
     />
   );
 }

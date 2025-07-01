@@ -2,8 +2,7 @@ import Knob from "../Knob";
 import { useSynthStore } from "@/store/synthStore";
 
 function ModulationMix() {
-  const modMix = useSynthStore((s) => s.modMix);
-  const setModMix = useSynthStore((s) => s.setModMix);
+  const { modMix, setModMix, isDisabled } = useSynthStore();
 
   return (
     <Knob
@@ -34,6 +33,7 @@ function ModulationMix() {
           </span>
         ),
       }}
+      disabled={isDisabled}
     />
   );
 }

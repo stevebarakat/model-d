@@ -9,15 +9,16 @@ import Row from "../Row";
 import { useSynthStore } from "@/store/synthStore";
 
 function Controllers() {
-  const osc3FilterEgSwitch = useSynthStore((s) => s.osc3FilterEgSwitch);
-  const setOsc3FilterEgSwitch = useSynthStore((s) => s.setOsc3FilterEgSwitch);
-  const noiseLfoSwitch = useSynthStore((s) => s.noiseLfoSwitch);
-  const setNoiseLfoSwitch = useSynthStore((s) => s.setNoiseLfoSwitch);
-  const isDisabled = useSynthStore((s) => s.isDisabled);
+  const {
+    osc3FilterEgSwitch,
+    setOsc3FilterEgSwitch,
+    noiseLfoSwitch,
+    setNoiseLfoSwitch,
+    isDisabled,
+  } = useSynthStore();
 
   return (
     <Section
-      className={isDisabled ? "disabled" : ""}
       style={{
         paddingLeft: "var(--spacing-sm)",
         paddingRight: "var(--spacing-lg)",
@@ -39,6 +40,7 @@ function Controllers() {
             label="Send to mod 1"
             bottomLabelLeft="Osc. 3"
             bottomLabelRight="Filter Eg"
+            disabled={isDisabled}
           />
           <RockerSwitch
             checked={noiseLfoSwitch}
@@ -46,6 +48,7 @@ function Controllers() {
             label="Send to mod 2"
             bottomLabelLeft="Noise"
             bottomLabelRight="LFO"
+            disabled={isDisabled}
           />
         </Row>
       </Column>

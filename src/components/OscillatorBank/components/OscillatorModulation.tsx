@@ -8,12 +8,8 @@ const style: React.CSSProperties = {
 };
 
 function OscillatorModulation() {
-  const oscillatorModulationOn = useSynthStore(
-    (state) => state.oscillatorModulationOn
-  );
-  const setOscillatorModulationOn = useSynthStore(
-    (state) => state.setOscillatorModulationOn
-  );
+  const { oscillatorModulationOn, setOscillatorModulationOn, isDisabled } =
+    useSynthStore();
   return (
     <div style={style}>
       <RockerSwitch
@@ -23,6 +19,7 @@ function OscillatorModulation() {
         label="Oscillator Modulation"
         topLabel="Oscillator Modulation"
         bottomLabelRight="On"
+        disabled={isDisabled}
       />
     </div>
   );

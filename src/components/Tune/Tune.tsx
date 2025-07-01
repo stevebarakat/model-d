@@ -2,7 +2,7 @@ import { useSynthStore } from "@/store/synthStore";
 import Knob from "../Knob";
 
 function Tune() {
-  const { masterTune, setMasterTune } = useSynthStore();
+  const { masterTune, setMasterTune, isDisabled } = useSynthStore();
 
   return (
     <Knob
@@ -19,6 +19,7 @@ function Tune() {
         "1": "+1",
         "2": "+2",
       }}
+      disabled={isDisabled}
     />
   );
 }
