@@ -20,6 +20,7 @@ function Knob({
   type = "radial",
   logarithmic = false,
   style,
+  disabled = false,
 }: KnobProps) {
   const { knobRef, handlePointerDown } = useKnobInteraction({
     value,
@@ -99,10 +100,14 @@ function Knob({
         >
           <div
             id={id}
-            className={type === "arrow" ? styles.arrow : styles.radial}
+            className={
+              type === "arrow"
+                ? styles.arrow + " " + (disabled ? "disabled" : "")
+                : styles.radial + " " + (disabled ? "disabled" : "")
+            }
             ref={knobRef}
             style={{ transform: `rotate(${rotation}deg)` }}
-            onPointerDown={handlePointerDown}
+            onPointerDown={disabled ? undefined : handlePointerDown}
             tabIndex={0}
             role="slider"
             aria-valuemin={min}

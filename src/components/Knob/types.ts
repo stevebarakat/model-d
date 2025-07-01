@@ -15,6 +15,7 @@ type KnobProps = {
   type?: "arrow" | "radial";
   logarithmic?: boolean;
   style?: React.CSSProperties;
+  disabled?: boolean;
 };
 
 type KnobSize = "small" | "medium" | "large";

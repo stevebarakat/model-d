@@ -15,6 +15,7 @@ type RockerSwitchProps = {
   theme?: "black" | "orange" | "blue" | "white";
   style?: React.CSSProperties;
   orientation?: "horizontal" | "vertical";
+  disabled?: boolean;
 };
 
 function RockerSwitch({
@@ -31,6 +32,7 @@ function RockerSwitch({
   bottomLabelRight,
   style,
   orientation = "horizontal",
+  disabled = false,
 }: RockerSwitchProps) {
   // Covert label to slug for id
   const id = slugify(label);
@@ -99,10 +101,12 @@ function RockerSwitch({
           id={id}
           className={styles.state}
           type="checkbox"
-          onChange={(e) => onCheckedChange(e.target.checked)}
+          onChange={(e) =>
+            disabled ? undefined : onCheckedChange(e.target.checked)
+          }
           checked={checked}
         />
-        <div className={styles.switch}>
+        <div className={styles.switch + " " + (disabled ? "disabled" : "")}>
           <span className="sr-only">{label}</span>
         </div>
       </label>
