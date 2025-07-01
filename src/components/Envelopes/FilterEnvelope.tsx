@@ -3,10 +3,10 @@ import Row from "../Row";
 import { useSynthStore } from "@/store/synthStore";
 
 function FilterEnvelope() {
-  const filterAttack = useSynthStore((state) => state.filterAttack);
-  const filterDecay = useSynthStore((state) => state.filterDecay);
-  const filterSustain = useSynthStore((state) => state.filterSustain);
-  const setFilterEnvelope = useSynthStore((state) => state.setFilterEnvelope);
+  const { filterAttack, filterDecay, filterSustain, isDisabled } =
+    useSynthStore((state) => state);
+  const { setFilterEnvelope } = useSynthStore((state) => state);
+
   return (
     <Row gap="var(--spacing-xl)">
       <Knob
@@ -30,6 +30,7 @@ function FilterEnvelope() {
         step={1}
         label="Attack Time"
         onChange={(v) => setFilterEnvelope({ attack: v })}
+        disabled={isDisabled}
       />
       <Knob
         valueLabels={{
@@ -52,6 +53,7 @@ function FilterEnvelope() {
         step={1}
         label="Decay Time"
         onChange={(v) => setFilterEnvelope({ decay: v })}
+        disabled={isDisabled}
       />
       <Knob
         valueLabels={{
@@ -68,6 +70,7 @@ function FilterEnvelope() {
         step={1}
         label="Sustain Level"
         onChange={(v) => setFilterEnvelope({ sustain: v })}
+        disabled={isDisabled}
       />
     </Row>
   );
