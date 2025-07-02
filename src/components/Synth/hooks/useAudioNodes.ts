@@ -40,19 +40,12 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
         audioContext,
         "worklet-processor"
       );
-      console.log("useAudioNodes: Created Moog filter AudioWorkletNode");
       filterNodeRef.current = moogFilter;
 
       // Fetch and send WASM binary
-      console.log("useAudioNodes: Fetching WASM binary...");
       const response = await fetch("/moog-filter/filterKernel.wasm");
       const wasmBinary = await response.arrayBuffer();
-      console.log(
-        "useAudioNodes: WASM binary fetched, size:",
-        wasmBinary.byteLength
-      );
       moogFilter.port.postMessage(wasmBinary);
-      console.log("useAudioNodes: WASM binary sent to worklet");
 
       // --- Loudness Envelope Gain ---
       const loudnessGain = audioContext.createGain();
@@ -73,18 +66,12 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
         loudnessGain &&
         masterGain
       ) {
-        console.log("useAudioNodes: Connecting audio nodes...");
         mixer.connect(saturationNode);
         // Temporarily bypass filter for testing
         saturationNode.connect(loudnessGain);
         // moogFilter.connect(loudnessGain);
         loudnessGain.connect(masterGain);
         masterGain.connect(audioContext.destination);
-        console.log(
-          "useAudioNodes: Audio nodes connected successfully (filter bypassed)"
-        );
-      } else {
-        console.error("useAudioNodes: Some nodes are missing for connection");
       }
     })();
 
@@ -130,19 +117,11 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
   // Set mixer volume based on master active state
   useEffect(() => {
     if (!audioContext || !mixerNodeRef.current) return;
-    console.log(
-      "useAudioNodes: isMainActive =",
-      isMainActive,
-      "mainVolume =",
-      mainVolume
-    );
     if (!isMainActive) {
       mixerNodeRef.current.gain.setValueAtTime(0, audioContext.currentTime);
-      console.log("useAudioNodes: Setting mixer gain to 0 (muted)");
     } else {
       const gain = Math.pow(mainVolume / 10, 2);
       mixerNodeRef.current.gain.setValueAtTime(gain, audioContext.currentTime);
-      console.log("useAudioNodes: Setting mixer gain to", gain);
     }
   }, [mainVolume, isMainActive, audioContext]);
 
