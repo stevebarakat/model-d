@@ -20,11 +20,11 @@
   position: relative;
   width: var(--switch-width);
   height: var(--switch-height);
-  background-color: black;
-  border: 1.5px solid black;
-  border-top: 0.5px solid black;
-  border-radius: 0.15rem;
-  box-shadow: 0 0 0 1px var(--color-gray-d);
+  background-color: var(--color-gray-l);
+  /* border: 1.5px solid black; */
+  /* border-top: 0.5px solid black; */
+  border-radius: 0.25rem;
+  /* box-shadow: 0 0 0 1px var(--color-gray-d); */
   cursor: pointer;
   transform: rotate(180deg);
   perspective: 7.5rem;
