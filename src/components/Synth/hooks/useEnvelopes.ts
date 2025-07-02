@@ -58,41 +58,58 @@ function useEnvelopes({
             baseCutoff *
             Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
 
-          if (filterModulationOn) {
-            // Filter envelope modulation
-            const contourOctaves =
-              mapContourAmount(filterContourAmount) * (modWheel / 100);
-            const attackTime = mapEnvelopeTime(filterAttack);
-            const decayTime = mapEnvelopeTime(filterDecay);
-            const sustainLevel = filterSustain / 10;
-            const envMax = trackedCutoff * Math.pow(2, contourOctaves);
-            const envSustain =
-              trackedCutoff + (envMax - trackedCutoff) * sustainLevel;
-            const now = audioContext.currentTime;
+          if (
+            typeof AudioWorkletNode !== "undefined" &&
+            filterNode instanceof AudioWorkletNode
+          ) {
+            // For AudioWorkletNode, send normalized cutoff
+            const minFreq = 20;
+            const maxFreq = 20000;
+            let normCutoff =
+              (Math.log(trackedCutoff) - Math.log(minFreq)) /
+              (Math.log(maxFreq) - Math.log(minFreq));
+            normCutoff = Math.max(0, Math.min(1, normCutoff));
+            filterNode.port.postMessage({ cutOff: normCutoff });
+          } else if (
+            typeof filterNode.frequency !== "undefined" &&
+            typeof filterNode.context !== "undefined"
+          ) {
+            if (filterModulationOn) {
+              // Filter envelope modulation
+              const contourOctaves =
+                mapContourAmount(filterContourAmount) * (modWheel / 100);
+              const attackTime = mapEnvelopeTime(filterAttack);
+              const decayTime = mapEnvelopeTime(filterDecay);
+              const sustainLevel = filterSustain / 10;
+              const envMax = trackedCutoff * Math.pow(2, contourOctaves);
+              const envSustain =
+                trackedCutoff + (envMax - trackedCutoff) * sustainLevel;
+              const now = audioContext.currentTime;
 
-            filterNode.frequency.cancelScheduledValues(now);
+              filterNode.frequency.cancelScheduledValues(now);
 
-            // For smooth note transitions, start from current frequency if it's close
-            const currentFreq = filterNode.frequency.value;
-            const freqDiff =
-              Math.abs(currentFreq - trackedCutoff) / trackedCutoff;
-            const startFreq = freqDiff < 0.5 ? currentFreq : trackedCutoff; // Smooth transition if close
+              // For smooth note transitions, start from current frequency if it's close
+              const currentFreq = filterNode.frequency.value;
+              const freqDiff =
+                Math.abs(currentFreq - trackedCutoff) / trackedCutoff;
+              const startFreq = freqDiff < 0.5 ? currentFreq : trackedCutoff; // Smooth transition if close
 
-            filterNode.frequency.setValueAtTime(startFreq, now);
-            filterNode.frequency.linearRampToValueAtTime(
-              envMax,
-              now + attackTime
-            );
-            filterNode.frequency.linearRampToValueAtTime(
-              envSustain,
-              now + attackTime + decayTime
-            );
-          } else {
-            // Just set cutoff with key tracking
-            filterNode.frequency.setValueAtTime(
-              trackedCutoff,
-              audioContext.currentTime
-            );
+              filterNode.frequency.setValueAtTime(startFreq, now);
+              filterNode.frequency.linearRampToValueAtTime(
+                envMax,
+                now + attackTime
+              );
+              filterNode.frequency.linearRampToValueAtTime(
+                envSustain,
+                now + attackTime + decayTime
+              );
+            } else {
+              // Just set cutoff with key tracking
+              filterNode.frequency.setValueAtTime(
+                trackedCutoff,
+                audioContext.currentTime
+              );
+            }
           }
         }
 
@@ -128,16 +145,33 @@ function useEnvelopes({
 
         // Handle filter envelope release
         if (filterNode && filterModulationOn) {
-          if (decaySwitchOn) {
-            filterNode.frequency.cancelScheduledValues(now);
-            const currentFreq = filterNode.frequency.value;
-            filterNode.frequency.setValueAtTime(currentFreq, now);
-            filterNode.frequency.linearRampToValueAtTime(
-              mapCutoff(filterCutoff),
-              now + mapEnvelopeTime(filterDecay)
-            );
-          } else {
-            filterNode.frequency.setValueAtTime(mapCutoff(filterCutoff), now);
+          if (
+            typeof AudioWorkletNode !== "undefined" &&
+            filterNode instanceof AudioWorkletNode
+          ) {
+            // For AudioWorkletNode, send normalized cutoff
+            const minFreq = 20;
+            const maxFreq = 20000;
+            let normCutoff =
+              (Math.log(mapCutoff(filterCutoff)) - Math.log(minFreq)) /
+              (Math.log(maxFreq) - Math.log(minFreq));
+            normCutoff = Math.max(0, Math.min(1, normCutoff));
+            filterNode.port.postMessage({ cutOff: normCutoff });
+          } else if (
+            typeof filterNode.frequency !== "undefined" &&
+            typeof filterNode.context !== "undefined"
+          ) {
+            if (decaySwitchOn) {
+              filterNode.frequency.cancelScheduledValues(now);
+              const currentFreq = filterNode.frequency.value;
+              filterNode.frequency.setValueAtTime(currentFreq, now);
+              filterNode.frequency.linearRampToValueAtTime(
+                mapCutoff(filterCutoff),
+                now + mapEnvelopeTime(filterDecay)
+              );
+            } else {
+              filterNode.frequency.setValueAtTime(mapCutoff(filterCutoff), now);
+            }
           }
         }
 

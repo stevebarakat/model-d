@@ -5,7 +5,7 @@ import { AudioNodes } from "../types/synthTypes";
 
 function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
   const mixerNodeRef = useRef<GainNode | null>(null);
-  const filterNodeRef = useRef<BiquadFilterNode | null>(null);
+  const filterNodeRef = useRef<AudioWorkletNode | null>(null);
   const loudnessEnvelopeGainRef = useRef<GainNode | null>(null);
   const masterGainRef = useRef<GainNode | null>(null);
   const [isMixerReady, setIsMixerReady] = useState(false);
@@ -17,45 +17,66 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
   useEffect(() => {
     if (!audioContext) return;
 
-    // Create nodes
-    const filter = audioContext.createBiquadFilter();
-    filter.type = "lowpass";
-    filter.Q.value = 0;
-    filterNodeRef.current = filter;
+    let isMounted = true;
+    (async () => {
+      // Create nodes
+      // --- Mixer ---
+      const mixer = audioContext.createGain();
+      mixer.gain.value = 1;
+      mixerNodeRef.current = mixer;
+      setIsMixerReady(true);
 
-    const mixer = audioContext.createGain();
-    mixer.gain.value = 1;
-    mixerNodeRef.current = mixer;
-    setIsMixerReady(true);
+      // --- Saturation (unchanged) ---
+      const saturationNode = audioContext.createWaveShaper();
+      const saturationCurve = new Float32Array(4096);
+      for (let i = 0; i < 4096; i++) {
+        const x = (i * 2) / 4096 - 1;
+        saturationCurve[i] = Math.tanh(x * 1.5) / 1.5; // Subtle saturation
+      }
+      saturationNode.curve = saturationCurve;
+      saturationNode.oversample = "4x";
 
-    // Add subtle saturation for fatter sound
-    const saturationNode = audioContext.createWaveShaper();
-    const saturationCurve = new Float32Array(4096);
-    for (let i = 0; i < 4096; i++) {
-      const x = (i * 2) / 4096 - 1;
-      saturationCurve[i] = Math.tanh(x * 1.5) / 1.5; // Subtle saturation
-    }
-    saturationNode.curve = saturationCurve;
-    saturationNode.oversample = "4x";
+      // --- Moog Filter AudioWorkletNode ---
+      const moogFilter = new AudioWorkletNode(
+        audioContext,
+        "worklet-processor"
+      );
+      filterNodeRef.current = moogFilter;
 
-    const loudnessGain = audioContext.createGain();
-    loudnessGain.gain.value = 1;
-    loudnessEnvelopeGainRef.current = loudnessGain;
+      // Fetch and send WASM binary
+      const response = await fetch("/moog-filter/filterKernel.wasm");
+      const wasmBinary = await response.arrayBuffer();
+      moogFilter.port.postMessage(wasmBinary);
 
-    const masterGain = audioContext.createGain();
-    masterGain.gain.value = 1;
-    masterGainRef.current = masterGain;
+      // --- Loudness Envelope Gain ---
+      const loudnessGain = audioContext.createGain();
+      loudnessGain.gain.value = 1;
+      loudnessEnvelopeGainRef.current = loudnessGain;
 
-    // Connect: Mixer -> Saturation -> Filter -> Loudness Envelope -> Master -> Destination
-    if (mixer && saturationNode && filter && loudnessGain && masterGain) {
-      mixer.connect(saturationNode);
-      saturationNode.connect(filter);
-      filter.connect(loudnessGain);
-      loudnessGain.connect(masterGain);
-      masterGain.connect(audioContext.destination);
-    }
+      // --- Master Gain ---
+      const masterGain = audioContext.createGain();
+      masterGain.gain.value = 1;
+      masterGainRef.current = masterGain;
+
+      // --- Connect: Mixer -> Saturation -> Moog Filter -> Loudness Envelope -> Master -> Destination ---
+      if (
+        isMounted &&
+        mixer &&
+        saturationNode &&
+        moogFilter &&
+        loudnessGain &&
+        masterGain
+      ) {
+        mixer.connect(saturationNode);
+        saturationNode.connect(moogFilter);
+        moogFilter.connect(loudnessGain);
+        loudnessGain.connect(masterGain);
+        masterGain.connect(audioContext.destination);
+      }
+    })();
 
     return () => {
+      isMounted = false;
       if (mixerNodeRef.current) {
         mixerNodeRef.current.disconnect();
         mixerNodeRef.current = null;
@@ -76,22 +97,14 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
     };
   }, [audioContext]);
 
-  // Set filter cutoff and emphasis
+  // Set filter cutoff and emphasis (send to worklet)
   useEffect(() => {
     if (!filterNodeRef.current || !audioContext) return;
-
-    filterNodeRef.current.frequency.setValueAtTime(
-      mapCutoff(filterCutoff),
-      audioContext.currentTime
-    );
-
-    // Map 0-10 to Q: 0.7 (no resonance) to 15 (classic Minimoog max resonance)
-    // Add slight boost to default resonance for fatter sound
-    const minQ = 0.7;
-    const maxQ = 15;
-    const boostedEmphasis = Math.min(10, filterEmphasis + 1); // Boost resonance by 1
-    const q = minQ + (maxQ - minQ) * (boostedEmphasis / 10);
-    filterNodeRef.current.Q.setValueAtTime(q, audioContext.currentTime);
+    // Map 0-10 to 0.0-1.0 for cutoff and resonance
+    const cutoffNorm = Math.max(0, Math.min(1, filterCutoff / 10));
+    const resonanceNorm = Math.max(0, Math.min(1, filterEmphasis / 10));
+    filterNodeRef.current.port.postMessage({ cutOff: cutoffNorm });
+    filterNodeRef.current.port.postMessage({ resonance: resonanceNorm });
   }, [filterCutoff, filterEmphasis, audioContext]);
 
   // Set master volume

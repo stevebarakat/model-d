@@ -16,6 +16,11 @@ export function useAudioContext() {
         await audioContextRef.current.resume();
       }
 
+      // Register the worklet processor (await to ensure it's loaded)
+      await audioContextRef.current.audioWorklet.addModule(
+        "/moog-filter/worklet-processor.js"
+      );
+
       setIsInitialized(true);
       setIsDisabled(false);
     } catch (error) {

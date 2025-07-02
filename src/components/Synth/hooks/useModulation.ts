@@ -200,17 +200,37 @@ function useModulation({
       });
     }
 
+    // --- MODIFIED: Sample modulation output and send to filter worklet ---
+    let modMonitorNode: ScriptProcessorNode | null = null;
+    let intervalId: number | undefined;
     if (
       filterModulationOn &&
       filterNode &&
-      filterNode.context === audioContext
+      filterNode instanceof AudioWorkletNode &&
+      modWheelGainRef.current
     ) {
-      // Ensure filter belongs to current context
-      modWheelGainRef.current.connect(filterNode.frequency);
+      // Use ScriptProcessorNode to tap the modulation signal
+      modMonitorNode = audioContext.createScriptProcessor(256, 1, 1);
+      modWheelGainRef.current.connect(modMonitorNode);
+      modMonitorNode.connect(audioContext.destination); // or audioContext.createGain() to silence
+      modMonitorNode.onaudioprocess = (event) => {
+        const input = event.inputBuffer.getChannelData(0);
+        // Take the average value of this buffer as the modulation value
+        let sum = 0;
+        for (let i = 0; i < input.length; i++) sum += input[i];
+        const avg = sum / input.length;
+        filterNode.port.postMessage({ modValue: avg });
+      };
     }
 
     return () => {
       cleanupAllNodes();
+      if (modMonitorNode) {
+        modMonitorNode.disconnect();
+        modMonitorNode.onaudioprocess = null;
+        modMonitorNode = null;
+      }
+      if (intervalId) clearInterval(intervalId);
     };
   }, [
     audioContext,

@@ -47,8 +47,13 @@ function Synth() {
   useURLSync();
 
   // Set up audio nodes
-  const { mixerNode, filterNode, loudnessEnvelopeGain } =
-    useAudioNodes(audioContext);
+  const {
+    mixerNode,
+    filterNode: _filterNode,
+    loudnessEnvelopeGain,
+  } = useAudioNodes(audioContext);
+  // Explicitly type filterNode as AudioWorkletNode | BiquadFilterNode | null
+  const filterNode: AudioWorkletNode | BiquadFilterNode | null = _filterNode;
 
   // Set up oscillators
   const validCtx = audioContext && mixerNode ? audioContext : null;
@@ -105,16 +110,37 @@ function Synth() {
         trackedCutoff *
         Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
     }
-    filterNode.frequency.setValueAtTime(
-      trackedCutoff,
-      filterNode.context.currentTime
-    );
 
-    // Map 0-10 to Q: 0.7 (no resonance) to 15 (classic Minimoog max resonance)
-    const minQ = 0.7;
-    const maxQ = 15;
-    const q = minQ + (maxQ - minQ) * (filterEmphasis / 10);
-    filterNode.Q.setValueAtTime(q, filterNode.context.currentTime);
+    // Type guard for AudioWorkletNode
+    if (
+      typeof AudioWorkletNode !== "undefined" &&
+      filterNode instanceof AudioWorkletNode
+    ) {
+      // Normalize trackedCutoff to 0.0–1.0 (assuming 20Hz–20kHz mapping)
+      const minFreq = 20;
+      const maxFreq = 20000;
+      let normCutoff =
+        (Math.log(trackedCutoff) - Math.log(minFreq)) /
+        (Math.log(maxFreq) - Math.log(minFreq));
+      normCutoff = Math.max(0, Math.min(1, normCutoff));
+      filterNode.port.postMessage({ cutOff: normCutoff });
+    } else if (
+      filterNode &&
+      typeof filterNode.frequency !== "undefined" &&
+      typeof filterNode.context !== "undefined" &&
+      typeof filterNode.Q !== "undefined"
+    ) {
+      // BiquadFilterNode case
+      filterNode.frequency.setValueAtTime(
+        trackedCutoff,
+        filterNode.context.currentTime
+      );
+      // Map 0-10 to Q: 0.7 (no resonance) to 15 (classic Minimoog max resonance)
+      const minQ = 0.7;
+      const maxQ = 15;
+      const q = minQ + (maxQ - minQ) * (filterEmphasis / 10);
+      filterNode.Q.setValueAtTime(q, filterNode.context.currentTime);
+    }
   }, [filterNode, audioContext, activeKeys]);
 
   return (
