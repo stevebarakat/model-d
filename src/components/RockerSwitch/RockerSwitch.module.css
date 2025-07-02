@@ -71,6 +71,21 @@
   width: var(--switch-width);
   transition: all 0.3s ease-in-out;
 
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    height: calc(var(--switch-width) / 3);
+    width: var(--switch-height);
+    background: linear-gradient(
+      to bottom,
+      hsl(0 0% 80% / 0.5),
+      hsl(0 0% 100% / 0)
+    );
+    z-index: 1000;
+    /* box-shadow: 0 0 0 1px var(--color-gray-d); */
+  }
+
   label {
     position: relative;
     z-index: 50;
@@ -135,15 +150,14 @@
 }
 
 .black .switch::before {
-  background-image: var(--switch-gloss-img),
-    linear-gradient(to right, hsl(0deg 0% 8%), hsl(0deg 0% 18%));
+  background-image: var(--switch-gloss-img);
   box-shadow: calc(var(--switch-depth) * -1) 0 0 0 hsl(0deg 0% 8%);
 }
 
 .black .switch::after {
-  background-image: var(--switch-gloss-img),
-    linear-gradient(to left, hsl(0deg 0% 8%), hsl(0deg 0% 18%));
+  background-image: var(--switch-gloss-img);
   box-shadow: 0 0 0 0 hsl(0deg 0% 8%);
+  opacity: 0.75;
 }
 
 /* White Theme */
@@ -189,11 +203,13 @@
 .black .state:checked ~ .switch::before {
   box-shadow: 0 0 0 0 hsl(0deg 0% 8%);
   border-left-color: hsl(0deg 0% 18%);
+  opacity: 0.75;
 }
 
 .black .state:checked ~ .switch::after {
   box-shadow: var(--switch-depth) 0 0 0 hsl(0deg 0% 8%);
   border-right-color: hsl(0deg 0% 25%);
+  opacity: 1;
 }
 
 /* Orange Theme State */
