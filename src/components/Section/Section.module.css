@@ -4,4 +4,5 @@
   flex-direction: column;
   padding-bottom: 1.75rem;
   border-right: 2px solid var(--color-white-50);
+  background: var(--color-off-black);
 }

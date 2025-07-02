@@ -20,8 +20,9 @@ function Controllers() {
   return (
     <Section
       style={{
-        paddingLeft: "var(--spacing-sm)",
+        marginLeft: "var(--spacing-sm)",
         paddingRight: "var(--spacing-lg)",
+        borderRadius: "0 0 0 10px",
       }}
     >
       <Column gap="var(--spacing-lg)">

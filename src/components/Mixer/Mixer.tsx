@@ -18,8 +18,8 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
   const { mixer, setMixerSource, isDisabled } = useSynthStore();
 
   return (
-    <Section style={{ margin: "0 var(--spacing-md)" }}>
-      <Row>
+    <Section>
+      <Row style={{ padding: "0 var(--spacing-md)" }}>
         <Column gap="1.2rem">
           <Row>
             <Knob

@@ -135,7 +135,7 @@ function Synth() {
             <Mixer audioContext={audioContext!} mixerNode={mixerNode!} />
             <Modifiers />
             <Output />
-            <Section style={{ borderRight: "none" }}>
+            <Section style={{ borderRadius: "0 0 10px 0" }}>
               <PowerButton
                 isOn={isInitialized}
                 onPowerOn={initialize}
@@ -149,6 +149,7 @@ function Synth() {
               padding: "var(--spacing-md)",
               background: "url('/images/mid-panel-2.png')  ",
             }}
+            className={styles.midPanel}
           >
             <Logo />
           </Row>
