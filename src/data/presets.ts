@@ -6,6 +6,7 @@ export interface Preset {
   description: string;
   category: string;
   parameters: Partial<SynthState>;
+  shareURL?: string; // Optional URL for sharing
 }
 
 export const presets: Preset[] = [

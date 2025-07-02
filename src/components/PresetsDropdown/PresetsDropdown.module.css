@@ -180,9 +180,23 @@
   background: transparent;
   border: none;
   text-align: left;
-  cursor: pointer;
   transition: all 0.2s ease;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.presetButton {
+  flex: 1;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  color: inherit;
 }
 
 .presetItem:last-child {
@@ -283,4 +297,31 @@
   .presetList {
     max-height: 200px;
   }
+}
+
+.copyUrlButton {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.copyUrlButton:hover {
+  background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+  border-color: #777;
+  color: #e0e0e0;
+  transform: translateY(-1px);
+}
+
+.copyUrlButton:active {
+  transform: translateY(0);
 }
