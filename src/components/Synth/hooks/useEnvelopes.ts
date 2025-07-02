@@ -40,14 +40,9 @@ function useEnvelopes({
   const synthObj = useMemo(() => {
     return {
       triggerAttack: (note: string) => {
-        console.log("Synth triggerAttack:", { note, timestamp: Date.now() });
         if (!audioContext || !loudnessEnvelopeGain) {
-          console.log(
-            "Synth triggerAttack: missing audio context or envelope gain"
-          );
           return;
         }
-
         osc1?.triggerAttack?.(note);
         osc2?.triggerAttack?.(note);
         osc3?.triggerAttack?.(note);
@@ -122,14 +117,9 @@ function useEnvelopes({
         }
       },
       triggerRelease: () => {
-        console.log("Synth triggerRelease:", { timestamp: Date.now() });
         if (!audioContext || !loudnessEnvelopeGain) {
-          console.log(
-            "Synth triggerRelease: missing audio context or envelope gain"
-          );
           return;
         }
-
         osc1?.triggerRelease?.();
         osc2?.triggerRelease?.();
         osc3?.triggerRelease?.();

@@ -20,7 +20,8 @@ export function useOscillator2(
   const oscRef = useRef<Osc2Instance | null>(null);
   const lastFrequencyRef = useRef<number | null>(null);
   const lastNoteRef = useRef<string | null>(null);
-  const vibratoIntervalRef = useRef<number | null>(null);
+  const vibratoLfoRef = useRef<OscillatorNode | null>(null);
+  const vibratoGainRef = useRef<GainNode | null>(null);
 
   useEffect(() => {
     if (oscRef.current) {
@@ -86,21 +87,26 @@ export function useOscillator2(
         oscRef.current.start(freq);
       }
       lastFrequencyRef.current = freq;
-      // Vibrato
+      // Vibrato LFO
       if (vibratoAmount > 0 && oscRef.current) {
         const oscNode = oscRef.current.getNode();
-        const t0 = audioContext.currentTime;
-        vibratoIntervalRef.current = window.setInterval(() => {
-          const t = performance.now() / 1000 - t0;
-          // 6 Hz vibrato, ±1 semitone max
-          const vibratoSemis = Math.sin(2 * Math.PI * 6 * t) * vibratoAmount;
-          const vibFreq =
-            baseFreq *
-            Math.pow(2, (detuneSemis + bendSemis + vibratoSemis) / 12);
-          if (oscNode) {
-            oscNode.frequency.setValueAtTime(vibFreq, audioContext.currentTime);
-          }
-        }, 1000 / 60);
+        // Clean up previous LFO if any
+        vibratoLfoRef.current?.disconnect();
+        vibratoGainRef.current?.disconnect();
+        vibratoLfoRef.current = null;
+        vibratoGainRef.current = null;
+        if (oscNode) {
+          const lfo = audioContext.createOscillator();
+          lfo.type = "sine";
+          lfo.frequency.value = 6; // 6 Hz vibrato
+          const lfoGain = audioContext.createGain();
+          lfoGain.gain.value = baseFreq * (Math.pow(2, vibratoAmount / 12) - 1);
+          lfo.connect(lfoGain);
+          lfoGain.connect(oscNode.frequency);
+          lfo.start();
+          vibratoLfoRef.current = lfo;
+          vibratoGainRef.current = lfoGain;
+        }
       }
     },
     [
@@ -116,10 +122,12 @@ export function useOscillator2(
   );
 
   const triggerRelease = useCallback(() => {
-    if (vibratoIntervalRef.current) {
-      clearInterval(vibratoIntervalRef.current);
-      vibratoIntervalRef.current = null;
-    }
+    // Clean up vibrato LFO
+    vibratoLfoRef.current?.stop();
+    vibratoLfoRef.current?.disconnect();
+    vibratoGainRef.current?.disconnect();
+    vibratoLfoRef.current = null;
+    vibratoGainRef.current = null;
   }, []);
 
   useEffect(() => {
@@ -145,10 +153,12 @@ export function useOscillator2(
         oscRef.current.stop();
         oscRef.current = null;
       }
-      if (vibratoIntervalRef.current) {
-        clearInterval(vibratoIntervalRef.current);
-        vibratoIntervalRef.current = null;
-      }
+      // Clean up vibrato LFO
+      vibratoLfoRef.current?.stop();
+      vibratoLfoRef.current?.disconnect();
+      vibratoGainRef.current?.disconnect();
+      vibratoLfoRef.current = null;
+      vibratoGainRef.current = null;
     };
   }, []);
 

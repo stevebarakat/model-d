@@ -139,62 +139,33 @@ export function useMidiHandling(synthObj: SynthObject | null) {
     let newModValue: MIDIValue;
     let newPitchValue: MIDIValue;
 
-    console.log("MIDI Message:", {
-      status: status.toString(16),
-      data1,
-      data2,
-      messageType: messageType.toString(16),
-      timestamp: Date.now(),
-    });
-
     switch (messageType) {
       case MIDI_NOTE_ON: {
         note = midiNoteToNote(data1);
         if (data2 > 0) {
-          console.log("MIDI Note ON:", {
-            note,
-            velocity: data2,
-            midiNote: data1,
-          });
           // For monophonic synth: legato mode
           const currentActiveKey = activeKeysRef.current;
 
           // Add to pressed keys
           pressedKeysRef.current.add(note);
 
-          console.log("MIDI Note ON - Debug:", {
-            note,
-            currentActiveKey,
-            pressedKeys: Array.from(pressedKeysRef.current),
-          });
-
           if (currentActiveKey && currentActiveKey !== note) {
             // Legato mode: change pitch of current note
-            console.log("Legato mode: changing pitch to", note);
             setActiveKeysRef.current(note);
             activeKeysRef.current = note; // Update ref immediately
             synthObjRef.current?.triggerAttack(note);
           } else if (!currentActiveKey) {
             // First key press: start a new note
-            console.log("First key press: starting new note", note);
             setActiveKeysRef.current(note);
             activeKeysRef.current = note; // Update ref immediately
             synthObjRef.current?.triggerAttack(note);
           }
         } else {
           // Note ON with velocity 0 is equivalent to Note OFF
-          console.log("MIDI Note OFF (velocity 0):", { note, midiNote: data1 });
-
           // Remove from pressed keys
           pressedKeysRef.current.delete(note);
 
           const currentActiveKey = activeKeysRef.current;
-          console.log("MIDI Note OFF (velocity 0) - Debug:", {
-            note,
-            currentActiveKey,
-            pressedKeys: Array.from(pressedKeysRef.current),
-            remainingKeys: Array.from(pressedKeysRef.current),
-          });
 
           if (currentActiveKey === note) {
             // Check if there are other pressed keys
@@ -203,13 +174,11 @@ export function useMidiHandling(synthObj: SynthObject | null) {
             if (remainingKeys.length > 0) {
               // Switch to the most recently pressed remaining key
               const nextKey = remainingKeys[remainingKeys.length - 1];
-              console.log("Switching to next key (velocity 0):", nextKey);
               setActiveKeysRef.current(nextKey);
               activeKeysRef.current = nextKey; // Update ref immediately
               synthObjRef.current?.triggerAttack(nextKey);
             } else {
               // No more keys pressed, release the note
-              console.log("No more keys pressed, releasing note (velocity 0)");
               setActiveKeysRef.current(null);
               activeKeysRef.current = null; // Update ref immediately
               synthObjRef.current?.triggerRelease();
@@ -221,18 +190,11 @@ export function useMidiHandling(synthObj: SynthObject | null) {
 
       case MIDI_NOTE_OFF: {
         note = midiNoteToNote(data1);
-        console.log("MIDI Note OFF:", { note, midiNote: data1 });
 
         // Remove from pressed keys
         pressedKeysRef.current.delete(note);
 
         const currentActiveKey = activeKeysRef.current;
-        console.log("MIDI Note OFF - Debug:", {
-          note,
-          currentActiveKey,
-          pressedKeys: Array.from(pressedKeysRef.current),
-          remainingKeys: Array.from(pressedKeysRef.current),
-        });
 
         if (currentActiveKey === note) {
           // Check if there are other pressed keys
@@ -241,13 +203,11 @@ export function useMidiHandling(synthObj: SynthObject | null) {
           if (remainingKeys.length > 0) {
             // Switch to the most recently pressed remaining key
             const nextKey = remainingKeys[remainingKeys.length - 1];
-            console.log("Switching to next key:", nextKey);
             setActiveKeysRef.current(nextKey);
             activeKeysRef.current = nextKey; // Update ref immediately
             synthObjRef.current?.triggerAttack(nextKey);
           } else {
             // No more keys pressed, release the note
-            console.log("No more keys pressed, releasing note");
             setActiveKeysRef.current(null);
             activeKeysRef.current = null; // Update ref immediately
             synthObjRef.current?.triggerRelease();
@@ -261,21 +221,14 @@ export function useMidiHandling(synthObj: SynthObject | null) {
           case CC_MODULATION:
             newModValue = expScale(data2);
             pendingMod.current = newModValue;
-            console.log("MIDI Modulation:", {
-              raw: data2,
-              scaled: newModValue,
-            });
             break;
           case CC_VOLUME:
-            console.log("MIDI Volume:", data2);
             // Handle volume if needed
             break;
           case CC_PAN:
-            console.log("MIDI Pan:", data2);
             // Handle pan if needed
             break;
           default:
-            console.log("MIDI CC:", { controller: data1, value: data2 });
         }
         break;
       }
@@ -284,15 +237,10 @@ export function useMidiHandling(synthObj: SynthObject | null) {
         rawValue = data1 + (data2 << 7);
         newPitchValue = Math.round((rawValue / 16383) * 100);
         pendingPitch.current = newPitchValue;
-        console.log("MIDI Pitch Bend:", {
-          raw: rawValue,
-          scaled: newPitchValue,
-        });
         break;
       }
 
       default:
-        console.log("Unknown MIDI message type:", messageType.toString(16));
     }
   }, []);
 
@@ -304,7 +252,6 @@ export function useMidiHandling(synthObj: SynthObject | null) {
         midiAccess.inputs.forEach((input) => {
           // Only set up each input once
           if (!setupInputs.current.has(input.id)) {
-            console.log("Setting up MIDI input:", input.name, input.id);
             input.onmidimessage = handleMidiMessage;
             setupInputs.current.add(input.id);
           }
@@ -315,7 +262,6 @@ export function useMidiHandling(synthObj: SynthObject | null) {
           if (port && port.type === "input" && port.state === "connected") {
             // Only set up new inputs that haven't been set up before
             if (!setupInputs.current.has(port.id)) {
-              console.log("New MIDI input connected:", port.name, port.id);
               port.onmidimessage = handleMidiMessage;
               setupInputs.current.add(port.id);
             }
