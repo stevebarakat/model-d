@@ -52,13 +52,14 @@ function Synth() {
     filterNode: _filterNode,
     loudnessEnvelopeGain,
   } = useAudioNodes(audioContext);
-  // Explicitly type filterNode as AudioWorkletNode | BiquadFilterNode | null
-  const filterNode: AudioWorkletNode | BiquadFilterNode | null = _filterNode;
+  // Explicitly type filterNode as AudioWorkletNode | null
+  const filterNode: AudioWorkletNode | null = _filterNode;
 
   // Set up oscillators
   const validCtx = audioContext && mixerNode ? audioContext : null;
   const validMixer =
     audioContext && mixerNode instanceof GainNode ? mixerNode : null;
+
   useNoise(validCtx, validMixer);
 
   const vibratoAmount = useSynthStore((state) =>
@@ -96,7 +97,7 @@ function Synth() {
   // Update filter based on key tracking
   useEffect(() => {
     if (!filterNode || !audioContext) return;
-    const { filterCutoff, filterEmphasis, keyboardControl1, keyboardControl2 } =
+    const { filterCutoff, keyboardControl1, keyboardControl2 } =
       useSynthStore.getState();
 
     // Key tracking for static cutoff
@@ -111,36 +112,14 @@ function Synth() {
         Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
     }
 
-    // Type guard for AudioWorkletNode
-    if (
-      typeof AudioWorkletNode !== "undefined" &&
-      filterNode instanceof AudioWorkletNode
-    ) {
-      // Normalize trackedCutoff to 0.0–1.0 (assuming 20Hz–20kHz mapping)
-      const minFreq = 20;
-      const maxFreq = 20000;
-      let normCutoff =
-        (Math.log(trackedCutoff) - Math.log(minFreq)) /
-        (Math.log(maxFreq) - Math.log(minFreq));
-      normCutoff = Math.max(0, Math.min(1, normCutoff));
-      filterNode.port.postMessage({ cutOff: normCutoff });
-    } else if (
-      filterNode &&
-      typeof filterNode.frequency !== "undefined" &&
-      typeof filterNode.context !== "undefined" &&
-      typeof filterNode.Q !== "undefined"
-    ) {
-      // BiquadFilterNode case
-      filterNode.frequency.setValueAtTime(
-        trackedCutoff,
-        filterNode.context.currentTime
-      );
-      // Map 0-10 to Q: 0.7 (no resonance) to 15 (classic Minimoog max resonance)
-      const minQ = 0.7;
-      const maxQ = 15;
-      const q = minQ + (maxQ - minQ) * (filterEmphasis / 10);
-      filterNode.Q.setValueAtTime(q, filterNode.context.currentTime);
-    }
+    // AudioWorkletNode case - send normalized cutoff to WASM
+    const minFreq = 20;
+    const maxFreq = 20000;
+    let normCutoff =
+      (Math.log(trackedCutoff) - Math.log(minFreq)) /
+      (Math.log(maxFreq) - Math.log(minFreq));
+    normCutoff = Math.max(0, Math.min(1, normCutoff));
+    filterNode.port.postMessage({ cutOff: normCutoff });
   }, [filterNode, audioContext, activeKeys]);
 
   return (

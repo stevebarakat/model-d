@@ -212,14 +212,18 @@ function useModulation({
       // Use ScriptProcessorNode to tap the modulation signal
       modMonitorNode = audioContext.createScriptProcessor(256, 1, 1);
       modWheelGainRef.current.connect(modMonitorNode);
-      modMonitorNode.connect(audioContext.destination); // or audioContext.createGain() to silence
+      modMonitorNode.connect(audioContext.createGain()); // Silence the monitor output
       modMonitorNode.onaudioprocess = (event) => {
         const input = event.inputBuffer.getChannelData(0);
         // Take the average value of this buffer as the modulation value
         let sum = 0;
         for (let i = 0; i < input.length; i++) sum += input[i];
         const avg = sum / input.length;
-        filterNode.port.postMessage({ modValue: avg });
+
+        // Scale and clamp the modulation value
+        const scaledMod = Math.max(-1, Math.min(1, avg * 0.1)); // Scale down and clamp
+
+        filterNode.port.postMessage({ modValue: scaledMod });
       };
     }
 

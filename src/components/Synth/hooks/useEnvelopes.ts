@@ -40,9 +40,17 @@ function useEnvelopes({
   const synthObj = useMemo(() => {
     return {
       triggerAttack: (note: string) => {
+        console.log("useEnvelopes: triggerAttack called with note:", note);
+        console.log("useEnvelopes: osc1 =", osc1);
+        console.log("useEnvelopes: osc2 =", osc2);
+        console.log("useEnvelopes: osc3 =", osc3);
         if (!audioContext || !loudnessEnvelopeGain) {
+          console.log(
+            "useEnvelopes: Missing audioContext or loudnessEnvelopeGain"
+          );
           return;
         }
+        console.log("useEnvelopes: Calling oscillator triggerAttack functions");
         osc1?.triggerAttack?.(note);
         osc2?.triggerAttack?.(note);
         osc3?.triggerAttack?.(note);
@@ -62,14 +70,46 @@ function useEnvelopes({
             typeof AudioWorkletNode !== "undefined" &&
             filterNode instanceof AudioWorkletNode
           ) {
-            // For AudioWorkletNode, send normalized cutoff
+            // For AudioWorkletNode, send all parameters to WASM
             const minFreq = 20;
             const maxFreq = 20000;
             let normCutoff =
               (Math.log(trackedCutoff) - Math.log(minFreq)) /
               (Math.log(maxFreq) - Math.log(minFreq));
             normCutoff = Math.max(0, Math.min(1, normCutoff));
+
+            // Send cutoff and key tracking
             filterNode.port.postMessage({ cutOff: normCutoff });
+            filterNode.port.postMessage({
+              keyTracking: {
+                base: normCutoff,
+                tracking: keyTracking,
+                note: noteNumber,
+              },
+            });
+
+            // Send envelope parameters if modulation is on
+            if (filterModulationOn) {
+              const attackTime = mapEnvelopeTime(filterAttack);
+              const decayTime = mapEnvelopeTime(filterDecay);
+              const sustainLevel = filterSustain / 10;
+              const releaseTime = mapEnvelopeTime(filterDecay); // Use decay time for release
+              const contourAmount =
+                mapContourAmount(filterContourAmount) * (modWheel / 100);
+
+              filterNode.port.postMessage({
+                envelopeParams: {
+                  attack: attackTime,
+                  decay: decayTime,
+                  sustain: sustainLevel,
+                  release: releaseTime,
+                  contour: contourAmount,
+                },
+              });
+
+              // Trigger envelope
+              filterNode.port.postMessage({ triggerEnvelope: true });
+            }
           } else if (
             typeof filterNode.frequency !== "undefined" &&
             typeof filterNode.context !== "undefined"
@@ -149,14 +189,8 @@ function useEnvelopes({
             typeof AudioWorkletNode !== "undefined" &&
             filterNode instanceof AudioWorkletNode
           ) {
-            // For AudioWorkletNode, send normalized cutoff
-            const minFreq = 20;
-            const maxFreq = 20000;
-            let normCutoff =
-              (Math.log(mapCutoff(filterCutoff)) - Math.log(minFreq)) /
-              (Math.log(maxFreq) - Math.log(minFreq));
-            normCutoff = Math.max(0, Math.min(1, normCutoff));
-            filterNode.port.postMessage({ cutOff: normCutoff });
+            // Send release command to WASM
+            filterNode.port.postMessage({ releaseEnvelope: true });
           } else if (
             typeof filterNode.frequency !== "undefined" &&
             typeof filterNode.context !== "undefined"

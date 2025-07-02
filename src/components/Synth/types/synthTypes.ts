@@ -14,7 +14,7 @@ export type AudioNodes = {
 
 export type EnvelopeProps = {
   audioContext: AudioContext | null;
-  filterNode: BiquadFilterNode | null;
+  filterNode: AudioWorkletNode | BiquadFilterNode | null;
   loudnessEnvelopeGain: GainNode | null;
   osc1: Oscillator | null;
   osc2: Oscillator | null;
@@ -26,5 +26,5 @@ export type ModulationProps = {
   osc1: Oscillator | null;
   osc2: Oscillator | null;
   osc3: Oscillator | null;
-  filterNode: BiquadFilterNode | null;
+  filterNode: AudioWorkletNode | BiquadFilterNode | null;
 };
