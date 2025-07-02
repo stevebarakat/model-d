@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./Section.module.css";
 
 type SectionProps = {
   children: React.ReactNode;
@@ -6,14 +7,6 @@ type SectionProps = {
   justify?: "flex-start" | "center" | "flex-end" | "space-between";
   align?: "flex-start" | "center" | "flex-end" | "space-between";
   className?: string;
-};
-
-const defaultStyle: React.CSSProperties = {
-  position: "relative",
-  display: "flex",
-  flexDirection: "column",
-  paddingBottom: "1.75rem",
-  borderRight: "2px solid var(--color-white-50)",
 };
 
 function Section({
@@ -25,9 +18,8 @@ function Section({
 }: SectionProps) {
   return (
     <div
-      className={className}
+      className={`${styles.section} ${className}`}
       style={{
-        ...defaultStyle,
         ...style,
         justifyContent: justify,
         alignItems: align,

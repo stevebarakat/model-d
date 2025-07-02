@@ -147,7 +147,7 @@ function Synth() {
             justify="flex-end"
             style={{
               padding: "var(--spacing-md)",
-              background: "url('/images/mid-panel-2.png') repeat-x ",
+              background: "url('/images/mid-panel-2.png')  ",
             }}
           >
             <Logo />
@@ -163,7 +163,7 @@ function Synth() {
             />
           </div>
         </div>
-        <Side backgroundImage="/images/side-right.png" />
+        <Side backgroundImage="/images/side-left.png" />
       </div>
     </>
   );

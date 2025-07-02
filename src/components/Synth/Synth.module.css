@@ -30,13 +30,19 @@
     height: 2.25rem;
     background: url("/images/mid-panel-2.png") no-repeat center center;
     filter: brightness(0.75);
+    border-right: 1px solid var(--color-off-black);
   }
+}
+
+.midPanel {
+  border-right: none;
 }
 
 .backPanel {
   position: relative;
   height: 4.75rem;
   background: url("/images/back-panel3.png") no-repeat center center;
+  border-right: 1px solid var(--color-off-black);
 }
 
 .controlsPanel {

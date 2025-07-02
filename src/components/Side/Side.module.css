@@ -1,7 +1,3 @@
 .side {
-  position: relative;
-  display: flex;
-  flex-direction: column;
   min-width: 1.75rem;
-  min-height: 100%;
 }

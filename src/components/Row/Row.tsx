@@ -12,6 +12,7 @@ type RowProps = {
     | "space-evenly";
   gap?: string;
   style?: React.CSSProperties;
+  className?: string;
 };
 
 function Row({
@@ -20,10 +21,11 @@ function Row({
   justify = "flex-start",
   gap = "0",
   style,
+  className,
 }: RowProps) {
   return (
     <div
-      className={styles.row}
+      className={`${styles.row} ${className}`}
       style={{
         alignItems: align,
         justifyContent: justify,

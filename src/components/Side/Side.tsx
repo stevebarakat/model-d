@@ -4,7 +4,11 @@ function Side({ backgroundImage }: { backgroundImage: string }) {
   return (
     <div
       className={styles.side}
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     ></div>
   );
 }
