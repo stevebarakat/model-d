@@ -74,7 +74,7 @@
   &::before {
     content: "";
     position: absolute;
-    top: 0.5rem;
+    margin-top: 0.5rem;
     height: calc(var(--switch-width) / 3);
     width: var(--switch-height);
     background: linear-gradient(
@@ -83,7 +83,7 @@
       hsl(0 0% 100% / 0)
     );
     z-index: 1000;
-    /* box-shadow: 0 0 0 1px var(--color-gray-d); */
+    border-radius: 0.175rem;
   }
 
   label {
@@ -105,6 +105,24 @@
 
 .state {
   display: none;
+}
+
+/* Black Theme */
+.black .switch::before,
+.black .switch::after {
+  border: none;
+}
+
+.black .switch::before {
+  background-image: var(--switch-gloss-img),
+    linear-gradient(to right, hsl(0deg 0% 8%), hsl(0deg 0% 18%));
+  box-shadow: calc(var(--switch-depth) * -1) 0 0 0 hsl(0deg 0% 8%);
+}
+
+.black .switch::after {
+  background-image: var(--switch-gloss-img),
+    linear-gradient(to left, hsl(0deg 0% 8%), hsl(0deg 0% 18%));
+  box-shadow: 0 0 0 0 hsl(0deg 0% 8%);
 }
 
 /* Orange Theme */
@@ -141,23 +159,6 @@
   background-image: var(--switch-gloss-img),
     linear-gradient(to left, hsl(195deg 100% 50%), hsl(199deg 92% 75%));
   box-shadow: 0 0 0 0 hsl(195deg 100% 40%);
-}
-
-/* Black Theme */
-.black .switch::before,
-.black .switch::after {
-  border: none;
-}
-
-.black .switch::before {
-  background-image: var(--switch-gloss-img);
-  box-shadow: calc(var(--switch-depth) * -1) 0 0 0 hsl(0deg 0% 8%);
-}
-
-.black .switch::after {
-  background-image: var(--switch-gloss-img);
-  box-shadow: 0 0 0 0 hsl(0deg 0% 8%);
-  opacity: 0.75;
 }
 
 /* White Theme */
@@ -201,15 +202,13 @@
 
 /* Black Theme State */
 .black .state:checked ~ .switch::before {
-  box-shadow: 0 0 0 0 hsl(0deg 0% 8%);
-  border-left-color: hsl(0deg 0% 18%);
-  opacity: 0.75;
+  box-shadow: 0 0 0 0 hsl(0deg 0% 1%);
+  border-left-color: hsl(0deg 0% 22%);
 }
 
 .black .state:checked ~ .switch::after {
   box-shadow: var(--switch-depth) 0 0 0 hsl(0deg 0% 8%);
-  border-right-color: hsl(0deg 0% 25%);
-  opacity: 1;
+  border-right-color: hsl(0deg 0% 22%);
 }
 
 /* Orange Theme State */
@@ -300,7 +299,8 @@
 
   .verticalLabel {
     position: relative;
-    top: 1.55rem;
+    top: 1.75rem;
+    line-height: 0;
   }
 
   .left {

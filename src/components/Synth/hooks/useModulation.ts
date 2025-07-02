@@ -71,67 +71,86 @@ function useModulation({
   useEffect(() => {
     if (!audioContext) return;
 
-    // Clean up previous modulation gains
-    modOsc1GainRef.current?.disconnect();
-    modOsc2GainRef.current?.disconnect();
-    modOsc3GainRef.current?.disconnect();
-    modOsc1GainRef.current = null;
-    modOsc2GainRef.current = null;
-    modOsc3GainRef.current = null;
+    // Clean up ALL previous modulation nodes when audio context changes
+    const cleanupAllNodes = () => {
+      // Stop and disconnect LFO
+      lfoNodeRef.current?.stop();
+      lfoNodeRef.current?.disconnect();
+      lfoGainRef.current?.disconnect();
+      lfoNodeRef.current = null;
+      lfoGainRef.current = null;
+
+      // Stop and disconnect modulation oscillators
+      modOsc3Ref.current?.stop();
+      modOsc3Ref.current?.disconnect();
+      modOsc3Ref.current = null;
+
+      // Stop and disconnect noise
+      modNoiseRef.current?.stop();
+      modNoiseRef.current?.disconnect();
+      modNoiseRef.current = null;
+
+      // Disconnect all gain nodes
+      modEnvelopeGainRef.current?.disconnect();
+      modLeftGainRef.current?.disconnect();
+      modRightGainRef.current?.disconnect();
+      modSumGainRef.current?.disconnect();
+      modWheelGainRef.current?.disconnect();
+      modOsc1GainRef.current?.disconnect();
+      modOsc2GainRef.current?.disconnect();
+      modOsc3GainRef.current?.disconnect();
+
+      // Clear all references
+      modEnvelopeGainRef.current = null;
+      modLeftGainRef.current = null;
+      modRightGainRef.current = null;
+      modSumGainRef.current = null;
+      modWheelGainRef.current = null;
+      modOsc1GainRef.current = null;
+      modOsc2GainRef.current = null;
+      modOsc3GainRef.current = null;
+
+      // Clear buffer reference (will be recreated)
+      modNoiseBufferRef.current = null;
+    };
+
+    // Always clean up first to ensure we start fresh
+    cleanupAllNodes();
 
     // Create modulation-only OSC3
-    if (!modOsc3Ref.current) {
-      const osc = audioContext.createOscillator();
-      osc.type = mapOscillatorType(osc3State.waveform);
-      osc.frequency.value = osc3Control ? 440 : 6;
-      osc.start();
-      modOsc3Ref.current = osc;
-    } else {
-      modOsc3Ref.current.type = mapOscillatorType(osc3State.waveform);
-      modOsc3Ref.current.frequency.value = osc3Control ? 440 : 6;
-    }
+    const osc = audioContext.createOscillator();
+    osc.type = mapOscillatorType(osc3State.waveform);
+    osc.frequency.value = osc3Control ? 440 : 6;
+    osc.start();
+    modOsc3Ref.current = osc;
 
     // Create modulation-only Noise
-    if (!modNoiseBufferRef.current) {
-      const bufferSize = audioContext.sampleRate * 2;
-      const buffer = audioContext.createBuffer(
-        1,
-        bufferSize,
-        audioContext.sampleRate
-      );
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-      }
-      modNoiseBufferRef.current = buffer;
+    const bufferSize = audioContext.sampleRate * 2;
+    const buffer = audioContext.createBuffer(
+      1,
+      bufferSize,
+      audioContext.sampleRate
+    );
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
     }
-    if (!modNoiseRef.current) {
-      const noise = audioContext.createBufferSource();
-      noise.buffer = modNoiseBufferRef.current;
-      noise.loop = true;
-      noise.start();
-      modNoiseRef.current = noise;
-    }
+    modNoiseBufferRef.current = buffer;
+
+    const noise = audioContext.createBufferSource();
+    noise.buffer = modNoiseBufferRef.current;
+    noise.loop = true;
+    noise.start();
+    modNoiseRef.current = noise;
 
     // Create modulation gains
-    if (!modEnvelopeGainRef.current) {
-      modEnvelopeGainRef.current = audioContext.createGain();
-      modEnvelopeGainRef.current.gain.value = 0;
-    }
-    if (!modLeftGainRef.current)
-      modLeftGainRef.current = audioContext.createGain();
-    if (!modRightGainRef.current)
-      modRightGainRef.current = audioContext.createGain();
-    if (!modSumGainRef.current)
-      modSumGainRef.current = audioContext.createGain();
-    if (!modWheelGainRef.current)
-      modWheelGainRef.current = audioContext.createGain();
+    modEnvelopeGainRef.current = audioContext.createGain();
+    modEnvelopeGainRef.current.gain.value = 0;
 
-    // Disconnect and reconnect sources
-    if (modOsc3Ref.current) modOsc3Ref.current.disconnect();
-    if (modNoiseRef.current) modNoiseRef.current.disconnect();
-    if (modEnvelopeGainRef.current) modEnvelopeGainRef.current.disconnect();
-    if (lfoGainRef.current) lfoGainRef.current.disconnect();
+    modLeftGainRef.current = audioContext.createGain();
+    modRightGainRef.current = audioContext.createGain();
+    modSumGainRef.current = audioContext.createGain();
+    modWheelGainRef.current = audioContext.createGain();
 
     // Connect selected sources
     if (osc3FilterEgSwitch) {
@@ -165,7 +184,8 @@ function useModulation({
     if (oscillatorModulationOn && audioContext && modWheelGainRef.current) {
       [osc1, osc2, osc3].forEach((osc, index) => {
         const node = osc?.getNode?.();
-        if (node) {
+        if (node && node.context === audioContext) {
+          // Ensure node belongs to current context
           const modGain = audioContext.createGain();
           if (index === 0) modOsc1GainRef.current = modGain;
           else if (index === 1) modOsc2GainRef.current = modGain;
@@ -180,22 +200,17 @@ function useModulation({
       });
     }
 
-    if (filterModulationOn && filterNode) {
+    if (
+      filterModulationOn &&
+      filterNode &&
+      filterNode.context === audioContext
+    ) {
+      // Ensure filter belongs to current context
       modWheelGainRef.current.connect(filterNode.frequency);
     }
 
     return () => {
-      modOsc3Ref.current?.disconnect();
-      modNoiseRef.current?.disconnect();
-      modEnvelopeGainRef.current?.disconnect();
-      modLeftGainRef.current?.disconnect();
-      modRightGainRef.current?.disconnect();
-      modSumGainRef.current?.disconnect();
-      modWheelGainRef.current?.disconnect();
-      if (lfoGainRef.current) lfoGainRef.current.disconnect();
-      modOsc1GainRef.current?.disconnect();
-      modOsc2GainRef.current?.disconnect();
-      modOsc3GainRef.current?.disconnect();
+      cleanupAllNodes();
     };
   }, [
     audioContext,
