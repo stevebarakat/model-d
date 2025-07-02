@@ -94,10 +94,15 @@ export function createSynthActions(
           env.sustain !== undefined ? env.sustain : state.loudnessSustain,
       })),
     setDecaySwitchOn: (on: boolean) => set({ decaySwitchOn: on }),
-    loadPreset: (preset: Partial<SynthState>) =>
-      set((state: SynthState) => ({
-        ...state,
-        ...preset,
-      })),
+    loadPreset: (preset: Partial<SynthState>) => {
+      set((state: SynthState) => {
+        const newState = { ...state, ...preset };
+        return newState;
+      });
+    },
+    updateURL: () => {
+      // This will be called with the current state
+      // The actual implementation will be in the component
+    },
   };
 }

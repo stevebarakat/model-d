@@ -36,6 +36,7 @@ This project aims to recreate the iconic Minimoog Model D synthesizer in the bro
 - **MIDI Support**: Connect your MIDI keyboard for real-time control
 - **Responsive Design**: Works on desktop and mobile devices
 - **Logarithmic Knob Controls**: Natural-feeling frequency and filter controls
+- **URL State Persistence**: Save and share your current settings via URL parameters
 
 ---
 
@@ -169,3 +170,24 @@ Use for frequency controls, filter cutoff, and other parameters that benefit fro
 ```
 
 The logarithmic prop provides natural-feeling control for frequency ranges and other exponential parameters while maintaining linear visual representation of labels and tick marks.
+
+## URL State Persistence
+
+The Minimoog emulator supports saving and sharing your current settings via URL parameters. This feature allows you to:
+
+- **Save Settings**: Click the "Save to URL" button next to the preset dropdown to copy the current URL with all your settings
+- **Share Settings**: Share the URL with others to let them load your exact configuration
+- **Bookmark Configurations**: Bookmark URLs to quickly return to specific sounds
+- **Auto-Load**: When you visit a URL with parameters, the settings will automatically load
+
+### How It Works
+
+All synth parameters are encoded in the URL as query parameters, including:
+
+- Oscillator waveforms, frequencies, and ranges
+- Mixer levels and noise settings
+- Filter cutoff, emphasis, and envelope settings
+- Modulation settings (LFO, modulation mix)
+- Glide and other performance controls
+
+The URL will update automatically as you adjust settings, and you can copy the current URL at any time using the "Save to URL" button.

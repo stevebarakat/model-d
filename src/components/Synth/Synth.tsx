@@ -24,11 +24,27 @@ import Row from "../Row";
 import Logo from "../Logo";
 import Section from "../Section";
 import PresetsDropdown from "../PresetsDropdown";
+import { loadStateFromURL } from "@/utils/urlState";
+import { useURLSync, setLoadingFromURL } from "@/hooks/useURLSync";
 
 function Synth() {
-  const { activeKeys, setActiveKeys } = useSynthStore();
+  const { activeKeys, setActiveKeys, loadPreset } = useSynthStore();
   const { audioContext, isInitialized, initialize, dispose } =
     useAudioContext();
+
+  // Load settings from URL parameters on mount - run immediately
+  useEffect(() => {
+    const urlState = loadStateFromURL();
+    if (urlState) {
+      setLoadingFromURL(true);
+      loadPreset(urlState);
+      // Reset the flag after a short delay to allow URL sync to resume
+      setTimeout(() => setLoadingFromURL(false), 200);
+    }
+  }, []); // Empty dependency array to run only once on mount
+
+  // Sync state changes with URL
+  useURLSync();
 
   // Set up audio nodes
   const { mixerNode, filterNode, loudnessEnvelopeGain } =

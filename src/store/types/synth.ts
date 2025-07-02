@@ -146,4 +146,5 @@ export type SynthActions = {
   }) => void;
   setDecaySwitchOn: (on: boolean) => void;
   loadPreset: (preset: Partial<SynthState>) => void;
+  updateURL: () => void;
 };
