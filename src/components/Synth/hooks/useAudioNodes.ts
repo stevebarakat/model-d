@@ -75,11 +75,14 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
       ) {
         console.log("useAudioNodes: Connecting audio nodes...");
         mixer.connect(saturationNode);
-        saturationNode.connect(moogFilter);
-        moogFilter.connect(loudnessGain);
+        // Temporarily bypass filter for testing
+        saturationNode.connect(loudnessGain);
+        // moogFilter.connect(loudnessGain);
         loudnessGain.connect(masterGain);
         masterGain.connect(audioContext.destination);
-        console.log("useAudioNodes: Audio nodes connected successfully");
+        console.log(
+          "useAudioNodes: Audio nodes connected successfully (filter bypassed)"
+        );
       } else {
         console.error("useAudioNodes: Some nodes are missing for connection");
       }

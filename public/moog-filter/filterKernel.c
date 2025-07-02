@@ -99,6 +99,16 @@ void releaseEnvelope() {
     envelopeRate = 1.0f / (releaseTime * SAMPLE_RATE);
 }
 
+EMSCRIPTEN_KEEPALIVE
+float getCutoff() {
+    return cutoff;
+}
+
+EMSCRIPTEN_KEEPALIVE
+float getResonance() {
+    return resonance;
+}
+
 // Moog ladder filter implementation
 static float moogFilter(float input) {
     // Calculate current cutoff with envelope and modulation

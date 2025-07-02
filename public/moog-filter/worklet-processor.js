@@ -12,18 +12,11 @@ class WorkletProcessor extends AudioWorkletProcessor {
     this.releaseEnvelope = null;
     this.exports = null;
 
-    console.log("WorkletProcessor: Constructor called");
-
     this.port.onmessage = (e) => {
       if (e.data instanceof ArrayBuffer) {
-        console.log(
-          "WorkletProcessor: Received WASM binary, size:",
-          e.data.byteLength
-        );
         // Instantiate WASM
         WebAssembly.instantiate(e.data)
           .then((result) => {
-            console.log("WorkletProcessor: WASM instantiated successfully");
             this.exports = result.instance.exports;
             this.inputStart = this.exports.inputBufferPtr();
             this.outputStart = this.exports.outputBufferPtr();
@@ -48,7 +41,6 @@ class WorkletProcessor extends AudioWorkletProcessor {
             this.releaseEnvelope = this.exports.releaseEnvelope;
 
             this.isWasmReady = true;
-            console.log("WorkletProcessor: WASM ready, functions stored");
           })
           .catch((error) => {
             console.error(
@@ -59,7 +51,6 @@ class WorkletProcessor extends AudioWorkletProcessor {
       } else if (e.data && typeof e.data === "object") {
         // Handle parameter messages
         if (this.isWasmReady) {
-          console.log("WorkletProcessor: Received parameter message:", e.data);
           if (e.data.cutOff !== undefined && this.setCutoff) {
             this.setCutoff(e.data.cutOff);
           }
@@ -84,17 +75,12 @@ class WorkletProcessor extends AudioWorkletProcessor {
           if (e.data.releaseEnvelope && this.releaseEnvelope) {
             this.releaseEnvelope();
           }
-        } else {
-          console.warn(
-            "WorkletProcessor: Received parameter message but WASM not ready"
-          );
         }
       }
     };
   }
   process(inputs, outputs, parameters) {
     if (!this.isWasmReady) {
-      console.warn("WorkletProcessor: WASM not ready, skipping processing");
       return true;
     }
 
@@ -112,53 +98,13 @@ class WorkletProcessor extends AudioWorkletProcessor {
 
       // Process through WASM filter
       if (this.exports && this.exports.filter) {
-        // Debug: Check input values
-        let hasInput = false;
-        for (let i = 0; i < this.WEBEAUDIO_FRAME_SIZE; i++) {
-          if (Math.abs(this.inputBuffer[i]) > 0.001) {
-            hasInput = true;
-            break;
-          }
-        }
-        if (!hasInput) {
-          console.warn("WorkletProcessor: No input signal detected");
-        } else {
-          console.log("WorkletProcessor: Input signal detected, processing...");
-        }
-
         this.exports.filter();
-
-        // Debug: Check if we're getting output
-        let hasOutput = false;
-        let maxOutput = 0;
-        for (let i = 0; i < this.WEBEAUDIO_FRAME_SIZE; i++) {
-          if (Math.abs(this.outputBuffer[i]) > 0.001) {
-            hasOutput = true;
-            maxOutput = Math.max(maxOutput, Math.abs(this.outputBuffer[i]));
-          }
-        }
-        if (!hasOutput) {
-          console.warn("WorkletProcessor: No output from filter");
-        } else {
-          console.log(
-            "WorkletProcessor: Filter output detected, max amplitude:",
-            maxOutput
-          );
-        }
-      } else {
-        console.error("WorkletProcessor: Filter function not available");
-        console.log(
-          "WorkletProcessor: Available exports:",
-          Object.keys(this.exports || {})
-        );
       }
 
       // Copy output from WASM buffer
       for (let i = 0; i < this.WEBEAUDIO_FRAME_SIZE; i++) {
         outputChannel[i] = this.outputBuffer[i];
       }
-    } else {
-      console.warn("WorkletProcessor: No input or output channels");
     }
 
     return true;

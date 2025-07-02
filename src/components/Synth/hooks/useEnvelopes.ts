@@ -40,17 +40,9 @@ function useEnvelopes({
   const synthObj = useMemo(() => {
     return {
       triggerAttack: (note: string) => {
-        console.log("useEnvelopes: triggerAttack called with note:", note);
-        console.log("useEnvelopes: osc1 =", osc1);
-        console.log("useEnvelopes: osc2 =", osc2);
-        console.log("useEnvelopes: osc3 =", osc3);
         if (!audioContext || !loudnessEnvelopeGain) {
-          console.log(
-            "useEnvelopes: Missing audioContext or loudnessEnvelopeGain"
-          );
           return;
         }
-        console.log("useEnvelopes: Calling oscillator triggerAttack functions");
         osc1?.triggerAttack?.(note);
         osc2?.triggerAttack?.(note);
         osc3?.triggerAttack?.(note);
