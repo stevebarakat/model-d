@@ -126,7 +126,7 @@ function Synth() {
     <>
       <PresetsDropdown disabled={!isInitialized} />
       <div className={styles.synthContainer}>
-        <Side />
+        <Side backgroundImage="/images/side-left.png" />
         <div className={styles.synth}>
           <div className={styles.backPanel}></div>
           <div className={styles.controlsPanel}>
@@ -146,8 +146,8 @@ function Synth() {
           <Row
             justify="flex-end"
             style={{
-              borderBottom: "var(--color-off-white) dotted 1px",
               padding: "var(--spacing-md)",
+              background: "url('/images/mid-panel-2.png') repeat-x ",
             }}
           >
             <Logo />
@@ -163,7 +163,7 @@ function Synth() {
             />
           </div>
         </div>
-        <Side />
+        <Side backgroundImage="/images/side-right.png" />
       </div>
     </>
   );
