@@ -23,7 +23,7 @@ function Controllers() {
         marginLeft: "var(--spacing-md)",
         paddingLeft: "var(--spacing-md)",
         paddingRight: "var(--spacing-lg)",
-        borderRadius: "0 0 0 10px",
+        borderRadius: "0 0 0 0.5rem",
       }}
     >
       <Column gap="var(--spacing-lg)">
