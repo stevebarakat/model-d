@@ -127,7 +127,7 @@ function Synth() {
     <>
       <PresetsDropdown disabled={!isInitialized} />
       <div className={styles.synthContainer}>
-        <Side backgroundImage="/images/side-left.png" />
+        <Side />
         <div className={styles.synth}>
           <div className={styles.backPanel}></div>
           <div className={styles.controlsPanel}>
@@ -171,7 +171,7 @@ function Synth() {
             />
           </div>
         </div>
-        <Side backgroundImage="/images/side-left.png" />
+        <Side />
       </div>
     </>
   );
