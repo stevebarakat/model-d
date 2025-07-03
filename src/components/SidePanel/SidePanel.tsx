@@ -11,7 +11,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 function SidePanel() {
   return (
     <Tooltip.Provider>
-      <Column style={{ margin: "var(--spacing-md)" }}>
+      <Column className={styles.sidePanel}>
         <Row gap="var(--spacing-md)">
           <LfoRate />
           <div className={styles.switches}>

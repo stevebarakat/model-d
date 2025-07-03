@@ -1,11 +1,10 @@
 .wheel {
   position: relative;
   cursor: pointer;
-  --wheel-width: 12px;
+  --wheel-width: 14px;
 }
 
 .track {
-  box-sizing: content-box;
   --base-texture: linear-gradient(
     180deg,
     hsl(217deg 5% 40%),
@@ -30,8 +29,11 @@
 .thumb {
   position: absolute;
   top: calc(100% - var(--thumb-position));
-  left: 1px;
   width: var(--wheel-width);
+  border-left: 1px solid hsl(0, 0%, 0%);
+  border-top: 3px solid hsl(0, 0%, 0%);
+  border-right: 3px solid hsl(0, 0%, 0%);
+  border-bottom: 1px solid hsl(0, 0%, 0%);
   height: 9px;
   background: linear-gradient(
     180deg,

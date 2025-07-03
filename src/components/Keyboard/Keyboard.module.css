@@ -7,6 +7,8 @@
 .keyboard {
   padding: 0 3px;
   background: var(--color-off-black);
+  position: relative;
+  /* top: 8px; */
 }
 
 .pianoKeys {
@@ -17,6 +19,8 @@
 }
 
 .whiteKey {
+  position: relative;
+  z-index: 1;
   flex: 1;
   height: 220px;
   background: linear-gradient(180deg, hsl(0deg 0% 100%), hsl(0deg 0% 80%));
@@ -66,6 +70,7 @@
     hsl(217deg 13% 15%),
     hsl(217deg 13% 10%)
   );
+  border-top: 4px solid black;
   border-radius: 0 0 5px 5px;
   box-shadow: 4px 0 6px hsl(0deg 0% 0% / 50%);
   cursor: pointer;
@@ -77,8 +82,8 @@
     overflow: clip;
     background: linear-gradient(
       180deg,
-      hsl(217deg 13% 28%),
-      hsl(217deg 13% 17%)
+      hsl(217deg 13% 20%),
+      hsl(217deg 13% 30%)
     );
     border-radius: 0 0 4px 4px;
     box-shadow: inset 0 0 12px 0 hsl(0deg 0% 100% / 10%);

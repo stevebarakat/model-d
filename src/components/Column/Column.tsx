@@ -12,9 +12,11 @@ type ColumnProps = {
     | "space-evenly";
   gap?: string;
   style?: React.CSSProperties;
+  className?: string;
 };
 
 function Column({
+  className,
   children,
   align = "center",
   justify = "flex-start",
@@ -23,7 +25,7 @@ function Column({
 }: ColumnProps) {
   return (
     <div
-      className={styles.column}
+      className={`${styles.column} ${styles.sidePanel} ${className}`}
       style={{
         alignItems: align,
         justifyContent: justify,

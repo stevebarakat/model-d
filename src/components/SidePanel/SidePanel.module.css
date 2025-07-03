@@ -4,3 +4,17 @@
   width: fit-content;
   gap: var(--spacing-xs);
 }
+
+.sidePanel {
+  padding: var(--spacing-sm);
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    hsl(0deg, 0%, 20%),
+    hsl(0deg, 0%, 20%) 2.5%,
+    hsl(0deg, 0%, 17.5%) 50%,
+    hsl(0deg, 0%, 20%) 90%,
+    hsl(0deg, 0%, 17.5%)
+  );
+  border-left: 2px solid var(--color-off-black);
+}
