@@ -29,9 +29,7 @@ function Modifiers() {
       <Column
         style={{
           borderTop: "2px solid var(--color-white-50)",
-          paddingLeft: "1.75rem",
-          width: "102%",
-          marginLeft: "-0.25rem",
+          paddingLeft: "1.5rem",
           paddingBottom: "var(--spacing-md)",
         }}
       >
