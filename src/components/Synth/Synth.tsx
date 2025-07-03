@@ -26,6 +26,7 @@ import Section from "../Section";
 import PresetsDropdown from "../PresetsDropdown";
 import { loadStateFromURL } from "@/utils/urlState";
 import { useURLSync, setLoadingFromURL } from "@/hooks/useURLSync";
+import Hinge from "../Hinge";
 
 function Synth() {
   const { activeKeys, setActiveKeys, loadPreset } = useSynthStore();
@@ -135,7 +136,12 @@ function Synth() {
             <Mixer audioContext={audioContext!} mixerNode={mixerNode!} />
             <Modifiers />
             <Output />
-            <Section style={{ borderRadius: "0 0 10px 0" }}>
+            <Section
+              style={{
+                borderRadius: "0 0 10px 0",
+                marginRight: "var(--spacing-md)",
+              }}
+            >
               <PowerButton
                 isOn={isInitialized}
                 onPowerOn={initialize}
@@ -143,6 +149,7 @@ function Synth() {
               />
             </Section>
           </div>
+          <Hinge />
           <Row
             justify="flex-end"
             style={{

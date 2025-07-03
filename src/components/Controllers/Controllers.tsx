@@ -20,7 +20,7 @@ function Controllers() {
   return (
     <Section
       style={{
-        marginLeft: "var(--spacing-sm)",
+        marginLeft: "var(--spacing-md)",
         paddingRight: "var(--spacing-lg)",
         borderRadius: "0 0 0 10px",
       }}

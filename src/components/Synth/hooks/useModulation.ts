@@ -23,6 +23,7 @@ function useModulation({
   const modOsc1GainRef = useRef<GainNode | null>(null);
   const modOsc2GainRef = useRef<GainNode | null>(null);
   const modOsc3GainRef = useRef<GainNode | null>(null);
+  const modMonitorWorkletRef = useRef<AudioWorkletNode | null>(null);
 
   const {
     lfoRate,
@@ -99,6 +100,10 @@ function useModulation({
       modOsc1GainRef.current?.disconnect();
       modOsc2GainRef.current?.disconnect();
       modOsc3GainRef.current?.disconnect();
+
+      // Disconnect modulation monitor worklet
+      modMonitorWorkletRef.current?.disconnect();
+      modMonitorWorkletRef.current = null;
 
       // Clear all references
       modEnvelopeGainRef.current = null;
@@ -201,40 +206,47 @@ function useModulation({
     }
 
     // --- MODIFIED: Sample modulation output and send to filter worklet ---
-    let modMonitorNode: ScriptProcessorNode | null = null;
-    let intervalId: number | undefined;
     if (
       filterModulationOn &&
       filterNode &&
       filterNode instanceof AudioWorkletNode &&
       modWheelGainRef.current
     ) {
-      // Use ScriptProcessorNode to tap the modulation signal
-      modMonitorNode = audioContext.createScriptProcessor(256, 1, 1);
-      modWheelGainRef.current.connect(modMonitorNode);
-      modMonitorNode.connect(audioContext.createGain()); // Silence the monitor output
-      modMonitorNode.onaudioprocess = (event) => {
-        const input = event.inputBuffer.getChannelData(0);
-        // Take the average value of this buffer as the modulation value
-        let sum = 0;
-        for (let i = 0; i < input.length; i++) sum += input[i];
-        const avg = sum / input.length;
+      // Use AudioWorkletNode to tap the modulation signal
+      try {
+        const modMonitorWorklet = new AudioWorkletNode(
+          audioContext,
+          "modulation-monitor-processor",
+          {
+            numberOfInputs: 1,
+            numberOfOutputs: 1,
+            outputChannelCount: [1],
+          }
+        );
 
-        // Scale and clamp the modulation value
-        const scaledMod = Math.max(-1, Math.min(1, avg * 0.1)); // Scale down and clamp
+        // Connect the modulation signal to the worklet
+        modWheelGainRef.current.connect(modMonitorWorklet);
 
-        filterNode.port.postMessage({ modValue: scaledMod });
-      };
+        // Connect worklet output to a silent gain to complete the audio graph
+        const silentGain = audioContext.createGain();
+        silentGain.gain.value = 0;
+        modMonitorWorklet.connect(silentGain);
+
+        // Listen for modulation values from the worklet
+        modMonitorWorklet.port.onmessage = (event) => {
+          if (event.data.modValue !== undefined) {
+            filterNode.port.postMessage({ modValue: event.data.modValue });
+          }
+        };
+
+        modMonitorWorkletRef.current = modMonitorWorklet;
+      } catch (error) {
+        console.warn("Failed to create modulation monitor worklet:", error);
+      }
     }
 
     return () => {
       cleanupAllNodes();
-      if (modMonitorNode) {
-        modMonitorNode.disconnect();
-        modMonitorNode.onaudioprocess = null;
-        modMonitorNode = null;
-      }
-      if (intervalId) clearInterval(intervalId);
     };
   }, [
     audioContext,

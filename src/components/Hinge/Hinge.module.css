@@ -1,0 +1,10 @@
+.hinge {
+  position: relative;
+  top: -5px;
+  left: 1%;
+  width: 98%;
+  height: 10px;
+  background: url("/images/hinge.svg") repeat-x left center;
+  background-size: 30px auto;
+  filter: drop-shadow(0 1px 2px hsl(0 0% 0% / 0.75));
+}
