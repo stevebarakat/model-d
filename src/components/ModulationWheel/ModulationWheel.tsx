@@ -9,7 +9,7 @@ function ModulationWheel() {
       min={0}
       max={100}
       onChange={setModWheel}
-      label="Mod"
+      label="Mod."
       isDisabled={isDisabled}
     />
   );

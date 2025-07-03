@@ -10,7 +10,7 @@ function Glide() {
       min={0}
       max={10}
       step={0.01}
-      label="Glide Time"
+      label="Glide"
       onChange={setGlideTime}
       valueLabels={{
         "0": "0",
