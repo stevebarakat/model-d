@@ -8,8 +8,8 @@ import KeyboardControl from "../Filter/KeyboardControl";
 
 const filterSwitches: React.CSSProperties = {
   position: "absolute",
-  top: "17.5%",
-  left: "-1.75rem",
+  top: "10%",
+  left: "-1.5rem",
 };
 
 function Modifiers() {
@@ -20,7 +20,7 @@ function Modifiers() {
         <KeyboardControl />
       </div>
       <Column
-        style={{ paddingLeft: "1.75rem", paddingRight: "0.25rem" }}
+        style={{ paddingLeft: "2.25rem", paddingRight: "0.5rem" }}
         gap="var(--spacing-md)"
       >
         <Filter />
@@ -31,6 +31,8 @@ function Modifiers() {
           borderTop: "2px solid var(--color-white-50)",
           paddingLeft: "1.5rem",
           paddingBottom: "var(--spacing-md)",
+          width: "101%",
+          // marginLeft: "-0.25rem",
         }}
       >
         <LoudnessEnvelope />
