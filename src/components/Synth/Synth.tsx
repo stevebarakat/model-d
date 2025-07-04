@@ -154,7 +154,6 @@ function Synth() {
             justify="flex-end"
             style={{
               padding: "var(--spacing-md)",
-              background: "url('/images/mid-panel-2.png')  ",
             }}
             className={styles.midPanel}
           >
