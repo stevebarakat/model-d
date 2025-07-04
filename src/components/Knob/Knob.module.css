@@ -103,6 +103,29 @@
   width: var(--knob-size);
   height: var(--knob-size);
   border-radius: var(--knob-border-radius);
+  /* Metal cap for radial knob */
+  &:has(.radial) {
+    &::before {
+      position: absolute;
+      top: 25%;
+      left: 17.5%;
+      z-index: 5555;
+      width: 62.5%;
+      height: 62.5%;
+      /* background-image: var(--metal-cap); */
+      border-radius: var(--knob-border-radius);
+      pointer-events: none;
+      content: "";
+      border: 1px solid hsl(0, 0%, 0%);
+      background-image: conic-gradient(
+        var(--color-gray-d) 0%,
+        var(--color-gray-l) 25%,
+        var(--color-gray-d) 50%,
+        var(--color-gray-l) 75%,
+        var(--color-gray-d) 100%
+      );
+    }
+  }
 }
 
 .knobBtm {
@@ -152,18 +175,6 @@
   top: 7.5%;
   scale: 0.95;
   background: url("./images/radial-knob.svg") no-repeat center center;
-
-  &::before {
-    position: absolute;
-    top: 15%;
-    left: 15%;
-    z-index: -1;
-    width: 70%;
-    height: 70%;
-    background-image: var(--metal-cap);
-    border-radius: var(--knob-border-radius);
-    content: "";
-  }
 
   .dot {
     top: 12.5%;
