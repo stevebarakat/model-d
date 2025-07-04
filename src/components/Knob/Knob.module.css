@@ -112,13 +112,11 @@
       z-index: 5555;
       width: 62.5%;
       height: 62.5%;
-      /* background-image: var(--metal-cap); */
       border-radius: var(--knob-border-radius);
       pointer-events: none;
       content: "";
       border: 0.5px solid hsl(0, 0%, 40%);
       background-image: var(--metal-cap);
-      background-size: contain;
     }
   }
 }
