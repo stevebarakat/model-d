@@ -119,6 +119,20 @@
       background-image: var(--metal-cap);
     }
   }
+  &:has(.arrow) {
+    &::before {
+      position: absolute;
+      z-index: 1;
+      top: 32.5%;
+      left: 32.5%;
+      width: 35%;
+      height: 35%;
+      border: 0.5px solid hsl(0, 0%, 40%);
+      background-image: var(--metal-cap);
+      border-radius: var(--knob-border-radius);
+      content: "";
+    }
+  }
 }
 
 .knobBtm {
@@ -182,20 +196,10 @@
   scale: 1.05;
   background: url("./images/arrow-knob.svg") no-repeat center center;
 
-  &::before {
-    position: absolute;
-    z-index: -1;
-    width: 35%;
-    height: 35%;
-    background-image: var(--metal-cap);
-    border-radius: var(--knob-border-radius);
-    content: "";
-  }
-
   /* More of a line than a "dot" for the arrow knob */
   .dot {
     top: 25%;
-    width: var(--tick-width);
+    width: 1px;
     height: var(--dot-size-large);
     border-radius: var(--tick-width);
     transform: var(--dot-transform);
