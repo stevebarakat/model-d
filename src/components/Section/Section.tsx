@@ -17,19 +17,16 @@ function Section({
   className,
 }: SectionProps) {
   return (
-    <>
-      <div className={styles.blur} />
-      <div
-        className={`${styles.section} ${className}`}
-        style={{
-          ...style,
-          justifyContent: justify,
-          alignItems: align,
-        }}
-      >
-        {children}
-      </div>
-    </>
+    <div
+      className={`${styles.section} ${className}`}
+      style={{
+        ...style,
+        justifyContent: justify,
+        alignItems: align,
+      }}
+    >
+      {children}
+    </div>
   );
 }
 
