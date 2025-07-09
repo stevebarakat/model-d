@@ -16,6 +16,7 @@
   --knob-surface-medium: hsl(0deg 0% 80%);
   --knob-surface-gray: hsl(0deg 0% 50%);
   --metal-cap: conic-gradient(
+    from 255deg,
     var(--knob-surface-light),
     var(--knob-surface-white),
     var(--knob-surface-dark),
