@@ -1,3 +1,5 @@
+import { KnobType } from "../types";
+
 // Logarithmic scaling functions
 export function toLogarithmic(value: number, min: number, max: number): number {
   // Handle edge cases where logarithmic scaling isn't appropriate
@@ -43,7 +45,7 @@ export function getRotation(
   value: number,
   min: number,
   max: number,
-  type: "arrow" | "radial" = "radial",
+  type: KnobType = "radial",
   logarithmic: boolean = false
 ): number {
   let percentage: number;
@@ -93,7 +95,7 @@ export function calculateValueFromDelta(
   min: number,
   max: number,
   step: number,
-  type: "radial" | "arrow" = "radial",
+  type: KnobType = "radial",
   logarithmic: boolean = false
 ): number {
   const range = max - min;
@@ -136,7 +138,7 @@ export function calculateLabelPosition(
   min: number,
   max: number,
   size: "small" | "medium" | "large",
-  type: "arrow" | "radial"
+  type: KnobType
 ): { x: number; y: number } {
   const arc = type === "arrow" ? 150 : 290;
   const startAngle = type === "arrow" ? -165 : 125;

@@ -77,7 +77,6 @@ function Knob({
             max={max}
             type={type}
             showMidTicks={showMidTicks}
-            size={size}
           />
         )}
 

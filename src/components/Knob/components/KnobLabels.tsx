@@ -1,12 +1,13 @@
 import React from "react";
 import { calculateLabelPosition } from "../utils";
 import styles from "../Knob.module.css";
+import { KnobType } from "../types";
 
 type KnobLabelsProps = {
   valueLabels: Record<number, string | React.ReactElement>;
   min: number;
   max: number;
-  type: "arrow" | "radial";
+  type: KnobType;
   size: "small" | "medium" | "large";
 };
 

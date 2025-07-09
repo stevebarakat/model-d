@@ -1,14 +1,14 @@
 import React from "react";
 import { calculateTickAngle } from "../utils";
 import styles from "../Knob.module.css";
+import { KnobType } from "../types";
 
 type KnobTicksProps = {
   valueLabels: Record<number, string | React.ReactElement>;
   min: number;
   max: number;
-  type: "arrow" | "radial";
+  type: KnobType;
   showMidTicks: boolean;
-  size: "small" | "medium" | "large";
 };
 
 export function KnobTicks({
@@ -17,7 +17,6 @@ export function KnobTicks({
   max,
   type,
   showMidTicks,
-  size,
 }: KnobTicksProps) {
   const labelKeys = Object.keys(valueLabels)
     .map(Number)
@@ -28,7 +27,7 @@ export function KnobTicks({
   // Main ticks for valueLabels
   for (let i = 0; i < labelKeys.length; i++) {
     const tick = labelKeys[i];
-    const angle = calculateTickAngle(tick, min, max, type, size);
+    const angle = calculateTickAngle(tick, min, max, type);
 
     ticks.push(
       <div
@@ -44,7 +43,7 @@ export function KnobTicks({
     if (showMidTicks && type !== "arrow" && i < labelKeys.length - 1) {
       const nextTick = labelKeys[i + 1];
       const mid = (tick + nextTick) / 2;
-      const midAngle = calculateTickAngle(mid, min, max, type, size);
+      const midAngle = calculateTickAngle(mid, min, max, type);
 
       ticks.push(
         <div

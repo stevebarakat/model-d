@@ -10,15 +10,15 @@ type KnobProps = {
   unit?: string;
   onChange: (value: number) => void;
   valueLabels?: Record<number, string | React.ReactElement>;
-  size?: "small" | "medium" | "large";
+  size?: KnobSize;
   showMidTicks?: boolean;
-  type?: "arrow" | "radial";
+  type?: KnobType;
   logarithmic?: boolean;
   style?: React.CSSProperties;
   disabled?: boolean;
 };
 
 type KnobSize = "small" | "medium" | "large";
-type KnobType = "arrow" | "radial";
+type KnobType = "arrow" | "radial" | "millisecond";
 
 export type { KnobProps, KnobSize, KnobType };

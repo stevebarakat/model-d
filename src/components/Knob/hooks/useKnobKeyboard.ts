@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef } from "react";
 import { calculateValueFromDelta } from "../utils";
+import { KnobType } from "../types";
 
 type UseKnobKeyboardProps = {
   value: number;
   min: number;
   max: number;
   step: number;
-  type: "radial" | "arrow";
+  type: KnobType;
   onChange: (value: number) => void;
   logarithmic?: boolean;
 };
