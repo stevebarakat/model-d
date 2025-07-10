@@ -190,4 +190,4 @@ All synth parameters are encoded in the URL as query parameters, including:
 - Modulation settings (LFO, modulation mix)
 - Glide and other performance controls
 
-The URL will update automatically as you adjust settings, and you can copy the current URL at any time using the "Save to URL" button.
+The URL is generated on-demand when you click the "Copy URL" button, providing optimal performance while still allowing you to save and share your settings.

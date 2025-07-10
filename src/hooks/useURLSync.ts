@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { useSynthStore } from "@/store/synthStore";
-import { updateURLWithState } from "@/utils/urlState";
 
 // Global flag to track if we're currently loading from URL
 let isLoadingFromURL = false;
@@ -23,16 +22,15 @@ export function useURLSync() {
         if (!isLoadingFromURL) {
           const urlParams = new URLSearchParams(window.location.search);
           if (urlParams.toString() === "") {
-            updateURLWithState(synthState);
+            // No longer automatically updating URL for performance
+            // URL will only be updated when "Copy URL" button is pressed
           }
         }
       }, 100);
       return;
     }
 
-    // Don't update URL if we're currently loading from URL
-    if (!isLoadingFromURL) {
-      updateURLWithState(synthState);
-    }
+    // Removed automatic URL synchronization for performance
+    // URL will only be updated when "Copy URL" button is pressed
   }, [synthState]);
 }

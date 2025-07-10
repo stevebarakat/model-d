@@ -33,7 +33,7 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
     setFocusedIndex(-1);
   };
 
-  const handleSaveToURL = async () => {
+  const handleCopyURL = async () => {
     try {
       await copyURLToClipboard(synthState);
       setShowCopiedMessage(true);
@@ -156,10 +156,10 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
 
         <button
           className={styles.urlButton}
-          onClick={handleSaveToURL}
+          onClick={handleCopyURL}
           disabled={disabled}
-          title="Save current settings to URL"
-          aria-label="Save current settings to URL"
+          title="Copy current settings as URL"
+          aria-label="Copy current settings as URL"
         >
           {showCopiedMessage ? "Copied!" : "Copy URL"}
         </button>
