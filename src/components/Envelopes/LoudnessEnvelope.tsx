@@ -36,7 +36,7 @@ function LoudnessEnvelope() {
             type="attackDecay"
             valueLabels={attackDecayValueLabels}
             value={loudnessAttack}
-            showMidTicks={false}
+            showMidTicks={true}
             min={0}
             max={10000}
             step={1}
@@ -49,7 +49,7 @@ function LoudnessEnvelope() {
             type="attackDecay"
             valueLabels={attackDecayValueLabels}
             value={loudnessDecay}
-            showMidTicks={false}
+            showMidTicks={true}
             min={0}
             max={10000}
             step={1}

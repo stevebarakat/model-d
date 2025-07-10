@@ -22,14 +22,10 @@ export function KnobTicks({
     .map(Number)
     .sort((a, b) => a - b);
 
-  const ticks = [];
-
   // Main ticks for valueLabels
-  for (let i = 0; i < labelKeys.length; i++) {
-    const tick = labelKeys[i];
+  const mainTicks = labelKeys.map((tick) => {
     const angle = calculateTickAngle(tick, min, max, type);
-
-    ticks.push(
+    return (
       <div
         key={`tick-${tick}`}
         className={styles.knobTick}
@@ -38,24 +34,40 @@ export function KnobTicks({
         }}
       />
     );
+  });
 
-    // Add a small tick between this and the next label (only for radial type)
-    if (showMidTicks && type !== "arrow" && i < labelKeys.length - 1) {
+  // Mid ticks (between main ticks)
+  let midTicks: React.ReactNode[] = [];
+  if (showMidTicks && type !== "arrow") {
+    // Create all possible midTicks
+    const allMidTicks = labelKeys.slice(0, -1).map((tick, i) => {
       const nextTick = labelKeys[i + 1];
       const mid = (tick + nextTick) / 2;
       const midAngle = calculateTickAngle(mid, min, max, type);
-
-      ticks.push(
-        <div
-          key={`tick-mid-${tick}-${nextTick}`}
-          className={styles.knobTick}
-          style={{
-            transform: `rotate(${midAngle}deg) translate(-50%, calc(-1 * var(--tick-offset)))`,
-          }}
-        />
-      );
-    }
+      return {
+        key: `tick-mid-${tick}-${nextTick}`,
+        angle: midAngle,
+        index: i,
+      };
+    });
+    // For attackDecay, skip the first two midTicks
+    midTicks = (
+      type === "attackDecay" ? allMidTicks.filter((_, i) => i > 1) : allMidTicks
+    ).map(({ key, angle }) => (
+      <div
+        key={key}
+        className={styles.knobTick}
+        style={{
+          transform: `rotate(${angle}deg) translate(-50%, calc(-1 * var(--tick-offset)))`,
+        }}
+      />
+    ));
   }
 
-  return <>{ticks}</>;
+  return (
+    <>
+      {mainTicks}
+      {midTicks}
+    </>
+  );
 }
