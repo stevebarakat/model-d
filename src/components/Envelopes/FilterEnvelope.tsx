@@ -1,6 +1,7 @@
 import Knob from "../Knob";
 import Row from "../Row";
 import { useSynthStore } from "@/store/synthStore";
+import { valueToKnobPos } from "../Knob/utils/attackDecayMapping";
 
 function FilterEnvelope() {
   const {
@@ -11,49 +12,38 @@ function FilterEnvelope() {
     setFilterEnvelope,
   } = useSynthStore();
 
+  // Define label values and map to knob positions
+  const attackDecayValueLabels = Object.fromEntries([
+    [valueToKnobPos(1), "m-sec."],
+    [valueToKnobPos(10), "10"],
+    [valueToKnobPos(200), "200"],
+    [valueToKnobPos(600), "600"],
+    [valueToKnobPos(1000), "1"],
+    [valueToKnobPos(5000), "5"],
+    [valueToKnobPos(10000), "10 sec."],
+  ]);
+
   return (
     <Row gap="var(--spacing-xl)">
       <Knob
-        valueLabels={{
-          0: "m-sec.",
-          1: "10",
-          2: "200",
-          3: "",
-          4: "600",
-          5: "",
-          6: "1",
-          7: "",
-          8: "5",
-          9: "10",
-          10: "sec.",
-        }}
+        type="attackDecay"
+        valueLabels={attackDecayValueLabels}
         value={filterAttack}
         showMidTicks={false}
         min={0}
-        max={10}
+        max={10000}
         step={1}
         label="Attack Time"
         onChange={(v) => setFilterEnvelope({ attack: v })}
         disabled={isDisabled}
       />
       <Knob
-        valueLabels={{
-          0: "m-sec.",
-          1: "10",
-          2: "200",
-          3: "",
-          4: "600",
-          5: "",
-          6: "1",
-          7: "",
-          8: "5",
-          9: "10",
-          10: "sec.",
-        }}
+        type="attackDecay"
+        valueLabels={attackDecayValueLabels}
         value={filterDecay}
         showMidTicks={false}
         min={0}
-        max={10}
+        max={10000}
         step={1}
         label="Decay Time"
         onChange={(v) => setFilterEnvelope({ decay: v })}

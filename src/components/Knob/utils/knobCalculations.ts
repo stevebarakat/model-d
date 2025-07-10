@@ -1,4 +1,9 @@
 import { KnobType } from "../types";
+import {
+  knobPosToValue,
+  valueToKnobPos,
+  attackDecayStops,
+} from "./attackDecayMapping";
 
 // Logarithmic scaling functions
 export function toLogarithmic(value: number, min: number, max: number): number {
@@ -99,6 +104,18 @@ export function calculateValueFromDelta(
   logarithmic: boolean = false,
   size?: "small" | "medium" | "large"
 ): number {
+  // Handle custom scaling for attackDecay type
+  if (type === "attackDecay") {
+    // Convert value to knob position (0-10)
+    const startPos = valueToKnobPos(startValue, attackDecayStops);
+    // Apply delta in position space
+    const posRange = max - min;
+    const newPos = startPos + (deltaY * sensitivity * posRange) / 200;
+    // Clamp position to [min, max]
+    const clampedPos = Math.max(min, Math.min(max, newPos));
+    // Map back to value
+    return knobPosToValue(clampedPos, attackDecayStops);
+  }
   const range = max - min;
   let newValue: number;
 

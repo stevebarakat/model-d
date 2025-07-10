@@ -19,6 +19,6 @@ type KnobProps = {
 };
 
 type KnobSize = "small" | "medium" | "large";
-type KnobType = "arrow" | "radial" | "millisecond";
+type KnobType = "arrow" | "radial" | "attackDecay";
 
 export type { KnobProps, KnobSize, KnobType };

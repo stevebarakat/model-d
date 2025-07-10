@@ -48,7 +48,7 @@ export const presets: Preset[] = [
       filterAttack: 0.5,
       filterDecay: 2.5,
       filterSustain: 7.5,
-      loudnessAttack: 0.5,
+      loudnessAttack: 4000,
       loudnessDecay: 2.5,
       loudnessSustain: 7.5,
       filterModulationOn: true,

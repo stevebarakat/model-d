@@ -3,6 +3,7 @@ import Row from "../Row";
 import Title from "../Title";
 import Column from "../Column";
 import { useSynthStore } from "@/store/synthStore";
+import { valueToKnobPos } from "../Knob/utils/attackDecayMapping";
 
 function LoudnessEnvelope() {
   const {
@@ -13,6 +14,17 @@ function LoudnessEnvelope() {
     setLoudnessEnvelope,
   } = useSynthStore();
 
+  // Define label values and map to knob positions
+  const attackDecayValueLabels = Object.fromEntries([
+    [valueToKnobPos(1), "m-sec."],
+    [valueToKnobPos(10), "10"],
+    [valueToKnobPos(200), "200"],
+    [valueToKnobPos(600), "600"],
+    [valueToKnobPos(1000), "1"],
+    [valueToKnobPos(5000), "5"],
+    [valueToKnobPos(10000), "10 sec."],
+  ]);
+
   return (
     <Column
       style={{ paddingRight: "0.75rem", paddingTop: "var(--spacing-sm)" }}
@@ -21,20 +33,8 @@ function LoudnessEnvelope() {
       <Column>
         <Row gap="var(--spacing-xl)">
           <Knob
-            type="millisecond"
-            valueLabels={{
-              0: "m-sec.",
-              1000: "10",
-              2000: "200",
-              3000: "",
-              4000: "600",
-              5000: "",
-              6000: "1",
-              7000: "",
-              8000: "5",
-              9000: "10",
-              10000: "sec.",
-            }}
+            type="attackDecay"
+            valueLabels={attackDecayValueLabels}
             value={loudnessAttack}
             showMidTicks={false}
             min={0}
@@ -46,19 +46,8 @@ function LoudnessEnvelope() {
           />
           {loudnessAttack}
           <Knob
-            valueLabels={{
-              0: "m-sec.",
-              1: "10",
-              2: "200",
-              3: "",
-              4: "600",
-              5: "",
-              6: "1",
-              7: "",
-              8: "5",
-              9: "10",
-              10000: "sec.",
-            }}
+            type="attackDecay"
+            valueLabels={attackDecayValueLabels}
             value={loudnessDecay}
             showMidTicks={false}
             min={0}

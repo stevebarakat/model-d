@@ -4,6 +4,11 @@ import { KnobTicks, KnobLabels } from "./components";
 import { KnobProps } from "./types";
 import styles from "./Knob.module.css";
 import { slugify } from "@/utils/";
+import {
+  valueToKnobPos,
+  knobPosToValue,
+  attackDecayStops,
+} from "./utils/attackDecayMapping";
 
 function Knob({
   value,
@@ -22,20 +27,31 @@ function Knob({
   style,
   disabled = false,
 }: KnobProps) {
+  // For attackDecay, convert value to knob position for rendering
+  const knobValue =
+    type === "attackDecay" ? valueToKnobPos(value, attackDecayStops) : value;
   const { knobRef, handlePointerDown } = useKnobInteraction({
     value,
     min,
     max,
     step,
     type,
-    onChange,
+    onChange: (v) => {
+      if (type === "attackDecay") {
+        // v is a knob position, map to value
+        onChange(knobPosToValue(v, attackDecayStops));
+      } else {
+        onChange(v);
+      }
+    },
     logarithmic,
     size,
   });
 
   const id = slugify(label);
   const labelClass = title ? styles.labelHidden : styles.label;
-  const rotation = getRotation(value, min, max, type, logarithmic);
+  // For attackDecay, use knobValue for rotation
+  const rotation = getRotation(knobValue, min, max, type, logarithmic);
   const displayValue = getDisplayValue(value, step, unit, valueLabels);
   const ariaValueText =
     typeof displayValue === "string"
@@ -107,7 +123,7 @@ function Knob({
             role="slider"
             aria-valuemin={min}
             aria-valuemax={max}
-            aria-valuenow={value}
+            aria-valuenow={knobValue}
             aria-label={label}
             aria-valuetext={ariaValueText}
           >

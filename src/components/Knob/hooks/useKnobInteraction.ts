@@ -107,14 +107,14 @@ export function useKnobInteraction({
       isDragging,
       startY,
       startValue,
-      sensitivity,
       min,
       max,
       step,
       type,
+      logarithmic,
+      size,
       value,
       updateValue,
-      logarithmic,
     ]
   );
 
