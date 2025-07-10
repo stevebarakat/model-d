@@ -3,7 +3,7 @@ import Row from "../Row";
 import Title from "../Title";
 import Column from "../Column";
 import { useSynthStore } from "@/store/synthStore";
-import { valueToKnobPos } from "../Knob/utils/attackDecayMapping";
+import { attackDecayValueLabels } from "./constants";
 
 function LoudnessEnvelope() {
   const {
@@ -13,17 +13,6 @@ function LoudnessEnvelope() {
     isDisabled,
     setLoudnessEnvelope,
   } = useSynthStore();
-
-  // Define label values and map to knob positions
-  const attackDecayValueLabels = Object.fromEntries([
-    [valueToKnobPos(1), "m-sec."],
-    [valueToKnobPos(10), "10"],
-    [valueToKnobPos(200), "200"],
-    [valueToKnobPos(600), "600"],
-    [valueToKnobPos(1000), "1"],
-    [valueToKnobPos(5000), "5"],
-    [valueToKnobPos(10000), "10 sec."],
-  ]);
 
   return (
     <Column
@@ -39,9 +28,11 @@ function LoudnessEnvelope() {
             showMidTicks={true}
             min={0}
             max={10000}
-            step={1}
+            step={10}
             label="Attack Time"
-            onChange={(value) => setLoudnessEnvelope({ attack: value })}
+            onChange={(value) =>
+              setLoudnessEnvelope({ attack: Number(value.toFixed(0)) })
+            }
             disabled={isDisabled}
           />
           {loudnessAttack}
@@ -52,9 +43,11 @@ function LoudnessEnvelope() {
             showMidTicks={true}
             min={0}
             max={10000}
-            step={1}
+            step={10}
             label="Decay Time"
-            onChange={(value) => setLoudnessEnvelope({ decay: value })}
+            onChange={(value) =>
+              setLoudnessEnvelope({ decay: Number(value.toFixed(0)) })
+            }
             disabled={isDisabled}
           />
           <Knob

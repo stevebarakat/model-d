@@ -3,8 +3,8 @@
   --knob-container-multiplier: 1.75;
   --knob-border-radius: 50%;
   --knob-shadow-color: hsl(0deg 0% 0%);
-  --knob-highlight-color: hsl(0deg 0% 50% / 50%);
-  --knob-highlight-color-2: hsl(0deg 0% 30% / 50%);
+  --knob-highlight-color: hsl(0deg 0% 30% / 50%);
+  --knob-highlight-color-2: hsl(0deg 0% 50% / 50%);
   --knob-tick-color: hsl(0deg 0% 60%);
   --knob-dot-color: hsl(0deg 0% 75%);
   --knob-dot-gradient-start: hsl(220deg 13% 85%);
@@ -88,10 +88,10 @@
   height: var(--knob-size);
   background: linear-gradient(
     to bottom,
-    hsl(0, 0%, 35%) 0%,
-    hsl(0, 0%, 20%) 35%,
-    hsl(0, 0%, 7%) 35%,
-    hsl(0, 0%, 0%) 100%
+    #595959 0%,
+    #333333 35%,
+    #111111 35%,
+    #000000 100%
   );
   border-radius: var(--knob-border-radius);
   transform: var(--center-transform);
@@ -140,11 +140,16 @@
   position: relative;
   top: 0;
   left: 0;
-  width: calc(var(--knob-size));
+  width: var(--knob-size);
   height: var(--knob-size);
   filter: drop-shadow(0 -1px 0 var(--knob-highlight-color));
-  /* filter: drop-shadow(0 -1px 0 var(--knob-highlight-color))
-    drop-shadow(0 1px 0 var(--knob-highlight-color-2)); */
+  &:has(.radial) {
+    filter: drop-shadow(0 -1px 0 var(--knob-highlight-color));
+  }
+  &:has(.arrow) {
+    filter: drop-shadow(0 -1px 0 var(--knob-highlight-color-2))
+      drop-shadow(0 1px 0 var(--knob-highlight-color));
+  }
 }
 
 /* Common knob type styles */
