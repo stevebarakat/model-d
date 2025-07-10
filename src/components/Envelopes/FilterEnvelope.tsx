@@ -18,7 +18,7 @@ function FilterEnvelope() {
         type="attackDecay"
         valueLabels={attackDecayValueLabels}
         value={filterAttack}
-        showMidTicks={false}
+        showMidTicks={true}
         min={0}
         max={10000}
         step={10}
@@ -30,7 +30,7 @@ function FilterEnvelope() {
         type="attackDecay"
         valueLabels={attackDecayValueLabels}
         value={filterDecay}
-        showMidTicks={false}
+        showMidTicks={true}
         min={0}
         max={10000}
         step={10}
