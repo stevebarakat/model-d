@@ -35,7 +35,6 @@ function Filter() {
           logarithmic={true}
           disabled={isDisabled}
         />
-        {filterCutoff}
         <Knob
           valueLabels={{
             0: "0",

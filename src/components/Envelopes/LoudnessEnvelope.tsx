@@ -35,7 +35,6 @@ function LoudnessEnvelope() {
             }
             disabled={isDisabled}
           />
-          {loudnessAttack}
           <Knob
             type="attackDecay"
             valueLabels={attackDecayValueLabels}
