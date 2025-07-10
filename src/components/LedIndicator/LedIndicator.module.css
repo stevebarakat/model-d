@@ -1,16 +1,16 @@
 /* Container for the LED and label */
 .container {
+  position: relative;
+  left: var(--spacing-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
-  left: var(--spacing-lg);
-  position: relative;
 }
 
 /* Label styling */
 .label {
-  text-transform: uppercase;
   font-weight: 800;
+  text-transform: uppercase;
 }
 
 /* Base LED styles */

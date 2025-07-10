@@ -89,9 +89,9 @@
   background: linear-gradient(
     to bottom,
     #595959 0%,
-    #333333 35%,
-    #111111 35%,
-    #000000 100%
+    #333 35%,
+    #111 35%,
+    #000 100%
   );
   border-radius: var(--knob-border-radius);
   transform: var(--center-transform);
@@ -104,6 +104,7 @@
   width: var(--knob-size);
   height: var(--knob-size);
   border-radius: var(--knob-border-radius);
+
   /* Metal cap for radial knob */
   &:has(.radial) {
     &::before {
@@ -113,23 +114,24 @@
       z-index: 5555;
       width: 62.5%;
       height: 62.5%;
+      background-image: var(--metal-cap);
+      border: 0.5px solid hsl(0deg 0% 40%);
       border-radius: var(--knob-border-radius);
       pointer-events: none;
       content: "";
-      border: 0.5px solid hsl(0, 0%, 40%);
-      background-image: var(--metal-cap);
     }
   }
+
   &:has(.arrow) {
     &::before {
       position: absolute;
-      z-index: 1;
       top: 32.5%;
       left: 32.5%;
+      z-index: 1;
       width: 35%;
       height: 35%;
-      border: 0.5px solid hsl(0, 0%, 40%);
       background-image: var(--metal-cap);
+      border: 0.5px solid hsl(0deg 0% 40%);
       border-radius: var(--knob-border-radius);
       content: "";
     }
@@ -143,9 +145,11 @@
   width: var(--knob-size);
   height: var(--knob-size);
   filter: drop-shadow(0 -1px 0 var(--knob-highlight-color));
+
   &:has(.radial) {
     filter: drop-shadow(0 -1px 0 var(--knob-highlight-color));
   }
+
   &:has(.arrow) {
     filter: drop-shadow(0 -1px 0 var(--knob-highlight-color-2))
       drop-shadow(0 1px 0 var(--knob-highlight-color));
@@ -292,10 +296,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 0;
   width: var(--tick-width);
   height: var(--tick-height);
   background: var(--knob-tick-color);
   border-radius: var(--tick-width);
   transform: var(--center-transform);
-  z-index: 0;
 }

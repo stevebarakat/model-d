@@ -5,10 +5,9 @@
 }
 
 .keyboard {
+  position: relative;
   padding: 0 3px;
   background: var(--color-off-black);
-  position: relative;
-  /* top: 8px; */
 }
 
 .pianoKeys {

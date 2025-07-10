@@ -21,8 +21,8 @@
 }
 
 .switch {
-  z-index: 10;
   position: relative;
+  z-index: 10;
   width: var(--switch-width);
   height: var(--switch-height);
   background-color: var(--color-gray-l);
@@ -77,25 +77,25 @@
   transition: all 0.3s ease-in-out;
 
   &::before {
-    pointer-events: none;
-    content: "";
     position: absolute;
+    z-index: 1000;
     margin-top: 0.5rem;
-    height: calc(var(--switch-width) / 3);
     width: var(--switch-height);
+    height: calc(var(--switch-width) / 3);
     background: linear-gradient(
       to bottom,
-      hsl(0 0% 80% / 0.5),
-      hsl(0 0% 100% / 0)
+      hsl(0deg 0% 80% / 50%),
+      hsl(0deg 0% 100% / 0%)
     );
-    z-index: 1000;
     border-radius: 0.175rem;
+    pointer-events: none;
+    content: "";
   }
 
   label {
     position: relative;
-    z-index: 50;
     top: -0.5rem;
+    z-index: 50;
   }
 
   .switch {
