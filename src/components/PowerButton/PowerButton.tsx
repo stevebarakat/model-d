@@ -37,14 +37,13 @@ function PowerButton({ isOn, onPowerOn, onPowerOff }: PowerButtonProps) {
   );
 
   return (
-    <Column gap="var(--spacing-xl)" style={{ height: "fit-content" }}>
-      <Column gap="var(--spacing-xs)">
-        <VintageLED
-          label="Power"
-          isOn={isOn}
-          onCheckedChange={() => handleCheckedChange(!isOn)}
-        />
-      </Column>
+    <Column gap="1.5rem" style={{ paddingTop: "var(--spacing-sm)" }}>
+      <VintageLED
+        size="medium"
+        label="Power"
+        isOn={isOn}
+        onCheckedChange={() => handleCheckedChange(!isOn)}
+      />
       <RockerSwitch
         orientation="vertical"
         checked={isOn}

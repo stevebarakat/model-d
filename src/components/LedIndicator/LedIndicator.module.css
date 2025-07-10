@@ -16,7 +16,6 @@
 /* Base LED styles */
 .vintageLed {
   position: relative;
-  border: 3px solid var(--color-white-50);
   border-radius: var(--radius-full);
   transition: var(--transition-fast);
 }
@@ -34,6 +33,7 @@
   opacity: 0.25;
   transform: translate(-50%, -50%);
   transition: var(--transition-fast);
+  filter: blur(3px);
 
   &::after {
     position: absolute;
@@ -68,35 +68,38 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 50%;
-  height: 50%;
+  width: 75%;
+  height: 75%;
   background: var(--color-white-75);
   border-radius: var(--radius-full);
   opacity: 0.75;
   transform: translate(-50%, -50%);
-  transition: var(--transition-fast);
-  filter: blur(3px);
+  transition: opacity var(--transition-fast);
+  filter: blur(1px);
 }
 
 /* Size variants */
 .vintageLedSmall {
   width: 12px;
   height: 12px;
+  border: 1px solid var(--color-white-50);
 }
 
 .vintageLedMedium {
   width: 20px;
   height: 20px;
+  border: 2px solid var(--color-white-50);
 }
 
 .vintageLedLarge {
   width: 28px;
   height: 28px;
+  border: 3px solid var(--color-white-50);
 }
 
 /* Color variants */
-.vintageLedRed {
-  color: hsl(0deg 100% 50%);
+.vintageLedYellow {
+  color: hsl(50deg 100% 55%);
 }
 
 /* Active state with intensity-based opacity */
@@ -117,7 +120,7 @@
 .vintageLedRed.vintageLedOn .vintageLedReflection {
   box-shadow: 0 0 calc(20px * var(--led-intensity, 1))
     calc(8px * var(--led-intensity, 1))
-    hsl(0deg 100% 50% / calc(60% * var(--led-intensity, 1)));
+    hsl(0deg 100% 100% / calc(60% * var(--led-intensity, 1)));
 }
 
 /* Intensity-based color variation for overload indication */
@@ -129,5 +132,5 @@
 .vintageLedRed.vintageLedOn .vintageLedGlow {
   box-shadow: 0 0 calc(30px * var(--led-intensity, 1))
     calc(15px * var(--led-intensity, 1))
-    hsl(0deg 100% 50% / calc(40% * var(--led-intensity, 1)));
+    hsl(0deg 100% 100% / calc(40% * var(--led-intensity, 1)));
 }

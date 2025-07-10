@@ -5,27 +5,27 @@ import Title from "../Title";
 
 export type LEDSize = "small" | "medium" | "large";
 
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export type VintageLEDProps = {
-  /** Whether the LED is on or off */
   isOn?: boolean;
-  /** Whether to animate the warm-up effect when turning on */
   warmupEffect?: boolean;
-  /** Additional CSS class names */
   className?: string;
-  /** Label text for the LED (optional) */
   label?: string;
-  /** Click handler for the LED */
+  size?: LEDSize;
+  color?: "red" | "yellow";
   onCheckedChange: (e: React.FormEvent<HTMLInputElement>) => void;
 };
 
-/**
- * VintageLED component that simulates the appearance of old-school indicator lights
- */
 function VintageLED({
   isOn = true,
   warmupEffect = true,
   className,
   label,
+  size = "medium",
+  color = "red",
   onCheckedChange,
 }: VintageLEDProps) {
   const [isWarmedUp, setIsWarmedUp] = useState(isOn && !warmupEffect);
@@ -47,17 +47,15 @@ function VintageLED({
     };
   }, [isOn, warmupEffect]);
 
-  // Using the new cssModule utility for better conditional class handling
   const ledClasses = cssModule(
     styles,
     "vintageLed",
-    `vintageLedRed`,
-    `vintageLedLarge`,
+    `vintageLed${capitalizeFirstLetter(color)}`,
+    `vintageLed${capitalizeFirstLetter(size)}`,
     isOn && "vintageLedOn",
     isWarmedUp && "vintageLedWarmedUp"
   );
 
-  // Using cn utility for combining with external className
   const containerClasses = cn(ledClasses, className);
 
   return (

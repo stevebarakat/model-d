@@ -27,7 +27,7 @@ function LedIndicator({
   const ledClasses = cssModule(
     styles,
     "vintageLed",
-    "vintageLedRed",
+    "vintageLedYellow",
     "vintageLedLarge",
     isOn && "vintageLedOn"
   );
