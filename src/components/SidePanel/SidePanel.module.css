@@ -16,11 +16,11 @@
     hsl(0deg 0% 20%),
     hsl(0deg 0% 20%) 2.5%,
     hsl(0deg 0% 17.5%) 50%,
-    hsl(0deg 0% 20%) 90%,
-    hsl(0deg 0% 17.5%) 99%,
-    hsl(0deg 0% 20%) 100%
+    hsl(0deg 0% 22.5%) 90%,
+    hsl(0deg 0% 20%) 98.5%,
+    hsl(0deg 0% 10%) 100%
   );
-  border-bottom: 1.5px solid var(--color-off-black);
+  /* border-bottom: 1.5px solid var(--color-white-10); */
 
   &::after {
     position: absolute;
