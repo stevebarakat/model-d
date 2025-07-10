@@ -20,21 +20,22 @@ function Filter() {
       <Row gap="var(--spacing-xl)">
         <Knob
           valueLabels={{
-            0: "-4",
-            2.5: "-2",
-            5: "0",
-            7.5: "2",
-            10: "4",
+            "-4": "-4",
+            "-2": "-2",
+            0: "0",
+            2: "2",
+            4: "4",
           }}
           value={filterCutoff}
-          min={0}
-          max={10}
+          min={-4}
+          max={4}
           step={0.5}
           label="Cutoff Frequency"
           onChange={setFilterCutoff}
           logarithmic={true}
           disabled={isDisabled}
         />
+        {filterCutoff}
         <Knob
           valueLabels={{
             0: "0",

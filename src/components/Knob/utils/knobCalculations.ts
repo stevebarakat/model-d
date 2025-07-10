@@ -62,7 +62,7 @@ export function getRotation(
   if (type === "arrow") {
     return percentage * 150 - 75; // -75 to +75 degrees (9:30 to 2:30)
   } else {
-    return percentage * 300 - 150; // -150 to +150 degrees (7:15 to 4:45)
+    return percentage * 290 - 145; // -150 to +150 degrees (7:15 to 4:45)
   }
 }
 
@@ -140,8 +140,9 @@ export function calculateLabelPosition(
   size: "small" | "medium" | "large",
   type: KnobType
 ): { x: number; y: number } {
-  const arc = type === "arrow" ? 150 : 290;
-  const startAngle = type === "arrow" ? -165 : 125;
+  const arc = type === "arrow" ? 150 : 300;
+
+  const startAngle = type === "arrow" ? -165 : 120;
   const percentage = (tick - min) / (max - min);
   const angle = startAngle + percentage * arc;
   const rad = (angle * Math.PI) / 180;
@@ -159,8 +160,8 @@ export function calculateTickAngle(
   max: number,
   type: "arrow" | "radial"
 ): number {
-  const arc = type === "arrow" ? 150 : 290;
-  const startAngle = type === "arrow" ? -75 : -145;
+  const arc = type === "arrow" ? 150 : 300;
+  const startAngle = type === "arrow" ? -75 : -150;
   const percentage = (tick - min) / (max - min);
   return startAngle + percentage * arc;
 }

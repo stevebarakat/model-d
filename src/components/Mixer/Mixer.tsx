@@ -47,6 +47,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
               }}
               disabled={isDisabled}
             />
+            {mixer.osc1.volume}
             <Line />
             <RockerSwitch
               style={{ left: "1.65rem" }}
