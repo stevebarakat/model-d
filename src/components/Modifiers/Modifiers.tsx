@@ -5,17 +5,12 @@ import Section from "../Section";
 import Column from "../Column";
 import ModulationSwitch from "../Filter/ModulationSwitch";
 import KeyboardControl from "../Filter/KeyboardControl";
-
-const filterSwitches: React.CSSProperties = {
-  position: "absolute",
-  top: "10%",
-  left: "-1.5rem",
-};
+import styles from "./Modifiers.module.css";
 
 function Modifiers() {
   return (
     <Section>
-      <div style={filterSwitches}>
+      <div className={styles.filterSwitches}>
         <ModulationSwitch />
         <KeyboardControl />
       </div>

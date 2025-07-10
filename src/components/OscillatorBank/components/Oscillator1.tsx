@@ -57,7 +57,12 @@ export default function Oscillator1() {
         disabled={isDisabled}
       />
       <Spacer width="28%" style={{ marginTop: "-6.75rem" }}>
-        <Title size="md">Oscillator - 1</Title>
+        <Title
+          size="md"
+          style={{ paddingTop: "0.55rem", paddingBottom: "0.75rem" }}
+        >
+          Oscillator - 1
+        </Title>
         <Title size="sm">Frequency</Title>
       </Spacer>
       <Knob

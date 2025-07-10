@@ -4,18 +4,19 @@ import styles from "./Title.module.css";
 
 type TitleProps = {
   children: React.ReactNode;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
   style?: React.CSSProperties;
 };
 
-function Title({ children, size = "lg", style }: TitleProps) {
+function Title({ children, size = "xl", style }: TitleProps) {
   return (
     <div
       className={cn(
         styles.title,
         size === "sm" && styles.small,
         size === "md" && styles.medium,
-        size === "lg" && styles.large
+        size === "lg" && styles.large,
+        size === "xl" && styles.xlarge
       )}
       style={style}
     >

@@ -39,7 +39,8 @@
   --font-size-xs: 0.4375rem;
   --font-size-sm: 0.4875rem;
   --font-size-md: 0.582rem;
-  --font-size-lg: 1.2rem;
+  --font-size-lg: 0.775rem;
+  --font-size-xl: 1.2rem;
 
   /* Synth */
   --color-synth-bg: var(--color-gray-xd);
