@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/utils/helpers";
 import styles from "./Title.module.css";
 
 type TitleProps = {
@@ -8,14 +9,14 @@ type TitleProps = {
 };
 
 function Title({ children, size = "lg", style }: TitleProps) {
-  const isSmall = size === "sm";
-  const isMedium = size === "md";
-  const isLarge = size === "lg";
   return (
     <div
-      className={`${styles.title} ${isSmall && styles.small} ${
-        isMedium && styles.medium
-      } ${isLarge && styles.large}`}
+      className={cn(
+        styles.title,
+        size === "sm" && styles.small,
+        size === "md" && styles.medium,
+        size === "lg" && styles.large
+      )}
       style={style}
     >
       {children}

@@ -251,13 +251,13 @@
 
 .titleMedium,
 .labelMedium {
-  bottom: 100%;
+  bottom: 95%;
   font-size: var(--font-size-sm);
 }
 
 .labelLarge,
 .titleLarge {
-  bottom: 100%;
+  bottom: 95%;
   font-size: var(--font-size-md);
 }
 
