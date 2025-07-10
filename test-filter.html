@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filter Test</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #1a1a1a;
+        color: white;
+      }
+      .controls {
+        margin: 20px 0;
+      }
+      button {
+        padding: 10px 20px;
+        margin: 5px;
+        background: #333;
+        color: white;
+        border: 1px solid #555;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #444;
+      }
+      input[type="range"] {
+        width: 200px;
+        margin: 10px;
+      }
+      label {
+        display: inline-block;
+        width: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Minimoog Filter Test</h1>
+
+    <div class="controls">
+      <button id="startBtn">Start Audio</button>
+      <button id="playBtn">Play Note</button>
+      <button id="stopBtn">Stop Note</button>
+    </div>
+
+    <div class="controls">
+      <label>Filter Cutoff: <span id="cutoffValue">0</span></label>
+      <input
+        type="range"
+        id="cutoffSlider"
+        min="-4"
+        max="4"
+        step="0.5"
+        value="0"
+      />
+    </div>
+
+    <div class="controls">
+      <label>Filter Emphasis: <span id="emphasisValue">0</span></label>
+      <input
+        type="range"
+        id="emphasisSlider"
+        min="0"
+        max="10"
+        step="1"
+        value="0"
+      />
+    </div>
+
+    <div class="controls">
+      <label>Filter Modulation: <span id="modValue">0</span></label>
+      <input type="range" id="modSlider" min="0" max="10" step="1" value="0" />
+    </div>
+
+    <script>
+      let audioContext;
+      let filterNode;
+      let oscillator;
+      let isPlaying = false;
+
+      async function initAudio() {
+        try {
+          audioContext = new AudioContext();
+
+          // Register worklet
+          await audioContext.audioWorklet.addModule(
+            "/moog-filter/worklet-processor.js"
+          );
+
+          // Create filter
+          filterNode = new AudioWorkletNode(audioContext, "worklet-processor");
+
+          // Load WASM
+          const response = await fetch("/moog-filter/filterKernel.wasm");
+          const wasmBinary = await response.arrayBuffer();
+          filterNode.port.postMessage(wasmBinary);
+
+          // Create oscillator
+          oscillator = audioContext.createOscillator();
+          oscillator.type = "sawtooth";
+          oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+
+          // Connect: oscillator -> filter -> destination
+          oscillator.connect(filterNode);
+          filterNode.connect(audioContext.destination);
+
+          console.log("Audio initialized successfully");
+        } catch (error) {
+          console.error("Error initializing audio:", error);
+        }
+      }
+
+      function playNote() {
+        if (!audioContext || !oscillator) return;
+
+        if (!isPlaying) {
+          oscillator.start();
+          isPlaying = true;
+        }
+      }
+
+      function stopNote() {
+        if (!oscillator || !isPlaying) return;
+
+        oscillator.stop();
+        oscillator = audioContext.createOscillator();
+        oscillator.type = "sawtooth";
+        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+        oscillator.connect(filterNode);
+        isPlaying = false;
+      }
+
+      function updateFilter() {
+        if (!filterNode) return;
+
+        const cutoff = parseFloat(
+          document.getElementById("cutoffSlider").value
+        );
+        const emphasis = parseFloat(
+          document.getElementById("emphasisSlider").value
+        );
+        const mod = parseFloat(document.getElementById("modSlider").value);
+
+        // Map cutoff from -4..4 to 0..1
+        const cutoffNorm = (cutoff + 4) / 8;
+        const emphasisNorm = emphasis / 10;
+        const modNorm = mod / 10;
+
+        filterNode.port.postMessage({ cutOff: cutoffNorm });
+        filterNode.port.postMessage({ resonance: emphasisNorm });
+        filterNode.port.postMessage({ modValue: modNorm });
+
+        document.getElementById("cutoffValue").textContent = cutoff;
+        document.getElementById("emphasisValue").textContent = emphasis;
+        document.getElementById("modValue").textContent = mod;
+      }
+
+      // Event listeners
+      document.getElementById("startBtn").addEventListener("click", initAudio);
+      document.getElementById("playBtn").addEventListener("click", playNote);
+      document.getElementById("stopBtn").addEventListener("click", stopNote);
+      document
+        .getElementById("cutoffSlider")
+        .addEventListener("input", updateFilter);
+      document
+        .getElementById("emphasisSlider")
+        .addEventListener("input", updateFilter);
+      document
+        .getElementById("modSlider")
+        .addEventListener("input", updateFilter);
+    </script>
+  </body>
+</html>

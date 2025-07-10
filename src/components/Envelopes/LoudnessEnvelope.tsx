@@ -28,7 +28,6 @@ function LoudnessEnvelope() {
             showMidTicks={true}
             min={0}
             max={10000}
-            step={10}
             label="Attack Time"
             onChange={(value) =>
               setLoudnessEnvelope({ attack: Number(value.toFixed(0)) })
@@ -42,7 +41,7 @@ function LoudnessEnvelope() {
             showMidTicks={true}
             min={0}
             max={10000}
-            step={10}
+            step={100}
             label="Decay Time"
             onChange={(value) =>
               setLoudnessEnvelope({ decay: Number(value.toFixed(0)) })
