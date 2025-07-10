@@ -11,6 +11,7 @@ type UseKnobInteractionProps = {
   type: KnobType;
   onChange: (value: number) => void;
   logarithmic?: boolean;
+  size?: "small" | "medium" | "large";
 };
 
 export function useKnobInteraction({
@@ -21,6 +22,7 @@ export function useKnobInteraction({
   type,
   onChange,
   logarithmic = false,
+  size,
 }: UseKnobInteractionProps) {
   const { knobRef } = useKnobKeyboard({
     value,
@@ -30,6 +32,7 @@ export function useKnobInteraction({
     type,
     onChange,
     logarithmic,
+    size,
   });
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
@@ -85,7 +88,8 @@ export function useKnobInteraction({
         max,
         step,
         type,
-        logarithmic
+        logarithmic,
+        size
       );
 
       // Only apply threshold-based updates for arrow knobs

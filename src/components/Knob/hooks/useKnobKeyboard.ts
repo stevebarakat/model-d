@@ -10,6 +10,7 @@ type UseKnobKeyboardProps = {
   type: KnobType;
   onChange: (value: number) => void;
   logarithmic?: boolean;
+  size?: "small" | "medium" | "large";
 };
 
 export function useKnobKeyboard({
@@ -20,6 +21,7 @@ export function useKnobKeyboard({
   type,
   onChange,
   logarithmic = false,
+  size,
 }: UseKnobKeyboardProps) {
   const knobRef = useRef<HTMLDivElement>(null);
 
@@ -44,7 +46,8 @@ export function useKnobKeyboard({
             max,
             step,
             type,
-            logarithmic
+            logarithmic,
+            size
           );
           break;
         case "ArrowDown":
@@ -57,7 +60,8 @@ export function useKnobKeyboard({
             max,
             step,
             type,
-            logarithmic
+            logarithmic,
+            size
           );
           break;
         default:
@@ -71,7 +75,7 @@ export function useKnobKeyboard({
 
       onChange(newValue);
     },
-    [value, min, max, step, type, onChange, logarithmic]
+    [value, min, max, step, type, onChange, logarithmic, size]
   );
 
   useEffect(() => {

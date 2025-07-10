@@ -30,6 +30,7 @@ function Knob({
     type,
     onChange,
     logarithmic,
+    size,
   });
 
   const id = slugify(label);

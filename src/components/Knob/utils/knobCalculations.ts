@@ -96,7 +96,8 @@ export function calculateValueFromDelta(
   max: number,
   step: number,
   type: KnobType = "radial",
-  logarithmic: boolean = false
+  logarithmic: boolean = false,
+  size?: "small" | "medium" | "large"
 ): number {
   const range = max - min;
   let newValue: number;
@@ -116,8 +117,11 @@ export function calculateValueFromDelta(
     newValue = startValue + (deltaY * sensitivity * range) / 200;
   }
 
-  // Apply step snapping only for arrow knobs
-  if (type === "arrow" && step > 0) {
+  // Apply step snapping for arrow knobs and large radial knobs
+  if (
+    step > 0 &&
+    (type === "arrow" || (type === "radial" && size === "large"))
+  ) {
     // Use a more precise method to avoid floating-point errors
     const steps = Math.round(newValue / step);
     newValue = steps * step;
