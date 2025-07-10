@@ -16,7 +16,7 @@ function LoudnessEnvelope() {
 
   return (
     <Column
-      style={{ paddingRight: "0.75rem", paddingTop: "var(--spacing-sm)" }}
+      style={{ paddingRight: "0.75rem", paddingTop: "var(--spacing-xs)" }}
     >
       <Title size="lg">Loudness Contour</Title>
       <Column>
