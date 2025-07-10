@@ -3,7 +3,8 @@
   --knob-container-multiplier: 1.75;
   --knob-border-radius: 50%;
   --knob-shadow-color: hsl(0deg 0% 0%);
-  --knob-highlight-color: hsl(0deg 0% 30% / 50%);
+  --knob-highlight-color: hsl(0deg 0% 50% / 50%);
+  --knob-highlight-color-2: hsl(0deg 0% 30% / 50%);
   --knob-tick-color: hsl(0deg 0% 60%);
   --knob-dot-color: hsl(0deg 0% 75%);
   --knob-dot-gradient-start: hsl(220deg 13% 85%);
@@ -87,10 +88,10 @@
   height: var(--knob-size);
   background: linear-gradient(
     to bottom,
-    #595959 0%,
-    #333333 35%,
-    #111111 35%,
-    #000000 100%
+    hsl(0, 0%, 35%) 0%,
+    hsl(0, 0%, 20%) 35%,
+    hsl(0, 0%, 7%) 35%,
+    hsl(0, 0%, 0%) 100%
   );
   border-radius: var(--knob-border-radius);
   transform: var(--center-transform);
@@ -139,9 +140,11 @@
   position: relative;
   top: 0;
   left: 0;
-  width: var(--knob-size);
+  width: calc(var(--knob-size));
   height: var(--knob-size);
   filter: drop-shadow(0 -1px 0 var(--knob-highlight-color));
+  /* filter: drop-shadow(0 -1px 0 var(--knob-highlight-color))
+    drop-shadow(0 1px 0 var(--knob-highlight-color-2)); */
 }
 
 /* Common knob type styles */
@@ -282,11 +285,12 @@
 /* Knob tick indicator */
 .knobTick {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
   width: var(--tick-width);
   height: var(--tick-height);
   background: var(--knob-tick-color);
   border-radius: var(--tick-width);
   transform: var(--center-transform);
+  z-index: 0;
 }

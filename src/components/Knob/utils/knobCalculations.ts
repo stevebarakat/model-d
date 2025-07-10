@@ -117,11 +117,8 @@ export function calculateValueFromDelta(
     newValue = startValue + (deltaY * sensitivity * range) / 200;
   }
 
-  // Apply step snapping for arrow knobs and large radial knobs
-  if (
-    step > 0 &&
-    (type === "arrow" || (type === "radial" && size === "large"))
-  ) {
+  // Apply step snapping for arrow knobs
+  if (type === "arrow" && step > 0) {
     // Use a more precise method to avoid floating-point errors
     const steps = Math.round(newValue / step);
     newValue = steps * step;
@@ -133,8 +130,17 @@ export function calculateValueFromDelta(
       Math.pow(10, decimalPlaces);
   }
 
+  // Apply zero snapping for large radial knobs
+  if (type === "radial" && size === "large") {
+    // Snap to 0 when within a small threshold
+    const zeroThreshold = 0.3; // Adjust this value to control snap sensitivity
+    if (Math.abs(newValue) <= zeroThreshold) {
+      newValue = 0;
+    }
+  }
+
   // Clamp to min/max
-  return Math.min(max, Math.max(min, newValue));
+  return Number(Math.min(max, Math.max(min, newValue)).toFixed(2));
 }
 
 export function calculateLabelPosition(
@@ -153,7 +159,7 @@ export function calculateLabelPosition(
   const x =
     50 + Math.cos(rad) * (size === "small" ? 80 : size === "medium" ? 80 : 70);
   const y =
-    50 + Math.sin(rad) * (size === "small" ? 82 : size === "medium" ? 80 : 70);
+    55 + Math.sin(rad) * (size === "small" ? 82 : size === "medium" ? 80 : 70);
 
   return { x, y };
 }
@@ -162,7 +168,7 @@ export function calculateTickAngle(
   tick: number,
   min: number,
   max: number,
-  type: "arrow" | "radial"
+  type: KnobType
 ): number {
   const arc = type === "arrow" ? 150 : 300;
   const startAngle = type === "arrow" ? -75 : -150;
