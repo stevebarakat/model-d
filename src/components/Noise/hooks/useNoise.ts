@@ -19,8 +19,8 @@ export function useNoise(
 
     async function setup() {
       if (!audioContext || !activeKeys) return;
-      // Add subtle noise even when not explicitly enabled for fatter sound
-      const shouldEnableNoise = mixer.noise.enabled || mixer.noise.volume > 0;
+      // Only enable noise when explicitly turned on
+      const shouldEnableNoise = mixer.noise.enabled;
       if (!shouldEnableNoise) return;
       const moduleUrl =
         mixer.noise.noiseType === "pink"
