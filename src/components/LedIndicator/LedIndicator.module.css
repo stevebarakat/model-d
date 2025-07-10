@@ -94,7 +94,7 @@
 .vintageLedLarge {
   width: 28px;
   height: 28px;
-  border: 3px solid var(--color-white-50);
+  border: 3px solid var(--color-gray);
 }
 
 /* Color variants */
