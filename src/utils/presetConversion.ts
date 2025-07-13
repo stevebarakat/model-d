@@ -37,7 +37,6 @@ export function convertPresetToStoreFormat(
     decaySwitchOn: preset.sidePanel.decaySwitchOn,
     lfoRate: preset.sidePanel.lfoRate,
     lfoWaveform: preset.sidePanel.lfoWaveform as "triangle" | "square",
-    modWheel: preset.sidePanel.modWheel,
 
     // Main volume
     mainVolume: preset.mainVolume,

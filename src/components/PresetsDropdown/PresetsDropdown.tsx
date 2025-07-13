@@ -3,6 +3,7 @@ import { useSynthStore } from "@/store/synthStore";
 import { presets, getCategories } from "@/data/presets";
 import { copyURLToClipboard } from "@/utils/urlState";
 import { getPresetWithURL } from "@/utils/generatePresetURLs";
+import { convertPresetToStoreFormat } from "@/utils/presetConversion";
 import styles from "./PresetsDropdown.module.css";
 
 const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
@@ -22,7 +23,8 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
       : presets.filter((preset) => preset.category === selectedCategory);
 
   const handlePresetSelect = (preset: (typeof presets)[0]) => {
-    loadPreset(preset.parameters);
+    const presetParameters = convertPresetToStoreFormat(preset);
+    loadPreset(presetParameters);
     setCurrentPreset(preset.name);
     setIsOpen(false);
     setFocusedIndex(-1);

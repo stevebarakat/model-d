@@ -2,6 +2,7 @@ import { Preset } from "@/data/presets";
 import { SynthState } from "@/store/types/synth";
 import { saveStateToURL } from "./urlState";
 import { createInitialState } from "@/store/state/initialState";
+import { convertPresetToStoreFormat } from "./presetConversion";
 
 /**
  * Converts a preset to a URL with the preset parameters
@@ -27,8 +28,11 @@ function createCompleteStateFromPreset(preset: Preset): SynthState {
   // Get the initial state as a base
   const defaultState = createInitialState();
 
+  // Convert preset to store format
+  const presetParameters = convertPresetToStoreFormat(preset);
+
   // Deep merge preset parameters with default state
-  return deepMerge(defaultState, preset.parameters);
+  return deepMerge(defaultState, presetParameters);
 }
 
 /**
