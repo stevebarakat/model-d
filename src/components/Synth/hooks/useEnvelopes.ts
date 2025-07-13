@@ -14,14 +14,16 @@ function convertAttackDecayValue(largeValue: number): number {
   if (largeValue <= 0) return 0;
   if (largeValue >= 10000) return 10;
 
-  // Use the same logarithmic mapping as the original attackDecayStops
+  // Use a more gradual mapping that gives better control over the range
+  // Map the original values (0, 10, 200, 600, 1000, 5000, 10000) to (0, 3, 5, 7, 8.5, 9.5, 10)
+  // This gives better attack times and longer decay times
   const stops = [
     { pos: 0, value: 0 },
-    { pos: 1000, value: 1 },
-    { pos: 2000, value: 3 },
-    { pos: 4000, value: 5 },
-    { pos: 6000, value: 7 },
-    { pos: 8000, value: 9 },
+    { pos: 10, value: 3 },
+    { pos: 200, value: 5 },
+    { pos: 600, value: 7 },
+    { pos: 1000, value: 8.5 },
+    { pos: 5000, value: 9.5 },
     { pos: 10000, value: 10 },
   ];
 

@@ -36,11 +36,11 @@ export function mapOscillatorType(waveform: string): OscillatorType {
   }
 }
 
-// Helper to map knob values (0-10) to time values (5ms to 10s)
+// Helper to map knob values (0-10) to time values (20ms to 15s)
 export function mapEnvelopeTime(value: number): number {
-  // Map 0-10 to 0.005-10 seconds logarithmically
-  const minTime = 0.005; // 5ms
-  const maxTime = 10; // 10s
+  // Map 0-10 to 0.02-15 seconds logarithmically for more musical envelope times
+  const minTime = 0.02; // 20ms (increased from 5ms)
+  const maxTime = 15; // 15s (increased from 10s)
   return minTime * Math.pow(maxTime / minTime, value / 10);
 }
 
