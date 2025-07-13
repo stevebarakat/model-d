@@ -1,415 +1,60 @@
 import { SynthState } from "@/store/types/synth";
 
-export interface Preset {
+export type Preset = {
   id: string;
   name: string;
   description: string;
   category: string;
-  parameters: Partial<SynthState>;
+  controllers: {
+    tune: number; // 0-10
+    glideTime: number; // 0-10
+    modMix: number; // 0-10
+    osc3FilterEgSwitch: boolean;
+    noiseLfoSwitch: boolean;
+  };
+  filter: {
+    filterCutoff: number;
+    filterEmphasis: number;
+    filterContourAmount: number;
+    filterAttack: number;
+    filterDecay: number;
+    filterSustain: number;
+    filterModulationOn: boolean;
+  };
+  loudness: {
+    loudnessAttack: number;
+    loudnessDecay: number;
+    loudnessSustain: number;
+  };
+  oscillators: Partial<SynthState>;
+  sidePanel: {
+    glideOn: boolean;
+    decaySwitchOn: boolean;
+    lfoRate: number;
+    lfoWaveform: string;
+    modWheel: number;
+  };
+  mainVolume: number;
   shareURL?: string; // Optional URL for sharing
-}
+};
 
 export const presets: Preset[] = [
   {
-    id: "air-bass",
-    name: "Air Bass",
+    id: "shamisen",
+    name: "Shamisen (Chinese plucked instrument)",
     description:
-      "Light, airy bass with subtle noise and smooth filter movement.",
-    category: "Bass",
-    parameters: {
-      oscillator1: {
-        waveform: "sawtooth",
-        frequency: 0,
-        range: "32",
-        enabled: true,
-      },
-      oscillator2: {
-        waveform: "sawtooth",
-        frequency: -2,
-        range: "32",
-        enabled: true,
-      },
-      oscillator3: {
-        waveform: "pulse3",
-        frequency: -2,
-        range: "16",
-        enabled: true,
-      },
-      mixer: {
-        osc1: { enabled: true, volume: 8 },
-        osc2: { enabled: true, volume: 8 },
-        osc3: { enabled: true, volume: 8 },
-        noise: { enabled: true, volume: 2, noiseType: "white" },
-        external: { enabled: false, volume: 2, overload: false },
-      },
-      filterCutoff: 2.5,
-      filterEmphasis: 2.5,
-      filterContourAmount: 6,
-      filterAttack: 0.5,
-      filterDecay: 2.5,
-      filterSustain: 7.5,
-      loudnessAttack: 4000,
-      loudnessDecay: 2.5,
-      loudnessSustain: 7.5,
-      filterModulationOn: true,
-      keyboardControl1: true,
-      mainVolume: 6,
-      glideOn: true,
-      glideTime: 6.5,
-      modMix: 2.5,
-      osc3Control: true,
-      osc3FilterEgSwitch: true,
-      lfoRate: 0,
-      lfoWaveform: "triangle",
-      decaySwitchOn: true,
-      oscillatorModulationOn: true,
-    },
-  },
-  {
-    id: "midnight-funk",
-    name: "Midnight Funk",
-    description:
-      "Funky, modulated synth sound with triangle LFO and rich filter movement.",
-    category: "Funk",
-    parameters: {
-      oscillator1: {
-        waveform: "pulse3",
-        frequency: 0,
-        range: "2",
-        enabled: true,
-      },
-      oscillator2: {
-        waveform: "pulse3",
-        frequency: 0,
-        range: "16",
-        enabled: true,
-      },
-      oscillator3: {
-        waveform: "sawtooth",
-        frequency: 0,
-        range: "16",
-        enabled: true,
-      },
-      mixer: {
-        osc1: { enabled: true, volume: 5 },
-        osc2: { enabled: true, volume: 9 },
-        osc3: { enabled: true, volume: 10 },
-        noise: { enabled: false, volume: 0, noiseType: "white" },
-        external: { enabled: false, volume: 0, overload: false },
-      },
-      filterCutoff: -4,
-      filterEmphasis: 7,
-      filterAttack: 0,
-      filterDecay: 2.5,
-      filterSustain: 4,
-      filterContourAmount: 6,
-      loudnessAttack: 0,
-      loudnessDecay: 5,
-      loudnessSustain: 10,
-      mainVolume: 7,
-      glideOn: true,
-      glideTime: 1,
-      filterModulationOn: true,
-      keyboardControl1: false,
-      keyboardControl2: true,
-      osc3FilterEgSwitch: true,
-      osc3Control: false,
-      modWheel: 0,
-      modMix: 10,
-      lfoRate: 4,
-      lfoWaveform: "triangle",
-      decaySwitchOn: false,
-      oscillatorModulationOn: true,
-    },
-  },
-  {
-    id: "sawyer-bass",
-    name: "Sawyer = Bass",
-    description:
-      "Classic Moog bass inspired by the Sawyer sound. Adjust External Input Volume to taste.",
-    category: "Bass",
-    parameters: {
-      oscillator1: {
-        waveform: "sawtooth",
-        frequency: 0,
-        range: "32",
-        enabled: true,
-      },
-      oscillator2: {
-        waveform: "sawtooth",
-        frequency: 0,
-        range: "16",
-        enabled: true,
-      },
-      oscillator3: {
-        waveform: "triangle",
-        frequency: 0,
-        range: "32",
-        enabled: true,
-      },
-      mixer: {
-        osc1: { enabled: true, volume: 10 },
-        osc2: { enabled: true, volume: 10 },
-        osc3: { enabled: true, volume: 10 },
-        noise: { enabled: false, volume: 0, noiseType: "white" },
-        external: { enabled: false, volume: 5, overload: false },
-      },
-      filterCutoff: 0,
-      filterEmphasis: 7,
-      filterAttack: 0,
-      filterDecay: 5,
-      filterSustain: 0,
-      filterContourAmount: 8,
-      filterModulationOn: true,
-      keyboardControl1: true,
-      keyboardControl2: true,
-      loudnessAttack: 0,
-      loudnessDecay: 5,
-      loudnessSustain: 8.5,
-      mainVolume: 5,
-      glideOn: true,
-      glideTime: 1,
-      modMix: 0,
-      modWheel: 10,
-      osc3Control: false,
-      osc3FilterEgSwitch: true,
-      noiseLfoSwitch: false,
-      lfoRate: 9,
-      lfoWaveform: "triangle",
-      decaySwitchOn: true,
-      oscillatorModulationOn: true,
-    },
-  },
-  {
-    id: "kraft-bass",
-    name: "Kraft Bass",
-    description:
-      "Set the LFO Rate knob to triangle wave (down position). Adjust External Input Volume to taste. Use Mod Wheel to introduce vibrato.",
-    category: "Bass",
-    parameters: {
-      oscillator1: {
-        waveform: "sawtooth",
-        frequency: 0,
-        range: "32",
-        enabled: true,
-      },
-      oscillator2: {
-        waveform: "triangle",
-        frequency: 0,
-        range: "32",
-        enabled: true,
-      },
-      oscillator3: {
-        waveform: "sawtooth",
-        frequency: 0,
-        range: "16",
-        enabled: true,
-      },
-      mixer: {
-        osc1: { enabled: true, volume: 10 },
-        osc2: { enabled: true, volume: 10 },
-        osc3: { enabled: true, volume: 10 },
-        noise: { enabled: false, volume: 0, noiseType: "white" },
-        external: { enabled: true, volume: 5, overload: false },
-      },
-      filterCutoff: 2.5,
-      filterEmphasis: 0,
-      filterAttack: 0,
-      filterDecay: 5,
-      filterSustain: 0,
-      filterContourAmount: 5,
-      filterModulationOn: false,
-      keyboardControl1: true,
-      keyboardControl2: true,
-      loudnessAttack: 0,
-      loudnessDecay: 3.5,
-      loudnessSustain: 8.5,
-      mainVolume: 5,
-      glideOn: false,
-      glideTime: 6.5,
-      modMix: 10,
-      osc3Control: false,
-      osc3FilterEgSwitch: true,
-      lfoRate: 3,
-      lfoWaveform: "triangle",
-      decaySwitchOn: true,
-      oscillatorModulationOn: true,
-    },
-  },
-  {
-    id: "electric-guitar-bass-treble",
-    name: "Electric Guitar, Bass/Treble",
-    description:
-      "OSCILLATOR-1 and OSCILLATOR-2 in unison. Use Pitch wheel for pitch-bending. Apply modulation to long tones. Sound will decay gradually when key is held; for prolonged sustain turn both SUSTAIN LEVEL controls to 5. MOOG 1121 Foot Switch may be used to control the DECAY switch to create gradual decays without finger sustain. BASS: 32' Range. TREBLE: 8' Range with Keyboard control #2 on.",
-    category: "Guitar/Bass",
-    parameters: {
-      oscillator1: {
-        waveform: "sawtooth",
-        frequency: 0,
-        range: "32",
-        enabled: true,
-      },
-      oscillator2: {
-        waveform: "pulse3",
-        frequency: 0,
-        range: "32",
-        enabled: true,
-      },
-      oscillator3: {
-        waveform: "triangle",
-        frequency: 3,
-        range: "lo",
-        enabled: false,
-      },
-      mixer: {
-        osc1: { enabled: true, volume: 5 },
-        osc2: { enabled: true, volume: 7 },
-        osc3: { enabled: false, volume: 0 },
-        noise: { enabled: false, volume: 0, noiseType: "white" },
-        external: { enabled: false, volume: 0, overload: false },
-      },
-      filterCutoff: 3.5,
-      filterEmphasis: 0,
-      filterAttack: 0,
-      filterDecay: 8,
-      filterSustain: 5,
-      filterContourAmount: 5,
-      filterModulationOn: false,
-      keyboardControl1: false,
-      keyboardControl2: true,
-      loudnessAttack: 0,
-      loudnessDecay: 8,
-      loudnessSustain: 5,
-      mainVolume: 8,
-      glideOn: false,
-      glideTime: 0,
-      modMix: 0,
-      osc3Control: false,
-      osc3FilterEgSwitch: false,
-      lfoRate: 0,
-      lfoWaveform: "triangle",
-      decaySwitchOn: true,
-      oscillatorModulationOn: false,
-    },
-  },
-  {
-    id: "aquatarkus",
-    name: "Aquatarkus (Emerson, Lake & Palmer)",
-    description: "Tune oscillators to a fourth and a fifth from the root.",
-    category: "Signature",
-    parameters: {
-      oscillator1: {
-        waveform: "sawtooth",
-        frequency: 0, // root
-        range: "8",
-        enabled: true,
-      },
-      oscillator2: {
-        waveform: "sawtooth",
-        frequency: 4,
-        range: "8",
-        enabled: true,
-      },
-      oscillator3: {
-        waveform: "sawtooth",
-        frequency: 7,
-        range: "8",
-        enabled: true,
-      },
-      mixer: {
-        osc1: { enabled: true, volume: 8 },
-        osc2: { enabled: true, volume: 8 },
-        osc3: { enabled: true, volume: 8 },
-        noise: { enabled: false, volume: 0, noiseType: "white" },
-        external: { enabled: false, volume: 0, overload: false },
-      },
-      filterCutoff: 3.5,
-      filterEmphasis: 6,
-      filterContourAmount: 6,
-      filterAttack: 0.1,
-      filterDecay: 200,
-      filterSustain: 5,
-      loudnessAttack: 0,
-      loudnessDecay: 3.5,
-      loudnessSustain: 3,
-      filterModulationOn: true,
-      keyboardControl1: false,
-      keyboardControl2: false,
-      mainVolume: 8,
-      glideOn: true,
-      glideTime: 0,
-      modMix: 0,
-      osc3Control: false,
-      osc3FilterEgSwitch: false,
-      lfoRate: 0,
-      lfoWaveform: "triangle",
-      decaySwitchOn: false,
-      oscillatorModulationOn: true,
-      modWheel: 1,
-    },
-  },
-  {
-    id: "trilogy",
-    name: "Trilogy (Emerson, Lake & Palmer)",
-    description: "Preset based on the Trilogy patch sheet.",
-    category: "Signature",
-    parameters: {
-      oscillator1: {
-        waveform: "sawtooth",
-        frequency: 0,
-        range: "16",
-        enabled: true,
-      },
-      oscillator2: {
-        waveform: "sawtooth",
-        frequency: 0,
-        range: "2",
-        enabled: true,
-      },
-      oscillator3: {
-        waveform: "sawtooth",
-        frequency: 0,
-        range: "16",
-        enabled: true,
-      },
-      mixer: {
-        osc1: { enabled: true, volume: 2 },
-        osc2: { enabled: true, volume: 8 },
-        osc3: { enabled: true, volume: 2 },
-        noise: { enabled: false, volume: 0, noiseType: "white" },
-        external: { enabled: false, volume: 0, overload: false },
-      },
-      filterCutoff: 6,
-      filterEmphasis: 6,
-      filterAttack: 0,
-      filterDecay: 800,
-      filterSustain: 10,
-      filterContourAmount: 10,
-      filterModulationOn: false,
-      keyboardControl1: false,
-      keyboardControl2: false,
-      loudnessAttack: 0,
-      loudnessDecay: 7,
-      loudnessSustain: 10,
-      mainVolume: 8,
-      glideOn: false,
-      glideTime: 0,
-      modMix: 0,
-      osc3Control: false,
-      osc3FilterEgSwitch: false,
-      lfoRate: 0,
-      lfoWaveform: "triangle",
-      decaySwitchOn: true,
-      oscillatorModulationOn: false,
-    },
-  },
-  {
-    id: "balalaika-mandolin",
-    name: "Balalaika (Mandolin)",
-    description:
-      "Vary OSCILLATOR-3 FREQUENCY control to alter repetition rate. For mandolin, reduce CUTOFF FREQUENCY control to -1.5.",
+      "OSCILLATOR-1 and OSCILLATOR-2 in unison. Play black keys only in middle of the keyboard.",
     category: "Plucked",
-    parameters: {
+    controllers: {
+      tune: 0,
+      glideTime: 0,
+      modMix: 0,
+      osc3FilterEgSwitch: false,
+      noiseLfoSwitch: false,
+    },
+    oscillators: {
+      oscillatorModulationOn: false,
+      osc3Control: true,
       oscillator1: {
         waveform: "sawtooth",
         frequency: 0,
@@ -419,45 +64,110 @@ export const presets: Preset[] = [
       oscillator2: {
         waveform: "sawtooth",
         frequency: 0,
-        range: "8",
+        range: "4",
+        enabled: true,
+      },
+      oscillator3: {
+        waveform: "triangle",
+        frequency: 4,
+        range: "lo",
         enabled: false,
+      },
+      mixer: {
+        osc1: { enabled: true, volume: 5 },
+        osc2: { enabled: true, volume: 5 },
+        osc3: { enabled: false, volume: 0 },
+        noise: { enabled: false, volume: 0, noiseType: "white" },
+        external: { enabled: false, volume: 0, overload: false },
+      },
+    },
+    filter: {
+      filterCutoff: -2,
+      filterEmphasis: 4,
+      filterContourAmount: 6,
+      filterAttack: 0, // 0ms - instant attack
+      filterDecay: 25, // 25ms - quick decay
+      filterSustain: 4,
+      filterModulationOn: true,
+    },
+    loudness: {
+      loudnessAttack: 0, // 0ms - instant attack
+      loudnessDecay: 50, // 50ms - quick decay
+      loudnessSustain: 0,
+    },
+    sidePanel: {
+      glideOn: true,
+      decaySwitchOn: false,
+      lfoRate: 0,
+      lfoWaveform: "triangle",
+      modWheel: 2,
+    },
+    mainVolume: 5,
+  },
+  {
+    id: "harpsicord",
+    name: "Harpsicord",
+    description:
+      "Oscillator-1 and OSCILLATOR-2 in unison. Increase DECAY TIME control to 7 for lower register of keyboard.",
+    category: "Plucked",
+    controllers: {
+      tune: 0,
+      glideTime: 0,
+      modMix: 0,
+      osc3FilterEgSwitch: false,
+      noiseLfoSwitch: false,
+    },
+    oscillators: {
+      oscillatorModulationOn: false,
+      osc3Control: false,
+      oscillator1: {
+        waveform: "sawtooth",
+        frequency: 0,
+        range: "8",
+        enabled: true,
+      },
+      oscillator2: {
+        waveform: "pulse3",
+        frequency: 0,
+        range: "8",
+        enabled: true,
       },
       oscillator3: {
         waveform: "triangle",
         frequency: 0,
         range: "8",
-        enabled: true,
+        enabled: false,
       },
       mixer: {
-        osc1: { enabled: true, volume: 4 },
-        osc2: { enabled: false, volume: 0 },
-        osc3: { enabled: true, volume: 5 },
+        osc1: { enabled: true, volume: 3 },
+        osc2: { enabled: true, volume: 5 },
+        osc3: { enabled: false, volume: 0 },
         noise: { enabled: false, volume: 0, noiseType: "white" },
         external: { enabled: false, volume: 0, overload: false },
       },
-      filterCutoff: 0,
-      filterEmphasis: 0,
-      filterAttack: 0,
-      filterDecay: 100,
+    },
+    filter: {
+      filterCutoff: 5,
+      filterEmphasis: 7,
+      filterContourAmount: 0,
+      filterAttack: 0, // 0ms - instant attack
+      filterDecay: 10, // 10ms - very quick decay
       filterSustain: 0,
-      filterContourAmount: 8,
-      filterModulationOn: false,
-      keyboardControl1: false,
-      keyboardControl2: false,
-      loudnessAttack: 0,
-      loudnessDecay: 800,
+      filterModulationOn: true,
+    },
+    loudness: {
+      loudnessAttack: 0, // 0ms - instant attack
+      loudnessDecay: 10, // 10ms - very quick decay
       loudnessSustain: 0,
-      mainVolume: 5,
+    },
+    sidePanel: {
       glideOn: false,
-      glideTime: 0,
-      modMix: 0,
-      osc3Control: true,
-      osc3FilterEgSwitch: false,
+      decaySwitchOn: true,
       lfoRate: 0,
       lfoWaveform: "triangle",
-      decaySwitchOn: true,
-      oscillatorModulationOn: false,
+      modWheel: 0,
     },
+    mainVolume: 5,
   },
 ];
 
