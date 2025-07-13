@@ -81,7 +81,6 @@ export default function Oscillator2() {
         }}
         disabled={isDisabled}
       />
-      {oscillator2.frequency}
       <Knob
         type="arrow"
         size="large"

@@ -75,13 +75,13 @@ export const presets: Preset[] = [
       },
       oscillator2: {
         waveform: "sawtooth",
-        frequency: -12,
+        frequency: -7,
         range: "32",
         enabled: true,
       },
       oscillator3: {
         waveform: "triangle",
-        frequency: -24,
+        frequency: -7,
         range: "32",
         enabled: true,
       },
@@ -138,13 +138,13 @@ export const presets: Preset[] = [
       },
       oscillator2: {
         waveform: "pulse1",
-        frequency: 12,
+        frequency: 7,
         range: "8",
         enabled: true,
       },
       oscillator3: {
         waveform: "triangle",
-        frequency: -12,
+        frequency: -7,
         range: "8",
         enabled: true,
       },
@@ -206,7 +206,7 @@ export const presets: Preset[] = [
       },
       oscillator3: {
         waveform: "triangle",
-        frequency: -12,
+        frequency: -7,
         range: "8",
         enabled: true,
       },
@@ -256,20 +256,20 @@ export const presets: Preset[] = [
     oscillators: {
       oscillator1: {
         waveform: "sawtooth",
-        frequency: -12,
+        frequency: -7,
         range: "32",
         enabled: true,
       },
       oscillator2: {
         waveform: "sawtooth",
-        frequency: -24,
-        range: "32",
+        frequency: -7,
+        range: "16",
         enabled: true,
       },
       oscillator3: {
         waveform: "triangle",
-        frequency: -36,
-        range: "32",
+        frequency: -7,
+        range: "16",
         enabled: true,
       },
       mixer: {
@@ -324,13 +324,13 @@ export const presets: Preset[] = [
       },
       oscillator2: {
         waveform: "pulse2",
-        frequency: 12,
+        frequency: 7,
         range: "8",
         enabled: true,
       },
       oscillator3: {
         waveform: "sawtooth",
-        frequency: -12,
+        frequency: -7,
         range: "8",
         enabled: true,
       },
@@ -392,7 +392,7 @@ export const presets: Preset[] = [
       },
       oscillator3: {
         waveform: "sawtooth",
-        frequency: -12,
+        frequency: -7,
         range: "8",
         enabled: true,
       },
@@ -442,20 +442,20 @@ export const presets: Preset[] = [
     oscillators: {
       oscillator1: {
         waveform: "sawtooth",
-        frequency: -12,
+        frequency: -7,
         range: "32",
         enabled: true,
       },
       oscillator2: {
         waveform: "sawtooth",
-        frequency: -24,
-        range: "32",
+        frequency: -7,
+        range: "16",
         enabled: true,
       },
       oscillator3: {
         waveform: "triangle",
-        frequency: -36,
-        range: "32",
+        frequency: -7,
+        range: "16",
         enabled: true,
       },
       mixer: {
