@@ -8,6 +8,34 @@ import {
 } from "../utils/synthUtils";
 import type { EnvelopeProps } from "../types/synthTypes";
 
+// Convert large attack/decay values (0-10000) to 0-10 range for mapEnvelopeTime
+function convertAttackDecayValue(largeValue: number): number {
+  // Map 0-10000 to 0-10 logarithmically to match the original mapping
+  if (largeValue <= 0) return 0;
+  if (largeValue >= 10000) return 10;
+
+  // Use the same logarithmic mapping as the original attackDecayStops
+  const stops = [
+    { pos: 0, value: 0 },
+    { pos: 1000, value: 1 },
+    { pos: 2000, value: 3 },
+    { pos: 4000, value: 5 },
+    { pos: 6000, value: 7 },
+    { pos: 8000, value: 9 },
+    { pos: 10000, value: 10 },
+  ];
+
+  for (let i = 0; i < stops.length - 1; i++) {
+    const a = stops[i];
+    const b = stops[i + 1];
+    if (largeValue >= a.pos && largeValue <= b.pos) {
+      const t = (largeValue - a.pos) / (b.pos - a.pos);
+      return a.value + t * (b.value - a.value);
+    }
+  }
+  return 10;
+}
+
 function useEnvelopes({
   audioContext,
   filterNode,
@@ -32,9 +60,13 @@ function useEnvelopes({
     loudnessSustain,
   } = useSynthStore();
 
-  // Precompute envelope times
-  const loudnessAttackTime = mapEnvelopeTime(loudnessAttack);
-  const loudnessDecayTime = mapEnvelopeTime(loudnessDecay);
+  // Precompute envelope times with conversion
+  const loudnessAttackTime = mapEnvelopeTime(
+    convertAttackDecayValue(loudnessAttack)
+  );
+  const loudnessDecayTime = mapEnvelopeTime(
+    convertAttackDecayValue(loudnessDecay)
+  );
   const loudnessSustainLevel = loudnessSustain / 10;
 
   const synthObj = useMemo(() => {
@@ -82,10 +114,16 @@ function useEnvelopes({
 
             // Send envelope parameters if modulation is on
             if (filterModulationOn) {
-              const attackTime = mapEnvelopeTime(filterAttack);
-              const decayTime = mapEnvelopeTime(filterDecay);
+              const attackTime = mapEnvelopeTime(
+                convertAttackDecayValue(filterAttack)
+              );
+              const decayTime = mapEnvelopeTime(
+                convertAttackDecayValue(filterDecay)
+              );
               const sustainLevel = filterSustain / 10;
-              const releaseTime = mapEnvelopeTime(filterDecay); // Use decay time for release
+              const releaseTime = mapEnvelopeTime(
+                convertAttackDecayValue(filterDecay)
+              ); // Use decay time for release
               const contourAmount =
                 mapContourAmount(filterContourAmount) * (modWheel / 100);
 
@@ -110,8 +148,12 @@ function useEnvelopes({
               // Filter envelope modulation
               const contourOctaves =
                 mapContourAmount(filterContourAmount) * (modWheel / 100);
-              const attackTime = mapEnvelopeTime(filterAttack);
-              const decayTime = mapEnvelopeTime(filterDecay);
+              const attackTime = mapEnvelopeTime(
+                convertAttackDecayValue(filterAttack)
+              );
+              const decayTime = mapEnvelopeTime(
+                convertAttackDecayValue(filterDecay)
+              );
               const sustainLevel = filterSustain / 10;
               const envMax = trackedCutoff * Math.pow(2, contourOctaves);
               const envSustain =
@@ -193,7 +235,7 @@ function useEnvelopes({
               filterNode.frequency.setValueAtTime(currentFreq, now);
               filterNode.frequency.linearRampToValueAtTime(
                 mapCutoff(filterCutoff),
-                now + mapEnvelopeTime(filterDecay)
+                now + mapEnvelopeTime(convertAttackDecayValue(filterDecay))
               );
             } else {
               filterNode.frequency.setValueAtTime(mapCutoff(filterCutoff), now);
