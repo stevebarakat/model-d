@@ -67,8 +67,9 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
         masterGain
       ) {
         mixer.connect(saturationNode);
-        // Temporarily bypass filter for testing
+        // Temporarily bypass filter for testing - uncomment next line to test
         saturationNode.connect(loudnessGain);
+        // saturationNode.connect(moogFilter);
         // moogFilter.connect(loudnessGain);
         loudnessGain.connect(masterGain);
         masterGain.connect(audioContext.destination);
@@ -100,9 +101,25 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
   // Set filter cutoff and emphasis (send to worklet)
   useEffect(() => {
     if (!filterNodeRef.current || !audioContext) return;
-    // Map 0-10 to 0.0-1.0 for cutoff and resonance
-    const cutoffNorm = Math.max(0, Math.min(1, filterCutoff / 10));
+    // Clamp filterCutoff to -4 to 4 range and normalize to 0-1
+    const clampedCutoff = Math.max(-4, Math.min(4, filterCutoff));
+    const cutoffNorm = (clampedCutoff + 4) / 8; // This will be 0 to 1
     const resonanceNorm = Math.max(0, Math.min(1, filterEmphasis / 10));
+
+    console.log(
+      `AudioNodes: filterCutoff=${filterCutoff}, clampedCutoff=${clampedCutoff}, cutoffNorm=${cutoffNorm.toFixed(
+        3
+      )}, resonanceNorm=${resonanceNorm.toFixed(3)}`
+    );
+
+    // Add safety check - if cutoff is too extreme, bypass the filter
+    if (cutoffNorm < 0.01 || cutoffNorm > 0.99) {
+      console.warn(
+        `Filter cutoff too extreme (${cutoffNorm}), bypassing filter`
+      );
+      // Could add bypass logic here
+    }
+
     filterNodeRef.current.port.postMessage({ cutOff: cutoffNorm });
     filterNodeRef.current.port.postMessage({ resonance: resonanceNorm });
   }, [filterCutoff, filterEmphasis, audioContext]);

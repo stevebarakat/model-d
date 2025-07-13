@@ -145,7 +145,9 @@ export function loadStateFromURL(): Partial<SynthState> | null {
 
   // Load filter settings
   if (params.has("filter_cutoff")) {
-    state.filterCutoff = parseFloat(params.get("filter_cutoff") || "5");
+    const loadedCutoff = parseFloat(params.get("filter_cutoff") || "0");
+    // Clamp the loaded value to -4 to 4 range to prevent out-of-range values
+    state.filterCutoff = Math.max(-4, Math.min(4, loadedCutoff));
     state.filterEmphasis = parseFloat(params.get("filter_emphasis") || "5");
     state.filterContourAmount = parseFloat(params.get("filter_contour") || "5");
     state.filterAttack = parseFloat(params.get("filter_attack") || "0.5");

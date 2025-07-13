@@ -49,7 +49,7 @@ export function createInitialState(): Omit<
     filterAttack: 0.5,
     filterDecay: 2.5,
     filterSustain: 5,
-    filterCutoff: 5,
+    filterCutoff: 0,
     filterEmphasis: 5,
     filterContourAmount: 5,
     filterModulationOn: false,

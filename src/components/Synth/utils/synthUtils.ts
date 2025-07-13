@@ -44,14 +44,29 @@ export function mapEnvelopeTime(value: number): number {
   return minTime * Math.pow(maxTime / minTime, value / 10);
 }
 
-// Helper to map 0-10 to 20 Hz - 20,000 Hz logarithmically
-// Enhanced for fatter sound with slightly warmer default
+// Helper to map -4 to 4 to 200 Hz - 20,000 Hz logarithmically
+// Enhanced for fatter sound with better musical control
 export function mapCutoff(val: number): number {
-  const minFreq = 20;
+  const minFreq = 200; // Increased from 20Hz to 200Hz for better musical range
   const maxFreq = 20000;
-  // Slightly boost the cutoff for a fatter, more present sound
-  const boostedVal = Math.min(10, val + 0.5);
-  return minFreq * Math.pow(maxFreq / minFreq, boostedVal / 10);
+  // Clamp input to -4 to 4 range
+  const clampedVal = Math.max(-4, Math.min(4, val));
+  // Map -4 to 4 to 0 to 1, then apply logarithmic mapping
+  const normalizedVal = (clampedVal + 4) / 8; // Convert -4..4 to 0..1
+  // Apply a more musical curve that gives better control in the middle range
+  const musicalCurve = Math.pow(normalizedVal, 1.5); // Less aggressive curve
+  let result = minFreq * Math.pow(maxFreq / minFreq, musicalCurve);
+
+  // Add safety limits to prevent extreme values
+  result = Math.max(50, Math.min(20000, result));
+
+  console.log(
+    `mapCutoff: input=${val}, clamped=${clampedVal}, normalized=${normalizedVal.toFixed(
+      3
+    )}, curve=${musicalCurve.toFixed(3)}, result=${result.toFixed(0)}Hz`
+  );
+
+  return result;
 }
 
 // Helper to map 0-10 to a modulation amount (octaves above base cutoff)

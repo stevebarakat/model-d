@@ -92,6 +92,14 @@ function useEnvelopes({
             baseCutoff *
             Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
 
+          console.log(
+            `Envelopes: filterCutoff=${filterCutoff}, baseCutoff=${baseCutoff.toFixed(
+              0
+            )}Hz, trackedCutoff=${trackedCutoff.toFixed(
+              0
+            )}Hz, keyTracking=${keyTracking.toFixed(3)}`
+          );
+
           if (
             typeof AudioWorkletNode !== "undefined" &&
             filterNode instanceof AudioWorkletNode
