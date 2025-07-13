@@ -44,10 +44,10 @@ export function mapEnvelopeTime(value: number): number {
   return minTime * Math.pow(maxTime / minTime, value / 10);
 }
 
-// Helper to map -4 to 4 to 200 Hz - 20,000 Hz logarithmically
+// Helper to map -4 to 4 to 40 Hz - 20,000 Hz logarithmically
 // Enhanced for fatter sound with better musical control
 export function mapCutoff(val: number): number {
-  const minFreq = 200; // Increased from 20Hz to 200Hz for better musical range
+  const minFreq = 40; // Changed from 200Hz to 40Hz as requested
   const maxFreq = 20000;
   // Clamp input to -4 to 4 range
   const clampedVal = Math.max(-4, Math.min(4, val));
@@ -58,7 +58,7 @@ export function mapCutoff(val: number): number {
   let result = minFreq * Math.pow(maxFreq / minFreq, musicalCurve);
 
   // Add safety limits to prevent extreme values
-  result = Math.max(50, Math.min(20000, result));
+  result = Math.max(40, Math.min(20000, result));
 
   console.log(
     `mapCutoff: input=${val}, clamped=${clampedVal}, normalized=${normalizedVal.toFixed(

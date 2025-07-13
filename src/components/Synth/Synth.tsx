@@ -49,13 +49,8 @@ function Synth() {
   useURLSync();
 
   // Set up audio nodes
-  const {
-    mixerNode,
-    filterNode: _filterNode,
-    loudnessEnvelopeGain,
-  } = useAudioNodes(audioContext);
-  // Explicitly type filterNode as AudioWorkletNode | null
-  const filterNode: AudioWorkletNode | null = _filterNode;
+  const { mixerNode, filterNode, loudnessEnvelopeGain } =
+    useAudioNodes(audioContext);
 
   // Set up oscillators
   const validCtx = audioContext && mixerNode ? audioContext : null;
@@ -114,14 +109,11 @@ function Synth() {
         Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
     }
 
-    // AudioWorkletNode case - send normalized cutoff to WASM
-    const minFreq = 20;
-    const maxFreq = 20000;
-    let normCutoff =
-      (Math.log(trackedCutoff) - Math.log(minFreq)) /
-      (Math.log(maxFreq) - Math.log(minFreq));
-    normCutoff = Math.max(0, Math.min(1, normCutoff));
-    filterNode.port.postMessage({ cutOff: normCutoff });
+    // BiquadFilter case - set frequency directly
+    filterNode.frequency.setValueAtTime(
+      trackedCutoff,
+      audioContext.currentTime
+    );
   }, [filterNode, audioContext, activeKeys]);
 
   return (

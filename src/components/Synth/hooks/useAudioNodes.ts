@@ -1,10 +1,11 @@
 import { useRef, useEffect, useState } from "react";
 import { useSynthStore } from "@/store/synthStore";
 import { AudioNodes } from "../types/synthTypes";
+import { mapCutoff } from "../utils/synthUtils";
 
 function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
   const mixerNodeRef = useRef<GainNode | null>(null);
-  const filterNodeRef = useRef<AudioWorkletNode | null>(null);
+  const filterNodeRef = useRef<BiquadFilterNode | null>(null);
   const loudnessEnvelopeGainRef = useRef<GainNode | null>(null);
   const masterGainRef = useRef<GainNode | null>(null);
   const [isMixerReady, setIsMixerReady] = useState(false);
@@ -35,17 +36,12 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
       saturationNode.curve = saturationCurve;
       saturationNode.oversample = "4x";
 
-      // --- Moog Filter AudioWorkletNode ---
-      const moogFilter = new AudioWorkletNode(
-        audioContext,
-        "worklet-processor"
-      );
-      filterNodeRef.current = moogFilter;
-
-      // Fetch and send WASM binary
-      const response = await fetch("/moog-filter/filterKernel.wasm");
-      const wasmBinary = await response.arrayBuffer();
-      moogFilter.port.postMessage(wasmBinary);
+      // --- Biquad Filter ---
+      const biquadFilter = audioContext.createBiquadFilter();
+      biquadFilter.type = "lowpass";
+      biquadFilter.frequency.value = 1000; // Default 1kHz
+      biquadFilter.Q.value = 1; // Default Q
+      filterNodeRef.current = biquadFilter;
 
       // --- Loudness Envelope Gain ---
       const loudnessGain = audioContext.createGain();
@@ -57,20 +53,18 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
       masterGain.gain.value = 1;
       masterGainRef.current = masterGain;
 
-      // --- Connect: Mixer -> Saturation -> Moog Filter -> Loudness Envelope -> Master -> Destination ---
+      // --- Connect: Mixer -> Saturation -> Biquad Filter -> Loudness Envelope -> Master -> Destination ---
       if (
         isMounted &&
         mixer &&
         saturationNode &&
-        moogFilter &&
+        biquadFilter &&
         loudnessGain &&
         masterGain
       ) {
-        mixer.connect(saturationNode);
-        // Temporarily bypass filter for testing - uncomment next line to test
-        saturationNode.connect(loudnessGain);
-        // saturationNode.connect(moogFilter);
-        // moogFilter.connect(loudnessGain);
+        mixer.connect(biquadFilter);
+        // saturationNode.connect(biquadFilter);
+        biquadFilter.connect(loudnessGain);
         loudnessGain.connect(masterGain);
         masterGain.connect(audioContext.destination);
       }
@@ -98,30 +92,28 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
     };
   }, [audioContext]);
 
-  // Set filter cutoff and emphasis (send to worklet)
+  // Set filter cutoff and emphasis (BiquadFilter)
   useEffect(() => {
     if (!filterNodeRef.current || !audioContext) return;
-    // Clamp filterCutoff to -4 to 4 range and normalize to 0-1
-    const clampedCutoff = Math.max(-4, Math.min(4, filterCutoff));
-    const cutoffNorm = (clampedCutoff + 4) / 8; // This will be 0 to 1
-    const resonanceNorm = Math.max(0, Math.min(1, filterEmphasis / 10));
 
-    console.log(
-      `AudioNodes: filterCutoff=${filterCutoff}, clampedCutoff=${clampedCutoff}, cutoffNorm=${cutoffNorm.toFixed(
-        3
-      )}, resonanceNorm=${resonanceNorm.toFixed(3)}`
+    // Use the mapCutoff function to get the actual frequency
+    const actualFreq = mapCutoff(filterCutoff);
+
+    // Set BiquadFilter frequency directly
+    filterNodeRef.current.frequency.setValueAtTime(
+      actualFreq,
+      audioContext.currentTime
     );
 
-    // Add safety check - if cutoff is too extreme, bypass the filter
-    if (cutoffNorm < 0.01 || cutoffNorm > 0.99) {
-      console.warn(
-        `Filter cutoff too extreme (${cutoffNorm}), bypassing filter`
-      );
-      // Could add bypass logic here
-    }
+    // Set Q (resonance) - map emphasis (0-10) to Q (0.1-10)
+    const qValue = Math.max(0.1, Math.min(10, filterEmphasis));
+    filterNodeRef.current.Q.setValueAtTime(qValue, audioContext.currentTime);
 
-    filterNodeRef.current.port.postMessage({ cutOff: cutoffNorm });
-    filterNodeRef.current.port.postMessage({ resonance: resonanceNorm });
+    console.log(
+      `AudioNodes: filterCutoff=${filterCutoff}, actualFreq=${actualFreq.toFixed(
+        0
+      )}Hz, Q=${qValue.toFixed(2)}`
+    );
   }, [filterCutoff, filterEmphasis, audioContext]);
 
   // Set master volume

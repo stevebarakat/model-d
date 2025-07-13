@@ -100,60 +100,7 @@ function useEnvelopes({
             )}Hz, keyTracking=${keyTracking.toFixed(3)}`
           );
 
-          if (
-            typeof AudioWorkletNode !== "undefined" &&
-            filterNode instanceof AudioWorkletNode
-          ) {
-            // For AudioWorkletNode, send all parameters to WASM
-            const minFreq = 20;
-            const maxFreq = 20000;
-            let normCutoff =
-              (Math.log(trackedCutoff) - Math.log(minFreq)) /
-              (Math.log(maxFreq) - Math.log(minFreq));
-            normCutoff = Math.max(0, Math.min(1, normCutoff));
-
-            // Send cutoff and key tracking
-            filterNode.port.postMessage({ cutOff: normCutoff });
-            filterNode.port.postMessage({
-              keyTracking: {
-                base: normCutoff,
-                tracking: keyTracking,
-                note: noteNumber,
-              },
-            });
-
-            // Send envelope parameters if modulation is on
-            if (filterModulationOn) {
-              const attackTime = mapEnvelopeTime(
-                convertAttackDecayValue(filterAttack)
-              );
-              const decayTime = mapEnvelopeTime(
-                convertAttackDecayValue(filterDecay)
-              );
-              const sustainLevel = filterSustain / 10;
-              const releaseTime = mapEnvelopeTime(
-                convertAttackDecayValue(filterDecay)
-              ); // Use decay time for release
-              const contourAmount =
-                mapContourAmount(filterContourAmount) * (modWheel / 100);
-
-              filterNode.port.postMessage({
-                envelopeParams: {
-                  attack: attackTime,
-                  decay: decayTime,
-                  sustain: sustainLevel,
-                  release: releaseTime,
-                  contour: contourAmount,
-                },
-              });
-
-              // Trigger envelope
-              filterNode.port.postMessage({ triggerEnvelope: true });
-            }
-          } else if (
-            typeof filterNode.frequency !== "undefined" &&
-            typeof filterNode.context !== "undefined"
-          ) {
+          if (filterNode instanceof BiquadFilterNode) {
             if (filterModulationOn) {
               // Filter envelope modulation
               const contourOctaves =
@@ -228,28 +175,21 @@ function useEnvelopes({
         const now = audioContext.currentTime;
 
         // Handle filter envelope release
-        if (filterNode && filterModulationOn) {
-          if (
-            typeof AudioWorkletNode !== "undefined" &&
-            filterNode instanceof AudioWorkletNode
-          ) {
-            // Send release command to WASM
-            filterNode.port.postMessage({ releaseEnvelope: true });
-          } else if (
-            typeof filterNode.frequency !== "undefined" &&
-            typeof filterNode.context !== "undefined"
-          ) {
-            if (decaySwitchOn) {
-              filterNode.frequency.cancelScheduledValues(now);
-              const currentFreq = filterNode.frequency.value;
-              filterNode.frequency.setValueAtTime(currentFreq, now);
-              filterNode.frequency.linearRampToValueAtTime(
-                mapCutoff(filterCutoff),
-                now + mapEnvelopeTime(convertAttackDecayValue(filterDecay))
-              );
-            } else {
-              filterNode.frequency.setValueAtTime(mapCutoff(filterCutoff), now);
-            }
+        if (
+          filterNode &&
+          filterModulationOn &&
+          filterNode instanceof BiquadFilterNode
+        ) {
+          if (decaySwitchOn) {
+            filterNode.frequency.cancelScheduledValues(now);
+            const currentFreq = filterNode.frequency.value;
+            filterNode.frequency.setValueAtTime(currentFreq, now);
+            filterNode.frequency.linearRampToValueAtTime(
+              mapCutoff(filterCutoff),
+              now + mapEnvelopeTime(convertAttackDecayValue(filterDecay))
+            );
+          } else {
+            filterNode.frequency.setValueAtTime(mapCutoff(filterCutoff), now);
           }
         }
 
