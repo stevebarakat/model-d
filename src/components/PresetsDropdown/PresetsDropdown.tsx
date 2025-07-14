@@ -9,7 +9,7 @@ import styles from "./PresetsDropdown.module.css";
 const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [currentPreset, setCurrentPreset] = useState<string | null>(null);
+  const [currentPreset, setCurrentPreset] = useState<string | null>("Fat Bass");
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const [showCopiedMessage, setShowCopiedMessage] = useState(false);
   const loadPreset = useSynthStore((state) => state.loadPreset);
