@@ -38,7 +38,7 @@ function Synth() {
   // Load settings from URL parameters on mount - run immediately
   useEffect(() => {
     const urlState = loadStateFromURL();
-    console.log("Synth: URL state loaded:", urlState);
+
     if (urlState) {
       setLoadingFromURL(true);
       loadPreset(urlState);

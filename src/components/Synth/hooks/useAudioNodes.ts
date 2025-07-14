@@ -108,12 +108,6 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
     // Set Q (resonance) - map emphasis (0-10) to Q (0.1-10)
     const qValue = Math.max(0.1, Math.min(10, filterEmphasis));
     filterNodeRef.current.Q.setValueAtTime(qValue, audioContext.currentTime);
-
-    console.log(
-      `AudioNodes: filterCutoff=${filterCutoff}, actualFreq=${actualFreq.toFixed(
-        0
-      )}Hz, Q=${qValue.toFixed(2)}`
-    );
   }, [filterCutoff, filterEmphasis, audioContext]);
 
   // Set master volume

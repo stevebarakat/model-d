@@ -21,21 +21,6 @@ export function useRockerSwitchKeyboard({
         switchRef.current?.contains(document.activeElement) ||
         dataFocused === "true";
 
-      console.log(
-        "RockerSwitch key pressed:",
-        e.key,
-        "Switch id:",
-        switchRef.current?.getAttribute("for"),
-        "Active element:",
-        document.activeElement,
-        "Switch ref:",
-        switchRef.current,
-        "Data focused:",
-        dataFocused,
-        "Is active:",
-        isActive
-      );
-
       // Only respond if this switch is active
       if (!isActive) return;
 

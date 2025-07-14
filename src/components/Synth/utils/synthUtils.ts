@@ -60,12 +60,6 @@ export function mapCutoff(val: number): number {
   // Add safety limits to prevent extreme values
   result = Math.max(40, Math.min(20000, result));
 
-  console.log(
-    `mapCutoff: input=${val}, clamped=${clampedVal}, normalized=${normalizedVal.toFixed(
-      3
-    )}, curve=${musicalCurve.toFixed(3)}, result=${result.toFixed(0)}Hz`
-  );
-
   return result;
 }
 

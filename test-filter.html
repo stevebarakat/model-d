@@ -104,8 +104,6 @@
           // Connect: oscillator -> filter -> destination
           oscillator.connect(filterNode);
           filterNode.connect(audioContext.destination);
-
-          console.log("Audio initialized successfully");
         } catch (error) {
           console.error("Error initializing audio:", error);
         }

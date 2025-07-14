@@ -24,7 +24,6 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
   }, [mixer.external.volume, setMixerExternal]);
 
   function ubu(checked: boolean) {
-    console.log("ubu", checked);
     setMixerExternal({ enabled: checked });
   }
 

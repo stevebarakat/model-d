@@ -51,10 +51,8 @@ function RockerSwitch({
 
   // Track re-renders and focus state
   useEffect(() => {
-    console.log("RockerSwitch re-rendered for:", id, "checked:", checked);
     // If we had focus before the re-render, try to restore it
     if (wasFocusedRef.current) {
-      console.log("Restoring focus after re-render for:", id);
       setTimeout(() => {
         if (switchRef.current) {
           switchRef.current.focus();
@@ -123,7 +121,6 @@ function RockerSwitch({
 
   function Switch() {
     const handlePointerDown = (e: React.PointerEvent) => {
-      console.log("RockerSwitch pointer down triggered");
       e.preventDefault();
 
       // Focus the switch when clicked and prevent focus loss
@@ -132,31 +129,19 @@ function RockerSwitch({
         // Prevent the focus from being lost during pointer events
         e.currentTarget.setAttribute("data-focused", "true");
         wasFocusedRef.current = true;
-        console.log("RockerSwitch focused and data-focused set");
-        console.log(
-          "Data focused after set:",
-          e.currentTarget.getAttribute("data-focused")
-        );
       }
     };
 
     const handleClick = (e: React.MouseEvent) => {
-      console.log("RockerSwitch click triggered");
       // Ensure focus is maintained after click
       if (switchRef.current) {
         switchRef.current.focus();
         e.currentTarget.setAttribute("data-focused", "true");
         wasFocusedRef.current = true;
-        console.log("RockerSwitch focused via click");
-        console.log(
-          "Data focused after click set:",
-          e.currentTarget.getAttribute("data-focused")
-        );
       }
     };
 
     const handleBlur = () => {
-      console.log("RockerSwitch blur triggered for:", id);
       // Clean up the data-focused attribute when focus is lost
       // Add a small delay to prevent immediate cleanup during focus transitions
       setTimeout(() => {
@@ -164,14 +149,8 @@ function RockerSwitch({
           switchRef.current &&
           !switchRef.current.contains(document.activeElement)
         ) {
-          console.log("RockerSwitch removing data-focused attribute for:", id);
           switchRef.current.removeAttribute("data-focused");
           wasFocusedRef.current = false;
-        } else {
-          console.log(
-            "RockerSwitch blur timeout - keeping data-focused for:",
-            id
-          );
         }
       }, 10);
     };
