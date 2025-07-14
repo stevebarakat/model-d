@@ -50,8 +50,14 @@ function Knob({
 
   const id = slugify(label);
   const labelClass = title ? styles.labelHidden : styles.label;
-  // For attackDecay, use knobValue for rotation
-  const rotation = getRotation(knobValue, min, max, type, logarithmic);
+  // For attackDecay, use knobValue for rotation with position range
+  const rotation = getRotation(
+    knobValue,
+    type === "attackDecay" ? 0 : min,
+    type === "attackDecay" ? 10000 : max,
+    type,
+    logarithmic
+  );
   const displayValue = getDisplayValue(value, step, unit, valueLabels);
   const ariaValueText =
     typeof displayValue === "string"

@@ -55,7 +55,11 @@ export function getRotation(
 ): number {
   let percentage: number;
 
-  if (logarithmic) {
+  if (type === "attackDecay") {
+    // For attackDecay, the value is already a knob position (0-10000)
+    // Convert it to a percentage based on the position range
+    percentage = (value - min) / (max - min);
+  } else if (logarithmic) {
     // Use logarithmic scaling for visual rotation to match the control behavior
     percentage = toLogarithmic(value, min, max);
   } else {
