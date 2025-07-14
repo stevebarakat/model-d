@@ -1,1 +1,1 @@
-export { default } from "./LFORate";
+export { default } from "./LfoRate";
