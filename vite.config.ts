@@ -2,6 +2,7 @@ import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
+import fs from "fs";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,6 +14,13 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  server: {
+    https: {
+      key: fs.readFileSync("./10.0.0.223-key.pem"),
+      cert: fs.readFileSync("./10.0.0.223.pem"),
+    },
+    host: "0.0.0.0",
   },
   css: {
     modules: {
