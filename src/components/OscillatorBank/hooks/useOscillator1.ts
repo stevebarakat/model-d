@@ -108,7 +108,7 @@ export function useOscillator1(
     vibratoGainRef.current?.disconnect();
     vibratoLfoRef.current = null;
     vibratoGainRef.current = null;
-  }, [audioContext, mixerNode]);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -158,7 +158,7 @@ export function useOscillator1(
         );
       }
     }
-  }, [pitchWheel]);
+  }, [audioContext, masterTune, oscillator1.frequency, pitchWheel]);
 
   return {
     triggerAttack,

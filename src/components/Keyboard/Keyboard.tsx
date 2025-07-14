@@ -74,7 +74,7 @@ export function Keyboard({
         }
       }
     },
-    [onKeyUp, synth, activeKeys, isReleasing, pressedKeys]
+    [isReleasing, activeKeys, pressedKeys, synth, onKeyDown, onKeyUp]
   );
 
   const handleMouseDown = useCallback((): void => {

@@ -45,6 +45,7 @@ function Synth() {
       // Reset the flag after a short delay to allow URL sync to resume
       setTimeout(() => setLoadingFromURL(false), 200);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array to run only once on mount
 
   // Sync state changes with URL

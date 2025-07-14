@@ -145,7 +145,7 @@ export function useOscillator2(
         );
       }
     }
-  }, [pitchWheel]);
+  }, [audioContext, masterTune, oscillator2.frequency, pitchWheel]);
 
   useEffect(() => {
     return () => {
