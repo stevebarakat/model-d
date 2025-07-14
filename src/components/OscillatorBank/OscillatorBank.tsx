@@ -9,7 +9,7 @@ import Column from "../Column";
 function OscillatorBank() {
   return (
     <Section>
-      <Column gap="var(--spacing-md)">
+      <Column>
         <OscillatorModulation />
         <Oscillator1 />
         <Oscillator2 />

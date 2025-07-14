@@ -1,6 +1,5 @@
 import Knob from "../Knob";
 import Row from "../Row";
-import Title from "../Title";
 import Column from "../Column";
 import { useSynthStore } from "@/store/synthStore";
 import { attackDecayValueLabels } from "./constants";
@@ -22,7 +21,6 @@ function FilterEnvelope() {
     <Column
       style={{ paddingRight: "0.75rem", paddingTop: "var(--spacing-xs)" }}
     >
-      <Title size="lg">Filter Contour</Title>
       <Column>
         <Row gap="var(--spacing-xl)">
           <Knob

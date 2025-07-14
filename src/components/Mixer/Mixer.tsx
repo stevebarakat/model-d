@@ -20,7 +20,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
   return (
     <Section>
       <Row style={{ padding: "0 var(--spacing-md)" }}>
-        <Column gap="1.2rem">
+        <Column gap="1.35rem">
           <Row>
             <Knob
               valueLabels={{
@@ -140,7 +140,7 @@ function Mixer({ audioContext, mixerNode }: MixerProps) {
           </Row>
         </Column>
         <Column
-          style={{ paddingRight: "5rem", left: "2.2rem", gap: "1.45rem" }}
+          style={{ paddingRight: "5rem", left: "2.325rem", gap: "1.45rem" }}
         >
           <ExternalInput audioContext={audioContext} mixerNode={mixerNode} />
           <Noise audioContext={audioContext} mixerNode={mixerNode} />
