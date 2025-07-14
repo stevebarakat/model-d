@@ -29,6 +29,7 @@ import PresetsDropdown from "../PresetsDropdown";
 import { loadStateFromURL } from "@/utils/urlState";
 import { useURLSync, setLoadingFromURL } from "@/hooks/useURLSync";
 import Hinge from "../Hinge";
+import Screw from "../Screw";
 
 function Synth() {
   const { activeKeys, setActiveKeys, loadPreset } = useSynthStore();
@@ -129,7 +130,12 @@ function Synth() {
       <div className={styles.synthContainer}>
         <Side />
         <div className={styles.synth}>
-          <div className={styles.backPanel}></div>
+          <div className={styles.backPanel}>
+            <Screw />
+            <Screw />
+            <Screw />
+            <Screw />
+          </div>
           <div className={styles.controlsPanel}>
             <Controllers />
             <OscillatorBank />

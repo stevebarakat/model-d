@@ -10,8 +10,8 @@
   padding: var(--spacing-md) var(--spacing-lg);
   width: 120px;
   overflow: hidden;
+  margin: 0.25rem 3rem;
 
-  /* opacity: 0.85; */
   background: linear-gradient(
     to bottom,
     hsl(0deg 0% 40%),
