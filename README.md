@@ -49,7 +49,7 @@ Experience the Minimoog Model D emulator in your browser:
 ### Key Features Demo
 
 - **Three Oscillators**: Mix sawtooth, triangle, square, and pulse waves
-- **Biquad Filter**: Low-pass filter with resonance and key tracking
+- **4-Pole Ladder Filter**: Authentic Minimoog ladder filter with resonance and key tracking
 - **Dual Envelopes**: Filter and loudness contours with authentic curves
 - **MIDI Support**: Connect your MIDI keyboard for real-time control
 - **Preset System**: Explore classic Minimoog sounds
@@ -77,7 +77,7 @@ This project recreates the iconic Minimoog Model D synthesizer in the browser us
 
 - **Three-Oscillator Architecture**: Classic waveforms (sawtooth, triangle, square, reverse sawtooth, pulse)
 - **Authentic Mixer**: Individual volume controls for oscillators, noise, and external input
-- **Biquad Filter**: Low-pass filter with resonance and key tracking using Web Audio API
+- **4-Pole Ladder Filter**: Authentic Minimoog ladder filter with resonance and key tracking using Web Audio API
 - **Dual Envelope Generators**: Filter and loudness contours with authentic response curves
 
 ### Modulation & Control
@@ -187,7 +187,7 @@ src/
   components/               # React UI components organized by feature
     OscillatorBank/         # Three-oscillator bank with modulation
     Mixer/                  # Audio mixer with individual controls
-    Filter/                 # Biquad filter and envelope controls
+    Filter/                 # 4-pole ladder filter and envelope controls
     Envelopes/              # Filter and loudness envelope controls
     Controllers/            # Modulation and performance controls
     Keyboard/               # Virtual keyboard with MIDI support
@@ -280,7 +280,7 @@ docs/                       # Additional documentation
 The synthesizer uses a modular audio architecture:
 
 ```
-Oscillators → Mixer → Biquad Filter → Envelopes → Output
+Oscillators → Mixer → 4-Pole Ladder Filter → Envelopes → Output
      ↓           ↓           ↓           ↓
   Modulation → LFO → Effects → Aux Output
 ```
@@ -507,7 +507,7 @@ We welcome contributions to improve the Minimoog Model D emulator!
 
 ### Audio Synthesis
 
-- [Biquad Filter](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode): Web Audio API filter implementation
+- [4-Pole Ladder Filter](https://en.wikipedia.org/wiki/Ladder_filter): Minimoog's iconic ladder filter implementation
 - [Analog Synthesizer Architecture](https://en.wikipedia.org/wiki/Analog_synthesizer): Overview of analog synthesis
 - [Web Audio API Worklets](https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet): Custom audio processing
 
