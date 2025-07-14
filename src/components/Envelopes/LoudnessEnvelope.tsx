@@ -4,6 +4,10 @@ import Title from "../Title";
 import Column from "../Column";
 import { useSynthStore } from "@/store/synthStore";
 import { attackDecayValueLabels } from "./constants";
+import {
+  valueToKnobPos,
+  knobPosToValue,
+} from "../Knob/utils/attackDecayMapping";
 
 function LoudnessEnvelope() {
   const {
@@ -22,29 +26,32 @@ function LoudnessEnvelope() {
       <Column>
         <Row gap="var(--spacing-xl)">
           <Knob
-            type="attackDecay"
             valueLabels={attackDecayValueLabels}
-            value={loudnessAttack}
+            value={valueToKnobPos(loudnessAttack)}
             showMidTicks={true}
             min={0}
             max={10000}
+            step={100}
             label="Attack Time"
-            onChange={(value) =>
-              setLoudnessEnvelope({ attack: Number(value.toFixed(0)) })
+            onChange={(position) =>
+              setLoudnessEnvelope({
+                attack: Number(knobPosToValue(position).toFixed(0)),
+              })
             }
             disabled={isDisabled}
           />
           <Knob
-            type="attackDecay"
             valueLabels={attackDecayValueLabels}
-            value={loudnessDecay}
+            value={valueToKnobPos(loudnessDecay)}
             showMidTicks={true}
             min={0}
             max={10000}
             step={100}
             label="Decay Time"
-            onChange={(value) =>
-              setLoudnessEnvelope({ decay: Number(value.toFixed(0)) })
+            onChange={(position) =>
+              setLoudnessEnvelope({
+                decay: Number(knobPosToValue(position).toFixed(0)),
+              })
             }
             disabled={isDisabled}
           />

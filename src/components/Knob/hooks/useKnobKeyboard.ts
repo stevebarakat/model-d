@@ -39,6 +39,7 @@ export function useKnobKeyboard({
       const isShiftPressed = e.shiftKey;
       const multiplier = isShiftPressed ? 10 : 1;
       const stepSize = step * multiplier;
+      const keyboardStepSize = stepSize * 10;
 
       let newValue = value;
 
@@ -46,7 +47,7 @@ export function useKnobKeyboard({
         case "ArrowUp":
         case "ArrowRight":
           newValue = calculateValueFromDelta(
-            stepSize * 10,
+            keyboardStepSize,
             value,
             1,
             min,
@@ -60,7 +61,7 @@ export function useKnobKeyboard({
         case "ArrowDown":
         case "ArrowLeft":
           newValue = calculateValueFromDelta(
-            -stepSize * 10,
+            -keyboardStepSize,
             value,
             1,
             min,

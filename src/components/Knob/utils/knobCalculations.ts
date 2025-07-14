@@ -1,9 +1,4 @@
 import { KnobType } from "../types";
-import {
-  knobPosToValue,
-  valueToKnobPos,
-  attackDecayStops,
-} from "./attackDecayMapping";
 
 // Logarithmic scaling functions
 export function toLogarithmic(value: number, min: number, max: number): number {
@@ -55,11 +50,7 @@ export function getRotation(
 ): number {
   let percentage: number;
 
-  if (type === "attackDecay") {
-    // For attackDecay, the value is already a knob position (0-10000)
-    // Convert it to a percentage based on the position range
-    percentage = (value - min) / (max - min);
-  } else if (logarithmic) {
+  if (logarithmic) {
     // Use logarithmic scaling for visual rotation to match the control behavior
     percentage = toLogarithmic(value, min, max);
   } else {
@@ -108,18 +99,6 @@ export function calculateValueFromDelta(
   logarithmic: boolean = false,
   size?: "small" | "medium" | "large"
 ): number {
-  // Handle custom scaling for attackDecay type
-  if (type === "attackDecay") {
-    // Convert value to knob position (0-10)
-    const startPos = valueToKnobPos(startValue, attackDecayStops);
-    // Apply delta in position space
-    const posRange = max - min;
-    const newPos = startPos + (deltaY * sensitivity * posRange) / 200;
-    // Clamp position to [min, max]
-    const clampedPos = Math.max(min, Math.min(max, newPos));
-    // Map back to value
-    return knobPosToValue(clampedPos, attackDecayStops);
-  }
   const range = max - min;
   let newValue: number;
 
@@ -172,8 +151,8 @@ export function calculateLabelPosition(
   type: KnobType
 ): { x: number; y: number } {
   const arc = type === "arrow" ? 150 : 300;
-
   const startAngle = type === "arrow" ? -165 : 120;
+
   const percentage = (tick - min) / (max - min);
   const angle = startAngle + percentage * arc;
   const rad = (angle * Math.PI) / 180;
@@ -193,6 +172,7 @@ export function calculateTickAngle(
 ): number {
   const arc = type === "arrow" ? 150 : 300;
   const startAngle = type === "arrow" ? -75 : -150;
+
   const percentage = (tick - min) / (max - min);
   return startAngle + percentage * arc;
 }

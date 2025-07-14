@@ -1,7 +1,13 @@
 import Knob from "../Knob";
 import Row from "../Row";
+import Title from "../Title";
+import Column from "../Column";
 import { useSynthStore } from "@/store/synthStore";
 import { attackDecayValueLabels } from "./constants";
+import {
+  valueToKnobPos,
+  knobPosToValue,
+} from "../Knob/utils/attackDecayMapping";
 
 function FilterEnvelope() {
   const {
@@ -13,49 +19,62 @@ function FilterEnvelope() {
   } = useSynthStore();
 
   return (
-    <Row gap="var(--spacing-xl)">
-      <Knob
-        type="attackDecay"
-        valueLabels={attackDecayValueLabels}
-        value={filterAttack}
-        showMidTicks={true}
-        min={0}
-        max={10000}
-        step={10}
-        label="Attack Time"
-        onChange={(v) => setFilterEnvelope({ attack: v })}
-        disabled={isDisabled}
-      />
-      <Knob
-        type="attackDecay"
-        valueLabels={attackDecayValueLabels}
-        value={filterDecay}
-        showMidTicks={true}
-        min={0}
-        max={10000}
-        step={10}
-        label="Decay Time"
-        onChange={(v) => setFilterEnvelope({ decay: v })}
-        disabled={isDisabled}
-      />
-      <Knob
-        valueLabels={{
-          0: "0",
-          2: "2",
-          4: "4",
-          6: "6",
-          8: "8",
-          10: "10",
-        }}
-        value={filterSustain}
-        min={0}
-        max={10}
-        step={1}
-        label="Sustain Level"
-        onChange={(v) => setFilterEnvelope({ sustain: v })}
-        disabled={isDisabled}
-      />
-    </Row>
+    <Column
+      style={{ paddingRight: "0.75rem", paddingTop: "var(--spacing-xs)" }}
+    >
+      <Title size="lg">Filter Contour</Title>
+      <Column>
+        <Row gap="var(--spacing-xl)">
+          <Knob
+            valueLabels={attackDecayValueLabels}
+            value={valueToKnobPos(filterAttack)}
+            showMidTicks={true}
+            min={0}
+            max={10000}
+            step={100}
+            label="Attack Time"
+            onChange={(position) =>
+              setFilterEnvelope({
+                attack: Number(knobPosToValue(position).toFixed(0)),
+              })
+            }
+            disabled={isDisabled}
+          />
+          <Knob
+            valueLabels={attackDecayValueLabels}
+            value={valueToKnobPos(filterDecay)}
+            showMidTicks={true}
+            min={0}
+            max={10000}
+            step={100}
+            label="Decay Time"
+            onChange={(position) =>
+              setFilterEnvelope({
+                decay: Number(knobPosToValue(position).toFixed(0)),
+              })
+            }
+            disabled={isDisabled}
+          />
+          <Knob
+            valueLabels={{
+              0: "0",
+              2: "2",
+              4: "4",
+              6: "6",
+              8: "8",
+              10: "10",
+            }}
+            value={filterSustain}
+            min={0}
+            max={10}
+            step={1}
+            label="Sustain Level"
+            onChange={(value) => setFilterEnvelope({ sustain: value })}
+            disabled={isDisabled}
+          />
+        </Row>
+      </Column>
+    </Column>
   );
 }
 
