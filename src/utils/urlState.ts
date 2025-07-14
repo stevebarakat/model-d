@@ -74,6 +74,10 @@ export function saveStateToURL(state: SynthState): string {
   params.set("mod_wheel", state.modWheel.toString());
   params.set("tuner_on", state.tunerOn.toString());
 
+  // Save aux output settings
+  params.set("aux_enabled", state.auxOutput.enabled.toString());
+  params.set("aux_volume", state.auxOutput.volume.toString());
+
   return params.toString();
 }
 
@@ -206,6 +210,14 @@ export function loadStateFromURL(): Partial<SynthState> | null {
 
   if (params.has("tuner_on")) {
     state.tunerOn = params.get("tuner_on") === "true";
+  }
+
+  // Load aux output settings
+  if (params.has("aux_enabled")) {
+    state.auxOutput = {
+      enabled: params.get("aux_enabled") === "true",
+      volume: parseFloat(params.get("aux_volume") || "0"),
+    };
   }
 
   return state;

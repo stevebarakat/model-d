@@ -3,7 +3,7 @@ import Section from "../Section";
 import Column from "../Column";
 import MainOutput from "./MainOutput";
 import Tuner from "../Tuner";
-import Phones from "./Phones";
+import Phones from "./AuxOut";
 
 export default function Output() {
   return (

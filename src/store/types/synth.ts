@@ -100,6 +100,12 @@ export type SynthState = {
 
   // Tuner state
   tunerOn: boolean;
+
+  // Aux output state
+  auxOutput: {
+    enabled: boolean;
+    volume: number;
+  };
 };
 
 export type SynthActions = {
@@ -149,6 +155,7 @@ export type SynthActions = {
   }) => void;
   setDecaySwitchOn: (on: boolean) => void;
   setTunerOn: (on: boolean) => void;
+  setAuxOutput: (value: Partial<{ enabled: boolean; volume: number }>) => void;
   loadPreset: (preset: Partial<SynthState>) => void;
   updateURL: () => void;
 };

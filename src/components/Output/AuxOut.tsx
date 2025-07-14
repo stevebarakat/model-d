@@ -3,8 +3,8 @@ import Row from "../Row";
 import { RockerSwitch } from "../RockerSwitch";
 import Knob from "../Knob";
 
-function Phones() {
-  const { isDisabled } = useSynthStore();
+function AuxOut() {
+  const { auxOutput, setAuxOutput, isDisabled } = useSynthStore();
 
   return (
     <Row gap="var(--spacing-md)" style={{ padding: "var(--spacing-md) 0" }}>
@@ -17,21 +17,21 @@ function Phones() {
           8: "8",
           10: "10",
         }}
-        value={0}
+        value={auxOutput.volume}
         logarithmic={true}
         min={0}
         max={10}
         step={0.1}
-        onChange={() => {}}
+        onChange={(value) => setAuxOutput({ volume: value })}
         label="Volume"
         disabled={isDisabled}
       />
       <RockerSwitch
         theme="blue"
-        checked={false}
-        onCheckedChange={() => {}}
-        label="Phones"
-        topLabel="Phones"
+        checked={auxOutput.enabled}
+        onCheckedChange={(checked) => setAuxOutput({ enabled: checked })}
+        label="Aux Out"
+        topLabel="Aux Out"
         bottomLabelRight="On"
         disabled={isDisabled}
       />
@@ -39,4 +39,4 @@ function Phones() {
   );
 }
 
-export default Phones;
+export default AuxOut;

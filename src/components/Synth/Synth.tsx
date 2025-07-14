@@ -7,6 +7,7 @@ import {
 } from "@/components/OscillatorBank/hooks";
 import { useTuner } from "@/components/Tuner/hooks";
 import { useMidiHandling } from "@/components/Keyboard/hooks";
+import { useAuxOutput } from "@/components/Output/hooks";
 import Modifiers from "../Modifiers";
 import Mixer from "../Mixer";
 import OscillatorBank from "../OscillatorBank";
@@ -50,7 +51,7 @@ function Synth() {
   useURLSync();
 
   // Set up audio nodes
-  const { mixerNode, filterNode, loudnessEnvelopeGain } =
+  const { mixerNode, filterNode, loudnessEnvelopeGain, masterGain } =
     useAudioNodes(audioContext);
 
   // Set up oscillators
@@ -62,6 +63,9 @@ function Synth() {
 
   // Set up tuner
   useTuner(audioContext);
+
+  // Set up aux output
+  useAuxOutput(audioContext, masterGain);
 
   const vibratoAmount = useSynthStore((state) =>
     state.oscillatorModulationOn && state.modWheel > 0

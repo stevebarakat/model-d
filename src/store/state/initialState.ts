@@ -67,5 +67,9 @@ export function createInitialState(): Omit<
     osc3FilterEgSwitch: true,
     noiseLfoSwitch: true,
     tunerOn: false,
+    auxOutput: {
+      enabled: false,
+      volume: 0,
+    },
   };
 }

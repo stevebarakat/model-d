@@ -95,6 +95,10 @@ export function createSynthActions(
       })),
     setDecaySwitchOn: (on: boolean) => set({ decaySwitchOn: on }),
     setTunerOn: (on: boolean) => set({ tunerOn: on }),
+    setAuxOutput: (value) =>
+      set((state: SynthState) => ({
+        auxOutput: { ...state.auxOutput, ...value },
+      })),
     loadPreset: (preset: Partial<SynthState>) => {
       set((state: SynthState) => {
         const newState = { ...state, ...preset };
