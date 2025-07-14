@@ -126,10 +126,10 @@
 
   &:has(.arrow) {
     &::before {
-      top: 30%;
-      left: 30%;
-      width: 40%;
-      height: 40%;
+      top: 32.5%;
+      left: 32.5%;
+      width: 35%;
+      height: 35%;
     }
   }
 }
