@@ -302,7 +302,7 @@ export const presets: Preset[] = [
       noiseLfoSwitch: false,
     },
     filter: {
-      filterCutoff: 5,
+      filterCutoff: 4,
       filterEmphasis: 7,
       filterContourAmount: 6,
       filterAttack: 0.3,
