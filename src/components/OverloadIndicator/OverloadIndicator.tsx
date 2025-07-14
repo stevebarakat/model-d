@@ -1,5 +1,5 @@
 import { cn, cssModule } from "@/utils/helpers";
-import styles from "./LedIndicator.module.css";
+import styles from "./OverloadIndicator.module.css";
 
 type LedIndicatorProps = {
   isEnabled: boolean;
@@ -7,14 +7,16 @@ type LedIndicatorProps = {
   audioLevel: number;
   label?: string;
   style?: React.CSSProperties;
+  size?: "small" | "medium" | "large";
 };
 
-function LedIndicator({
+function OverloadIndicator({
   isEnabled,
   volume,
   audioLevel,
   label,
   style,
+  size = "small",
 }: LedIndicatorProps) {
   // Determine if LED should be on based on enabled state and volume
   const isOn = isEnabled && volume > 0;
@@ -28,8 +30,11 @@ function LedIndicator({
     styles,
     "vintageLed",
     "vintageLedYellow",
-    "vintageLedLarge",
-    isOn && "vintageLedOn"
+    size === "large" && "vintageLedLarge",
+    size === "medium" && "vintageLedMedium",
+    size === "small" && "vintageLedSmall",
+    isOn && "vintageLedOn",
+    size
   );
 
   // Using cn utility for combining with external style
@@ -55,4 +60,4 @@ function LedIndicator({
   );
 }
 
-export default LedIndicator;
+export default OverloadIndicator;

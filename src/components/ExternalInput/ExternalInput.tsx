@@ -1,6 +1,6 @@
 import { useSynthStore } from "@/store/synthStore";
 import Knob from "../Knob";
-import LedIndicator from "../LedIndicator";
+import OverloadIndicator from "../OverloadIndicator";
 import { useExternalInput } from "./hooks";
 import Row from "../Row";
 import { RockerSwitch } from "../RockerSwitch";
@@ -23,13 +23,18 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
     }
   }, [mixer.external.volume, setMixerExternal]);
 
+  function ubu(checked: boolean) {
+    console.log("ubu", checked);
+    setMixerExternal({ enabled: checked });
+  }
+
   return (
     <Row>
       <RockerSwitch
         theme="blue"
         disabled={isDisabled}
         checked={mixer.external.enabled}
-        onCheckedChange={(checked) => setMixerExternal({ enabled: checked })}
+        onCheckedChange={ubu}
         label="External Input"
         bottomLabelRight="On"
         style={{
@@ -73,11 +78,12 @@ function ExternalInput({ audioContext, mixerNode }: ExternalInputProps) {
           }}
           disabled={isDisabled}
         />
-        <LedIndicator
+        <OverloadIndicator
           label="Signal"
           isEnabled={mixer.external.enabled}
           volume={mixer.external.volume}
           audioLevel={audioLevel}
+          size="medium"
           style={{
             left: "1.5rem",
           }}
