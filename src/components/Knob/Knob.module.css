@@ -127,12 +127,13 @@
       position: absolute;
       top: 32.5%;
       left: 32.5%;
-      z-index: 1;
+      z-index: 5555;
       width: 35%;
       height: 35%;
       background-image: var(--metal-cap);
       border: 0.5px solid hsl(0deg 0% 40%);
       border-radius: var(--knob-border-radius);
+      pointer-events: none;
       content: "";
     }
   }
@@ -233,8 +234,8 @@
 /* Focus styles for accessibility */
 .radial:focus-visible,
 .arrow:focus-visible {
-  outline: 2px solid hsl(220deg 100% 50%);
-  outline-offset: 2px;
+  /* Remove outline but keep focus for keyboard navigation */
+  outline: none;
 }
 
 /* Label styles */

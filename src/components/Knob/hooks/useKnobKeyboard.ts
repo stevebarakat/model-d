@@ -27,7 +27,14 @@ export function useKnobKeyboard({
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent): void => {
-      if (!knobRef.current?.contains(document.activeElement)) return;
+      // Check if the active element is the knob, if the knob contains the active element,
+      // or if the knob has the data-focused attribute (fallback for pointer events)
+      if (
+        document.activeElement !== knobRef.current &&
+        !knobRef.current?.contains(document.activeElement) &&
+        knobRef.current?.getAttribute("data-focused") !== "true"
+      )
+        return;
 
       const isShiftPressed = e.shiftKey;
       const multiplier = isShiftPressed ? 10 : 1;
@@ -39,7 +46,7 @@ export function useKnobKeyboard({
         case "ArrowUp":
         case "ArrowRight":
           newValue = calculateValueFromDelta(
-            -stepSize * 10,
+            stepSize * 10,
             value,
             1,
             min,
@@ -53,7 +60,7 @@ export function useKnobKeyboard({
         case "ArrowDown":
         case "ArrowLeft":
           newValue = calculateValueFromDelta(
-            stepSize * 10,
+            -stepSize * 10,
             value,
             1,
             min,

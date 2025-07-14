@@ -63,6 +63,14 @@ export function useKnobInteraction({
   const handlePointerDown = useCallback(
     (e: React.PointerEvent): void => {
       e.preventDefault();
+
+      // Focus the knob when clicked and prevent focus loss
+      if (knobRef.current) {
+        knobRef.current.focus();
+        // Prevent the focus from being lost during pointer events
+        e.currentTarget.setAttribute("data-focused", "true");
+      }
+
       setIsDragging(true);
       setStartY(e.clientY);
       setStartValue(value);
@@ -124,9 +132,10 @@ export function useKnobInteraction({
 
       setIsDragging(false);
 
-      // Release pointer capture
+      // Release pointer capture and clean up focus attribute
       if (knobRef.current) {
         knobRef.current.releasePointerCapture(e.pointerId);
+        knobRef.current.removeAttribute("data-focused");
       }
     },
     [isDragging, knobRef]
