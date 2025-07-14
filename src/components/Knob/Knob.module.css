@@ -49,6 +49,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Container size variants */
@@ -221,6 +224,38 @@
 .arrow:active {
   filter: brightness(0.9);
   transform: scale(0.98);
+}
+
+/* Touch scaling for mobile/tablet devices */
+.knobContainer.touching {
+  transform: scale(2);
+  transition: transform 0.2s ease-out;
+  z-index: 1000;
+  transform-origin: center center;
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 8px;
+  margin: -8px;
+}
+
+/* Legacy selectors for backward compatibility */
+.touching {
+  transform: scale(1.5) !important;
+  transition: transform 0.2s ease-out;
+  z-index: 10;
+}
+
+.radial.touching,
+.arrow.touching {
+  transform: scale(1.5);
+  transition: transform 0.2s ease-out;
+  z-index: 10;
+}
+
+/* Ensure the scaled knob stays above other elements */
+.knobContainer:has(.touching) {
+  z-index: 1000;
 }
 
 /* Focus styles for accessibility */

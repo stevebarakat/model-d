@@ -23,7 +23,7 @@ function Knob({
   style,
   disabled = false,
 }: KnobProps) {
-  const { knobRef, handlePointerDown } = useKnobInteraction({
+  const { knobRef, isTouching, handlePointerDown } = useKnobInteraction({
     value,
     min,
     max,
@@ -33,6 +33,9 @@ function Knob({
     logarithmic,
     size,
   });
+
+  // Debug log for touching state changes
+  console.log(`🎛️ Knob "${label}" isTouching:`, isTouching);
 
   const id = slugify(label);
   const labelClass = title ? styles.labelHidden : styles.label;
@@ -48,7 +51,7 @@ function Knob({
       style={style}
       className={`${styles.knobContainer} ${
         styles[`knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`]
-      }`}
+      } ${isTouching ? styles.touching : ""}`}
     >
       <label
         htmlFor={id}
@@ -98,11 +101,14 @@ function Knob({
             id={id}
             className={
               type === "arrow"
-                ? styles.arrow + " " + (disabled ? "disabled" : "")
-                : styles.radial + " " + (disabled ? "disabled" : "")
+                ? `${styles.arrow} ${disabled ? "disabled" : ""}`
+                : `${styles.radial} ${disabled ? "disabled" : ""}`
             }
             ref={knobRef}
-            style={{ transform: `rotate(${rotation}deg)` }}
+            style={{
+              transform: `rotate(${rotation}deg)`,
+              transformOrigin: "center center",
+            }}
             onPointerDown={disabled ? undefined : handlePointerDown}
             tabIndex={0}
             role="slider"
