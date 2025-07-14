@@ -6,7 +6,7 @@ export type Oscillator = {
 
 export type AudioNodes = {
   mixerNode: GainNode | null;
-  filterNode: BiquadFilterNode | null;
+  filterNode: AudioWorkletNode | null;
   loudnessEnvelopeGain: GainNode | null;
   masterGain: GainNode | null;
   isMixerReady: boolean;

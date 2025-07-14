@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moog ZDF Filter Test - Self Oscillation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .controls {
+        margin: 20px 0;
+      }
+      label {
+        display: inline-block;
+        width: 120px;
+      }
+      input[type="range"] {
+        width: 200px;
+      }
+      .value {
+        display: inline-block;
+        width: 60px;
+        text-align: right;
+      }
+      button {
+        margin: 10px 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+      .info {
+        background: #f0f0f0;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 20px 0;
+      }
+      .self-osc {
+        background: #ffe6e6;
+        border-left: 4px solid #ff4444;
+        padding: 10px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Moog ZDF Filter Test - Self Oscillation</h1>
+
+    <div class="info">
+      <h3>Self-Oscillation Guide:</h3>
+      <ul>
+        <li><strong>Resonance 0-2.5:</strong> Normal filtering</li>
+        <li>
+          <strong>Resonance 2.5-3.5:</strong> Increasing resonance, filter
+          starts to "sing"
+        </li>
+        <li>
+          <strong>Resonance 3.5-4.0:</strong> Self-oscillation range - filter
+          becomes an oscillator
+        </li>
+      </ul>
+      <div class="self-osc">
+        <strong>💡 Tip:</strong> Set resonance to 3.5+ and turn off the input
+        oscillator to hear pure self-oscillation!
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="startBtn">Start Audio</button>
+      <button id="playBtn">Play Note</button>
+      <button id="stopBtn">Stop Note</button>
+      <button id="toggleInputBtn">Toggle Input</button>
+    </div>
+
+    <div class="controls">
+      <label for="cutoffSlider">Cutoff:</label>
+      <input
+        type="range"
+        id="cutoffSlider"
+        min="20"
+        max="20000"
+        value="1000"
+        step="1"
+      />
+      <span class="value" id="cutoffValue">1000</span> Hz
+    </div>
+
+    <div class="controls">
+      <label for="resonanceSlider">Resonance:</label>
+      <input
+        type="range"
+        id="resonanceSlider"
+        min="0"
+        max="10"
+        value="5"
+        step="0.1"
+      />
+      <span class="value" id="resonanceValue">5.0</span>
+      <span id="resonanceType">(Normal)</span>
+    </div>
+
+    <div class="controls">
+      <label for="waveformSelect">Waveform:</label>
+      <select id="waveformSelect">
+        <option value="sawtooth">Sawtooth</option>
+        <option value="square">Square</option>
+        <option value="triangle">Triangle</option>
+        <option value="sine">Sine</option>
+      </select>
+    </div>
+
+    <script>
+      let audioContext;
+      let filterNode;
+      let oscillator;
+      let isPlaying = false;
+      let inputEnabled = true;
+
+      async function initAudio() {
+        try {
+          audioContext = new AudioContext();
+
+          // Register the Moog ZDF processor
+          await audioContext.audioWorklet.addModule("/moog-zdf-processor.js");
+
+          // Create filter
+          filterNode = new AudioWorkletNode(
+            audioContext,
+            "moog-zdf-processor",
+            {
+              numberOfInputs: 1,
+              numberOfOutputs: 1,
+              outputChannelCount: [1],
+            }
+          );
+
+          // Create oscillator
+          oscillator = audioContext.createOscillator();
+          oscillator.type = document.getElementById("waveformSelect").value;
+          oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+
+          // Connect: oscillator -> filter -> destination
+          oscillator.connect(filterNode);
+          filterNode.connect(audioContext.destination);
+
+          console.log("Audio initialized successfully");
+          console.log("Filter parameters:", filterNode.parameters);
+        } catch (error) {
+          console.error("Error initializing audio:", error);
+        }
+      }
+
+      function playNote() {
+        if (!audioContext || !oscillator) return;
+
+        if (!isPlaying) {
+          oscillator.start();
+          isPlaying = true;
+          console.log("Started playing note");
+        }
+      }
+
+      function stopNote() {
+        if (!oscillator || !isPlaying) return;
+
+        oscillator.stop();
+        oscillator = audioContext.createOscillator();
+        oscillator.type = document.getElementById("waveformSelect").value;
+        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+        if (inputEnabled) {
+          oscillator.connect(filterNode);
+        }
+        isPlaying = false;
+        console.log("Stopped playing note");
+      }
+
+      function toggleInput() {
+        if (!oscillator) return;
+
+        inputEnabled = !inputEnabled;
+        if (inputEnabled) {
+          oscillator.connect(filterNode);
+          document.getElementById("toggleInputBtn").textContent =
+            "Disable Input";
+          console.log("Input enabled");
+        } else {
+          oscillator.disconnect(filterNode);
+          document.getElementById("toggleInputBtn").textContent =
+            "Enable Input";
+          console.log("Input disabled - pure self-oscillation");
+        }
+      }
+
+      function updateFilter() {
+        if (!filterNode) return;
+
+        const cutoff = parseFloat(
+          document.getElementById("cutoffSlider").value
+        );
+        const emphasis = parseFloat(
+          document.getElementById("resonanceSlider").value
+        );
+
+        // Use the same mapping as the main app
+        const normalizedEmphasis = emphasis / 10; // 0 to 1
+        let resonanceValue;
+
+        if (normalizedEmphasis < 0.7) {
+          // Linear mapping for lower values (0-7 on emphasis = 0-2.5 resonance)
+          resonanceValue = normalizedEmphasis * (2.5 / 0.7);
+        } else {
+          // Exponential curve for higher values to reach self-oscillation
+          const remaining = normalizedEmphasis - 0.7;
+          const exponential = Math.pow(remaining / 0.3, 1.5); // 0.3 to 1.0
+          resonanceValue = 2.5 + exponential * 1.5; // 2.5 to 4.0
+        }
+
+        resonanceValue = Math.max(0, Math.min(4, resonanceValue));
+
+        // Set filter parameters
+        const cutoffParam = filterNode.parameters.get("cutoff");
+        const resonanceParam = filterNode.parameters.get("resonance");
+
+        if (cutoffParam) {
+          cutoffParam.setValueAtTime(cutoff, audioContext.currentTime);
+        }
+        if (resonanceParam) {
+          resonanceParam.setValueAtTime(
+            resonanceValue,
+            audioContext.currentTime
+          );
+        }
+
+        document.getElementById("cutoffValue").textContent = cutoff;
+        document.getElementById("resonanceValue").textContent =
+          emphasis.toFixed(1);
+
+        // Update resonance type indicator
+        const resonanceTypeEl = document.getElementById("resonanceType");
+        if (resonanceValue < 2.5) {
+          resonanceTypeEl.textContent = "(Normal)";
+          resonanceTypeEl.style.color = "black";
+        } else if (resonanceValue < 3.5) {
+          resonanceTypeEl.textContent = "(Resonant)";
+          resonanceTypeEl.style.color = "orange";
+        } else {
+          resonanceTypeEl.textContent = "(Self-Oscillating)";
+          resonanceTypeEl.style.color = "red";
+        }
+
+        console.log(
+          `Filter updated: cutoff=${cutoff}Hz, emphasis=${emphasis}, resonance=${resonanceValue.toFixed(
+            2
+          )}`
+        );
+      }
+
+      function updateWaveform() {
+        if (!oscillator) return;
+        oscillator.type = document.getElementById("waveformSelect").value;
+        console.log("Waveform changed to:", oscillator.type);
+      }
+
+      // Event listeners
+      document.getElementById("startBtn").addEventListener("click", initAudio);
+      document.getElementById("playBtn").addEventListener("click", playNote);
+      document.getElementById("stopBtn").addEventListener("click", stopNote);
+      document
+        .getElementById("toggleInputBtn")
+        .addEventListener("click", toggleInput);
+      document
+        .getElementById("cutoffSlider")
+        .addEventListener("input", updateFilter);
+      document
+        .getElementById("resonanceSlider")
+        .addEventListener("input", updateFilter);
+      document
+        .getElementById("waveformSelect")
+        .addEventListener("change", updateWaveform);
+    </script>
+  </body>
+</html>

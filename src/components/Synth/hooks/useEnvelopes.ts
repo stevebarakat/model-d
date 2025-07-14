@@ -60,6 +60,7 @@ function useEnvelopes({
     loudnessAttack,
     loudnessDecay,
     loudnessSustain,
+    activeKeys,
   } = useSynthStore();
 
   // Precompute envelope times with conversion
@@ -92,7 +93,7 @@ function useEnvelopes({
             baseCutoff *
             Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
 
-          if (filterNode instanceof BiquadFilterNode) {
+          if (filterNode instanceof AudioWorkletNode) {
             if (filterModulationOn) {
               // Filter envelope modulation
               const contourOctaves =
@@ -109,26 +110,27 @@ function useEnvelopes({
                 trackedCutoff + (envMax - trackedCutoff) * sustainLevel;
               const now = audioContext.currentTime;
 
-              filterNode.frequency.cancelScheduledValues(now);
+              const cutoffParam = filterNode.parameters.get("cutoff");
+              if (cutoffParam) {
+                cutoffParam.cancelScheduledValues(now);
 
-              // For smooth note transitions, start from current frequency if it's close
-              const currentFreq = filterNode.frequency.value;
-              const freqDiff =
-                Math.abs(currentFreq - trackedCutoff) / trackedCutoff;
-              const startFreq = freqDiff < 0.5 ? currentFreq : trackedCutoff; // Smooth transition if close
+                // For smooth note transitions, start from current frequency if it's close
+                const currentFreq = cutoffParam.value;
+                const freqDiff =
+                  Math.abs(currentFreq - trackedCutoff) / trackedCutoff;
+                const startFreq = freqDiff < 0.5 ? currentFreq : trackedCutoff; // Smooth transition if close
 
-              filterNode.frequency.setValueAtTime(startFreq, now);
-              filterNode.frequency.linearRampToValueAtTime(
-                envMax,
-                now + attackTime
-              );
-              filterNode.frequency.linearRampToValueAtTime(
-                envSustain,
-                now + attackTime + decayTime
-              );
+                cutoffParam.setValueAtTime(startFreq, now);
+                cutoffParam.linearRampToValueAtTime(envMax, now + attackTime);
+                cutoffParam.linearRampToValueAtTime(
+                  envSustain,
+                  now + attackTime + decayTime
+                );
+              }
             } else {
               // Just set cutoff with key tracking
-              filterNode.frequency.setValueAtTime(
+              const cutoffParam = filterNode.parameters.get("cutoff");
+              cutoffParam?.setValueAtTime(
                 trackedCutoff,
                 audioContext.currentTime
               );
@@ -170,18 +172,36 @@ function useEnvelopes({
         if (
           filterNode &&
           filterModulationOn &&
-          filterNode instanceof BiquadFilterNode
+          filterNode instanceof AudioWorkletNode
         ) {
-          if (decaySwitchOn) {
-            filterNode.frequency.cancelScheduledValues(now);
-            const currentFreq = filterNode.frequency.value;
-            filterNode.frequency.setValueAtTime(currentFreq, now);
-            filterNode.frequency.linearRampToValueAtTime(
-              mapCutoff(filterCutoff),
-              now + mapEnvelopeTime(convertAttackDecayValue(filterDecay))
-            );
-          } else {
-            filterNode.frequency.setValueAtTime(mapCutoff(filterCutoff), now);
+          const cutoffParam = filterNode.parameters.get("cutoff");
+          if (cutoffParam) {
+            // Calculate key-tracked base cutoff for release
+            const keyTracking =
+              (keyboardControl1 ? 1 / 3 : 0) + (keyboardControl2 ? 2 / 3 : 0);
+            const baseCutoff = mapCutoff(filterCutoff);
+            let trackedBaseCutoff = baseCutoff;
+
+            // Apply key tracking if we have active keys
+            if (activeKeys) {
+              const noteNumber = noteNameToMidi(activeKeys);
+              const baseNoteNumber = 60; // C4
+              trackedBaseCutoff =
+                baseCutoff *
+                Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
+            }
+
+            if (decaySwitchOn) {
+              cutoffParam.cancelScheduledValues(now);
+              const currentFreq = cutoffParam.value;
+              cutoffParam.setValueAtTime(currentFreq, now);
+              cutoffParam.linearRampToValueAtTime(
+                trackedBaseCutoff,
+                now + mapEnvelopeTime(convertAttackDecayValue(filterDecay))
+              );
+            } else {
+              cutoffParam.setValueAtTime(trackedBaseCutoff, now);
+            }
           }
         }
 
@@ -231,6 +251,7 @@ function useEnvelopes({
     loudnessAttackTime,
     loudnessDecayTime,
     loudnessSustainLevel,
+    activeKeys,
   ]);
 
   return synthObj;

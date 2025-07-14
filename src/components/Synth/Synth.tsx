@@ -118,11 +118,9 @@ function Synth() {
         Math.pow(2, (keyTracking * (noteNumber - baseNoteNumber)) / 12);
     }
 
-    // BiquadFilter case - set frequency directly
-    filterNode.frequency.setValueAtTime(
-      trackedCutoff,
-      audioContext.currentTime
-    );
+    // AudioWorkletNode case - set cutoff parameter
+    const cutoffParam = filterNode.parameters.get("cutoff");
+    cutoffParam?.setValueAtTime(trackedCutoff, audioContext.currentTime);
   }, [filterNode, audioContext, activeKeys]);
 
   return (
