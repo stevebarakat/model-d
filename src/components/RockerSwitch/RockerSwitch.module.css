@@ -282,6 +282,9 @@ label:focus:not(:focus-visible) {
   font-size: var(--font-size-xs);
   font-weight: 800;
   text-transform: uppercase;
+  .vertical & {
+    bottom: var(--spacing-xs);
+  }
 
   .left {
     height: 0;
@@ -292,7 +295,7 @@ label:focus:not(:focus-visible) {
     display: flex;
     justify-content: center;
     width: 100%;
-    background: var(--color-synth-bg);
+    backdrop-filter: blur(10px);
     font-size: var(--font-size-sm);
     text-align: center;
   }
@@ -336,7 +339,7 @@ label:focus:not(:focus-visible) {
     display: flex;
     justify-content: center;
     width: 100%;
-    background: var(--color-synth-bg);
+    backdrop-filter: blur(10px);
     font-size: var(--font-size-sm);
     text-align: center;
     white-space: wrap;

@@ -78,8 +78,8 @@ function RockerSwitch({
           <span
             className={styles.center}
             style={{
-              background:
-                orientation === "vertical" ? "none" : "var(--color-synth-bg)",
+              backdropFilter:
+                orientation === "vertical" ? "none" : "blur(10px)",
             }}
           >
             {topLabel}
