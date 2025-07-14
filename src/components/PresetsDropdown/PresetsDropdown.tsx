@@ -177,7 +177,11 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
               aria-label="Filter by category"
             >
               {categories.map((category) => (
-                <option key={category} value={category}>
+                <option
+                  style={{ opacity: disabled ? 0.5 : 1 }}
+                  key={category}
+                  value={category}
+                >
                   {category}
                 </option>
               ))}

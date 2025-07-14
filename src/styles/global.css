@@ -52,12 +52,6 @@ body {
   width: 15.38em;
   height: 1.54em;
   transform: rotate(45deg);
-  transform: rotate(45deg);
-  transform: rotate(45deg);
-  transform: rotate(45deg);
-  transform: rotate(45deg);
-  box-sizing: content-box;
-  box-sizing: content-box;
   box-sizing: content-box;
 }
 
@@ -76,10 +70,26 @@ body {
     from(rgb(0 0 0 / 0%)),
     to(rgb(0 0 0 / 15%))
   );
-  background-image: linear-gradient(top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
-  background-image: linear-gradient(top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
-  background-image: linear-gradient(top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
-  background-image: linear-gradient(top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
+  background-image: linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 0%),
+    rgb(0 0 0 / 15%)
+  );
+  background-image: linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 0%),
+    rgb(0 0 0 / 15%)
+  );
+  background-image: linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 0%),
+    rgb(0 0 0 / 15%)
+  );
+  background-image: linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 0%),
+    rgb(0 0 0 / 15%)
+  );
   background-image: linear-gradient(
     to bottom,
     rgb(0 0 0 / 0%),
@@ -87,8 +97,6 @@ body {
   );
 
   /* Add a drop shadow */
-  box-shadow: 0 0.15em 0.23em 0 rgb(0 0 0 / 50%);
-  box-shadow: 0 0.15em 0.23em 0 rgb(0 0 0 / 50%);
   box-shadow: 0 0.15em 0.23em 0 rgb(0 0 0 / 50%);
   color: #fff;
   content: "Fork me on GitHub";
@@ -153,31 +161,4 @@ body {
 .github-fork-ribbon.right-bottom::before,
 .github-fork-ribbon.right-bottom::after {
   transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-/********************  */
-
-/* Utility classes */
-
-/********************  */
-
-.sr-only:not(:focus, :active) {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  white-space: nowrap;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-}
-
-.disabled {
-  /* pointer-events: none; */
-  cursor: not-allowed;
-
-  /* opacity: 0.5; */
 }
