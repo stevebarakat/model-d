@@ -1,4 +1,6 @@
 import { SynthState } from "../types/synth";
+import { getPresetById } from "@/data/presets";
+import { convertPresetToStoreFormat } from "@/utils/presetConversion";
 
 export function createInitialState(): Omit<
   SynthState,
@@ -10,7 +12,20 @@ export function createInitialState(): Omit<
   | "setOscillator2"
   | "setOscillator3"
 > {
-  return {
+  // Get the Fat Bass preset
+  const fatBassPreset = getPresetById("fat-bass");
+
+  // Default state values (for properties not covered by the preset)
+  const defaultState: Omit<
+    SynthState,
+    | "setActiveKeys"
+    | "setKeyboardRef"
+    | "setPitchWheel"
+    | "setModWheel"
+    | "setOscillator1"
+    | "setOscillator2"
+    | "setOscillator3"
+  > = {
     isDisabled: true,
     activeKeys: null,
     keyboardRef: { synth: null },
@@ -72,4 +87,13 @@ export function createInitialState(): Omit<
       volume: 0,
     },
   };
+
+  // If Fat Bass preset exists, merge it with the default state
+  if (fatBassPreset) {
+    const presetParameters = convertPresetToStoreFormat(fatBassPreset);
+    return { ...defaultState, ...presetParameters };
+  }
+
+  // Fallback to default state if preset not found
+  return defaultState;
 }

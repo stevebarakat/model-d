@@ -35,7 +35,7 @@ describe("Tuner", () => {
 
     render(<Tuner />);
 
-    const switchElement = screen.getByRole("switch");
+    const switchElement = screen.getByRole("button", { name: "Tuner" });
     fireEvent.click(switchElement);
 
     expect(mockSetTunerOn).toHaveBeenCalledWith(true);
@@ -50,7 +50,9 @@ describe("Tuner", () => {
 
     render(<Tuner />);
 
-    const switchElement = screen.getByRole("switch");
-    expect(switchElement).toBeDisabled();
+    const switchElement = screen.getByRole("button", { name: "Tuner" });
+    // Check for the 'disabled' class on the inner switch div instead of 'aria-disabled' attribute
+    const switchDiv = switchElement.querySelector("div");
+    expect(switchDiv).toHaveClass("disabled");
   });
 });
