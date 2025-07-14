@@ -100,7 +100,7 @@ export const presets: Preset[] = [
       lfoWaveform: "triangle",
       modWheel: 50,
     },
-    mainVolume: 4,
+    mainVolume: 5,
   },
   {
     id: "lead-solo",
@@ -163,7 +163,7 @@ export const presets: Preset[] = [
       lfoWaveform: "triangle",
       modWheel: 70,
     },
-    mainVolume: 3,
+    mainVolume: 5,
   },
   {
     id: "warm-pad",
@@ -225,7 +225,7 @@ export const presets: Preset[] = [
       lfoWaveform: "triangle",
       modWheel: 40,
     },
-    mainVolume: 2,
+    mainVolume: 5,
   },
   {
     id: "noise-bass",
@@ -349,7 +349,7 @@ export const presets: Preset[] = [
       lfoWaveform: "triangle",
       modWheel: 60,
     },
-    mainVolume: 3,
+    mainVolume: 5,
   },
   {
     id: "string-pad",
@@ -411,7 +411,7 @@ export const presets: Preset[] = [
       lfoWaveform: "triangle",
       modWheel: 35,
     },
-    mainVolume: 2,
+    mainVolume: 5,
   },
   {
     id: "acid-bass",
@@ -473,7 +473,7 @@ export const presets: Preset[] = [
       lfoWaveform: "square",
       modWheel: 80,
     },
-    mainVolume: 4,
+    mainVolume: 5,
   },
   {
     id: "bell-lead",
@@ -535,7 +535,7 @@ export const presets: Preset[] = [
       lfoWaveform: "triangle",
       modWheel: 45,
     },
-    mainVolume: 3,
+    mainVolume: 5,
   },
 ];
 

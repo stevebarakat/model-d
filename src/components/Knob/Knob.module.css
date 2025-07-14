@@ -234,7 +234,14 @@
 /* Focus styles for accessibility */
 .radial:focus-visible,
 .arrow:focus-visible {
-  /* Remove outline but keep focus for keyboard navigation */
+  outline: 2px solid hsl(220deg 100% 50%);
+  outline-offset: 2px;
+  border-radius: var(--knob-border-radius);
+}
+
+/* Remove outline for mouse clicks but keep it for keyboard navigation */
+.radial:focus:not(:focus-visible),
+.arrow:focus:not(:focus-visible) {
   outline: none;
 }
 

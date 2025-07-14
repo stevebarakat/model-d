@@ -20,6 +20,13 @@
   }
 }
 
+/* Focus styles for accessibility */
+label:focus-visible {
+  outline: 2px solid hsl(220deg 100% 50%);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
 .switch {
   position: relative;
   z-index: 10;
@@ -76,6 +83,13 @@
   width: var(--switch-width);
   transition: all 0.3s ease-in-out;
 
+  /* Focus styles for accessibility */
+  label:focus-visible {
+    outline: 2px solid hsl(220deg 100% 50%);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
   &::before {
     position: absolute;
     z-index: 1000;
@@ -113,11 +127,9 @@
   display: none;
 }
 
-/* Focus styles for accessibility */
-label:focus-visible {
-  outline: 2px solid hsl(220deg 100% 50%);
-  outline-offset: 2px;
-  border-radius: 0.25rem;
+/* Remove outline for mouse clicks but keep it for keyboard navigation */
+label:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* Black Theme */
