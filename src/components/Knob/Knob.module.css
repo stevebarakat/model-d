@@ -106,35 +106,27 @@
   border-radius: var(--knob-border-radius);
 
   /* Metal cap for radial knob */
-  &:has(.radial) {
-    &::before {
-      position: absolute;
-      top: 25%;
-      left: 17.5%;
-      z-index: 5555;
-      width: 62.5%;
-      height: 62.5%;
-      background-image: var(--metal-cap);
-      border: 0.5px solid hsl(0deg 0% 40%);
-      border-radius: var(--knob-border-radius);
-      pointer-events: none;
-      content: "";
-    }
+  &::before {
+    position: absolute;
+    top: 25%;
+    left: 17.5%;
+    z-index: 5555;
+    width: 62.5%;
+    height: 62.5%;
+    background-image: var(--metal-cap);
+    border: 0.5px solid hsl(0deg 0% 40%);
+    border-radius: var(--knob-border-radius);
+    pointer-events: none;
+    content: "";
+    filter: brightness(0.75);
   }
 
   &:has(.arrow) {
     &::before {
-      position: absolute;
       top: 32.5%;
       left: 32.5%;
-      z-index: 5555;
       width: 35%;
       height: 35%;
-      background-image: var(--metal-cap);
-      border: 0.5px solid hsl(0deg 0% 40%);
-      border-radius: var(--knob-border-radius);
-      pointer-events: none;
-      content: "";
     }
   }
 }
@@ -152,7 +144,7 @@
   }
 
   &:has(.arrow) {
-    filter: drop-shadow(0 -1px 0 var(--knob-highlight-color-2))
+    filter: drop-shadow(0 -2px 0 var(--knob-highlight-color-2))
       drop-shadow(0 1px 0 var(--knob-highlight-color));
   }
 }

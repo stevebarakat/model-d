@@ -4,6 +4,7 @@ import { KnobTicks, KnobLabels } from "./components";
 import { KnobProps } from "./types";
 import styles from "./Knob.module.css";
 import { slugify } from "@/utils/";
+import KnobRing from "./components/KnobRing";
 
 function Knob({
   value,
@@ -69,7 +70,7 @@ function Knob({
       )}
 
       <div className={styles.knob}>
-        <div className={styles.knobRing}></div>
+        <KnobRing type={type} />
         {/* Tick marks around the knob */}
         {valueLabels && (
           <KnobTicks

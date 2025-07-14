@@ -40,6 +40,7 @@ describe("convertPresetToStoreFormat", () => {
     expect(storeFormat.decaySwitchOn).toBe(false);
     expect(storeFormat.lfoRate).toBe(5);
     expect(storeFormat.lfoWaveform).toBe("triangle");
+    expect(storeFormat.modWheel).toBe(50);
 
     // Check main volume
     expect(storeFormat.mainVolume).toBe(5);

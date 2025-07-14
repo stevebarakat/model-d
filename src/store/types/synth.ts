@@ -74,7 +74,7 @@ export type SynthState = {
   filterSustain: number; // 0-10
 
   // Filter controls
-  filterCutoff: number; // 0-10
+  filterCutoff: number; // -4 to 4
   filterEmphasis: number; // 0-10
   filterContourAmount: number; // 0-10
 

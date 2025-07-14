@@ -116,7 +116,7 @@ export const presets: Preset[] = [
       noiseLfoSwitch: false,
     },
     filter: {
-      filterCutoff: 6,
+      filterCutoff: 4,
       filterEmphasis: 8,
       filterContourAmount: 7,
       filterAttack: 0.5,
@@ -488,7 +488,7 @@ export const presets: Preset[] = [
       noiseLfoSwitch: false,
     },
     filter: {
-      filterCutoff: 7,
+      filterCutoff: 4,
       filterEmphasis: 8,
       filterContourAmount: 3,
       filterAttack: 0.1,

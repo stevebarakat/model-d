@@ -30,13 +30,17 @@ export function convertPresetToStoreFormat(
     loudnessSustain: preset.loudness.loudnessSustain,
 
     // Oscillators (already in the correct format)
-    ...preset.oscillators,
+    oscillator1: preset.oscillators.oscillator1,
+    oscillator2: preset.oscillators.oscillator2,
+    oscillator3: preset.oscillators.oscillator3,
+    mixer: preset.oscillators.mixer,
 
     // Side panel
     glideOn: preset.sidePanel.glideOn,
     decaySwitchOn: preset.sidePanel.decaySwitchOn,
     lfoRate: preset.sidePanel.lfoRate,
-    lfoWaveform: preset.sidePanel.lfoWaveform as "triangle" | "square",
+    lfoWaveform: preset.sidePanel.lfoWaveform,
+    modWheel: preset.sidePanel.modWheel,
 
     // Main volume
     mainVolume: preset.mainVolume,
