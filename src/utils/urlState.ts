@@ -72,6 +72,7 @@ export function saveStateToURL(state: SynthState): string {
   params.set("master_tune", state.masterTune.toString());
   params.set("pitch_wheel", state.pitchWheel.toString());
   params.set("mod_wheel", state.modWheel.toString());
+  params.set("tuner_on", state.tunerOn.toString());
 
   return params.toString();
 }
@@ -201,6 +202,10 @@ export function loadStateFromURL(): Partial<SynthState> | null {
     state.masterTune = parseFloat(params.get("master_tune") || "0");
     state.pitchWheel = parseFloat(params.get("pitch_wheel") || "50");
     state.modWheel = parseFloat(params.get("mod_wheel") || "50");
+  }
+
+  if (params.has("tuner_on")) {
+    state.tunerOn = params.get("tuner_on") === "true";
   }
 
   return state;

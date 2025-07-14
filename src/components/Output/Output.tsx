@@ -2,7 +2,7 @@ import Title from "../Title";
 import Section from "../Section";
 import Column from "../Column";
 import MainOutput from "./MainOutput";
-import Limiter from "../Limiter";
+import Tuner from "../Tuner";
 import Phones from "./Phones";
 
 export default function Output() {
@@ -14,7 +14,7 @@ export default function Output() {
         style={{ padding: "0.5rem", paddingRight: "0.5rem" }}
       >
         <MainOutput />
-        <Limiter />
+        <Tuner />
         <Phones />
       </Column>
       <Title>Output</Title>

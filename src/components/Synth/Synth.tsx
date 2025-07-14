@@ -5,6 +5,7 @@ import {
   useOscillator2,
   useOscillator3,
 } from "@/components/OscillatorBank/hooks";
+import { useTuner } from "@/components/Tuner/hooks";
 import { useMidiHandling } from "@/components/Keyboard/hooks";
 import Modifiers from "../Modifiers";
 import Mixer from "../Mixer";
@@ -58,6 +59,9 @@ function Synth() {
     audioContext && mixerNode instanceof GainNode ? mixerNode : null;
 
   useNoise(validCtx, validMixer);
+
+  // Set up tuner
+  useTuner(audioContext);
 
   const vibratoAmount = useSynthStore((state) =>
     state.oscillatorModulationOn && state.modWheel > 0

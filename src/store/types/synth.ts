@@ -97,6 +97,9 @@ export type SynthState = {
   loudnessDecay: number;
   loudnessSustain: number;
   decaySwitchOn: boolean;
+
+  // Tuner state
+  tunerOn: boolean;
 };
 
 export type SynthActions = {
@@ -145,6 +148,7 @@ export type SynthActions = {
     sustain?: number;
   }) => void;
   setDecaySwitchOn: (on: boolean) => void;
+  setTunerOn: (on: boolean) => void;
   loadPreset: (preset: Partial<SynthState>) => void;
   updateURL: () => void;
 };
