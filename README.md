@@ -1,5 +1,15 @@
 # Minimoog Model D Emulator
 
+<p align="center">
+  <img src="public/images/minimoog-real.png" alt="Original Minimoog Model D" width="100%"/><br/>
+  <em>Original Minimoog Model D (hardware)</em>
+</p>
+
+<p align="center">
+  <img src="public/images/minimoog-screenshot.png" alt="Minimoog Emulator Screenshot" width="100%"/><br/>
+  <em>Web-based Minimoog Model D Emulator (this project)</em>
+</p>
+
 A web-based emulation of the classic Minimoog Model D analog synthesizer, leveraging the Web Audio API for authentic sound synthesis and performance.
 
 [![Node.js](https://img.shields.io/badge/Node.js-18.0.0+-green.svg)](https://nodejs.org/)
