@@ -14,6 +14,26 @@ body {
   font-weight: 600;
 }
 
+/********************  */
+
+/* Utility classes */
+
+/********************  */
+
+.sr-only:not(:focus, :active) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
 /*!
  * "Fork me on GitHub" CSS ribbon v0.2.3 | MIT License
  * https://github.com/simonwhitaker/github-fork-ribbon-css
@@ -70,10 +90,10 @@ body {
     from(rgb(0 0 0 / 0%)),
     to(rgb(0 0 0 / 15%))
   );
-  background-image: linear-gradient(top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
-  background-image: linear-gradient(top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
-  background-image: linear-gradient(top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
-  background-image: linear-gradient(top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
+  background-image: linear-gradient(to top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
+  background-image: linear-gradient(to top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
+  background-image: linear-gradient(to top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
+  background-image: linear-gradient(to top, rgb(0 0 0 / 0%), rgb(0 0 0 / 15%));
   background-image: linear-gradient(
     to bottom,
     rgb(0 0 0 / 0%),
@@ -145,24 +165,4 @@ body {
 .github-fork-ribbon.right-bottom::before,
 .github-fork-ribbon.right-bottom::after {
   transform: rotate(-45deg);
-}
-
-/********************  */
-
-/* Utility classes */
-
-/********************  */
-
-.sr-only:not(:focus, :active) {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  white-space: nowrap;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-}
-
-.disabled {
-  cursor: not-allowed;
 }
