@@ -16,10 +16,6 @@ export function useAudioContext() {
         await audioContextRef.current.resume();
       }
 
-      // Register the worklet processors (await to ensure they're loaded)
-      await audioContextRef.current.audioWorklet.addModule(
-        "/moog-filter/worklet-processor.js"
-      );
       await audioContextRef.current.audioWorklet.addModule(
         "/modulation-monitor-processor.js"
       );
