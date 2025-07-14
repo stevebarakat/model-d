@@ -1,5 +1,7 @@
 import styles from "./RockerSwitch.module.css";
 import { slugify, cn } from "@/utils";
+import { useRockerSwitchKeyboard } from "./hooks";
+import { useEffect, useRef } from "react";
 
 type RockerSwitchProps = {
   checked: boolean;
@@ -36,6 +38,31 @@ function RockerSwitch({
 }: RockerSwitchProps) {
   // Covert label to slug for id
   const id = slugify(label);
+
+  // Add keyboard handling for spacebar toggle
+  const { switchRef } = useRockerSwitchKeyboard({
+    checked,
+    onCheckedChange,
+    disabled,
+  });
+
+  // Track focus state that persists across re-renders
+  const wasFocusedRef = useRef(false);
+
+  // Track re-renders and focus state
+  useEffect(() => {
+    console.log("RockerSwitch re-rendered for:", id, "checked:", checked);
+    // If we had focus before the re-render, try to restore it
+    if (wasFocusedRef.current) {
+      console.log("Restoring focus after re-render for:", id);
+      setTimeout(() => {
+        if (switchRef.current) {
+          switchRef.current.focus();
+          switchRef.current.setAttribute("data-focused", "true");
+        }
+      }, 0);
+    }
+  });
   const topLabels = [topLabelLeft, topLabel, topLabelRight].filter(
     (label) => label !== undefined
   ) as string[];
@@ -95,12 +122,77 @@ function RockerSwitch({
   }
 
   function Switch() {
+    const handlePointerDown = (e: React.PointerEvent) => {
+      console.log("RockerSwitch pointer down triggered");
+      e.preventDefault();
+
+      // Focus the switch when clicked and prevent focus loss
+      if (switchRef.current) {
+        switchRef.current.focus();
+        // Prevent the focus from being lost during pointer events
+        e.currentTarget.setAttribute("data-focused", "true");
+        wasFocusedRef.current = true;
+        console.log("RockerSwitch focused and data-focused set");
+        console.log(
+          "Data focused after set:",
+          e.currentTarget.getAttribute("data-focused")
+        );
+      }
+    };
+
+    const handleClick = (e: React.MouseEvent) => {
+      console.log("RockerSwitch click triggered");
+      // Ensure focus is maintained after click
+      if (switchRef.current) {
+        switchRef.current.focus();
+        e.currentTarget.setAttribute("data-focused", "true");
+        wasFocusedRef.current = true;
+        console.log("RockerSwitch focused via click");
+        console.log(
+          "Data focused after click set:",
+          e.currentTarget.getAttribute("data-focused")
+        );
+      }
+    };
+
+    const handleBlur = () => {
+      console.log("RockerSwitch blur triggered for:", id);
+      // Clean up the data-focused attribute when focus is lost
+      // Add a small delay to prevent immediate cleanup during focus transitions
+      setTimeout(() => {
+        if (
+          switchRef.current &&
+          !switchRef.current.contains(document.activeElement)
+        ) {
+          console.log("RockerSwitch removing data-focused attribute for:", id);
+          switchRef.current.removeAttribute("data-focused");
+          wasFocusedRef.current = false;
+        } else {
+          console.log(
+            "RockerSwitch blur timeout - keeping data-focused for:",
+            id
+          );
+        }
+      }, 10);
+    };
+
     return (
-      <label htmlFor={id}>
+      <label
+        htmlFor={id}
+        ref={switchRef}
+        tabIndex={0}
+        role="button"
+        aria-pressed={checked}
+        aria-label={label}
+        onPointerDown={handlePointerDown}
+        onClick={handleClick}
+        onBlur={handleBlur}
+      >
         <input
           id={id}
           className={styles.state}
           type="checkbox"
+          tabIndex={-1}
           onChange={(e) =>
             disabled ? undefined : onCheckedChange(e.target.checked)
           }
