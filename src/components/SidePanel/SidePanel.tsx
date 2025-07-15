@@ -20,15 +20,19 @@ function SidePanel() {
             <DecaySwitch />
           </div>
         </Row>
-        <Row gap="var(--spacing-xl)" justify="center">
+        <Row gap="0.5rem" justify="flex-end">
+          <Column gap="4.5rem" style={{ height: "100%", top: "0.5rem" }}>
+            <Screw size="small" color="dark" />
+            <Screw size="small" color="dark" />
+          </Column>
           <PitchBender />
+          <Column gap="4.5rem" style={{ height: "100%", top: "0.5rem" }}>
+            <Screw size="small" color="dark" />
+            <Screw size="small" color="dark" />
+          </Column>
           <ModulationWheel />
         </Row>
-        <Row
-          justify="flex-end"
-          gap="2.5rem"
-          style={{ top: "14px", left: "4px" }}
-        >
+        <Row justify="flex-end" gap="5rem" style={{ top: "14px" }}>
           <Screw />
           <Screw />
         </Row>

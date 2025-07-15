@@ -3,12 +3,13 @@ import styles from "./Screw.module.css";
 interface ScrewProps {
   size?: "small" | "medium" | "large";
   className?: string;
+  color?: "light" | "dark";
 }
 
-function Screw({ size = "medium", className }: ScrewProps) {
+function Screw({ size = "medium", className, color = "light" }: ScrewProps) {
   return (
     <div className={`${styles.screw} ${styles[size]} ${className || ""}`}>
-      <div className={styles.screwHead}>
+      <div className={`${styles.screwHead} ${styles[color]}`}>
         <div className={styles.phillipsCross}>
           <div className={styles.crossLine}></div>
           <div className={styles.crossLine}></div>
