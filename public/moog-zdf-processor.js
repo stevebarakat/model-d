@@ -4,7 +4,7 @@ class MoogZDFProcessor extends AudioWorkletProcessor {
       {
         name: "cutoff",
         defaultValue: 1000,
-        minValue: 10, // Original Minimoog goes down to 10Hz
+        minValue: 20, // Practical lower limit for digital audio
         maxValue: 20000, // Practical upper limit for digital audio
         automationRate: "k-rate",
       },
@@ -113,7 +113,7 @@ class MoogZDFProcessor extends AudioWorkletProcessor {
       : resonanceValues[0];
 
     // Validate and smooth parameters - practical digital audio range
-    const targetCutoff = Math.max(10, Math.min(20000, initialCutoff));
+    const targetCutoff = Math.max(20, Math.min(20000, initialCutoff));
     const targetResonance = Math.max(
       0,
       Math.min(this.maxResonance, initialResonance)
@@ -147,7 +147,7 @@ class MoogZDFProcessor extends AudioWorkletProcessor {
       } else {
         const rawCutoff = isCutoffConstant
           ? targetCutoff
-          : Math.max(10, Math.min(20000, cutoffValues[i]));
+          : Math.max(20, Math.min(20000, cutoffValues[i]));
         const rawResonance = isResonanceConstant
           ? targetResonance
           : Math.max(0, Math.min(this.maxResonance, resonanceValues[i]));

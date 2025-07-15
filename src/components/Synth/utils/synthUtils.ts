@@ -44,10 +44,10 @@ export function mapEnvelopeTime(value: number): number {
   return minTime * Math.pow(maxTime / minTime, value / 10);
 }
 
-// Helper to map -4 to 4 to 10 Hz - 20,000 Hz logarithmically
+// Helper to map -4 to 4 to 20 Hz - 20,000 Hz logarithmically
 // Practical range that works well with digital audio systems
 export function mapCutoff(val: number): number {
-  const minFreq = 10; // Original Minimoog goes down to 10Hz
+  const minFreq = 20; // Practical lower limit for digital audio
   const maxFreq = 20000; // Practical upper limit for digital audio
   // Clamp input to -4 to 4 range
   const clampedVal = Math.max(-4, Math.min(4, val));
@@ -58,7 +58,7 @@ export function mapCutoff(val: number): number {
   let result = minFreq * Math.pow(maxFreq / minFreq, musicalCurve);
 
   // Add safety limits to prevent extreme values
-  result = Math.max(10, Math.min(20000, result));
+  result = Math.max(20, Math.min(20000, result));
 
   return result;
 }
