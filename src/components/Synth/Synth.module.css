@@ -112,6 +112,13 @@
   overflow-y: hidden;
   background: var(--color-gray-l);
   min-width: 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-gutter: stable;
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 
   &::before {
     position: absolute;
@@ -165,17 +172,6 @@
 }
 
 /* Responsive breakpoints */
-@media (max-width: 1024px) {
-  .controlsPanel {
-    overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-  }
-
-  .controlsPanel::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-  }
-}
 
 @media (max-width: 768px) {
   .backPanel {
