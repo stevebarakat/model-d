@@ -1,6 +1,6 @@
 import styles from "../Knob.module.css";
 
-export default function KnobRing({ type }: { type: "radial" | "arrow" }) {
+export function KnobRing({ type }: { type: "radial" | "arrow" }) {
   return (
     <div
       className={styles.knobRing}

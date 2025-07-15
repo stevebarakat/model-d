@@ -1,10 +1,9 @@
 import { getRotation, getDisplayValue } from "./utils";
 import { useKnobInteraction } from "./hooks";
-import { KnobTicks, KnobLabels } from "./components";
+import { KnobTicks, KnobLabels, KnobRing } from "./components";
 import { KnobProps } from "./types";
 import styles from "./Knob.module.css";
 import { slugify } from "@/utils/";
-import KnobRing from "./components/KnobRing";
 
 function Knob({
   value,
@@ -93,7 +92,7 @@ function Knob({
           />
         )}
 
-        <div className={styles.knobBtm}>
+        <div className={styles.knobOutline}>
           <div
             id={id}
             className={
@@ -104,7 +103,6 @@ function Knob({
             ref={knobRef}
             style={{
               transform: `rotate(${rotation}deg)`,
-              transformOrigin: "center center",
             }}
             onPointerDown={disabled ? undefined : handlePointerDown}
             tabIndex={0}
