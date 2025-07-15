@@ -87,9 +87,9 @@
   &::after {
     position: absolute;
     top: 40px;
-    left: 0;
+    left: -1px;
     z-index: 9;
-    width: 100%;
+    width: calc(100% + 3px);
     height: 10px;
     background: linear-gradient(to bottom, hsl(0deg 0% 0% / 75%), transparent);
     content: "";
@@ -113,23 +113,10 @@
     display: none; /* Chrome, Safari, Opera */
   }
 
-  &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9;
-    width: 0;
-    height: 100%;
-    box-shadow: 0 0 5px 2.5px hsl(0deg 0% 0% / 85%);
-    content: "";
-  }
-
+  &::before,
   &::after {
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: relative;
     z-index: 9;
-    width: 0;
     height: 100%;
     box-shadow: 0 0 5px 2.5px hsl(0deg 0% 0% / 85%);
     content: "";
