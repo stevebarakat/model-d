@@ -34,9 +34,6 @@ function Knob({
     size,
   });
 
-  // Debug log for touching state changes
-  console.log(`🎛️ Knob "${label}" isTouching:`, isTouching);
-
   const id = slugify(label);
   const labelClass = title ? styles.labelHidden : styles.label;
   const rotation = getRotation(value, min, max, type, logarithmic);
@@ -46,7 +43,6 @@ function Knob({
       ? displayValue
       : value.toFixed(step >= 1 ? 0 : 2) + (unit ? ` ${unit}` : "");
 
-  console.log("valueLabels", Object.values(valueLabels));
   return (
     <div
       style={style}

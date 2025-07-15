@@ -53,17 +53,6 @@ export function useKnobInteraction({
           (navigator as Navigator & { msMaxTouchPoints: number })
             .msMaxTouchPoints > 0);
 
-      console.log("🔍 Touch device detection:", {
-        ontouchstart: "ontouchstart" in window,
-        maxTouchPoints: navigator.maxTouchPoints,
-        msMaxTouchPoints:
-          "msMaxTouchPoints" in navigator
-            ? (navigator as Navigator & { msMaxTouchPoints: number })
-                .msMaxTouchPoints
-            : "not available",
-        isTouchDevice: isTouch,
-      });
-
       setIsTouchDevice(isTouch);
     };
 
@@ -99,13 +88,6 @@ export function useKnobInteraction({
       e.preventDefault();
       e.stopPropagation();
 
-      console.log("👆 Pointer down event:", {
-        pointerType: e.pointerType,
-        isTouchDevice,
-        clientY: e.clientY,
-        pointerId: e.pointerId,
-      });
-
       // Focus the knob when clicked and prevent focus loss
       if (knobRef.current) {
         knobRef.current.focus();
@@ -117,7 +99,6 @@ export function useKnobInteraction({
 
       // Set touching state for touch devices
       if (isTouchDevice && e.pointerType === "touch") {
-        console.log("📱 Touch detected! Setting isTouching to true");
         setIsTouching(true);
       }
 
@@ -184,8 +165,6 @@ export function useKnobInteraction({
 
       e.preventDefault();
       e.stopPropagation();
-
-      console.log("👆 Pointer up event - resetting touching state");
 
       setIsDragging(false);
       setIsTouching(false);

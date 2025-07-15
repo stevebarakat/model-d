@@ -3,9 +3,7 @@
   margin: 0 auto;
   user-select: none;
   width: fit-content;
-  max-width: 100vw;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  max-width: 100%;
   box-shadow: 8px 0 12px 8px var(--color-black-25);
 }
 
@@ -13,11 +11,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
   background: var(--color-gray-l);
-  width: 100%;
-  min-width: 0;
-  margin: 4px 0;
 
   &::before {
     position: absolute;
@@ -168,14 +162,5 @@
     height: 214px;
     background: linear-gradient(to left, hsl(0deg 0% 0% / 50%), transparent);
     content: "";
-  }
-}
-
-/* Responsive breakpoints */
-
-@media (max-width: 768px) {
-  .backPanel {
-    gap: clamp(1rem, 10vw, 10rem);
-    padding-left: clamp(0.5rem, 2vw, 2rem);
   }
 }
