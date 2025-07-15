@@ -10,6 +10,7 @@ export function useExternalInput(
   const inputRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const analyzerRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
+  const isConnectedRef = useRef(false);
   const [audioLevel, setAudioLevel] = useState(0);
 
   // Convert linear volume (0-10) to logarithmic gain (0-1)
@@ -53,26 +54,21 @@ export function useExternalInput(
     animationFrameRef.current = requestAnimationFrame(updateAudioLevel);
   }, [mixer.external.enabled, mixer.external.volume]);
 
-  // Setup audio nodes and request microphone access only when enabled
+  // Setup audio nodes and request microphone access
   useEffect(() => {
     async function setup() {
       if (!audioContext || audioContext.state !== "running") {
         return;
       }
 
-      // Only proceed if external input is enabled
-      if (!mixer.external.enabled) {
-        return;
-      }
-
       try {
-        // Create gain node if it doesn't exist
+        // Always create gain node if it doesn't exist
         if (!gainRef.current) {
           gainRef.current = audioContext.createGain();
           gainRef.current.gain.value = 0; // Start muted
         }
 
-        // Create analyzer node
+        // Always create analyzer node if it doesn't exist
         if (!analyzerRef.current) {
           analyzerRef.current = audioContext.createAnalyser();
           analyzerRef.current.fftSize = 256;
@@ -92,13 +88,18 @@ export function useExternalInput(
             // Create new source node
             inputRef.current = audioContext.createMediaStreamSource(stream);
 
-            // Connect the nodes
+            // Connect the nodes internally
             inputRef.current.connect(gainRef.current);
-            inputRef.current.connect(analyzerRef.current); // Connect to analyzer
-            if (mixerNode) {
-              gainRef.current.connect(mixerNode);
-            } else {
-              gainRef.current.connect(audioContext.destination);
+            inputRef.current.connect(analyzerRef.current);
+
+            // Only connect to audio graph if external input is enabled
+            if (mixer.external.enabled && !isConnectedRef.current) {
+              if (mixerNode) {
+                gainRef.current.connect(mixerNode);
+              } else {
+                gainRef.current.connect(audioContext.destination);
+              }
+              isConnectedRef.current = true;
             }
 
             // Set initial gain based on mixer state
@@ -116,11 +117,14 @@ export function useExternalInput(
             console.error("ExternalInput: Error accessing microphone:", err);
           }
         } else if (inputRef.current) {
-          // If we already have input, just connect and start animation
-          if (mixerNode) {
-            gainRef.current?.connect(mixerNode);
-          } else {
-            gainRef.current?.connect(audioContext.destination);
+          // If we already have input, connect to audio graph if enabled
+          if (mixer.external.enabled && !isConnectedRef.current) {
+            if (mixerNode) {
+              gainRef.current?.connect(mixerNode);
+            } else {
+              gainRef.current?.connect(audioContext.destination);
+            }
+            isConnectedRef.current = true;
           }
           updateAudioLevel();
         }
@@ -148,14 +152,28 @@ export function useExternalInput(
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
+      isConnectedRef.current = false;
     };
-  }, [
-    audioContext,
-    mixer.external.enabled,
-    mixer.external.volume,
-    mixerNode,
-    updateAudioLevel,
-  ]);
+  }, [audioContext, mixerNode, updateAudioLevel]);
+
+  // Handle connection/disconnection based on enabled state
+  useEffect(() => {
+    if (!gainRef.current || !audioContext) return;
+
+    if (mixer.external.enabled && !isConnectedRef.current) {
+      // Connect to audio graph
+      if (mixerNode) {
+        gainRef.current.connect(mixerNode);
+      } else {
+        gainRef.current.connect(audioContext.destination);
+      }
+      isConnectedRef.current = true;
+    } else if (!mixer.external.enabled && isConnectedRef.current) {
+      // Disconnect from audio graph
+      gainRef.current.disconnect();
+      isConnectedRef.current = false;
+    }
+  }, [mixer.external.enabled, mixerNode, audioContext]);
 
   // Update gain when mixer settings change
   useEffect(() => {

@@ -8,26 +8,28 @@ export function useNoise(
   const { mixer, activeKeys } = useSynthStore();
   const gainRef = useRef<GainNode | null>(null);
   const noiseRef = useRef<AudioWorkletNode | null>(null);
+  const isConnectedRef = useRef(false);
 
   useEffect(() => {
     if (!audioContext) {
       gainRef.current = null;
       noiseRef.current = null;
+      isConnectedRef.current = false;
       return;
     }
     let cancelled = false;
 
     async function setup() {
       if (!audioContext || !activeKeys) return;
-      // Only enable noise when explicitly turned on
-      const shouldEnableNoise = mixer.noise.enabled;
-      if (!shouldEnableNoise) return;
+
       const moduleUrl =
         mixer.noise.noiseType === "pink"
           ? "/pink-noise-processor.js"
           : "/white-noise-processor.js";
       await audioContext.audioWorklet.addModule(moduleUrl);
       if (cancelled) return;
+
+      // Always create the nodes
       gainRef.current = audioContext.createGain();
       const initialGain = mixer.noise.volume / 10;
       gainRef.current.gain.value = isFinite(initialGain) ? initialGain : 0;
@@ -39,10 +41,15 @@ export function useNoise(
           : "white-noise-processor"
       );
       noiseRef.current.connect(gainRef.current);
-      if (mixerNode) {
-        gainRef.current.connect(mixerNode);
-      } else {
-        gainRef.current.connect(audioContext.destination);
+
+      // Only connect to the audio graph if noise is enabled
+      if (mixer.noise.enabled && !isConnectedRef.current) {
+        if (mixerNode) {
+          gainRef.current.connect(mixerNode);
+        } else {
+          gainRef.current.connect(audioContext.destination);
+        }
+        isConnectedRef.current = true;
       }
     }
     setup();
@@ -53,15 +60,28 @@ export function useNoise(
       noiseRef.current?.disconnect();
       gainRef.current = null;
       noiseRef.current = null;
+      isConnectedRef.current = false;
     };
-  }, [
-    audioContext,
-    mixer.noise.noiseType,
-    mixer.noise.enabled,
-    mixer.noise.volume,
-    mixerNode,
-    activeKeys,
-  ]);
+  }, [audioContext, mixer.noise.noiseType, mixerNode, activeKeys]);
+
+  // Handle connection/disconnection based on enabled state
+  useEffect(() => {
+    if (!gainRef.current || !audioContext) return;
+
+    if (mixer.noise.enabled && !isConnectedRef.current) {
+      // Connect to audio graph
+      if (mixerNode) {
+        gainRef.current.connect(mixerNode);
+      } else {
+        gainRef.current.connect(audioContext.destination);
+      }
+      isConnectedRef.current = true;
+    } else if (!mixer.noise.enabled && isConnectedRef.current) {
+      // Disconnect from audio graph
+      gainRef.current.disconnect();
+      isConnectedRef.current = false;
+    }
+  }, [mixer.noise.enabled, mixerNode, audioContext]);
 
   useEffect(() => {
     if (gainRef.current) {
