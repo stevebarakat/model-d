@@ -3,6 +3,15 @@ import { useSynthStore } from "@/store/synthStore";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useCallback } from "react";
 
+const tooltipStyles = {
+  backgroundColor: "var(--color-background)",
+  color: "var(--color-text)",
+  padding: "var(--spacing-sm)",
+  borderRadius: "var(--spacing-sm)",
+  fontSize: "var(--font-size-lg)",
+  zIndex: 9999999,
+};
+
 function LFORate() {
   const { lfoWaveform, setLfoWaveform, lfoRate, setLfoRate } = useSynthStore();
   const isDisabled = useSynthStore((s) => s.isDisabled);
@@ -41,13 +50,7 @@ function LFORate() {
           side="top"
           align="center"
           sideOffset={8}
-          style={{
-            backgroundColor: "var(--color-background)",
-            color: "var(--color-text)",
-            padding: "var(--spacing-sm)",
-            borderRadius: "var(--spacing-sm)",
-            fontSize: "var(--font-size-md)",
-          }}
+          style={tooltipStyles}
         >
           double click to change waveform. <br />
           current waveform: {lfoWaveform}

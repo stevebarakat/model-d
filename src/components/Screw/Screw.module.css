@@ -7,8 +7,8 @@
 }
 
 .screwHead {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   background: linear-gradient(180deg, hsl(0, 0%, 75%) 0%, hsl(0, 0%, 30%) 40%);
   border-radius: 50%;
   position: relative;

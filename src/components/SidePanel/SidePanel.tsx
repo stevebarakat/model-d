@@ -24,7 +24,11 @@ function SidePanel() {
           <PitchBender />
           <ModulationWheel />
         </Row>
-        <Row justify="space-between" gap="4.75rem" style={{ top: "14px" }}>
+        <Row
+          justify="flex-end"
+          gap="2.5rem"
+          style={{ top: "14px", left: "4px" }}
+        >
           <Screw />
           <Screw />
         </Row>
