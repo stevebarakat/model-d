@@ -425,7 +425,7 @@ URLs are automatically generated and updated as you adjust controls, making it e
 
 ## Contributing
 
-We welcome contributions to improve the Minimoog Model D emulator!
+Want to improve the Minimoog Model D emulator? Contributions are welcome!
 
 ### How to Contribute
 
@@ -459,6 +459,7 @@ We welcome contributions to improve the Minimoog Model D emulator!
 - **Write Docs**: Add documentation for new features
 
 ### Areas for Contribution
+
 - **Filter Quality**: Improve the quality of the 4-pole ladder filter
 - **Performance**: Audio and rendering optimizations
 - **Testing**: Improved test coverage and quality
