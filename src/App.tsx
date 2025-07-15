@@ -1,16 +1,11 @@
 import Synth from "./components/Synth";
+import GitHubRibbon from "./components/GitHubRibbon";
 
 function App() {
   return (
     <>
+      <GitHubRibbon />
       <Synth />
-      <a
-        href="https://github.com/stevebarakat/model-d"
-        className="github-fork-ribbon right-top fixed"
-        data-ribbon="Fork me on GitHub"
-      >
-        Fork me on GitHub
-      </a>
     </>
   );
 }
