@@ -134,7 +134,7 @@
     left: 0;
     z-index: 9;
     width: 20px;
-    height: 220px;
+    height: 250px;
     background: linear-gradient(to right, hsl(0deg 0% 0% / 50%), transparent);
     content: "";
   }
@@ -145,7 +145,7 @@
     bottom: 1.6rem;
     z-index: 9999;
     width: 20px;
-    height: 220px;
+    height: 250px;
     background: linear-gradient(to left, hsl(0deg 0% 0% / 50%), transparent);
     content: "";
   }

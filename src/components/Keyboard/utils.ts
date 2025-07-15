@@ -110,9 +110,67 @@ export function calculateBlackKeyPosition(
     return null;
   }
 
-  const position =
-    ((leftWhiteIndex + rightWhiteIndex + 1) / 2) * whiteKeyWidth -
-    whiteKeyWidth * 0.35;
+  // Find the current black key's position within its group
+  // Piano layout: F# G# A# (group of 3) ... C# D# (group of 2)
+
+  // First, let's find which octave pattern this black key belongs to
+  const noteName = keys[blackKeyIndex].note.replace(/\d+$/, ""); // Remove octave number
+
+  let groupSize = 1;
+  let blackKeyInGroup = 0;
+
+  if (noteName === "F#" || noteName === "G#" || noteName === "A#") {
+    // Group of 3 black keys
+    groupSize = 3;
+    if (noteName === "F#") {
+      blackKeyInGroup = 0; // First in group
+    } else if (noteName === "G#") {
+      blackKeyInGroup = 1; // Second in group
+    } else if (noteName === "A#") {
+      blackKeyInGroup = 2; // Third in group
+    }
+  } else if (noteName === "C#" || noteName === "D#") {
+    // Group of 2 black keys
+    groupSize = 2;
+    if (noteName === "C#") {
+      blackKeyInGroup = 0; // First in group
+    } else if (noteName === "D#") {
+      blackKeyInGroup = 1; // Second in group
+    }
+  }
+
+  // Calculate base position (center between white keys)
+  const basePosition =
+    ((leftWhiteIndex + rightWhiteIndex + 1) / 2) * whiteKeyWidth;
+
+  // Apply offset based on group size and position within group
+  let offset = 0;
+  const offsetAmount = whiteKeyWidth * 0.08; // Reduced to 8% of white key width for subtle offset
+
+  if (groupSize === 3) {
+    // Group of 3 black keys: F#, G#, A#
+    if (blackKeyInGroup === 0) {
+      // First black key: slightly left
+      offset = -offsetAmount;
+    } else if (blackKeyInGroup === 1) {
+      // Second black key: centered
+      offset = 0;
+    } else if (blackKeyInGroup === 2) {
+      // Third black key: slightly right
+      offset = offsetAmount;
+    }
+  } else if (groupSize === 2) {
+    // Group of 2 black keys: C#, D#
+    if (blackKeyInGroup === 0) {
+      // First black key: slightly left
+      offset = -offsetAmount;
+    } else if (blackKeyInGroup === 1) {
+      // Second black key: slightly right
+      offset = offsetAmount;
+    }
+  }
+
+  const position = basePosition + offset - whiteKeyWidth * 0.35;
   return {
     position,
     width: whiteKeyWidth * 0.7,
