@@ -119,18 +119,23 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
       ?.setValueAtTime(actualFreq, audioContext.currentTime);
 
     // Map emphasis (0-10) to resonance (0-4) for Moog filter
-    // Use a more musical curve that allows self-oscillation around 3.5-4.0
+    // Authentic to original Minimoog emphasis behavior
     const normalizedEmphasis = filterEmphasis / 10; // 0 to 1
     let resonanceValue;
 
-    if (normalizedEmphasis < 0.7) {
-      // Linear mapping for lower values (0-7 on emphasis = 0-2.5 resonance)
-      resonanceValue = normalizedEmphasis * (2.5 / 0.7);
+    if (normalizedEmphasis < 0.6) {
+      // Linear mapping for lower values (0-6 on emphasis = 0-2.0 resonance)
+      resonanceValue = normalizedEmphasis * (2.0 / 0.6);
+    } else if (normalizedEmphasis < 0.85) {
+      // Curved mapping for middle values (6-8.5 on emphasis = 2.0-3.2 resonance)
+      const remaining = normalizedEmphasis - 0.6;
+      const curve = Math.pow(remaining / 0.25, 1.2);
+      resonanceValue = 2.0 + curve * 1.2;
     } else {
-      // Exponential curve for higher values to reach self-oscillation
-      const remaining = normalizedEmphasis - 0.7;
-      const exponential = Math.pow(remaining / 0.3, 1.5); // 0.3 to 1.0
-      resonanceValue = 2.5 + exponential * 1.5; // 2.5 to 4.0
+      // Steep curve for self-oscillation (8.5-10 on emphasis = 3.2-4.0 resonance)
+      const remaining = normalizedEmphasis - 0.85;
+      const steepCurve = Math.pow(remaining / 0.15, 0.8);
+      resonanceValue = 3.2 + steepCurve * 0.8;
     }
 
     resonanceValue = Math.max(0, Math.min(4, resonanceValue));

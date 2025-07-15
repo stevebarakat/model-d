@@ -282,6 +282,7 @@
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
+  color: var(--color-text-primary);
 }
 
 .titleMedium,

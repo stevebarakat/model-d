@@ -84,6 +84,7 @@ describe("useKnobInteraction", () => {
     act(() => {
       const mockEvent = {
         preventDefault: vi.fn(),
+        stopPropagation: vi.fn(),
         clientY: 100,
         pointerType: "touch",
         pointerId: 1,
@@ -109,6 +110,7 @@ describe("useKnobInteraction", () => {
     act(() => {
       const mockEvent = {
         preventDefault: vi.fn(),
+        stopPropagation: vi.fn(),
         clientY: 100,
         pointerType: "mouse",
         pointerId: 1,
@@ -135,6 +137,7 @@ describe("useKnobInteraction", () => {
     act(() => {
       const mockEvent = {
         preventDefault: vi.fn(),
+        stopPropagation: vi.fn(),
         clientY: 100,
         pointerType: "touch",
         pointerId: 1,
