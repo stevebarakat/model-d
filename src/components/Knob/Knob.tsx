@@ -46,6 +46,7 @@ function Knob({
       ? displayValue
       : value.toFixed(step >= 1 ? 0 : 2) + (unit ? ` ${unit}` : "");
 
+  console.log("valueLabels", Object.values(valueLabels));
   return (
     <div
       style={style}

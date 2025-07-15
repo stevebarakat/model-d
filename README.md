@@ -1,7 +1,7 @@
 # Minimoog Model D Emulator
 
 <p align="center">
-  <img src="public/images/minimoog-real.png" alt="Original Minimoog Model D" width="100%"/><br/>
+  <img src="public/images/minimoog-real.webp" alt="Original Minimoog Model D" width="100%"/><br/>
   <em>Original Minimoog Model D (hardware)</em>
 </p>
 
@@ -61,8 +61,6 @@ Experience the Minimoog Model D emulator in your browser:
 
 This project recreates the iconic Minimoog Model D synthesizer in the browser using modern web technologies. It provides an authentic recreation of the original instrument's sound and interface, making the legendary synthesizer accessible to anyone with a web browser.
 
-### What Makes This Special
-
 - **Authentic Sound**: Faithful recreation of the synthesizer's oscillator characteristics and filter behavior
 - **Real-time Performance**: Low-latency audio processing for live performance
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
@@ -93,8 +91,8 @@ This project recreates the iconic Minimoog Model D synthesizer in the browser us
 - **URL State Persistence**: Save and share your current settings via URL parameters
 - **Responsive Design**: Works on desktop and mobile devices
 - **Logarithmic Controls**: Natural-feeling frequency and filter controls
-- **Tuner Integration**: Built-in tuner for precise pitch calibration
-- **Overload Protection**: Visual indicators for signal clipping
+- **Tuner Integration**: Built-in A-440 tone generator
+- **Signal Indicator**: Visual indicator of incoming signal
 - **Aux Output**: Secondary audio output for external routing
 
 ---
@@ -247,6 +245,7 @@ public/                     # Static assets
   images/                   # UI reference images
   delay-processor.js        # Web Audio worklet processors
   modulation-monitor-processor.js
+  moog-zdf-processor.js
   overload-meter-processor.js
   pink-noise-processor.js
   white-noise-processor.js
@@ -460,12 +459,9 @@ We welcome contributions to improve the Minimoog Model D emulator!
 - **Write Docs**: Add documentation for new features
 
 ### Areas for Contribution
-
-- **New Features**: Additional synthesis capabilities
-- **UI Improvements**: Enhanced user interface
+- **Filter Quality**: Improve the quality of the 4-pole ladder filter
 - **Performance**: Audio and rendering optimizations
 - **Testing**: Improved test coverage and quality
-- **Documentation**: Better guides and examples
 - **Accessibility**: Improved accessibility features
 
 ---
@@ -531,13 +527,4 @@ The only requirement is that the original license and copyright notice be includ
 
 ---
 
-## Acknowledgments
-
-- **Bob Moog**: For creating the iconic Minimoog Model D
-- **Web Audio API Community**: For advancing browser-based audio synthesis
-- **React Team**: For the excellent framework and ecosystem
-- **Open Source Contributors**: For the tools and libraries that make this possible
-
----
-
-_Built with ❤️ and Web Audio API_
+_Built with ❤️ by S.Barakat_
