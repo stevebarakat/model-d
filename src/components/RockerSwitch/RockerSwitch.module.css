@@ -22,9 +22,10 @@
 
 /* Focus styles for accessibility */
 .vertical:focus-visible {
-  outline: 2px solid hsl(220deg 100% 50%);
+  outline: 8px solid hsl(220deg 100% 50%);
   outline-offset: 2px;
   border-radius: 0.25rem;
+  width: 0;
 }
 
 .switch {
@@ -84,11 +85,11 @@
   transition: all 0.3s ease-in-out;
 
   /* Focus styles for accessibility */
-  /* label:focus-visible {
+  label:focus-visible {
     outline: 2px solid hsl(220deg 100% 50%);
     outline-offset: 2px;
     border-radius: 0.25rem;
-  } */
+  }
 
   &::before {
     position: absolute;
