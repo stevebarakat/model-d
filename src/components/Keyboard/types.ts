@@ -15,6 +15,7 @@ export type KeyboardProps = {
   onMouseDown?: () => void;
   onMouseUp?: () => void;
   synth: Minimoog;
+  view?: "desktop" | "tablet" | "mobile";
 };
 
 export type WhiteKeyProps = {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNoise } from "@/components/Noise/hooks";
 import {
   useOscillator1,
@@ -32,6 +32,7 @@ import { BackPanel, MidPanel, FrontPanel } from "../Panels";
 
 function Minimoog() {
   const { activeKeys, setActiveKeys, loadPreset } = useSynthStore();
+  const [view, setView] = useState<"desktop" | "tablet" | "mobile">("desktop");
   const { audioContext, isInitialized, initialize, dispose } =
     useAudioContext();
 
@@ -123,6 +124,27 @@ function Minimoog() {
     cutoffParam?.setValueAtTime(trackedCutoff, audioContext.currentTime);
   }, [filterNode, audioContext, activeKeys]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setView(
+        window.innerWidth > 980
+          ? "desktop"
+          : window.innerWidth > 768
+          ? "tablet"
+          : "mobile"
+      );
+    };
+
+    // Set initial view state
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <PresetsDropdown disabled={!isInitialized} />
@@ -159,6 +181,7 @@ function Minimoog() {
               onKeyDown={setActiveKeys}
               onKeyUp={() => setActiveKeys(null)}
               synth={synthObj}
+              view={view}
             />
           </div>
           <FrontPanel />

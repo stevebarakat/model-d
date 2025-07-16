@@ -17,11 +17,15 @@ export function Keyboard({
   onMouseDown = () => {},
   onMouseUp = () => {},
   synth,
+  view = "desktop",
 }: KeyboardProps) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isReleasing, setIsReleasing] = useState(false);
   const [pressedKeys, setPressedKeys] = useState<string[]>([]); // Track all pressed keys
-  const keys = generateKeyboardKeys(octaveRange);
+  const allKeys = generateKeyboardKeys(octaveRange);
+
+  // Remove last 12 keys for tablet view
+  const keys = view === "tablet" ? allKeys.slice(0, -12) : allKeys;
 
   const handleKeyPress = useCallback(
     (note: string): void => {
