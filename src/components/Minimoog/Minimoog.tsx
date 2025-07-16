@@ -22,15 +22,13 @@ import styles from "./Minimoog.module.css";
 import PowerButton from "../PowerButton";
 import { useAudioNodes, useModulation, useEnvelopes } from "./hooks";
 import { mapCutoff, noteNameToMidi } from "./utils/synthUtils";
-import Row from "../Row";
-import Logo from "../Logo";
 import Section from "../Section";
 import PresetsDropdown from "../PresetsDropdown";
 import { loadStateFromURL } from "@/utils/urlState";
 import { useURLSync, setLoadingFromURL } from "@/hooks/useURLSync";
 import Hinge from "../Hinge";
-import Screw from "../Screw";
 import Container from "../Container";
+import { BackPanel, MidPanel, FrontPanel } from "../Panels";
 
 function Minimoog() {
   const { activeKeys, setActiveKeys, loadPreset } = useSynthStore();
@@ -131,12 +129,7 @@ function Minimoog() {
       <Container>
         <Side />
         <div className={styles.synth}>
-          <div className={styles.backPanel}>
-            <Screw />
-            <Screw />
-            <Screw />
-            <Screw />
-          </div>
+          <BackPanel />
           <div className={styles.controlsPanel}>
             <Controllers />
             <OscillatorBank />
@@ -157,15 +150,7 @@ function Minimoog() {
             </Section>
           </div>
           <Hinge />
-          <Row
-            justify="flex-end"
-            style={{
-              padding: "var(--spacing-md)",
-            }}
-            className={styles.midPanel}
-          >
-            <Logo />
-          </Row>
+          <MidPanel />
           <div className={styles.keyboardPanel}>
             <SidePanel />
             <Keyboard
@@ -176,6 +161,7 @@ function Minimoog() {
               synth={synthObj}
             />
           </div>
+          <FrontPanel />
         </div>
         <Side />
       </Container>
