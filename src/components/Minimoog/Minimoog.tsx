@@ -69,11 +69,12 @@ function Minimoog() {
   // Set up aux output
   useAuxOutput(audioContext, masterGain);
 
-  const vibratoAmount = useSynthStore((state) =>
-    state.oscillatorModulationOn && state.modWheel > 0
-      ? state.modWheel / 100
-      : 0
-  );
+  const vibratoAmount = useSynthStore((state) => {
+    if (!state.oscillatorModulationOn || state.modWheel <= 0) return 0;
+    // Clamp modWheel to prevent extreme values
+    const clampedModWheel = Math.max(0, Math.min(100, state.modWheel));
+    return clampedModWheel / 100;
+  });
 
   const osc1 = useOscillator1(validCtx, validMixer, vibratoAmount);
   const osc2 = useOscillator2(validCtx, validMixer, vibratoAmount);

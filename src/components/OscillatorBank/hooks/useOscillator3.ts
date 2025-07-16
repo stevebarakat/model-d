@@ -71,14 +71,25 @@ export function useOscillator3(
       }
 
       lastNoteRef.current = note;
-      const baseFreq = noteToFrequency(note) * Math.pow(2, masterTune / 12);
-      const detuneSemis = oscillator3.frequency || 0;
-      const bendSemis = ((pitchWheel - 50) / 50) * 2;
+      // Clamp all parameters to prevent extreme values
+      const clampedMasterTune = Math.max(-12, Math.min(12, masterTune)); // ±1 octave
+      const clampedDetuneSemis = Math.max(
+        -12,
+        Math.min(12, oscillator3.frequency || 0)
+      ); // ±1 octave
+      const clampedPitchWheel = Math.max(0, Math.min(100, pitchWheel)); // 0-100 range
+      const bendSemis = ((clampedPitchWheel - 50) / 50) * 2;
       // Add subtle detuning for fatter sound (osc3 slightly sharp)
       const detuneCents = 1; // 1 cent sharp
+
+      const baseFreq =
+        noteToFrequency(note) * Math.pow(2, clampedMasterTune / 12);
       const freq =
         baseFreq *
-        Math.pow(2, (detuneSemis + bendSemis + detuneCents / 100) / 12);
+        Math.pow(2, (clampedDetuneSemis + bendSemis + detuneCents / 100) / 12);
+
+      // Final safety check to prevent extreme frequencies
+      const safeFreq = Math.max(20, Math.min(22050, freq));
 
       if (glideOn && lastFrequencyRef.current !== null) {
         oscRef.current.start(lastFrequencyRef.current);
@@ -86,14 +97,14 @@ export function useOscillator3(
         if (oscNode) {
           const mappedGlideTime = Math.pow(10, glideTime / 5) * 0.02;
           oscNode.frequency.linearRampToValueAtTime(
-            freq,
+            safeFreq,
             audioContext.currentTime + mappedGlideTime
           );
         }
       } else {
-        oscRef.current.start(freq);
+        oscRef.current.start(safeFreq);
       }
-      lastFrequencyRef.current = freq;
+      lastFrequencyRef.current = safeFreq;
       // Vibrato LFO
       if (vibratoAmount > 0 && oscRef.current) {
         const oscNode = oscRef.current.getNode();
@@ -107,7 +118,10 @@ export function useOscillator3(
           lfo.type = "sine";
           lfo.frequency.value = 6; // 6 Hz vibrato
           const lfoGain = audioContext.createGain();
-          lfoGain.gain.value = baseFreq * (Math.pow(2, vibratoAmount / 12) - 1);
+          // Clamp vibratoAmount to prevent extreme values
+          const clampedVibrato = Math.max(0, Math.min(2, vibratoAmount)); // Max 2 semitones
+          lfoGain.gain.value =
+            baseFreq * (Math.pow(2, clampedVibrato / 12) - 1);
           lfo.connect(lfoGain);
           lfoGain.connect(oscNode.frequency);
           lfo.start();
@@ -139,15 +153,28 @@ export function useOscillator3(
 
   useEffect(() => {
     if (oscRef.current && lastNoteRef.current) {
+      // Clamp all parameters to prevent extreme values
+      const clampedMasterTune = Math.max(-12, Math.min(12, masterTune)); // ±1 octave
+      const clampedDetuneSemis = Math.max(
+        -12,
+        Math.min(12, oscillator3.frequency || 0)
+      ); // ±1 octave
+      const clampedPitchWheel = Math.max(0, Math.min(100, pitchWheel)); // 0-100 range
+      const bendSemis = ((clampedPitchWheel - 50) / 50) * 2;
+
       const baseFreq =
-        noteToFrequency(lastNoteRef.current) * Math.pow(2, masterTune / 12);
-      const detuneSemis = oscillator3.frequency || 0;
-      const bendSemis = ((pitchWheel - 50) / 50) * 2;
-      const freq = baseFreq * Math.pow(2, (detuneSemis + bendSemis) / 12);
+        noteToFrequency(lastNoteRef.current) *
+        Math.pow(2, clampedMasterTune / 12);
+      const freq =
+        baseFreq * Math.pow(2, (clampedDetuneSemis + bendSemis) / 12);
+
+      // Final safety check to prevent extreme frequencies
+      const safeFreq = Math.max(20, Math.min(22050, freq));
+
       const oscNode = oscRef.current.getNode();
       if (oscNode && audioContext) {
         oscNode.frequency.linearRampToValueAtTime(
-          freq,
+          safeFreq,
           audioContext.currentTime + 0.02
         );
       }

@@ -105,7 +105,15 @@ function useEnvelopes({
                 convertAttackDecayValue(filterDecay)
               );
               const sustainLevel = filterSustain / 10;
-              const envMax = trackedCutoff * Math.pow(2, contourOctaves);
+              // Clamp contourOctaves to prevent extreme values
+              const clampedContourOctaves = Math.max(
+                0,
+                Math.min(3, contourOctaves)
+              ); // Max 3 octaves
+              const envMax = Math.min(
+                20000,
+                trackedCutoff * Math.pow(2, clampedContourOctaves)
+              );
               const envSustain =
                 trackedCutoff + (envMax - trackedCutoff) * sustainLevel;
               const now = audioContext.currentTime;

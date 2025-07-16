@@ -22,8 +22,6 @@ export function KnobTicks({
     .map(Number)
     .sort((a, b) => a - b);
 
-  console.log("labelKeys", labelKeys);
-
   // Main ticks for valueLabels
   const mainTicks = labelKeys.map((tick) => {
     const angle = calculateTickAngle(tick, min, max, type);

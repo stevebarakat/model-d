@@ -4,13 +4,11 @@
 
 - Use `.module.css` extension for all CSS modules
 - Name files to match their component: `Button.module.css` for `Button.tsx`
-- Use kebab-case for file names: `my-component.module.css`
 
 ## Class Naming
 
 - Use camelCase for class names in CSS (they'll be converted to kebab-case)
 - Use descriptive, semantic names: `.primaryButton` not `.btn1`
-- Use BEM-like naming for complex components: `.keyboard`, `.keyboard__key`, `.keyboard__key--active`
 
 ## Import Patterns
 

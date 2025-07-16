@@ -172,10 +172,26 @@ class MoogZDFProcessor extends AudioWorkletProcessor {
       // Compute filter coefficient if needed
       const currentG = G !== null ? G : this.prewarpFrequency(fc);
 
-      // Feedback from last stage with resonance - more authentic curve
-      // Original Minimoog had a specific resonance curve that wasn't linear
-      const resonanceCurve = res < 2.5 ? res : 2.5 + Math.pow(res - 2.5, 1.3);
-      const feedback = resonanceCurve * this.stage[3];
+      // Authentic to original Minimoog emphasis behavior
+      // Apply non-linear curve to resonance for more musical control
+      let resonanceValue;
+
+      if (res < 2.4) {
+        // Linear mapping for lower values (0-2.4 resonance = 0-2.4 feedback)
+        resonanceValue = res;
+      } else if (res < 3.4) {
+        // Curved mapping for middle values (2.4-3.4 resonance = 2.4-3.2 feedback)
+        const remaining = res - 2.4;
+        const curve = Math.pow(remaining / 1.0, 1.2);
+        resonanceValue = 2.4 + curve * 0.8;
+      } else {
+        // Steep curve for self-oscillation (3.4-4.0 resonance = 3.2-4.0 feedback)
+        const remaining = res - 3.4;
+        const steepCurve = Math.pow(remaining / 0.6, 0.8);
+        resonanceValue = 3.2 + steepCurve * 0.8;
+      }
+
+      const feedback = resonanceValue * this.stage[3];
 
       // Apply oversampling for better audio quality
       let oversampledInput = inputSample - feedback;
@@ -209,7 +225,7 @@ class MoogZDFProcessor extends AudioWorkletProcessor {
 
         // Update input for next oversample iteration
         if (oversample < this.oversampleFactor - 1) {
-          oversampledInput = inputSample - resonanceCurve * this.stage[3];
+          oversampledInput = inputSample - resonanceValue * this.stage[3];
         }
       }
 
