@@ -1,5 +1,5 @@
-import Screw from "../Screw";
-import styles from "./Panels.module.css";
+import Screw from "@/components/Screw";
+import styles from "../Panels.module.css";
 
 const BackPanel = () => {
   return (

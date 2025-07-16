@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   margin: 4px 1px;
+  overflow: hidden;
 
   &::before {
     position: absolute;

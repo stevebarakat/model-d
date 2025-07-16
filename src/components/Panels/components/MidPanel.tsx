@@ -1,6 +1,6 @@
-import Logo from "../Logo";
-import Row from "../Row";
-import styles from "./Panels.module.css";
+import Logo from "@/components/Logo";
+import Row from "@/components/Row";
+import styles from "../Panels.module.css";
 
 const MidPanel = () => {
   return (

@@ -79,9 +79,9 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
     }
   };
 
-  // Handle click outside to close dropdown
+  // Handle click/touch outside to close dropdown
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
@@ -93,10 +93,12 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
 
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [isOpen]);
 
@@ -178,6 +180,7 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
                   currentPreset === preset.name ? styles.selected : ""
                 } ${focusedIndex === index ? styles.focused : ""}`}
                 onMouseEnter={() => setFocusedIndex(index)}
+                onTouchStart={() => setFocusedIndex(index)}
               >
                 <button
                   className={styles.presetButton}

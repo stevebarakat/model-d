@@ -127,11 +127,11 @@ function Minimoog() {
   useEffect(() => {
     const handleResize = () => {
       setView(
-        window.innerWidth > 980
-          ? "desktop"
-          : window.innerWidth > 768
+        window.innerWidth < 768
+          ? "mobile"
+          : window.innerWidth < 980
           ? "tablet"
-          : "mobile"
+          : "desktop"
       );
     };
 

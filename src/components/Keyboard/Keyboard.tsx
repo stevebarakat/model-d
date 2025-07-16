@@ -24,8 +24,13 @@ export function Keyboard({
   const [pressedKeys, setPressedKeys] = useState<string[]>([]); // Track all pressed keys
   const allKeys = generateKeyboardKeys(octaveRange);
 
-  // Remove last 12 keys for tablet view
-  const keys = view === "tablet" ? allKeys.slice(0, -12) : allKeys;
+  // Remove last 12 keys for tablet view, last 24 keys for mobile view
+  const keys =
+    view === "mobile"
+      ? allKeys.slice(0, -24)
+      : view === "tablet"
+      ? allKeys.slice(0, -12)
+      : allKeys;
 
   const handleKeyPress = useCallback(
     (note: string): void => {
