@@ -1,11 +1,11 @@
-import Synth from "./components/Synth";
+import Minimoog from "./components/Minimoog";
 import GitHubRibbon from "./components/GitHubRibbon";
 
 function App() {
   return (
     <>
       <GitHubRibbon />
-      <Synth />
+      <Minimoog />
     </>
   );
 }

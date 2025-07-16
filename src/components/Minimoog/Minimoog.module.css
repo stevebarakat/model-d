@@ -1,12 +1,3 @@
-.synthContainer {
-  display: flex;
-  margin: 0 auto;
-  user-select: none;
-  width: fit-content;
-  max-width: 100%;
-  box-shadow: 8px 0 12px 8px var(--color-black-25);
-}
-
 .synth {
   position: relative;
   display: flex;

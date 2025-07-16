@@ -38,7 +38,7 @@
   /* Border Radius */
   --radius-full: 50%;
 
-  /* Synth */
+  /* Minimoog */
   --color-synth-bg: var(--color-gray-xd);
   --color-synth-border: var(--color-gray-xd);
 }

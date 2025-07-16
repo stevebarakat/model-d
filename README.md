@@ -193,7 +193,7 @@ src/
     RockerSwitch/           # Authentic rocker switch component
     PresetsDropdown/        # Preset selection with URL sharing
     Output/                 # Main output and headphone controls
-    Synth/                  # Main synthesizer container
+    Minimoog/                  # Main synthesizer container
     Tuner/                  # Built-in tuner for pitch calibration
     OverloadIndicator/      # Visual signal clipping indicators
     ExternalInput/          # External audio input controls

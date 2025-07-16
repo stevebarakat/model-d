@@ -18,7 +18,7 @@ import SidePanel from "@/components/SidePanel";
 import Side from "@/components/Side";
 import { useSynthStore } from "@/store/synthStore";
 import { useAudioContext } from "@/hooks/useAudioContext";
-import styles from "./Synth.module.css";
+import styles from "./Minimoog.module.css";
 import PowerButton from "../PowerButton";
 import { useAudioNodes, useModulation, useEnvelopes } from "./hooks";
 import { mapCutoff, noteNameToMidi } from "./utils/synthUtils";
@@ -30,8 +30,9 @@ import { loadStateFromURL } from "@/utils/urlState";
 import { useURLSync, setLoadingFromURL } from "@/hooks/useURLSync";
 import Hinge from "../Hinge";
 import Screw from "../Screw";
+import Container from "../Container";
 
-function Synth() {
+function Minimoog() {
   const { activeKeys, setActiveKeys, loadPreset } = useSynthStore();
   const { audioContext, isInitialized, initialize, dispose } =
     useAudioContext();
@@ -127,7 +128,7 @@ function Synth() {
   return (
     <>
       <PresetsDropdown disabled={!isInitialized} />
-      <div className={styles.synthContainer}>
+      <Container>
         <Side />
         <div className={styles.synth}>
           <div className={styles.backPanel}>
@@ -177,9 +178,9 @@ function Synth() {
           </div>
         </div>
         <Side />
-      </div>
+      </Container>
     </>
   );
 }
 
-export default Synth;
+export default Minimoog;

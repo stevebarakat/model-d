@@ -5,7 +5,7 @@ export type Note = {
   isSharp: boolean;
 };
 
-export type Synth = SynthObject;
+export type Minimoog = SynthObject;
 
 export type KeyboardProps = {
   activeKeys?: string | null;
@@ -14,7 +14,7 @@ export type KeyboardProps = {
   onKeyUp?: (note: string) => void;
   onMouseDown?: () => void;
   onMouseUp?: () => void;
-  synth: Synth;
+  synth: Minimoog;
 };
 
 export type WhiteKeyProps = {
