@@ -131,6 +131,155 @@ npm run analyze:css  # Analyze CSS structure and organization
 
 ---
 
+## Project Structure
+
+```
+src/
+  components/               # React UI components organized by feature
+    OscillatorBank/         # Three-oscillator bank with modulation
+      audio/                # Audio processing modules
+      components/           # Oscillator sub-components
+      hooks/                # Oscillator-specific hooks
+      icons/                # Waveform icons
+      types.ts              # Oscillator type definitions
+    Mixer/                  # Audio mixer with individual controls
+    Filter/                 # 4-pole ladder filter and envelope controls
+      KeyboardControl.tsx   # Filter keyboard tracking
+      ModulationSwitch.tsx  # Filter modulation controls
+    Envelopes/              # Filter and loudness envelope controls
+      constants.ts          # Envelope timing constants
+    Controllers/            # Modulation and performance controls
+      __tests__/            # Integration tests
+    Keyboard/               # Virtual keyboard with MIDI support
+      __tests__/            # Behavior tests
+      components/           # Key components (BlackKey, WhiteKey)
+      hooks/                # MIDI handling hooks
+      types.ts              # Keyboard type definitions
+      utils.ts              # Keyboard utilities
+    Knob/                   # Reusable knob component with linear/log scaling
+      __tests__/            # Behavior and keyboard tests
+      components/           # Knob sub-components (Labels, Ring, Ticks)
+      hooks/                # Knob interaction hooks
+      images/               # Knob visual assets
+      utils/                # Knob calculation utilities
+        __tests__/          # Calculation tests
+      types.ts              # Knob type definitions
+    RockerSwitch/           # Authentic rocker switch component
+      hooks/                # Keyboard interaction hooks
+      images/               # Switch visual assets
+    PresetsDropdown/        # Preset selection with URL sharing
+      __tests__/            # Behavior tests
+    Output/                 # Main output and headphone controls
+      __tests__/            # Aux output tests
+      hooks/                # Aux output hooks
+      AuxOut.tsx            # Auxiliary output component
+      MainOutput.tsx        # Main output component
+    Minimoog/               # Main synthesizer container
+      __tests__/            # Integration tests
+      hooks/                # Audio node and envelope hooks
+      types/                # Synth type definitions
+      utils/                # Synth utilities
+    Tuner/                  # Built-in tuner for pitch calibration
+      __tests__/            # Tuner tests
+      hooks/                # Tuner functionality hooks
+    OverloadIndicator/      # Visual signal clipping indicators
+    ExternalInput/          # External audio input controls
+      hooks/                # External input hooks
+    ModulationWheel/        # Modulation wheel component
+    PitchBender/            # Pitch bend controls
+    Glide/                  # Glide/portamento controls
+      GlideSwitch.tsx       # Glide on/off switch
+    Noise/                  # Noise generator controls
+      hooks/                # Noise generation hooks
+    Modifiers/              # Audio modification controls
+      hooks/                # Audio processing hooks
+    ModulationMix/          # Modulation mixing controls
+    LfoRate/                # LFO rate controls
+    LfoWaveformSwitch/      # LFO waveform selection
+    DecaySwitch/            # Decay switch controls
+    PowerButton/            # Power on/off controls
+    VintageLED/             # Vintage-style LED indicators
+    Title/                  # Component title displays
+    Section/                # Section container components
+    Row/                    # Row layout components
+    Column/                 # Column layout components
+    Line/                   # Line separator components
+    Spacer/                 # Spacing components
+    Hinge/                  # Hinge component for folding panels
+      images/               # Hinge visual assets
+    Side/                   # Side panel components
+      images/               # Side panel textures
+    SidePanel/              # Side panel container
+      components/           # Side panel sub-components
+    Panels/                 # Panel components (Front, Back, Mid, Side)
+      components/           # Panel sub-components
+      images/               # Panel textures and assets
+    Screw/                  # Screw component for authentic details
+    Container/              # Main container component
+    Logo/                   # Minimoog logo component
+    Tune/                   # Tuning controls
+    Wheel/                  # Wheel component for various controls
+    GitHubRibbon/           # GitHub corner ribbon
+  hooks/                    # Custom React hooks
+    useAudioContext.ts      # Web Audio API context management
+    useURLSync.ts           # URL state synchronization
+    index.ts                # Hook exports
+  store/                    # Zustand state management
+    actions/                # State update actions
+    state/                  # Initial state configuration
+    types/                  # TypeScript type definitions
+    synthStore.ts           # Main store implementation
+  utils/                    # Utility functions
+    __tests__/              # Utility tests
+    presetConversion.ts     # Preset format conversion
+    presetToURL.ts          # Preset to URL conversion
+    urlState.ts             # URL parameter handling
+    noteToFrequency.ts      # Musical note utilities
+    generatePresetURLs.ts   # Preset URL generation utilities
+    cssPerformance.ts       # CSS performance optimization utilities
+    helpers.tsx             # React helper components
+    index.ts                # Utility exports
+  data/                     # Static data
+    presets.ts              # Preset definitions
+  styles/                   # Global CSS and design tokens
+    fonts/                  # Custom font files
+    fonts.css               # Font declarations
+    global.css              # Global styles
+    reset.css               # CSS reset
+    tokens.css              # Design tokens
+  test/                     # Test configuration
+    setup.ts                # Vitest setup file
+  types/                    # TypeScript type definitions
+    css-modules.d.ts        # CSS Modules declarations
+  types.ts                  # Global type definitions
+  images/                   # UI reference images
+  App.tsx                   # Main application component
+  main.tsx                  # Application entry point
+  vite-env.d.ts             # Vite environment types
+
+public/                     # Static assets
+  images/                   # UI reference images
+  delay-processor.js        # Web Audio worklet processors
+  modulation-monitor-processor.js
+  moog-zdf-processor.js
+  overload-meter-processor.js
+  pink-noise-processor.js
+  white-noise-processor.js
+
+resources/                  # Documentation and reference materials
+  minimoog-description.txt  # Detailed synthesizer documentation
+  minimoog-signalflow.png   # Signal flow diagram
+  web-audio-performance.txt # Performance optimization notes
+  minimoog-full.png         # Full synthesizer reference image
+
+docs/                       # Additional documentation
+  aux-output.md            # Aux output feature documentation
+  css-modules-best-practices.md # CSS Modules guidelines
+  authentic-minimoog-filter-improvements.md # Filter implementation notes
+```
+
+---
+
 ## URL State Persistence
 
 The Minimoog emulator supports saving and sharing your current settings via URL parameters:
