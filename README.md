@@ -43,17 +43,8 @@ A web-based emulation of the classic Minimoog Model D analog synthesizer, levera
 
 Experience the Minimoog Model D emulator in your browser:
 
-1. **Live Demo**: [Coming Soon]
+1. **Live Demo**: [https://minimoog.vercel.app](https://minimoog.vercel.app/)
 2. **Local Development**: Follow the [Quick Start](#quick-start) guide below
-
-### Key Features Demo
-
-- **Three Oscillators**: Mix sawtooth, triangle, square, and pulse waves
-- **4-Pole Ladder Filter**: Authentic Minimoog ladder filter with resonance and key tracking
-- **Dual Envelopes**: Filter and loudness contours with authentic curves
-- **MIDI Support**: Connect your MIDI keyboard for real-time control
-- **Preset System**: Explore classic Minimoog sounds
-- **URL Sharing**: Save and share your configurations
 
 ---
 
@@ -90,9 +81,9 @@ This project recreates the iconic Minimoog Model D synthesizer in the browser us
 - **Preset System**: Curated collection of classic Minimoog sounds
 - **URL State Persistence**: Save and share your current settings via URL parameters
 - **Responsive Design**: Works on desktop and mobile devices
-- **Logarithmic Controls**: Natural-feeling frequency and filter controls
+- **Logarithmic Controls**: Natural-feeling frequency, filter, and volume controls
 - **Tuner Integration**: Built-in A-440 tone generator
-- **Signal Indicator**: Visual indicator of incoming signal
+- **Signal Indicator**: Real time display of incoming signal
 - **Aux Output**: Secondary audio output for external routing
 
 ---
@@ -103,7 +94,7 @@ This project recreates the iconic Minimoog Model D synthesizer in the browser us
 
 - **Node.js**: Version 18.0.0 or higher
 - **npm** or **yarn**: Package manager
-- **Modern Browser**: Chrome, Firefox, Safari, or Edge with Web Audio API support
+- **Web Browser**: Chrome, Firefox, Safari, Edge (any modern browser with Web Audio API support)
 
 ### Installation
 
@@ -121,16 +112,7 @@ npm run dev
 
 The application will be available at `http://localhost:5173`
 
-### First Steps
-
-1. **Power On**: Click the power button to initialize the synthesizer
-2. **Try a Preset**: Select a preset from the dropdown menu
-3. **Play the Keyboard**: Use your computer keyboard or connect a MIDI device
-4. **Experiment**: Adjust oscillators, filter, and envelopes to create your own sounds
-
 ---
-
-## Development
 
 ### Development Scripts
 
@@ -146,211 +128,6 @@ npm run lint:css     # Run Stylelint and auto-fix issues
 npm run lint:css:check # Check CSS without fixing
 npm run analyze:css  # Analyze CSS structure and organization
 ```
-
-### Key Dependencies
-
-#### Core Technologies
-
-- **React 19.1.0**: Modern React with concurrent features
-- **TypeScript 5.5.3**: Type-safe development
-- **Vite 6.2.1**: Fast build tool and dev server
-- **Zustand 5.0.4**: Lightweight state management
-
-#### Audio & Music
-
-- **Web Audio API**: Native browser audio processing with custom worklets
-- **Custom Audio Worklets**: Specialized processors for noise generation and modulation
-- **Periodic Wave Synthesis**: Custom waveform generation for authentic sounds
-
-#### UI & Styling
-
-- **CSS Modules**: Scoped styling with camelCase class names
-- **PostCSS**: Advanced CSS processing
-- **Lucide React**: Modern icon library
-- **Radix UI**: Accessible UI primitives
-
-#### Testing & Quality
-
-- **Vitest 3.1.4**: Fast unit testing framework
-- **Testing Library**: React component testing
-- **ESLint**: Code linting and formatting
-- **Stylelint**: CSS quality assurance
-
----
-
-## Project Structure
-
-```
-src/
-  components/               # React UI components organized by feature
-    OscillatorBank/         # Three-oscillator bank with modulation
-    Mixer/                  # Audio mixer with individual controls
-    Filter/                 # 4-pole ladder filter and envelope controls
-    Envelopes/              # Filter and loudness envelope controls
-    Controllers/            # Modulation and performance controls
-    Keyboard/               # Virtual keyboard with MIDI support
-    Knob/                   # Reusable knob component with linear/log scaling
-    RockerSwitch/           # Authentic rocker switch component
-    PresetsDropdown/        # Preset selection with URL sharing
-    Output/                 # Main output and headphone controls
-    Minimoog/                  # Main synthesizer container
-    Tuner/                  # Built-in tuner for pitch calibration
-    OverloadIndicator/      # Visual signal clipping indicators
-    ExternalInput/          # External audio input controls
-    ModulationWheel/        # Modulation wheel component
-    PitchBender/            # Pitch bend controls
-    Glide/                  # Glide/portamento controls
-    Noise/                  # Noise generator controls
-    Modifiers/              # Audio modification controls
-    ModulationMix/          # Modulation mixing controls
-    LfoRate/                # LFO rate controls
-    LfoWaveformSwitch/      # LFO waveform selection
-    DecaySwitch/            # Decay switch controls
-    PowerButton/            # Power on/off controls
-    VintageLED/             # Vintage-style LED indicators
-    Title/                  # Component title displays
-    Section/                # Section container components
-    Row/                    # Row layout components
-    Column/                 # Column layout components
-    Line/                   # Line separator components
-    Spacer/                 # Spacing components
-    Hinge/                  # Hinge component for folding panels
-    Side/                   # Side panel components
-    SidePanel/              # Side panel container
-    Logo/                   # Minimoog logo component
-    Tune/                   # Tuning controls
-    Wheel/                  # Wheel component for various controls
-  hooks/                    # Custom React hooks
-    useAudioContext.ts      # Web Audio API context management
-    useURLSync.ts           # URL state synchronization
-  store/                    # Zustand state management
-    actions/                # State update actions
-    state/                  # Initial state configuration
-    types/                  # TypeScript type definitions
-    synthStore.ts           # Main store implementation
-  utils/                    # Utility functions
-    presetConversion.ts     # Preset format conversion
-    urlState.ts             # URL parameter handling
-    noteToFrequency.ts      # Musical note utilities
-    generatePresetURLs.ts   # Preset URL generation utilities
-    cssPerformance.ts       # CSS performance optimization utilities
-    helpers.tsx             # React helper components
-  data/                     # Static data
-    presets.ts              # Preset definitions
-  styles/                   # Global CSS and design tokens
-  test/                     # Test configuration
-    setup.ts                # Vitest setup file
-
-public/                     # Static assets
-  images/                   # UI reference images
-  delay-processor.js        # Web Audio worklet processors
-  modulation-monitor-processor.js
-  moog-zdf-processor.js
-  overload-meter-processor.js
-  pink-noise-processor.js
-  white-noise-processor.js
-
-resources/                  # Documentation and reference materials
-  minimoog-description.txt  # Detailed synthesizer documentation
-  minimoog-signalflow.png   # Signal flow diagram
-  web-audio-performance.txt # Performance optimization notes
-  ui/                       # UI reference images
-
-docs/                       # Additional documentation
-  aux-output.md            # Aux output feature documentation
-  css-modules-best-practices.md # CSS Modules guidelines
-```
-
----
-
-## Architecture
-
-### Design Principles
-
-- **Colocation**: Related files (components, styles, tests, hooks, types) are placed together
-- **Component Separation**: Each component has a single responsibility
-- **Pure Functions**: Prefer immutable, side-effect-free functions
-- **TypeScript First**: Comprehensive type safety throughout
-- **CSS Modules**: Scoped styling with camelCase class names
-- **Functional Programming**: Immutable state management with Zustand
-
-### Audio Architecture
-
-The synthesizer uses a modular audio architecture:
-
-```
-Oscillators → Mixer → 4-Pole Ladder Filter → Envelopes → Output
-     ↓           ↓           ↓           ↓
-  Modulation → LFO → Effects → Aux Output
-```
-
-### State Management
-
-- **Zustand Store**: Centralized state management
-- **URL Synchronization**: Automatic state persistence in URL
-- **Immutable Updates**: All state changes are immutable
-- **Type Safety**: Full TypeScript coverage for state
-
-### Performance Optimizations
-
-- **Web Audio Worklets**: Off-main-thread audio processing
-- **CSS Modules**: Efficient styling with minimal overhead
-- **React 19**: Concurrent features for better responsiveness
-- **Lazy Loading**: Components loaded on demand
-- **Memoization**: Strategic use of React.memo and useMemo
-
----
-
-## Testing
-
-The project uses **Vitest** for comprehensive testing:
-
-### Test Features
-
-- **Unit Tests**: Individual component and utility function testing
-- **Integration Tests**: Component interaction testing
-- **Test Coverage**: Comprehensive coverage reporting
-- **UI Testing**: Visual test interface with `npm run test:ui`
-- **JSDOM Environment**: Browser-like testing environment
-- **Fast Execution**: Parallel test execution for quick feedback
-
-### Running Tests
-
-```bash
-npm test                 # Run all tests
-npm run test:ui         # Open interactive test UI
-npm run test:coverage   # Generate coverage report
-```
-
-### Test Structure
-
-Tests are co-located with their corresponding components and utilities:
-
-```
-src/
-  components/
-    Controllers/
-      __tests__/
-        Controllers.integration.test.tsx
-    Output/
-      __tests__/
-        AuxOut.test.tsx
-    Tuner/
-      __tests__/
-        Tuner.test.tsx
-  utils/
-    __tests__/
-      presetConversion.test.ts
-      presetToURL.test.ts
-      urlState.test.ts
-```
-
-### Testing Best Practices
-
-- **Component Testing**: Test component behavior, not implementation
-- **Utility Testing**: Comprehensive coverage of pure functions
-- **Integration Testing**: Test component interactions
-- **Mocking**: Strategic use of mocks for external dependencies
 
 ---
 
@@ -376,51 +153,6 @@ All synth parameters are encoded in the URL, including:
 - **Performance**: Glide, keyboard control settings
 - **Output**: Main and aux output settings
 
-### URL Format
-
-URLs are automatically generated and updated as you adjust controls, making it easy to share your exact sound configuration.
-
----
-
-## Troubleshooting
-
-### Common Issues
-
-#### Audio Not Working
-
-- **Check Browser Support**: Ensure your browser supports Web Audio API
-- **Check Permissions**: Allow microphone access if prompted
-- **Check Volume**: Ensure system and browser volume are not muted
-- **Check Power**: Make sure the synthesizer is powered on
-
-#### MIDI Not Responding
-
-- **Check Connection**: Ensure MIDI device is properly connected
-- **Check Permissions**: Allow MIDI access in browser settings
-- **Check Device**: Verify MIDI device is recognized by your system
-- **Check Channel**: Ensure MIDI device is on the correct channel
-
-#### Performance Issues
-
-- **Close Other Tabs**: Reduce browser resource usage
-- **Update Browser**: Use the latest version of your browser
-- **Check Extensions**: Disable audio-related browser extensions
-- **Reduce Polyphony**: Limit the number of simultaneous notes
-
-#### Build Issues
-
-- **Clear Cache**: Run `npm run build --force`
-- **Update Dependencies**: Run `npm update`
-- **Check Node Version**: Ensure Node.js 18.0.0+ is installed
-- **Reinstall Dependencies**: Delete `node_modules` and run `npm install`
-
-### Getting Help
-
-1. **Check Documentation**: Review the [Resources](#resources) section
-2. **Search Issues**: Look for similar issues in the project repository
-3. **Create Issue**: Report bugs with detailed information
-4. **Community**: Join discussions in the project community
-
 ---
 
 ## Contributing
@@ -435,35 +167,13 @@ Want to improve the Minimoog Model D emulator? Contributions are welcome!
 4. **Test Changes**: Ensure all tests pass
 5. **Submit PR**: Create a pull request with clear description
 
-### Development Guidelines
-
-#### Code Style
-
-- **TypeScript**: Use strict TypeScript with proper typing
-- **ESLint**: Follow ESLint rules and formatting
-- **CSS Modules**: Use CSS Modules with camelCase class names
-- **Component Structure**: Follow established component patterns
-
-#### Testing
-
-- **Write Tests**: Add tests for new features
-- **Maintain Coverage**: Keep test coverage high
-- **Test Components**: Test component behavior and interactions
-- **Test Utilities**: Test utility functions thoroughly
-
-#### Documentation
-
-- **Update README**: Keep documentation current
-- **Add Comments**: Document complex logic
-- **Update Types**: Keep TypeScript definitions current
-- **Write Docs**: Add documentation for new features
-
 ### Areas for Contribution
 
-- **Filter Quality**: Improve the quality of the 4-pole ladder filter
-- **Performance**: Audio and rendering optimizations
-- **Testing**: Improved test coverage and quality
-- **Accessibility**: Improved accessibility features
+- **Filter Implementation**: Make improvements to the 4-pole ladder filter implementation
+- **Audio Engine**: Enhance the audio engine to better match the sound of original Minimoog
+- **Performance**: Optimize audio and rendering
+- **Testing**: Improve test coverage and quality
+- **Accessibility**: Improve accessibility features
 
 ---
 

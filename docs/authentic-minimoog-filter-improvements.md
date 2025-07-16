@@ -6,16 +6,15 @@ The Moog ZDF filter has been significantly enhanced to more accurately replicate
 
 ## Key Authentic Improvements
 
-### 1. Original Frequency Range
+### 1. Practical Frequency Range
 
-**Before**: 20Hz - 20kHz
-**After**: 10Hz - 32kHz
+**Current Implementation**: 20Hz - 20kHz
 
-The original Minimoog Model D had a frequency response of 10Hz to 32kHz, which is now accurately replicated. This extended range allows for:
+The filter uses a practical frequency range of 20Hz to 20kHz, which is optimized for digital audio systems while maintaining excellent musical characteristics. This range provides:
 
-- **Lower bass frequencies**: More authentic sub-bass response
-- **Higher treble frequencies**: Better high-frequency detail and air
-- **Full spectrum coverage**: Matches the original instrument's capabilities
+- **Excellent bass response**: Down to 20Hz for powerful low-end
+- **Clear high frequencies**: Up to 20kHz for detailed treble
+- **Optimal performance**: Balanced for modern digital audio applications
 
 ### 2. Enhanced Saturation Characteristics
 
@@ -84,7 +83,7 @@ addAnalogCharacteristics(value) {
 **Before**: 2x oversampling
 **After**: 4x oversampling
 
-Increased oversampling from 2x to 4x for better audio quality and reduced aliasing, especially important for the extended frequency range.
+Increased oversampling from 2x to 4x for better audio quality and reduced aliasing, especially important for the full frequency range.
 
 ### 5. Authentic Resonance Curve
 
@@ -126,7 +125,7 @@ The original Minimoog could achieve pure self-oscillation, and now the digital i
 
 ### Frequency Warping
 
-The bilinear transform frequency warping remains the same, but now operates over the full 10Hz-32kHz range:
+The bilinear transform frequency warping remains the same, but now operates over the full 20Hz-20kHz range:
 
 ```javascript
 prewarpFrequency(fc) {
@@ -169,7 +168,7 @@ The enhanced saturation and analog characteristics create a warmer, more musical
 
 ### 2. Better Bass Response
 
-The extended low-frequency range (down to 10Hz) provides more authentic bass response, especially important for classic Minimoog bass sounds.
+The practical low-frequency range (down to 20Hz) provides excellent bass response, especially important for classic Minimoog bass sounds.
 
 ### 3. More Natural Resonance
 
@@ -207,18 +206,9 @@ The analog characteristics add subtle variations that make the sound less "perfe
 
 ### For Modern Applications
 
-1. **Low-pass filtering**: Take advantage of the extended 10Hz-32kHz range
+1. **Low-pass filtering**: Take advantage of the full 20Hz-20kHz range
 2. **Resonance effects**: Use the non-linear curve for more musical control
 3. **Analog character**: The subtle variations add warmth to any sound
-
-## Testing
-
-Use the `test-authentic-minimoog-filter.html` file to test the improved filter characteristics:
-
-1. **Frequency range**: Test the full 10Hz-32kHz range
-2. **Resonance behavior**: Explore the non-linear emphasis curve
-3. **Self-oscillation**: Set emphasis to 8.5+ and disable input
-4. **Analog characteristics**: Listen for the subtle variations and warmth
 
 ## Conclusion
 
