@@ -31,7 +31,7 @@ export type Preset = {
     glideOn: boolean;
     decaySwitchOn: boolean;
     lfoRate: number;
-    lfoWaveform: string;
+    lfoWaveform: "triangle" | "square";
     modWheel: number;
   };
   mainVolume: number;
