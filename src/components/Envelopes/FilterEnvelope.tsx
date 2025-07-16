@@ -24,6 +24,7 @@ function FilterEnvelope() {
       <Column>
         <Row gap="var(--spacing-xl)">
           <Knob
+            type="attackDecay"
             valueLabels={attackDecayValueLabels}
             value={valueToKnobPos(filterAttack)}
             showMidTicks={true}
@@ -39,6 +40,7 @@ function FilterEnvelope() {
             disabled={isDisabled}
           />
           <Knob
+            type="attackDecay"
             valueLabels={attackDecayValueLabels}
             value={valueToKnobPos(filterDecay)}
             showMidTicks={true}

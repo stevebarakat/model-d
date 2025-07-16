@@ -26,6 +26,7 @@ function LoudnessEnvelope() {
       <Column>
         <Row gap="var(--spacing-xl)">
           <Knob
+            type="attackDecay"
             valueLabels={attackDecayValueLabels}
             value={valueToKnobPos(loudnessAttack)}
             showMidTicks={true}
@@ -41,6 +42,7 @@ function LoudnessEnvelope() {
             disabled={isDisabled}
           />
           <Knob
+            type="attackDecay"
             valueLabels={attackDecayValueLabels}
             value={valueToKnobPos(loudnessDecay)}
             showMidTicks={true}

@@ -6,20 +6,20 @@ export function KnobRing({ type }: { type: "radial" | "arrow" }) {
       className={styles.knobRing}
       style={{
         background:
-          type === "radial"
+          type === "arrow"
             ? `linear-gradient(
-    to bottom,
-    #595959 0%,
-    #333 35%,
-    #111 35%,
-    #000 100%
-  )`
-            : `linear-gradient(
     to bottom,
     #595959 0%,
     #444 35%,
     #222 35%,
     #111 100%
+    )`
+            : `linear-gradient(
+      to bottom,
+      #595959 0%,
+      #333 35%,
+      #111 35%,
+      #000 100%
   )`,
       }}
     />
