@@ -8,33 +8,27 @@ import {
 import { useTuner } from "@/components/Tuner/hooks";
 import { useMidiHandling } from "@/components/Keyboard/hooks";
 import { useAuxOutput } from "@/components/Output/hooks";
-import Modifiers from "../Modifiers";
-import Mixer from "../Mixer";
-import OscillatorBank from "../OscillatorBank";
-import Controllers from "../Controllers";
-import Output from "../Output";
 import Keyboard from "@/components/Keyboard";
 import SidePanel from "@/components/SidePanel";
 import Side from "@/components/Side";
 import { useSynthStore } from "@/store/synthStore";
 import { useAudioContext } from "@/hooks/useAudioContext";
 import styles from "./Minimoog.module.css";
-import PowerButton from "../PowerButton";
 import { useAudioNodes, useModulation, useEnvelopes } from "./hooks";
 import { mapCutoff, noteNameToMidi } from "./utils/synthUtils";
-import Section from "../Section";
 import PresetsDropdown from "../PresetsDropdown";
 import { loadStateFromURL } from "@/utils/urlState";
 import { useURLSync, setLoadingFromURL } from "@/hooks/useURLSync";
 import Hinge from "../Hinge";
+import Synth from "@/components/Synth";
 import Container from "../Container";
 import { BackPanel, MidPanel, FrontPanel } from "../Panels";
+import Controls from "@/components/Controls";
 
 function Minimoog() {
   const { activeKeys, setActiveKeys, loadPreset } = useSynthStore();
   const [view, setView] = useState<"desktop" | "tablet" | "mobile">("desktop");
-  const { audioContext, isInitialized, initialize, dispose } =
-    useAudioContext();
+  const { audioContext, isInitialized } = useAudioContext();
 
   // Load settings from URL parameters on mount - run immediately
   useEffect(() => {
@@ -151,27 +145,9 @@ function Minimoog() {
       <PresetsDropdown disabled={!isInitialized} />
       <Container>
         <Side />
-        <div className={styles.synth}>
+        <Synth>
           <BackPanel />
-          <div className={styles.controlsPanel}>
-            <Controllers />
-            <OscillatorBank />
-            <Mixer audioContext={audioContext!} mixerNode={mixerNode!} />
-            <Modifiers />
-            <Output />
-            <Section
-              style={{
-                borderRadius: "0 0 10px 0",
-                marginRight: "var(--spacing-md)",
-              }}
-            >
-              <PowerButton
-                isOn={isInitialized}
-                onPowerOn={initialize}
-                onPowerOff={dispose}
-              />
-            </Section>
-          </div>
+          <Controls />
           <Hinge />
           <MidPanel />
           <div className={styles.keyboardPanel}>
@@ -186,7 +162,7 @@ function Minimoog() {
             />
           </div>
           <FrontPanel />
-        </div>
+        </Synth>
         <Side />
       </Container>
     </>
