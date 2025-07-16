@@ -55,11 +55,6 @@
       hsl(0deg 0% 20% / 85%) 100%
     );
   }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
 }
 
 .whiteKeyActive {
@@ -120,11 +115,6 @@
     inset: 2px 4px;
     content: "";
     transform-origin: top center;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
   }
 }
 
