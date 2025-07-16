@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import styles from "./Keyboard.module.css";
 import type { KeyboardProps } from "./types";
 import { WhiteKey, BlackKey } from "./components";
@@ -8,6 +8,7 @@ import {
   calculateBlackKeyPosition,
   FIXED_OCTAVE,
 } from "./utils";
+import { useSynthStore } from "@/store/synthStore";
 
 export function Keyboard({
   activeKeys = null,
@@ -22,7 +23,9 @@ export function Keyboard({
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isReleasing, setIsReleasing] = useState(false);
   const [pressedKeys, setPressedKeys] = useState<string[]>([]); // Track all pressed keys
+  const isDisabled = useSynthStore((state) => state.isDisabled);
   const allKeys = generateKeyboardKeys(octaveRange);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Remove last 12 keys for tablet view, last 24 keys for mobile view
   const keys =
@@ -32,85 +35,80 @@ export function Keyboard({
       ? allKeys.slice(0, -12)
       : allKeys;
 
-  const handleKeyPress = useCallback(
-    (note: string): void => {
-      if (isReleasing) return;
+  // Remove useCallback from handleKeyPress
+  function handleKeyPress(note: string): void {
+    if (isReleasing || isDisabled) return;
 
-      // Add the new key to pressed keys
-      setPressedKeys((prev) => {
-        const newPressedKeys = prev.includes(note) ? prev : [...prev, note];
-        return newPressedKeys;
-      });
+    setPressedKeys((prev) => {
+      const newPressedKeys = prev.includes(note) ? prev : [...prev, note];
+      return newPressedKeys;
+    });
 
-      if (activeKeys && activeKeys !== note) {
-        // Legato mode: change pitch of current note instead of creating new note
-        synth.triggerAttack(note);
-        onKeyDown(note);
-      } else if (!activeKeys) {
-        // First key press: start a new note
-        synth.triggerAttack(note);
-        onKeyDown(note);
+    if (activeKeys && activeKeys !== note) {
+      synth.triggerAttack(note);
+      onKeyDown(note);
+    } else if (!activeKeys) {
+      synth.triggerAttack(note);
+      onKeyDown(note);
+    }
+  }
+
+  // Remove useCallback from handleKeyRelease
+  function handleKeyRelease(note: string): void {
+    if (isReleasing || isDisabled) return;
+
+    setPressedKeys((prev) => {
+      const newPressedKeys = prev.filter((key) => key !== note);
+      return newPressedKeys;
+    });
+
+    if (note === activeKeys) {
+      const remainingKeys = pressedKeys.filter((key) => key !== note);
+
+      if (remainingKeys.length > 0) {
+        const nextKey = remainingKeys[remainingKeys.length - 1];
+        synth.triggerAttack(nextKey);
+        onKeyDown(nextKey);
+      } else {
+        setIsReleasing(true);
+        synth.triggerRelease(note);
+        onKeyUp(note);
+        setIsReleasing(false);
       }
-    },
-    [onKeyDown, synth, isReleasing, activeKeys]
-  );
-
-  const handleKeyRelease = useCallback(
-    (note: string): void => {
-      if (isReleasing) return;
-
-      // Remove the released key from pressed keys
-      setPressedKeys((prev) => {
-        const newPressedKeys = prev.filter((key) => key !== note);
-        return newPressedKeys;
-      });
-
-      if (note === activeKeys) {
-        // If releasing the currently active key, check if there are other pressed keys
-        const remainingKeys = pressedKeys.filter((key) => key !== note);
-
-        if (remainingKeys.length > 0) {
-          // Switch to the most recently pressed remaining key (last in array)
-          const nextKey = remainingKeys[remainingKeys.length - 1];
-          synth.triggerAttack(nextKey);
-          onKeyDown(nextKey);
-        } else {
-          // No more keys pressed, release the note
-          setIsReleasing(true);
-          synth.triggerRelease(note);
-          onKeyUp(note);
-          setIsReleasing(false);
-        }
-      }
-    },
-    [isReleasing, activeKeys, pressedKeys, synth, onKeyDown, onKeyUp]
-  );
+    }
+  }
 
   const handleMouseDown = useCallback((): void => {
-    if (isReleasing) return;
+    if (isReleasing || isDisabled) return;
     setIsMouseDown(true);
     onMouseDown();
-  }, [onMouseDown, isReleasing]);
+  }, [onMouseDown, isReleasing, isDisabled]);
 
   const handleMouseUp = useCallback((): void => {
-    if (isReleasing) return;
+    if (isReleasing || isDisabled) return;
     setIsMouseDown(false);
     if (activeKeys && pressedKeys.length === 0) {
-      // Only release if no keys are pressed
       setIsReleasing(true);
       synth.triggerRelease(activeKeys);
       onKeyUp(activeKeys);
       setIsReleasing(false);
     }
     onMouseUp();
-  }, [activeKeys, onKeyUp, onMouseUp, synth, isReleasing, pressedKeys]);
+  }, [
+    activeKeys,
+    onKeyUp,
+    onMouseUp,
+    synth,
+    isReleasing,
+    pressedKeys,
+    isDisabled,
+  ]);
 
   const handleMouseLeave = useCallback((): void => {
-    if (isReleasing) return;
+    if (isReleasing || isDisabled) return;
     if (isMouseDown) {
       setIsMouseDown(false);
       if (activeKeys && pressedKeys.length === 0) {
-        // Only release if no keys are pressed
         setIsReleasing(true);
         synth.triggerRelease(activeKeys);
         onKeyUp(activeKeys);
@@ -126,51 +124,56 @@ export function Keyboard({
     synth,
     isReleasing,
     pressedKeys,
+    isDisabled,
   ]);
 
   const handleKeyInteraction = useCallback(
     (note: string): void => {
-      if (isMouseDown) {
+      if (isMouseDown && !isDisabled) {
         handleKeyPress(note);
       }
     },
-    [isMouseDown, handleKeyPress]
+    [isMouseDown, handleKeyPress, isDisabled]
   );
 
   const handleKeyLeave = useCallback(
     (note: string): void => {
-      if (isMouseDown) {
+      if (isMouseDown && !isDisabled) {
         handleKeyRelease(note);
       }
     },
-    [isMouseDown, handleKeyRelease]
+    [isMouseDown, handleKeyRelease, isDisabled]
   );
 
-  useEffect(() => {
-    function handleKeyboardDown(e: KeyboardEvent) {
-      if (!e.key) return;
+  // Keyboard event handlers for the container
+  const handleContainerKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!e.key || isDisabled) return;
       const note = getNoteFromKeyEvent(e.key, FIXED_OCTAVE);
       if (note && !e.repeat) {
         handleKeyPress(note);
       }
-    }
+    },
+    [handleKeyPress, isDisabled]
+  );
 
-    function handleKeyboardUp(e: KeyboardEvent) {
-      if (!e.key) return;
+  const handleContainerKeyUp = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!e.key || isDisabled) return;
       const note = getNoteFromKeyEvent(e.key, FIXED_OCTAVE);
       if (note) {
         handleKeyRelease(note);
       }
+    },
+    [handleKeyRelease, isDisabled]
+  );
+
+  // Focus the container on mount for keyboard accessibility
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.focus();
     }
-
-    window.addEventListener("keydown", handleKeyboardDown);
-    window.addEventListener("keyup", handleKeyboardUp);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyboardDown);
-      window.removeEventListener("keyup", handleKeyboardUp);
-    };
-  }, [handleKeyPress, handleKeyRelease]);
+  }, []);
 
   const renderWhiteKeys = useCallback(() => {
     return keys
@@ -241,7 +244,12 @@ export function Keyboard({
 
   return (
     <div
+      ref={containerRef}
       className={styles.keyboardContainer}
+      tabIndex={0}
+      data-testid="keyboard-container"
+      onKeyDown={handleContainerKeyDown}
+      onKeyUp={handleContainerKeyUp}
       onPointerUp={handleMouseUp}
       onPointerLeave={handleMouseLeave}
     >

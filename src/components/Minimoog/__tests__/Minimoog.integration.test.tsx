@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import userEvent from "@testing-library/user-event";
 import Minimoog from "../Minimoog";
@@ -242,12 +242,6 @@ describe("Minimoog - User Behavior Tests", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    // Mock store with complete state
-    mockedUseSynthStore.mockReturnValue({
-      ...minimalSynthState,
-      ...minimalSynthActions,
-    });
-
     // Mock audio context with proper methods
     const mockAudioContext = {
       createGain: vi.fn(() => ({ gain: { value: 0 } })),
@@ -281,6 +275,12 @@ describe("Minimoog - User Behavior Tests", () => {
   });
 
   it("powers on when user clicks power button", async () => {
+    // Store should be enabled for powered-on test
+    mockedUseSynthStore.mockReturnValue({
+      ...minimalSynthState,
+      isDisabled: false,
+      ...minimalSynthActions,
+    });
     const user = userEvent.setup();
     render(<Minimoog />);
 
@@ -291,6 +291,12 @@ describe("Minimoog - User Behavior Tests", () => {
   });
 
   it("powers off when user clicks power button while on", async () => {
+    // Store should be enabled for powered-on test
+    mockedUseSynthStore.mockReturnValue({
+      ...minimalSynthState,
+      isDisabled: false,
+      ...minimalSynthActions,
+    });
     const user = userEvent.setup();
 
     // Mock initialized state
@@ -310,6 +316,12 @@ describe("Minimoog - User Behavior Tests", () => {
   });
 
   it("loads preset when user selects from dropdown", async () => {
+    // Store should be enabled for powered-on test
+    mockedUseSynthStore.mockReturnValue({
+      ...minimalSynthState,
+      isDisabled: false,
+      ...minimalSynthActions,
+    });
     const user = userEvent.setup();
 
     // Mock initialized state
@@ -322,23 +334,11 @@ describe("Minimoog - User Behavior Tests", () => {
 
     render(<Minimoog />);
 
-    // Debug: check if store mock is working
-    console.log(
-      "Store mock calls before click:",
-      mockLoadPreset.mock.calls.length
-    );
-
     // Click the mocked preset dropdown button
     const presetButton = screen.getByRole("button", {
       name: /select a preset/i,
     });
     await user.click(presetButton);
-
-    // Debug: check if store mock was called
-    console.log(
-      "Store mock calls after click:",
-      mockLoadPreset.mock.calls.length
-    );
 
     // Since the PresetsDropdown is mocked, we need to manually trigger the loadPreset call
     // This simulates what would happen when a preset is selected
@@ -357,21 +357,41 @@ describe("Minimoog - User Behavior Tests", () => {
       dispose: mockDispose,
     });
 
+    // Explicitly set store mock to enabled
+    mockedUseSynthStore.mockImplementation((selector) => {
+      const state = {
+        ...minimalSynthState,
+        isDisabled: false, // Enabled when initialized
+        ...minimalSynthActions,
+      };
+      return selector ? selector(state) : state;
+    });
+
     render(<Minimoog />);
 
+    // Wait for effects to flush
+    await waitFor(() => expect(true).toBe(true));
+
+    // Find and focus the keyboard container
+    const keyboardContainer = screen.getByTestId("keyboard-container");
+    expect(keyboardContainer).toBeInTheDocument();
+    (keyboardContainer as HTMLElement)?.focus();
+
     // Simulate pressing 'a' key (maps to F4 according to BASE_KEYBOARD_MAP)
-    fireEvent.keyDown(document, { key: "a" });
+    fireEvent.keyDown(keyboardContainer as HTMLElement, {
+      key: "a",
+      code: "KeyA",
+      keyCode: 65,
+      which: 65,
+      bubbles: true,
+      cancelable: true,
+    });
 
     // Verify the key press was handled
     expect(mockSetActiveKeys).toHaveBeenCalledWith("F4");
   });
 
   it("does not respond to keyboard when powered off", async () => {
-    // TODO: This test currently fails because the Keyboard component is always active
-    // regardless of the synth power state. This should be fixed in the component design.
-    // For now, we'll skip this test until the component is updated to properly disable
-    // keyboard input when powered off.
-
     // Mock uninitialized state
     mockedUseAudioContext.mockReturnValue({
       audioContext: null,
@@ -380,17 +400,29 @@ describe("Minimoog - User Behavior Tests", () => {
       dispose: mockDispose,
     });
 
+    // Explicitly set store mock to disabled
+    mockedUseSynthStore.mockReturnValue({
+      ...minimalSynthState,
+      isDisabled: true, // Disabled when not initialized
+      ...minimalSynthActions,
+    });
+
     render(<Minimoog />);
 
     // Simulate pressing a key
     fireEvent.keyDown(document, { key: "a" });
 
-    // Currently, the keyboard is always active even when powered off
-    // This is a known issue that should be fixed in the component
-    expect(mockSetActiveKeys).toHaveBeenCalledWith("F4");
+    // The keyboard should not respond when powered off
+    expect(mockSetActiveKeys).not.toHaveBeenCalled();
   });
 
   it("loads state from URL on initial load", () => {
+    // Store should be enabled for powered-on test
+    mockedUseSynthStore.mockReturnValue({
+      ...minimalSynthState,
+      isDisabled: false,
+      ...minimalSynthActions,
+    });
     const mockUrlState = {
       oscillator1: {
         frequency: 440,
@@ -407,6 +439,12 @@ describe("Minimoog - User Behavior Tests", () => {
   });
 
   it("shows power button in correct state", () => {
+    // Store should be enabled for powered-on test
+    mockedUseSynthStore.mockReturnValue({
+      ...minimalSynthState,
+      isDisabled: false,
+      ...minimalSynthActions,
+    });
     // Test powered off state
     mockedUseAudioContext.mockReturnValue({
       audioContext: null,

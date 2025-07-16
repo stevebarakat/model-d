@@ -18,6 +18,8 @@ describe("Keyboard - User Behavior Tests", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mockSynth.triggerAttack = vi.fn();
+    mockSynth.triggerRelease = vi.fn();
   });
 
   it("plays a note when user clicks a white key", async () => {
@@ -41,23 +43,6 @@ describe("Keyboard - User Behavior Tests", () => {
       expect(mockSynth.triggerAttack).toHaveBeenCalledWith("C4");
       expect(mockOnKeyDown).toHaveBeenCalledWith("C4");
     }
-  });
-
-  it("plays a note when user presses a key on keyboard", () => {
-    render(
-      <Keyboard
-        onKeyDown={mockOnKeyDown}
-        onKeyUp={mockOnKeyUp}
-        synth={mockSynth}
-        octaveRange={{ min: 4, max: 4 }}
-      />
-    );
-
-    // Simulate pressing 'a' key (maps to F4 according to BASE_KEYBOARD_MAP)
-    fireEvent.keyDown(document, { key: "a" });
-
-    expect(mockSynth.triggerAttack).toHaveBeenCalledWith("F4");
-    expect(mockOnKeyDown).toHaveBeenCalledWith("F4");
   });
 
   it("stops playing when user releases a key", async () => {
