@@ -12,11 +12,14 @@ export function WhiteKey({
 }: WhiteKeyProps) {
   const isDisabled = useSynthStore((s) => s.isDisabled);
   return (
-    <div
+    <button
+      type="button"
       className={`${styles.whiteKey} ${isActive ? styles.whiteKeyActive : ""} ${
         isDisabled ? "disabled" : ""
       }`}
-      aria-disabled={isDisabled}
+      disabled={isDisabled}
+      aria-pressed={isActive}
+      aria-label="Piano key"
       onPointerDown={isDisabled ? undefined : onPointerDown}
       onPointerUp={isDisabled ? undefined : onPointerUp}
       onPointerEnter={isDisabled ? undefined : onPointerEnter}

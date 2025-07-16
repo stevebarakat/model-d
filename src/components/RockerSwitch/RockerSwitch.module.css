@@ -20,14 +20,6 @@
   }
 }
 
-/* Focus styles for accessibility */
-.vertical:focus-visible {
-  outline: 8px solid hsl(220deg 100% 50%);
-  outline-offset: 2px;
-  border-radius: 0.25rem;
-  width: 0;
-}
-
 .switch {
   position: relative;
   z-index: 10;
@@ -104,6 +96,7 @@
     position: relative;
     top: -0.5rem;
     z-index: 50;
+
     &:focus-visible {
       outline: 2px solid hsl(220deg 100% 50%);
       outline-offset: 2px;
@@ -120,6 +113,14 @@
   }
 
   --switch-gloss-img: url("./images/vertical-gloss.svg");
+}
+
+/* Focus styles for accessibility */
+.vertical:focus-visible {
+  width: 0;
+  border-radius: 0.25rem;
+  outline: 8px solid hsl(220deg 100% 50%);
+  outline-offset: 2px;
 }
 
 .state {
@@ -276,6 +277,7 @@
   font-size: var(--font-size-xs);
   font-weight: 800;
   text-transform: uppercase;
+
   .vertical & {
     bottom: var(--spacing-xs);
   }

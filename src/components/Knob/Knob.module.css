@@ -50,7 +50,6 @@
   justify-content: center;
   align-items: center;
   touch-action: none;
-  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -228,29 +227,29 @@
 
 /* Touch scaling for mobile/tablet devices */
 .knobContainer.touching {
+  z-index: 1000;
+  margin: -8px;
+  padding: 8px;
+  background: rgb(0 0 0 / 10%);
+  border-radius: 12px;
   transform: scale(2);
   transition: transform 0.2s ease-out;
-  z-index: 1000;
   transform-origin: center center;
   backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  padding: 8px;
-  margin: -8px;
 }
 
 /* Legacy selectors for backward compatibility */
 .touching {
+  z-index: 10;
   transform: scale(1.5) !important;
   transition: transform 0.2s ease-out;
-  z-index: 10;
 }
 
 .radial.touching,
 .arrow.touching {
+  z-index: 10;
   transform: scale(1.5);
   transition: transform 0.2s ease-out;
-  z-index: 10;
 }
 
 /* Ensure the scaled knob stays above other elements */
@@ -278,11 +277,11 @@
   position: absolute;
   bottom: 100%;
   display: inline-block;
+  color: var(--color-text-primary);
   font-weight: 800;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
-  color: var(--color-text-primary);
 }
 
 .titleMedium,

@@ -14,14 +14,17 @@ export function BlackKey({
 }: BlackKeyProps) {
   const isDisabled = useSynthStore((s) => s.isDisabled);
   return (
-    <div
+    <button
+      type="button"
       className={`${styles.blackKey} ${isActive ? styles.blackKeyActive : ""}`}
       style={{
         left: `${position}%`,
         width: `${width}%`,
         cursor: isDisabled ? "not-allowed" : "pointer",
       }}
-      aria-disabled={isDisabled}
+      disabled={isDisabled}
+      aria-pressed={isActive}
+      aria-label="Piano key (sharp)"
       onPointerDown={isDisabled ? undefined : onPointerDown}
       onPointerUp={isDisabled ? undefined : onPointerUp}
       onPointerEnter={isDisabled ? undefined : onPointerEnter}

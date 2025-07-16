@@ -23,8 +23,7 @@
   padding: 0;
   width: 100%;
   max-width: 90vw;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: auto hidden;
   background: var(--color-gray-l);
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */

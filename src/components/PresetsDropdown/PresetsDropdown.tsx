@@ -35,6 +35,9 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
   };
 
   const handleCopyURL = async () => {
+    // DEBUG: log when called
+
+    console.log("handleCopyURL called");
     try {
       await copyURLToClipboard(synthState);
       setShowCopiedMessage(true);

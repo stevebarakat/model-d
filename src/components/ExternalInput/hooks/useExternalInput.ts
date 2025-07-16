@@ -154,7 +154,13 @@ export function useExternalInput(
       }
       isConnectedRef.current = false;
     };
-  }, [audioContext, mixerNode, updateAudioLevel]);
+  }, [
+    audioContext,
+    mixer.external.enabled,
+    mixer.external.volume,
+    mixerNode,
+    updateAudioLevel,
+  ]);
 
   // Handle connection/disconnection based on enabled state
   useEffect(() => {

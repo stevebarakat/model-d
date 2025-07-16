@@ -62,7 +62,14 @@ export function useNoise(
       noiseRef.current = null;
       isConnectedRef.current = false;
     };
-  }, [audioContext, mixer.noise.noiseType, mixerNode, activeKeys]);
+  }, [
+    audioContext,
+    mixer.noise.noiseType,
+    mixerNode,
+    activeKeys,
+    mixer.noise.volume,
+    mixer.noise.enabled,
+  ]);
 
   // Handle connection/disconnection based on enabled state
   useEffect(() => {

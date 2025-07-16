@@ -7,11 +7,10 @@
   justify-content: flex-end;
   align-items: center;
   margin: 0.25rem 1rem;
+  margin: 0.25rem 4%;
   padding: var(--spacing-md) var(--spacing-lg);
   width: 120px;
   overflow: hidden;
-  margin: 0.25rem 4%;
-
   background: linear-gradient(
     to bottom,
     hsl(0deg 0% 40%),
