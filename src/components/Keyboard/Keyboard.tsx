@@ -35,48 +35,60 @@ export function Keyboard({
       ? allKeys.slice(0, -12)
       : allKeys;
 
-  // Remove useCallback from handleKeyPress
-  function handleKeyPress(note: string): void {
-    if (isReleasing || isDisabled) return;
+  const handleKeyPress = useCallback(
+    (note: string): void => {
+      if (isReleasing || isDisabled) return;
 
-    setPressedKeys((prev) => {
-      const newPressedKeys = prev.includes(note) ? prev : [...prev, note];
-      return newPressedKeys;
-    });
+      setPressedKeys((prev) => {
+        const newPressedKeys = prev.includes(note) ? prev : [...prev, note];
+        return newPressedKeys;
+      });
 
-    if (activeKeys && activeKeys !== note) {
-      synth.triggerAttack(note);
-      onKeyDown(note);
-    } else if (!activeKeys) {
-      synth.triggerAttack(note);
-      onKeyDown(note);
-    }
-  }
-
-  // Remove useCallback from handleKeyRelease
-  function handleKeyRelease(note: string): void {
-    if (isReleasing || isDisabled) return;
-
-    setPressedKeys((prev) => {
-      const newPressedKeys = prev.filter((key) => key !== note);
-      return newPressedKeys;
-    });
-
-    if (note === activeKeys) {
-      const remainingKeys = pressedKeys.filter((key) => key !== note);
-
-      if (remainingKeys.length > 0) {
-        const nextKey = remainingKeys[remainingKeys.length - 1];
-        synth.triggerAttack(nextKey);
-        onKeyDown(nextKey);
-      } else {
-        setIsReleasing(true);
-        synth.triggerRelease(note);
-        onKeyUp(note);
-        setIsReleasing(false);
+      if (activeKeys && activeKeys !== note) {
+        synth.triggerAttack(note);
+        onKeyDown(note);
+      } else if (!activeKeys) {
+        synth.triggerAttack(note);
+        onKeyDown(note);
       }
-    }
-  }
+    },
+    [isReleasing, isDisabled, synth, onKeyDown, activeKeys]
+  );
+
+  const handleKeyRelease = useCallback(
+    (note: string): void => {
+      if (isReleasing || isDisabled) return;
+
+      setPressedKeys((prev) => {
+        const newPressedKeys = prev.filter((key) => key !== note);
+        return newPressedKeys;
+      });
+
+      if (note === activeKeys) {
+        const remainingKeys = pressedKeys.filter((key) => key !== note);
+
+        if (remainingKeys.length > 0) {
+          const nextKey = remainingKeys[remainingKeys.length - 1];
+          synth.triggerAttack(nextKey);
+          onKeyDown(nextKey);
+        } else {
+          setIsReleasing(true);
+          synth.triggerRelease(note);
+          onKeyUp(note);
+          setIsReleasing(false);
+        }
+      }
+    },
+    [
+      isReleasing,
+      isDisabled,
+      synth,
+      onKeyDown,
+      onKeyUp,
+      activeKeys,
+      pressedKeys,
+    ]
+  );
 
   const handleMouseDown = useCallback((): void => {
     if (isReleasing || isDisabled) return;
