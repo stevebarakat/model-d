@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Section.module.css";
+import { cn } from "@/utils/helpers";
 
 type SectionProps = {
   children: React.ReactNode;
@@ -18,7 +19,7 @@ function Section({
 }: SectionProps) {
   return (
     <div
-      className={`${styles.section} ${className}`}
+      className={cn(styles.section, className)}
       style={{
         ...style,
         justifyContent: justify,

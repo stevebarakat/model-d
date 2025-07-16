@@ -1,4 +1,5 @@
 import styles from "./Screw.module.css";
+import { cn } from "@/utils/helpers";
 
 interface ScrewProps {
   size?: "small" | "medium" | "large";
@@ -8,8 +9,8 @@ interface ScrewProps {
 
 function Screw({ size = "medium", className, color = "light" }: ScrewProps) {
   return (
-    <div className={`${styles.screw} ${styles[size]} ${className || ""}`}>
-      <div className={`${styles.screwHead} ${styles[color]}`}>
+    <div className={cn(styles.screw, styles[size], className)}>
+      <div className={cn(styles.screwHead, styles[color])}>
         <div className={styles.phillipsCross}>
           <div className={styles.crossLine}></div>
           <div className={styles.crossLine}></div>

@@ -3,6 +3,7 @@ import { useKnobInteraction } from "./hooks";
 import { KnobTicks, KnobLabels, KnobRing } from "./components";
 import { KnobProps } from "./types";
 import styles from "./Knob.module.css";
+import { cn } from "@/utils/helpers";
 import { slugify } from "@/utils/";
 
 function Knob({
@@ -45,24 +46,28 @@ function Knob({
   return (
     <div
       style={style}
-      className={`${styles.knobContainer} ${
-        styles[`knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`]
-      } ${isTouching ? styles.touching : ""}`}
+      className={cn(
+        styles.knobContainer,
+        styles[`knobContainer${size.charAt(0).toUpperCase() + size.slice(1)}`],
+        isTouching && styles.touching
+      )}
     >
       <label
         htmlFor={id}
-        className={`${labelClass} ${
+        className={cn(
+          labelClass,
           styles[`label${size.charAt(0).toUpperCase() + size.slice(1)}`]
-        }`}
+        )}
       >
         {label}
       </label>
 
       {title && (
         <span
-          className={`${styles.title} ${
+          className={cn(
+            styles.title,
             styles[`title${size.charAt(0).toUpperCase() + size.slice(1)}`]
-          }`}
+          )}
         >
           {title}
         </span>
@@ -97,8 +102,8 @@ function Knob({
             id={id}
             className={
               type === "arrow"
-                ? `${styles.arrow} ${disabled ? "disabled" : ""}`
-                : `${styles.radial} ${disabled ? "disabled" : ""}`
+                ? cn(styles.arrow, disabled && styles.disabled)
+                : cn(styles.radial, disabled && styles.disabled)
             }
             ref={knobRef}
             style={{

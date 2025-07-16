@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../Keyboard.module.css";
+import { cn } from "@/utils/helpers";
 import type { BlackKeyProps } from "../types";
 import { useSynthStore } from "@/store/synthStore";
 
@@ -16,7 +17,7 @@ export function BlackKey({
   return (
     <button
       type="button"
-      className={`${styles.blackKey} ${isActive ? styles.blackKeyActive : ""}`}
+      className={cn(styles.blackKey, isActive && styles.blackKeyActive)}
       style={{
         left: `${position}%`,
         width: `${width}%`,

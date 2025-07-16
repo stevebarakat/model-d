@@ -1,4 +1,5 @@
 import styles from "./Row.module.css";
+import { cn } from "@/utils/helpers";
 
 type RowProps = {
   children?: React.ReactNode;
@@ -25,7 +26,7 @@ function Row({
 }: RowProps) {
   return (
     <div
-      className={`${styles.row} ${className}`}
+      className={cn(styles.row, className)}
       style={{
         alignItems: align,
         justifyContent: justify,

@@ -1,4 +1,5 @@
 import styles from "./Column.module.css";
+import { cn } from "@/utils/helpers";
 
 type ColumnProps = {
   children: React.ReactNode;
@@ -25,7 +26,7 @@ function Column({
 }: ColumnProps) {
   return (
     <div
-      className={`${styles.column} ${styles.sidePanel} ${className}`}
+      className={cn(styles.column, styles.sidePanel, className)}
       style={{
         alignItems: align,
         justifyContent: justify,

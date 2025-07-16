@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../Keyboard.module.css";
+import { cn } from "@/utils/helpers";
 import type { WhiteKeyProps } from "../types";
 import { useSynthStore } from "@/store/synthStore";
 
@@ -14,9 +15,11 @@ export function WhiteKey({
   return (
     <button
       type="button"
-      className={`${styles.whiteKey} ${isActive ? styles.whiteKeyActive : ""} ${
-        isDisabled ? "disabled" : ""
-      }`}
+      className={cn(
+        styles.whiteKey,
+        isActive && styles.whiteKeyActive,
+        isDisabled && styles.disabled
+      )}
       disabled={isDisabled}
       aria-pressed={isActive}
       aria-label="Piano key"

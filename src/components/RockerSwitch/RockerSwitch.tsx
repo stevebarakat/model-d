@@ -108,7 +108,7 @@ function RockerSwitch({
           <span className={styles.left}>{bottomLabelLeft}</span>
         )}
         {bottomLabel && (
-          <span className={styles.center + " " + styles[`${orientation}Label`]}>
+          <span className={cn(styles.center, styles[`${orientation}Label`])}>
             {bottomLabel}
           </span>
         )}
@@ -177,7 +177,7 @@ function RockerSwitch({
           }
           checked={checked}
         />
-        <div className={styles.switch + " " + (disabled ? "disabled" : "")}>
+        <div className={cn(styles.switch, disabled && styles.disabled)}>
           <span className="sr-only">{label}</span>
         </div>
       </label>

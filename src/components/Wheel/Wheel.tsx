@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./Wheel.module.css";
 import { slugify } from "@/utils/helpers";
+import { cn } from "@/utils/helpers";
 
 type ModWheelProps = {
   value: number;
@@ -104,7 +105,7 @@ function Wheel({
   }, [handleMouseMove, onMouseUp, isDragging]);
 
   return (
-    <div className={styles.wheelContainer + (isDisabled ? " disabled" : "")}>
+    <div className={cn(styles.wheelContainer, isDisabled && styles.disabled)}>
       <div
         id={id}
         ref={sliderRef}

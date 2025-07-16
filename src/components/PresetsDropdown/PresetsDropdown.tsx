@@ -4,6 +4,7 @@ import { presets, getCategories } from "@/data/presets";
 import { copyURLToClipboard } from "@/utils/urlState";
 import { convertPresetToStoreFormat } from "@/utils/presetConversion";
 import styles from "./PresetsDropdown.module.css";
+import { cn } from "@/utils/helpers";
 
 const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -105,7 +106,7 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
   return (
     <div className={styles.container} ref={dropdownRef}>
       <div className={styles.controls}>
-        <div className={`${styles.dropdown} ${disabled ? "disabled" : ""}`}>
+        <div className={cn(styles.dropdown, disabled && styles.disabled)}>
           <button
             className={styles.trigger}
             style={{
@@ -122,7 +123,7 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
               {currentPreset || "Select Preset"}
             </span>
             <svg
-              className={`${styles.chevron} ${isOpen ? styles.rotated : ""}`}
+              className={cn(styles.chevron, isOpen && styles.rotated)}
               width="12"
               height="12"
               viewBox="0 0 12 12"
@@ -176,9 +177,11 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
             {filteredPresets.map((preset, index) => (
               <div
                 key={preset.id}
-                className={`${styles.presetItem} ${
-                  currentPreset === preset.name ? styles.selected : ""
-                } ${focusedIndex === index ? styles.focused : ""}`}
+                className={cn(
+                  styles.presetItem,
+                  currentPreset === preset.name && styles.selected,
+                  focusedIndex === index && styles.focused
+                )}
                 onMouseEnter={() => setFocusedIndex(index)}
                 onTouchStart={() => setFocusedIndex(index)}
               >

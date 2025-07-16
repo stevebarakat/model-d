@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Container.module.css";
+import { cn } from "@/utils/helpers";
 
 const Container = ({
   children,
@@ -8,7 +9,7 @@ const Container = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  return <div className={`${styles.container} ${className}`}>{children}</div>;
+  return <div className={cn(styles.container, className)}>{children}</div>;
 };
 
 export default Container;
