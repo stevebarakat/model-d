@@ -158,10 +158,10 @@ function useAudioNodes(audioContext: AudioContext | null): AudioNodes {
     if (!isMainActive) {
       mixerNodeRef.current.gain.setValueAtTime(0, audioContext.currentTime);
     } else {
-      const gain = Math.pow(mainVolume / 10, 2);
-      mixerNodeRef.current.gain.setValueAtTime(gain, audioContext.currentTime);
+      // Mixer should pass through at unity gain when active
+      mixerNodeRef.current.gain.setValueAtTime(1, audioContext.currentTime);
     }
-  }, [mainVolume, isMainActive, audioContext]);
+  }, [isMainActive, audioContext]);
 
   return {
     mixerNode: mixerNodeRef.current,

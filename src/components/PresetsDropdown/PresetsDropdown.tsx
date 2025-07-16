@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSynthStore } from "@/store/synthStore";
 import { presets, getCategories } from "@/data/presets";
 import { copyURLToClipboard } from "@/utils/urlState";
-import { getPresetWithURL } from "@/utils/generatePresetURLs";
 import { convertPresetToStoreFormat } from "@/utils/presetConversion";
 import styles from "./PresetsDropdown.module.css";
 
@@ -42,23 +41,6 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
       setTimeout(() => setShowCopiedMessage(false), 2000);
     } catch (error) {
       console.error("Failed to copy URL to clipboard:", error);
-    }
-  };
-
-  const handleCopyPresetURL = async (
-    presetId: string,
-    event: React.MouseEvent
-  ) => {
-    event.stopPropagation();
-    try {
-      const presetWithURL = getPresetWithURL(presetId);
-      if (presetWithURL) {
-        await navigator.clipboard.writeText(presetWithURL.shareURL);
-        setShowCopiedMessage(true);
-        setTimeout(() => setShowCopiedMessage(false), 2000);
-      }
-    } catch (error) {
-      console.error("Failed to copy preset URL to clipboard:", error);
     }
   };
 
@@ -212,29 +194,6 @@ const PresetsDropdown: React.FC<{ disabled: boolean }> = ({ disabled }) => {
                   <p className={styles.presetDescription}>
                     {preset.description}
                   </p>
-                </button>
-                <button
-                  className={styles.copyUrlButton}
-                  onClick={(e) => handleCopyPresetURL(preset.id, e)}
-                  title="Copy preset URL"
-                  aria-label={`Copy URL for ${preset.name} preset`}
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M4 2H2C1.44772 2 1 2.44772 1 3V13C1 13.5523 1.44772 14 2 14H10C10.5523 14 11 13.5523 11 13V11"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M6 6H14C14.5523 6 15 6.44772 15 7V13C15 13.5523 14.5523 14 14 14H6C5.44772 14 5 13.5523 5 13V7C5 6.44772 5.44772 6 6 6Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
                 </button>
               </div>
             ))}
