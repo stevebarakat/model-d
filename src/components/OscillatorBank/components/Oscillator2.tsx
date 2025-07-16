@@ -30,7 +30,7 @@ const waveformIcons = [
 ];
 const ranges: OscillatorRange[] = ["lo", "32", "16", "8", "4", "2"];
 
-export default function Oscillator2() {
+function Oscillator2() {
   const { oscillator2, setOscillator2, isDisabled } = useSynthStore();
 
   function handleWaveformChange(value: number) {
@@ -100,3 +100,5 @@ export default function Oscillator2() {
     </OscillatorPanel>
   );
 }
+
+export default Oscillator2;

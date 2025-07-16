@@ -2,7 +2,7 @@ import Logo from "@/components/Logo";
 import Row from "@/components/Row";
 import styles from "../Panels.module.css";
 
-const MidPanel = () => {
+function MidPanel() {
   return (
     <Row
       justify="flex-end"
@@ -14,6 +14,6 @@ const MidPanel = () => {
       <Logo />
     </Row>
   );
-};
+}
 
 export default MidPanel;

@@ -1,7 +1,7 @@
 import Screw from "@/components/Screw";
 import styles from "../Panels.module.css";
 
-const BackPanel = () => {
+function BackPanel() {
   return (
     <div className={styles.backPanel}>
       <Screw />
@@ -10,6 +10,6 @@ const BackPanel = () => {
       <Screw />
     </div>
   );
-};
+}
 
 export default BackPanel;

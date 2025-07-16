@@ -6,8 +6,19 @@ type LineProps = {
   side?: "left" | "right";
 };
 
-export default function Line({ style, side = "left" }: LineProps) {
-  const sideStyle = side === "left" ? { left: "4.7rem" } : { right: "5.5rem" };
-
-  return <div className={styles.line} style={{ ...style, ...sideStyle }}></div>;
+function Line({ style, side = "left" }: LineProps) {
+  return (
+    <div
+      className={styles.line}
+      style={{
+        ...style,
+        borderLeft:
+          side === "left" ? "2px solid var(--color-white-50)" : "none",
+        borderRight:
+          side === "right" ? "2px solid var(--color-white-50)" : "none",
+      }}
+    />
+  );
 }
+
+export default Line;

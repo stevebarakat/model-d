@@ -3,9 +3,9 @@ import Section from "../Section";
 import Column from "../Column";
 import MainOutput from "./MainOutput";
 import Tuner from "../Tuner";
-import Phones from "./AuxOut";
+import AuxOut from "./AuxOut";
 
-export default function Output() {
+function Output() {
   return (
     <Section>
       <Column
@@ -15,9 +15,11 @@ export default function Output() {
       >
         <MainOutput />
         <Tuner />
-        <Phones />
+        <AuxOut />
       </Column>
       <Title>Output</Title>
     </Section>
   );
 }
+
+export default Output;
