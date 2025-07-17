@@ -1,13 +1,13 @@
+import * as Tooltip from "@radix-ui/react-tooltip";
 import PitchBender from "../../PitchBender";
 import ModulationWheel from "../../ModulationWheel";
 import styles from "./SidePanel.module.css";
 import GlideSwitch from "../../Glide/GlideSwitch";
 import DecaySwitch from "../../DecaySwitch";
+import Screw from "../../Screw/Screw";
 import LfoRate from "../../LfoRate";
 import Column from "../../Column";
 import Row from "../../Row";
-import * as Tooltip from "@radix-ui/react-tooltip";
-import Screw from "../../Screw/Screw";
 
 function SidePanel() {
   return (

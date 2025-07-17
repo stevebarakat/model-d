@@ -1,7 +1,15 @@
+import React from "react";
 import styles from "./Synth.module.css";
+import { cn } from "@/utils/helpers";
 
-function Synth({ children }: { children: React.ReactNode }) {
-  return <div className={styles.synth}>{children}</div>;
-}
+const Synth = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return <div className={cn(styles.container, className)}>{children}</div>;
+};
 
 export default Synth;

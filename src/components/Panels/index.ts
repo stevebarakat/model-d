@@ -1,3 +1,3 @@
-export { default as BackPanel } from "./components/BackPanel";
-export { default as MidPanel } from "./components/MidPanel";
-export { default as FrontPanel } from "./components/FrontPanel";
+export { default as Top } from "./components/Top";
+export { default as Middle } from "./components/Middle";
+export { default as Bottom } from "./components/Bottom";

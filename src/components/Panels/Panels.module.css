@@ -56,7 +56,7 @@
   }
 }
 
-.midPanel {
+.middle {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -91,7 +91,7 @@
   }
 }
 
-.frontPanel {
+.bottom {
   position: relative;
   top: 0;
   left: 0;
@@ -111,5 +111,29 @@
     height: 1.5rem;
     background: linear-gradient(to bottom, hsl(0deg 0% 0% / 50%), transparent);
     content: "";
+  }
+}
+
+.keyboardPanel {
+  display: flex;
+
+  &::after,
+  &::before {
+    position: absolute;
+    bottom: 1.6rem;
+    z-index: 9;
+    width: 20px;
+    height: 220px;
+    content: "";
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, hsl(0deg 0% 0% / 50%), transparent);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, hsl(0deg 0% 0% / 50%), transparent);
   }
 }
